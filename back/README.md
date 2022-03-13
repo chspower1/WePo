@@ -49,6 +49,7 @@ yarn start
 ## 파일 구조 설명
 
 1. src폴더는 크게는 routers, services, db의 3개 폴더로 구분됩니다.
+**현재는 User MVP 코드만 있습니다.**
 
 - routers:
   - request와 response가 처리됩니다. MVP 별로 1개씩, 총 5개 파일이 있게 됩니다.
