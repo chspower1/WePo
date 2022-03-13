@@ -35,7 +35,9 @@ MONGODB_URL="mongodb+srv://<name>:<password>@cluster0.acaph.mongodb.net/myDB?ret
 ## 3. Express 실행
 
 > yarn은 사실 npm 패키지입니다. yarn부터 설치합니다. (이미 설치 시 생략)
+
 > 이후, 아래 yarn 커맨드는, yarn install 커맨드의 단축키입니다. 즉, 라이브러리 설치 커맨드입니다.
+
 > yarn 입력 시 자동으로, package.json 바탕으로 라이브러리를 한꺼번에 설치해 줍니다.
 
 ```bash
