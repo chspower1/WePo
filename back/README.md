@@ -18,7 +18,7 @@ https://www.mongodb.com/atlas \
 왼쪽 아래 SECURITY 의 Network Access -> Add IP Address -> current IP 등록 \
 왼쪽 위 DEPLOYMENT Databases -> Connect -> Connect your application -> 서버 링크 복사
 
-> Atlas 관련 상세 매뉴얼은 프로젝트 안내페이지의 "알면 좋을 개발 Tip"에 있습니다.
+> Atlas 관련 상세 매뉴얼은 프로젝트 가이드의 "MongoDB 데이터베이스 구축하기"에 있습니다.
 
 ## 2. Mongodb 서버 url 환경변수에 등록
 
