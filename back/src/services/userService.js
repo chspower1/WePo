@@ -100,7 +100,7 @@ class userAuthService {
 
     if (toUpdate.password) {
       const fieldToUpdate = "password";
-      const newValue = toUpdate.password;
+      const newValue = bcrypt.hash(toUpdate.password, 10);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
