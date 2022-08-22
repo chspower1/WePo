@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@sindresorhus/is": "^5.3.0",
+    "install": "^0.13.0",
+    "npm": "^8.18.0"
+  }
+}

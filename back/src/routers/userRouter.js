@@ -74,7 +74,7 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      const user_id = req.currentUserId;
+      const user_id = req['currentUserId'];
       const currentUserInfo = await userAuthService.getUserInfo({
         user_id,
       });
@@ -143,7 +143,7 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
     .status(200)
     .send(
-      `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
+      `안녕하세요 ${req['currentUserId']}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
 
