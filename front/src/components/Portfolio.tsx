@@ -7,6 +7,7 @@ import Certificate from "./certificate/Certificate";
 import Project from "./project/Project";
 import { getUser } from "../api/api";
 import { IUser } from "./../atoms";
+import User from "./user/User";
 function Portfolio() {
     const { userId } = useParams();
     const [user, setUser] = useState<IUser>();
@@ -21,7 +22,7 @@ function Portfolio() {
                 "loding"
             ) : (
                 <>
-                    <h1>{user?.name}</h1>
+                    <User />
                     <Education {...user?.educations!} />
                     <Award {...user?.awards!} />
                     <Certificate {...user?.certificate!} />
