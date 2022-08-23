@@ -16,7 +16,7 @@ export interface IUser {
 export interface IEducation {
     school: string;
     major: string;
-    status: EduStatus;
+    status: EduStatus | "";
 }
 export enum EduStatus {
     attending = "재학중",
@@ -58,3 +58,4 @@ export const isLoginState = atom({
     key: "isLogin",
     default: false,
 });
+
