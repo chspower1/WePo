@@ -5,7 +5,6 @@ import { Container, Col, Row } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-import { ProjectModel } from "./mongoTest/project"
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -28,14 +27,6 @@ function Portfolio() {
     setIsFetchCompleted(true);
   };
 
-  const [pros, setPros] = useState(undefined)
-  
-  async function getPro(userId){
-    const proj = await ProjectModel.findOne({ userId });
-    return proj;
-  }
-
-
   useEffect(() => {
     // 전역 상태의 user가 null이라면 로그인이 안 된 상태이므로, 로그인 페이지로 돌림.
     if (!userState.user) {
@@ -54,9 +45,6 @@ function Portfolio() {
       // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
       fetchPorfolioOwner(ownerId);
     }
-    const gotPros = getPro(params.userId)
-    setPros(gotPros)
-
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
@@ -76,7 +64,6 @@ function Portfolio() {
 
           <div style={{ textAlign: "center" }}>
             학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
-            {pros}
           </div>
 
         </Col>
