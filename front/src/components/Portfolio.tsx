@@ -1,20 +1,28 @@
 import { useQuery } from "react-query";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Education from "./education/Education";
 import Award from "./award/Award";
 import Certificate from "./certificate/Certificate";
 import Project from "./project/Project";
 import { getUser } from "../api/api";
-import { IUser } from "./../atoms";
+import { isLoginState, IUser } from "./../atoms";
+import { useRecoilState } from "recoil";
 function Portfolio() {
     const { userId } = useParams();
+    const navigator = useNavigate();
+    const [isLogin, setLogin] = useRecoilState(isLoginState);
     const [user, setUser] = useState<IUser>();
     const { isLoading } = useQuery(["user"], () => getUser(userId!), {
         onSuccess(data) {
             setUser(data!);
         },
     });
+    useEffect(() => {
+        if (!isLogin) {
+            navigator("/login", { replace: true });
+        }
+    }, []);
     return (
         <>
             {isLoading ? (

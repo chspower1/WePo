@@ -13,7 +13,7 @@ function Network() {
 
     return (
         <>
-            {users.map((user) => (
+            {users?.map((user) => (
                 <UserCard {...user} />
             ))}
         </>

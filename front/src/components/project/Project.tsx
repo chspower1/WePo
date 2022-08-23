@@ -1,5 +1,5 @@
 import { IProject } from "../../atoms";
 
-export default function Project( ifon : IProject[]) {
+export default function Project(info: IProject[]) {
     return null;
 }

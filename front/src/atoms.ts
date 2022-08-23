@@ -8,10 +8,10 @@ export interface IUser {
     password: string;
     picture: string;
     description: string;
-    educations: IEducation[];
-    awards: IAward[];
-    certificate: ICertificate[];
-    projects: IProject[];
+    educations?: IEducation[];
+    awards?: IAward[];
+    certificate?: ICertificate[];
+    projects?: IProject[];
 }
 export interface IEducation {
     school: string;
@@ -44,6 +44,10 @@ export interface IProject {
     description: string;
 }
 
+export const curUserState = atom<IUser>({
+    key: "curUser",
+    default: { id: "", token: "", email: "", name: "", password: "", picture: "", description: "" },
+});
 export const usersState = atom<IUser[]>({
     key: "user",
     default: [],
