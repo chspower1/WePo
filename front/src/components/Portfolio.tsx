@@ -1,5 +1,5 @@
 function Portfolio() {
-    return null;
+    return <>홈</>;
 }
 
 export default Portfolio;

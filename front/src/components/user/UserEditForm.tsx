@@ -1,4 +1,4 @@
-function UserEditForm({ user, setIsEditing, setUser }) {
+function UserEditForm() {
     return null;
 }
 

@@ -1,20 +1,15 @@
 import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { lightTheme } from "./../theme";
-import { Btn } from "./../index";
-
-const LoginBtn = styled(Btn)``;
 
 interface ILogIn {
     id: string;
     pw: string;
 }
-export default function Login() {
+export default function LoginForm() {
     const {
         register,
         handleSubmit,
-        setError,
         formState: { errors },
     } = useForm<ILogIn>({ mode: "onChange" });
     const onvalid = (data: ILogIn) => {
