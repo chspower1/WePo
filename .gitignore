@@ -1,2 +1,5 @@
 # dependencies
 node_modules
+back/package-lock.json
+back/package.json
+back/yarn.lock

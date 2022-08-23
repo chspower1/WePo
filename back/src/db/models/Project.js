@@ -3,23 +3,30 @@ import { ProjectModel } from "../schemas/project";
 class Project {
 
   // 새로운 프로젝트 생성
-  static async create({ newProject }) {
+  static async create(newProject) {
     const createdNewProject = await ProjectModel.create(newProject);
     return createdNewProject;
   }
 
   // 한 유저의 프로젝트 모두 불러오기
-  static async findById({ userId }) {
-    const allProjects = await ProjectModel.find({ id: userId });
+  static async findByUserId({ userId }) {
+    const allProjects = await ProjectModel.find({ userId });
     return allProjects;
   }
 
+  // 한 프로젝트 아이디로 프로젝트 찾아오기
+  static async findByProjectId({ projectId }) {
+    const oneProject = await ProjectModel.findOne({ _id: projectId });
+    return oneProject;
+  }
+
   // 프로젝트 삭제하기
-  static async deleteProject({ projectId }) {
+  static async delete({ projectId }) {
     const deleteSuccessful = await ProjectModel.findByIdAndDelete(projectId);
     return deleteSuccessful;
   }
 
+  // 프로젝트 속성 update하기
   static async update({ projectId, fieldToUpdate, newValue }) {
     const filter = { id: projectId };
     const update = { [fieldToUpdate]: newValue };
