@@ -1,5 +1,5 @@
 function User() {
-    return null;
+    return <></>;
 }
 
 export default User;

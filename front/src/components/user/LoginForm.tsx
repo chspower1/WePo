@@ -1,18 +1,18 @@
 import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-
-interface ILogIn {
-    id: string;
-    pw: string;
+import axios from "axios";
+export interface ILogin {
+    email: string;
+    password: string;
 }
 export default function LoginForm() {
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<ILogIn>({ mode: "onChange" });
-    const onvalid = (data: ILogIn) => {
+    } = useForm<ILogin>({ mode: "onChange" });
+    const onvalid = (data: ILogin) => {
         console.log(data);
     };
     return (
@@ -21,27 +21,27 @@ export default function LoginForm() {
                 <input
                     type="text"
                     placeholder="Email"
-                    {...register("id", {
+                    {...register("email", {
                         required: "이메일을 입력해 주세요",
-                        maxLength: {
-                            value: 10,
-                            message: "최댓값은 10입니다",
-                        },
-                        minLength: {
-                            value: 3,
-                            message: "최솟값은 3입니다",
+                        pattern: {
+                            value: /^\S+@\S+$/i,
+                            message: "이메일 형식에 맞지 않습니다!",
                         },
                     })}
                 />
-                {errors.id && <p>{errors.id.message}</p>}
+                {errors.email && <p>{errors.email.message}</p>}
                 <input
                     type="password"
-                    {...register("pw", {
+                    {...register("password", {
                         required: "비밀번호를 입력해 주세요",
+                        minLength: {
+                            value: 4,
+                            message: "비밀번호는 4글자 이상입니다!",
+                        },
                     })}
                 />
-                {errors.pw && <p>{errors.pw.message}</p>}
-                <button>클릭</button>
+                {errors.password && <p>{errors.password.message}</p>}
+                <button>로그인</button>
             </form>
         </>
     );
