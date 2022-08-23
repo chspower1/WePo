@@ -39,8 +39,8 @@ export interface ICertificate {
 }
 export interface IProject {
     title: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: number;
+    endDate: number;
     description: string;
 }
 
