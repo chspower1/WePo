@@ -5,7 +5,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-import { ProjectModel } from "../../../back/src/db/schemas/project"
+import { ProjectModel } from "./"
 
 function Portfolio() {
   const navigate = useNavigate();
