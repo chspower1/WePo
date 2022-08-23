@@ -28,7 +28,7 @@ class Project {
 
   // 프로젝트 속성 update하기
   static async update({ projectId, fieldToUpdate, newValue }) {
-    const filter = { id: projectId };
+    const filter = { _id: projectId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 

@@ -5,7 +5,7 @@ const ProjectSchema = new Schema(
 	userId: {
 		type: String,  //user의 id 해당되는 value 넣어줘서
 		required: true,
-	  },
+	},
 	// 프로젝트명
     title: { 
 		type: String, 
@@ -37,6 +37,6 @@ const ProjectSchema = new Schema(
   },
 );
 
-const ProjectModel = model("User", ProjectSchema);
+const ProjectModel = model("Project", ProjectSchema);
 
 export { ProjectModel };
