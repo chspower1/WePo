@@ -1,38 +1,37 @@
 import { ProjectModel } from "../schemas/project";
 
 class Project {
+
+  // 새로운 프로젝트 생성
   static async create({ newProject }) {
-    const createdNewUser = await UserModel.create(newProject);
-    return createdNewUser;
+    const createdNewProject = await ProjectModel.create(newProject);
+    return createdNewProject;
   }
 
-  static async findByEmail({ email }) {
-    const user = await UserModel.findOne({ email });
-    return user;
+  // 한 유저의 프로젝트 모두 불러오기
+  static async findById({ userId }) {
+    const allProjects = await ProjectModel.find({ id: userId });
+    return allProjects;
   }
 
-  static async findById({ user_id }) {
-    const user = await UserModel.findOne({ id: user_id });
-    return user;
+  // 프로젝트 삭제하기
+  static async deleteProject({ projectId }) {
+    const deleteSuccessful = await ProjectModel.findByIdAndDelete(projectId);
+    return deleteSuccessful;
   }
 
-  static async findAll() {
-    const users = await UserModel.find({});
-    return users;
-  }
-
-  static async update({ user_id, fieldToUpdate, newValue }) {
-    const filter = { id: user_id };
+  static async update({ projectId, fieldToUpdate, newValue }) {
+    const filter = { id: projectId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
-    const updatedUser = await UserModel.findOneAndUpdate(
+    const updatedProject = await ProjectModel.findOneAndUpdate(
       filter,
       update,
       option
     );
-    return updatedUser;
+    return updatedProject;
   }
 }
 
-export { User };
+export { Project };
