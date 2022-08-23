@@ -16,7 +16,7 @@ class Project {
 
   // 한 프로젝트 아이디로 프로젝트 찾아오기
   static async findByProjectId({ projectId }) {
-    const oneProject = await ProjectModel.findOne({ _id: projectId });
+    const oneProject = await ProjectModel.findById(projectId);
     return oneProject;
   }
 
