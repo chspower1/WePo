@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../../api/api";
+import { isLoginState } from "../../atoms";
 export interface ILogin {
     email: string;
     password: string;
@@ -16,13 +17,21 @@ export default function LoginForm() {
         formState: { errors },
         setError,
     } = useForm<ILogin>({ mode: "onChange", defaultValues: { email: "", password: "" } });
-
+    const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+    const navigator = useNavigate();
     const onvalid = (data: ILogin) => {
         console.log({ ...data });
-        (async () => Login({ ...data }))();
+        (async () => {
+            const a = await Login({ ...data });
+            await setIsLogin(a!);
+            console.log(isLogin);
+        })();
     };
 
     useEffect(() => {
+        if (isLogin) {
+            navigator("/", { replace: true });
+        }
         setError("email", {
             type: "costom",
             message: "이메일을 입력해 주세요",
@@ -31,7 +40,7 @@ export default function LoginForm() {
             type: "custom",
             message: "비밀번호를 입력해 주세요",
         });
-    }, []);
+    }, [isLogin]);
 
     return (
         <>

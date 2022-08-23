@@ -3,13 +3,18 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect } from "react";
+import { createtUser } from "../../api/api";
+import { usersState } from "../../atoms";
+import { IUser } from "./../../atoms";
+import { useQuery } from "react-query";
 export interface IRegister {
     email: string;
     name: string;
     password: string;
-    checkPassword: string;
+    checkPassword?: string;
 }
 export default function RegisterForm() {
+    const [users, setUsers] = useRecoilState(usersState);
     const {
         register,
         handleSubmit,
@@ -19,8 +24,16 @@ export default function RegisterForm() {
     } = useForm<IRegister>({ mode: "onChange" });
 
     const onvalid = (data: IRegister) => {
-        console.log(data);
+        (async () => {
+            const newUser = await createtUser(data as IUser);
+            await setUsers((prev) => {
+                const newUsers = [...prev];
+                newUsers.push(newUser!);
+                return newUsers;
+            });
+        })();
     };
+    
     useEffect(() => {
         setError("email", {
             type: "costom",

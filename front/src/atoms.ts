@@ -50,7 +50,35 @@ export const curUserState = atom<IUser>({
 });
 export const usersState = atom<IUser[]>({
     key: "user",
-    default: [],
+    default: [
+        {
+            id: "1",
+            token: "1",
+            email: "1",
+            name: "1",
+            password: "1",
+            picture: "1",
+            description: "1",
+        },
+        {
+            id: "2",
+            token: "2",
+            email: "2",
+            name: "2",
+            password: "2",
+            picture: "2",
+            description: "2",
+        },
+        {
+            id: "3",
+            token: "3",
+            email: "3",
+            name: "3",
+            password: "3",
+            picture: "3",
+            description: "3",
+        },
+    ],
 });
 
 export const isDarkState = atom({

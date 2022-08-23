@@ -13,9 +13,13 @@ function Network() {
 
     return (
         <>
-            {users?.map((user) => (
-                <UserCard {...user} />
-            ))}
+            {isLoading
+                ? "loding"
+                : users?.map((user) => (
+                      <div>
+                          <UserCard key={user.id} {...user} />
+                      </div>
+                  ))}
         </>
     );
 }

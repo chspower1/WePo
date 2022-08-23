@@ -4,7 +4,14 @@ import RegisterForm from "./components/user/RegisterForm";
 import Network from "./components/user/Network";
 import Header from "./components/Header";
 import LoginForm from "./components/user/LoginForm";
+import { useRecoilValue } from "recoil";
+import { isLoginState } from "./atoms";
+import { useEffect } from "react";
 function Router() {
+    const isLogin = useRecoilValue(isLoginState);
+    useEffect(() => {
+        if (isLogin) return;
+    }, [isLogin]);
     return (
         <BrowserRouter>
             <Header />
