@@ -6,12 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 export async function Login({ email, password }: ILogin) {
     try {
-        // const response = await axios.post("/post/login", {
-        //     email,
-        //     password,
-        // });
-        if (true) return true;
-        else return false;
+        const response = await axios.post("/user/login", {
+            email,
+            password,
+        });
+        if (response) return response;
     } catch (err) {
         console.log(err);
     }
@@ -19,14 +18,19 @@ export async function Login({ email, password }: ILogin) {
 
 export async function createtUser({ email, password, name }: IUser) {
     try {
-        const { data: newUser } = await axios.post("/user/register", {
+        const { data } = await axios.post("/user/register", {
             email,
             password,
             name,
         });
-        if (newUser) {
-            return newUser as IUser;
-        }
+        const newUser: IUser = await {
+            ...data,
+            description: "",
+            createdAt: "",
+            picture: "",
+            updatedAt: "",
+        };
+        return newUser;
     } catch (err) {
         console.log(err);
     }

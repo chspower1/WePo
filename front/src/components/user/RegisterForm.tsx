@@ -33,7 +33,7 @@ export default function RegisterForm() {
             });
         })();
     };
-    
+    const valid = !errors.email && !errors.checkPassword && !errors.name && !errors.password;
     useEffect(() => {
         setError("email", {
             type: "costom",
@@ -78,7 +78,7 @@ export default function RegisterForm() {
                         },
                     })}
                 />
-                {errors.name ? <p>{errors.name.message}</p> : <p>멋진 이름이에요!</p>}
+                {errors.name ? <p>{errors.name.message}</p> : <p>멋진 이름이에요✔️</p>}
                 <input
                     type="password"
                     placeholder="Password"
@@ -90,7 +90,7 @@ export default function RegisterForm() {
                         },
                     })}
                 />
-                {errors.password ? <p>{errors.password.message}</p> : <p>적합한 비밀번호에요!</p>}
+                {errors.password ? <p>{errors.password.message}</p> : <p>적합한 비밀번호에요✔️</p>}
                 <input
                     type="password"
                     placeholder="Check your Password"
@@ -107,9 +107,9 @@ export default function RegisterForm() {
                 {errors.checkPassword ? (
                     <p>{errors.checkPassword.message}</p>
                 ) : (
-                    <p>비밀번호가 일치해요!</p>
+                    <p>비밀번호가 일치해요✔️</p>
                 )}
-                <button>작성완료</button>
+                {valid && <button>작성완료</button>}
             </form>
         </>
     );

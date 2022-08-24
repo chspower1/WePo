@@ -5,7 +5,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../../api/api";
-import { isLoginState } from "../../atoms";
+import { isLoginState, IUser } from "../../atoms";
+import { curUserState } from "./../../atoms";
 export interface ILogin {
     email: string;
     password: string;
@@ -18,13 +19,15 @@ export default function LoginForm() {
         setError,
     } = useForm<ILogin>({ mode: "onChange", defaultValues: { email: "", password: "" } });
     const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+    const [curUser, setCurUser] = useRecoilState(curUserState);
     const navigator = useNavigate();
     const onvalid = (data: ILogin) => {
         console.log({ ...data });
         (async () => {
-            const a = await Login({ ...data });
-            await setIsLogin(a!);
-            console.log(isLogin);
+            const newUser = await Login({ ...data });
+            await setIsLogin(true);
+            // await setCurUser(newUser!);
+            console.log(newUser);
         })();
     };
 

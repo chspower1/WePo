@@ -1,5 +1,8 @@
+import { useForm } from "react-hook-form";
 function UserEditForm() {
-    return null;
+    const { register } = useForm();
+    return <>
+    </>;
 }
 
 export default UserEditForm;
