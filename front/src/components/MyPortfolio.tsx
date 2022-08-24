@@ -6,7 +6,6 @@ import Award from "./award/Award";
 import Certificate from "./certificate/Certificate";
 import Project from "./project/Project";
 import { getUser } from "../api/api";
-import User from "./user/MyProfile";
 import { curUserState, isLoginState, IUser } from "../atoms";
 import { useRecoilState } from "recoil";
 import UserCard from "./user/UserCard";
@@ -32,7 +31,7 @@ function MyPortfolio() {
         <>
             {
                 <>
-                    <User />
+                    <UserCard {...curUser} />
                     <Education {...curUser?.educations!} />
                     <Award {...curUser?.awards!} />
                     <Certificate {...curUser?.certificate!} />
