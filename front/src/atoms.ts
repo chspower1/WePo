@@ -28,7 +28,7 @@ export interface IAward {
     title: string;
     grade: string;
     org: string;
-    date: Date;
+    date: string;
     description: string;
 }
 export interface ICertificate {
