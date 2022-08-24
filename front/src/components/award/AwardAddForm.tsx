@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
+import { addAward } from "../../api/api";
 import { IAward } from "../../atoms";
+import { useParams } from "react-router-dom";
 
-export default function AwardAddForm({ setAwards, maxDate, setAddFormActive }: any) {
+export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, id }: any) {
     const {
         register,
         handleSubmit,
@@ -11,6 +13,8 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive }: a
     const onvalid = (data: IAward) => {
         setAwards((prev: any) => [...prev, data]); // 기존 DB에 data추가
         setAddFormActive(false);
+        addAward(data, id!);
+        console.log(data);
         reset({
             title: "",
             grade: "",
@@ -26,7 +30,6 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive }: a
                     <input
                         type="text"
                         placeholder="제목"
-                        // defaultValue={""}
                         {...register("title", {
                             required: "제목을 입력하세요!",
                             minLength: { value: 1, message: "제목을 입력하세요!" },
@@ -38,7 +41,6 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive }: a
                     <input
                         type="text"
                         placeholder="상세제목"
-                        defaultValue={""}
                         {...register("grade", {
                             required: "상세제목을 입력하세요!",
                             minLength: { value: 1, message: "상세제목을 입력하세요!" },
@@ -72,7 +74,6 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive }: a
                     <input
                         type="text"
                         placeholder="기관"
-                        defaultValue={""}
                         {...register("org", {
                             required: "기관을 입력하세요!",
                             minLength: { value: 1, message: "기관을 입력하세요!" },

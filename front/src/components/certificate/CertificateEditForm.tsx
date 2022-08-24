@@ -1,23 +1,35 @@
 import { useForm } from "react-hook-form";
+import { addCertificate } from "../../api/api";
 import { ICertificate } from "../../atoms";
 
-export function CertificateEditForm({index,projects,setProjects,setEditing,setIsEditing,setTargetIndex}:any){
+export function CertificateEditForm({
+    index,
+    projects,
+    setProjects,
+    setEditing,
+    setIsEditing,
+    setTargetIndex,
+    id,
+}: any) {
     const {
         register,
         handleSubmit,
         formState: { isSubmitting, errors },
     } = useForm<ICertificate>();
 
-    return(
-        <form onSubmit={handleSubmit((data) => {
-            setProjects((project:any)=>{
-                const editProject = [...project]
-                editProject[index] = data
-                return editProject
-            })
-            setIsEditing(false)
-            setTargetIndex(null)
-        })}>
+    const onvalid = (data: ICertificate) => {
+        addCertificate(data, id);
+        setProjects((project: any) => {
+            const editProject = [...project];
+            editProject[index] = data;
+            return editProject;
+        });
+
+        setIsEditing(false);
+        setTargetIndex(null);
+    };
+    return (
+        <form onSubmit={handleSubmit(onvalid)}>
             <input
                 type="text"
                 id="project-title"
@@ -61,5 +73,5 @@ export function CertificateEditForm({index,projects,setProjects,setEditing,setIs
             <button>수정</button>
             <button>닫기</button>
         </form>
-    )   
+    );
 }

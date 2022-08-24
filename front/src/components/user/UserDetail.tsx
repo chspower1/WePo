@@ -11,7 +11,6 @@ import { getUser } from "../../api/api";
 
 function UserDetail() {
     const { id } = useParams();
-    console.log(id);
     const [user, setUser] = useState<IUser>();
 
     const { isLoading } = useQuery(["getUser"], () => getUser(id), {
@@ -19,8 +18,6 @@ function UserDetail() {
             setUser(user);
         },
     });
-    console.log(isLoading);
-    console.log(user);
     return (
         <>
             {isLoading ? (

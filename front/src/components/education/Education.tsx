@@ -3,8 +3,10 @@ import { IEducation } from "../../atoms";
 import { useForm } from "react-hook-form";
 import EducationEditForm from "./EducationEditForm";
 import EducationAddForm from "./EducationAddForm";
+import { useParams } from "react-router-dom";
 
 export default function Education(info: IEducation[]) {
+    const { id } = useParams();
     const [addFormActive, setAddFormActive] = useState(false);
     const [editing, setEditing] = useState(true); // userId와 대조해서 맞으면 edit버튼 보임
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
@@ -50,6 +52,7 @@ export default function Education(info: IEducation[]) {
                                     educations={educations}
                                     setEducations={setEducations}
                                     setIsEditing={setIsEditing}
+                                    id={id}
                                 />
                             )}
                         </li>
@@ -60,6 +63,7 @@ export default function Education(info: IEducation[]) {
                 <EducationAddForm
                     setAddFormActive={setAddFormActive}
                     setEducations={setEducations}
+                    id={id}
                 />
             )}
             <button

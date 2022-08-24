@@ -1,8 +1,17 @@
 import { ILogin } from "../components/user/LoginForm";
-import { IEducation, isLoginState, IUser, usersState } from "./../atoms";
+import {
+    IAward,
+    ICertificate,
+    IEducation,
+    IProject,
+    isLoginState,
+    IUser,
+    usersState,
+} from "./../atoms";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import Certificate from "./../components/certificate/Certificate";
 
 // 에러.. type을 못잡겠음
 export async function UserLogin({ email, password }: ILogin) {
@@ -56,17 +65,65 @@ export async function getUser(id: any) {
         console.log(err);
     }
 }
-
-export async function addEducation(data: IEducation) {
+// -----------------------MVP 추가 수정 ----------------------
+// Award 추가,수정
+export async function addAward(data: IAward, id: string) {
     try {
-        axios.post("/education", { ...data });
+        await axios.post(`/${id}/award`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
-export async function updateEducation(data: IEducation) {
+export async function updateAward(data: IAward, id: string) {
     try {
-        axios.put("/education", { ...data });
+        await axios.put(`/${id}/award`, { ...data, id });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+// Certificate 추가,수정
+export async function addCertificate(data: ICertificate, id: string) {
+    try {
+        await axios.post(`/${id}/certificate`, { ...data, id });
+    } catch (err) {
+        console.log(err);
+    }
+}
+export async function updateCertificate(data: ICertificate, id: string) {
+    try {
+        await axios.put(`/${id}/certificate`, { ...data, id });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+// Education 추가,수정
+export async function addEducation(data: IEducation, id: string) {
+    try {
+        await axios.post(`/${id}/education`, { ...data, id });
+    } catch (err) {
+        console.log(err);
+    }
+}
+export async function updateEducation(data: IEducation, id: string) {
+    try {
+        await axios.put(`/${id}/education`, { ...data, id });
+    } catch (err) {
+        console.log(err);
+    }
+}
+// Project 추가,수정
+export async function addProject(data: IProject, id: string) {
+    try {
+        await axios.post(`/${id}/project`, { ...data, id });
+    } catch (err) {
+        console.log(err);
+    }
+}
+export async function updateProject(data: IProject, id: string) {
+    try {
+        await axios.put(`/${id}/project`, { ...data, id });
     } catch (err) {
         console.log(err);
     }

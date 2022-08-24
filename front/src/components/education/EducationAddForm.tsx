@@ -2,7 +2,7 @@ import { IEducation } from "../../atoms";
 import { useForm } from "react-hook-form";
 import { addEducation } from "../../api/api";
 
-export default function EducationAddForm({ setEducations, setAddFormActive }: any) {
+export default function EducationAddForm({ setEducations, setAddFormActive, id }: any) {
     const {
         register,
         handleSubmit,
@@ -11,12 +11,9 @@ export default function EducationAddForm({ setEducations, setAddFormActive }: an
     } = useForm<IEducation>({ mode: "onChange" });
 
     const onvalid = (data: IEducation) => {
-        setEducations((prev: any) => [...prev, data]); // 기존 DB에 data추가
-        (async () => {
-            await addEducation(data);
-        })();
+        setEducations((prev: any) => [...prev, data]);
         setAddFormActive(false);
-
+        addEducation(data, id);
         reset(); // 추가 시 inputValue 초기화
     };
     return (

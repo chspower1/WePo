@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IProject } from "../../atoms";
+import { updateProject } from "../../api/api";
 
 export function ProjectEditForm({
     index,
@@ -9,26 +10,26 @@ export function ProjectEditForm({
     setEditing,
     setIsEditing,
     setTargetIndex,
+    id,
 }: any) {
     const {
         register,
         handleSubmit,
         formState: { isSubmitting, errors },
     } = useForm<IProject>();
-
+    const onvalid = (data: IProject) => {
+        updateProject(data, id);
+        setProjects((project: any) => {
+            const editProject = [...project];
+            editProject[index] = data;
+            return editProject;
+        });
+        setIsEditing(false);
+        setTargetIndex(null);
+    };
     return (
         <>
-            <form
-                onSubmit={handleSubmit((data) => {
-                    setProjects((project: any) => {
-                        const editProject = [...project];
-                        editProject[index] = data;
-                        return editProject;
-                    });
-                    setIsEditing(false);
-                    setTargetIndex(null);
-                })}
-            >
+            <form onSubmit={handleSubmit(onvalid)}>
                 <input
                     type="text"
                     id="project-title"

@@ -1,19 +1,21 @@
 import { useForm } from "react-hook-form";
+import { addCertificate } from "../../api/api";
 import { ICertificate } from "../../atoms";
-export function CertificateAddForm({ setAdding, setProjects }: any) {
+export function CertificateAddForm({ setAdding, setProjects, id }: any) {
+    console.log(id);
     const {
         register,
         handleSubmit,
-        formState: { isSubmitting, errors },
+        formState: { errors },
     } = useForm<ICertificate>();
 
+    const onvalid = (data: ICertificate) => {
+        setProjects((project: any) => [...project, data]);
+        setAdding(false);
+        addCertificate(data, id);
+    };
     return (
-        <form
-            onSubmit={handleSubmit((data) => {
-                setProjects((project: any) => [...project, data]);
-                setAdding(false);
-            })}
-        >
+        <form onSubmit={handleSubmit(onvalid)}>
             <input
                 type="text"
                 id="project-title"

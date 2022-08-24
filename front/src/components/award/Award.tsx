@@ -2,8 +2,11 @@ import { IAward } from "../../atoms";
 import { useState } from "react";
 import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";
+import { IUser } from "./../../atoms";
+import { useParams } from "react-router-dom";
 
 export default function Award(info: IAward[]) {
+    const { id } = useParams();
     const newDate = new Date();
     const maxDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(
         2,
@@ -63,6 +66,7 @@ export default function Award(info: IAward[]) {
                                     setAwards={setAwards}
                                     setIsEditing={setIsEditing}
                                     maxDate={maxDate}
+                                    id={id}
                                 />
                             )}
                             {/* index === oneByOne 는 index를 찾아서 하나만 활성화 / 만약 다른 Edit버튼 누르면 원래 있던 건 사라지고 해당 list EditForm 만 활성화 */}
@@ -75,6 +79,7 @@ export default function Award(info: IAward[]) {
                     setAwards={setAwards}
                     maxDate={maxDate}
                     setAddFormActive={setAddFormActive}
+                    id={id}
                 />
             )}
             <button
