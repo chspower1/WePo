@@ -91,6 +91,22 @@ educationRouter.put("/education/:eduId", login_required, async function (req, re
 });
 
 
+// 학력 삭제
+educationRouter.delete("/education/:eduId", login_required, async function (req, res, next) {
+  try {
+    const eduId = req.params.eduId;
+
+    const deleteSuccessful = await educationService.deleteEducation({ eduId });
+
+    if(deleteSuccessful.errorMessage) {
+      throw new Error(deleteSuccessful.errorMessage);
+    }
+
+    res.status(200).json(deleteSuccessful);
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 

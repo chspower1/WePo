@@ -35,7 +35,7 @@ class Education {
 
   // eduId에 해당하는 학력정보 삭제
   static async delete({ eduId }) {
-    const deleteSuccessful = await EducationModel.findByIdAndDelete(eduId);
+    const deleteSuccessful = await EducationModel.findOneAndDelete(eduId);
     return deleteSuccessful;
   }
 }
