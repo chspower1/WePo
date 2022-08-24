@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "Elice";
+    src: url("./EliceDigitalBaeumOTF_Regular.otf") format("opentype");
+}
+@font-face {
+    font-family: "EliceBold";
+    src: url("./EliceDigitalBaeumOTF_Bold.otf") format("opentype");
+}

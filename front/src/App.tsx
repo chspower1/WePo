@@ -2,15 +2,17 @@ import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
 import { lightTheme } from "./theme";
 import Router from "./Router";
-
+import "./font/font.css";
 const GlobalStyle = createGlobalStyle`
     ${reset}
     html,body,#root{
+        font-family: "Elice";
         width:100%;
         height:100%;
     }
 
     *{
+        font-family: "Elice";
         box-sizing: border-box;
     }
 

@@ -94,7 +94,9 @@ function UserCard({ id, name, email, description }: IUser) {
                     {pathName === "/" ? (
                         <button title="Edit(편집)">edit</button>
                     ) : (
-                        <button title="더보기">더보기</button>
+                        <Link to={`${id}`}>
+                            <button title="더보기">더보기</button>
+                        </Link>
                     )}
                 </EditOrDetailBtnBox>
             </ItemWrap>
