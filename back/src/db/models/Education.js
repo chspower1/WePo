@@ -8,29 +8,34 @@ class Education {
     return createdNewEducation;
   }
 
-  // userId에 해당하는 유저의 학력 모두 불러오기
+  // userId에 해당하는 유저의 학력정보 전체조회
   static async findByUserId({ userId }) {
     const educationList = await EducationModel.find({ userId });
     return educationList;
   }
 
-  // userId에 해당하는 유저의 학력 수정
-  static async update({ educationId, fieldToUpdate, newValue }) {
-    const filter = { educationId };
-    const update = { [fieldToUpdate]: newValue };
+  // eduId에 해당하는 학력정보 조회
+  static async findOneByEduId({ eduId }) {
+    const education = await EducationModel.findOne({ eduId });
+    return education;
+  }
+
+  // eduId에 해당하는 학력정보 수정
+  static async update({ eduId, newValues }) {
+    const filter = { eduId };
     const option = { returnOriginal: false };
 
     const updatedEducation = await EducationModel.findOneAndUpdate(
       filter,
-      update,
+      newValues,
       option
     );
     return updatedEducation;
   }
 
-  // userId에 해당하는 유저의 학력 삭제
-  static async delete({ educationId }) {
-    const deleteSuccessful = await EducationModel.findByIdAndDelete(educationId);
+  // eduId에 해당하는 학력정보 삭제
+  static async delete({ eduId }) {
+    const deleteSuccessful = await EducationModel.findByIdAndDelete(eduId);
     return deleteSuccessful;
   }
 }
