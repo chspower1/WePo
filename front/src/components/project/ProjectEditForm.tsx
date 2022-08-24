@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IProject} from "../../atoms";
 
-export function ProjectEditForm({index,projects,setProjects,setEditing,setIsEditing}:any) {
+export function ProjectEditForm({index,projects,setProjects,setEditing,setIsEditing,setTargetIndex}:any) {
     const {
         register,
         handleSubmit,
@@ -11,7 +11,15 @@ export function ProjectEditForm({index,projects,setProjects,setEditing,setIsEdit
 
     return (
         <>
-            <form>
+            <form onSubmit={handleSubmit((data) => {
+                setProjects((project:any)=>{
+                    const editProject = [...project]
+                    editProject[index] = data
+                    return editProject
+                })
+                setIsEditing(false)
+                setTargetIndex(null)
+            })}>
                 <input
                     type="text"
                     id="project-title"
@@ -21,6 +29,7 @@ export function ProjectEditForm({index,projects,setProjects,setEditing,setIsEdit
                         shouldUnregister: true,
                     })}
                 ></input>
+                {errors.title?.message && errors.title.message}
                 <input
                     type="number"
                     id="project-startDate"
@@ -34,6 +43,7 @@ export function ProjectEditForm({index,projects,setProjects,setEditing,setIsEdit
                         shouldUnregister: true,
                     })}
                 ></input>
+                {errors.startDate?.message && errors.startDate.message}
                 <input
                     type="number"
                     id="project-endDate"
@@ -47,6 +57,7 @@ export function ProjectEditForm({index,projects,setProjects,setEditing,setIsEdit
                         shouldUnregister: true,
                     })}
                 ></input>
+                {errors.endDate?.message && errors.endDate.message}
                 <input
                     type="text"
                     id="project-description"

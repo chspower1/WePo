@@ -22,20 +22,7 @@ export default function Project(info: IProject[]) {
         setAdding((Adding) => !Adding);
     }
 
-    const [projects, setProjects] = useState<IProject[]>([
-        {
-            title: "elice",
-            startDate: 20220101,
-            endDate: 20220303,
-            description: "첫 프로젝트입니다.",
-        },
-        {
-            title: "elic123e",
-            startDate: 20220909,
-            endDate: 20221003,
-            description: "두번째 프로젝트입니다.",
-        },
-    ]);
+    const [projects, setProjects] = useState<IProject[]>([]);
 
     return (
         <>
@@ -48,8 +35,7 @@ export default function Project(info: IProject[]) {
                             <h2>{`${val.startDate} ~ ${val.endDate}`}</h2>
                             <h2>{val.description}</h2>
                             {Editing && targetIndex !== index &&<button onClick={()=>{setIsEditing(true); setTargetIndex(index)}}>수정</button>}
-                            {isEditing &&  targetIndex == index && <ProjectEditForm index={index} projects={projects} setProjects={setProjects} setEditing={setEditing} setIsEditing={setIsEditing}/>}
-
+                            {isEditing &&  targetIndex == index && <ProjectEditForm index={index} projects={projects} setProjects={setProjects} setEditing={setEditing} setIsEditing={setIsEditing} setTargetIndex={setTargetIndex}/>}
                         </Li>
                     ))}
                 </ul>
