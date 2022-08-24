@@ -5,6 +5,23 @@ import Router from "./Router";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
+    html,body,#root{
+        width:100%;
+        height:100%;
+    }
+
+    *{
+        box-sizing: border-box;
+    }
+
+    button{
+        cursor: pointer;
+        border: 0;
+        background: transparent;
+    }
+    img{
+        width:100%;
+    }
 `;
 export const Btn = styled.button`
     padding: 15px 10px;
