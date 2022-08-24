@@ -33,14 +33,14 @@ export interface IAward {
 }
 export interface ICertificate {
     title: string;
-    date: Date;
+    date: number; //Date
     org: string;
     description: string;
 }
 export interface IProject {
     title: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: number; //Date
+    endDate: number;   //Date
     description: string;
 }
 
