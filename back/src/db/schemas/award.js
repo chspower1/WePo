@@ -31,8 +31,10 @@ const AwardSchema = new Schema(
 		type: String,
 	},
   },
+	{
+	timestamps: true,
+	}
 );
-
 const AwardModel = model("User", AwardSchema);
 
 export { AwardModel };
