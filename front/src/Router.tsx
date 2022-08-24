@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Portfolio from "./components/Portfolio";
+import MyPortfolio from "./components/MyPortfolio";
 import RegisterForm from "./components/user/RegisterForm";
 import Network from "./components/user/Network";
 import Header from "./components/Header";
@@ -17,12 +17,12 @@ function Router() {
         <BrowserRouter>
             <Header />
             <Routes>
-                <Route path="/" element={<Portfolio />} />
+                <Route path="/" element={<MyPortfolio />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
-                <Route path="/users/:userId" element={<UserDetail />} />
+                <Route path="/network/:id" element={<UserDetail />} />
                 <Route path="/network" element={<Network />} />
-                <Route path="*" element={<Portfolio />} />
+                {/* <Route path="*" element={<Portfolio />} /> */}
             </Routes>
         </BrowserRouter>
     );

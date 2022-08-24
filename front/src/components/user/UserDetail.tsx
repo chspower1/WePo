@@ -10,21 +10,30 @@ import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
 
 function UserDetail() {
-    const userId = useParams();
+    const { id } = useParams();
+    console.log(id);
     const [user, setUser] = useState<IUser>();
-    // API
-    // const { inLoading } = useQuery(["getUser"], () => getUser(userId), {
-    //     onSuccess(data) {
-    //         setUser(data);
-    //     },
-    // });
+
+    const { isLoading } = useQuery(["getUser"], () => getUser(id), {
+        onSuccess(user) {
+            setUser(user);
+        },
+    });
+    console.log(isLoading);
+    console.log(user);
     return (
         <>
-            <UserCard {...user!} />
-            <Education {...user?.educations!} />
-            <Award {...user?.awards!} />
-            <Certificate {...user?.certificate!} />
-            <Project {...user?.projects!} />
+            {isLoading ? (
+                "로딩중"
+            ) : (
+                <>
+                    {user && <UserCard {...user} />}
+                    <Education {...user?.educations!} />
+                    <Award {...user?.awards!} />
+                    <Certificate {...user?.certificate!} />
+                    <Project {...user?.projects!} />{" "}
+                </>
+            )}
         </>
     );
 }

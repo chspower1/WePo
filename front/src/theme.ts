@@ -5,4 +5,4 @@ export const lightTheme: DefaultTheme = {
     btnColor: "blue",
     btnTextColor: "white",
     contentColor: "gray",
-};
+}; 

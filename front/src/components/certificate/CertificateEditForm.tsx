@@ -29,7 +29,7 @@ export function CertificateEditForm({index,projects,setProjects,setEditing,setIs
             ></input>
             {errors.title?.message && errors.title.message}
             <input
-                type="number"
+                type="data"
                 id="project-startDate"
                 defaultValue={projects[index].date}
                 {...register("date", {

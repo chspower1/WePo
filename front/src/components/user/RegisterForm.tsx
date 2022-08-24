@@ -7,6 +7,7 @@ import { createtUser } from "../../api/api";
 import { usersState } from "../../atoms";
 import { IUser } from "./../../atoms";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 export interface IRegister {
     email: string;
     name: string;
@@ -22,7 +23,7 @@ export default function RegisterForm() {
         getValues,
         setError,
     } = useForm<IRegister>({ mode: "onChange" });
-
+    const navigator = useNavigate();
     const onvalid = (data: IRegister) => {
         (async () => {
             const newUser = await createtUser(data as IUser);
@@ -31,6 +32,7 @@ export default function RegisterForm() {
                 newUsers.push(newUser!);
                 return newUsers;
             });
+            navigator("/", { replace: true });
         })();
     };
     const valid = !errors.email && !errors.checkPassword && !errors.name && !errors.password;

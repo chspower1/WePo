@@ -49,12 +49,12 @@ export interface IProject {
 export const curUserState = atom<IUser>({
     key: "curUser",
     default: {
-        id: "1",
-        token: "1",
-        email: "chspower1@gmail.com",
+        id: "0",
+        token: "",
+        email: "chspower1@gmail",
         name: "조호성",
-        password: "1",
-        picture: "1",
+        password: "1234",
+        picture: "",
         description: "프론트엔드장",
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -128,5 +128,5 @@ export const isDarkState = atom({
 
 export const isLoginState = atom({
     key: "isLogin",
-    default: false,
+    default: true,
 });
