@@ -1,15 +1,41 @@
 import { ILogin } from "../components/user/LoginForm";
-import { IUser } from "./../atoms";
+import { isLoginState, IUser, usersState } from "./../atoms";
 import axios from "axios";
-export async function Login({ email, password }: ILogin) {}
+import { useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 
-export async function putUser({ email, password, name }: IUser) {
-    await axios.put("/register", {
-        data: email,
-        password,
-        name,
-    });
+export async function Login({ email, password }: ILogin) {
+    try {
+        const response = await axios.post("/user/login", {
+            email,
+            password,
+        });
+        if (response) return response;
+    } catch (err) {
+        console.log(err);
+    }
 }
+
+export async function createtUser({ email, password, name }: IUser) {
+    try {
+        const { data } = await axios.post("/user/register", {
+            email,
+            password,
+            name,
+        });
+        const newUser: IUser = await {
+            ...data,
+            description: "",
+            createdAt: "",
+            picture: "",
+            updatedAt: "",
+        };
+        return newUser;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export async function getUsers() {
     try {
         const { data: users } = await axios.get(`/get/users`);
