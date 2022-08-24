@@ -16,16 +16,14 @@ import Certificate from "./../components/certificate/Certificate";
 
 export async function UserLogin({ email, password }: ILogin) {
     try {
-        const setCurUser = useSetRecoilState(curUserState);
         const { data: newUser } = await axios.post("/user/login", {
             email,
             password,
         });
-        const { token } = await newUser;
-        await sessionStorage.setItem("userToken", token);
-        setCurUser(newUser);
+        await sessionStorage.setItem("userToken", JSON.stringify(newUser));
         return newUser as IUser;
     } catch (err) {
+        alert("dd");
         console.log(err);
     }
 }

@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios, { AxiosResponse } from "axios";
@@ -115,16 +115,15 @@ export default function LoginForm() {
         setError,
     } = useForm<ILogin>({ mode: "onChange", defaultValues: { email: "", password: "" } });
 
-    const [isLogin, setIsLogin] = useRecoilState(isLoginState);
-    const [curUser, setCurUser] = useRecoilState(curUserState);
-    const [user, setUser] = useState<IUser>();
+    const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
+    const setCurUser = useSetRecoilState(curUserState);
     const onvalid = async (formData: ILogin) => {
         try {
             const newUser = await UserLogin({ ...formData });
-            await setIsLogin(true);
             await setCurUser(newUser!);
         } catch (err) {
+            alert("일치하지 않습니다!");
             console.log(err);
         }
     };

@@ -129,7 +129,11 @@ export const isDarkState = atom({
     default: false,
 });
 
-export const isLoginState = atom({
+export const isLoginState = selector({
     key: "isLogin",
-    default: true,
+    get: ({ get }) => {
+        const curUser = get(curUserState);
+        const checkLogin = curUser?.token && true;
+        return checkLogin;
+    },
 });

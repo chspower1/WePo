@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { useRecoilState } from "recoil";
-import { isLoginState } from "../atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { curUserState, isLoginState } from "../atoms";
 
 const HeaderWrap = styled.header`
     width: 100%;
@@ -79,7 +79,8 @@ const LoginOrRegiBtn = styled.button`
 `;
 
 function Header() {
-    const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+    const isLogin = useRecoilValue(isLoginState);
+    const setCurUser = useSetRecoilState(curUserState);
     const location = useLocation();
     const pathName = location.pathname;
     return (
@@ -108,7 +109,7 @@ function Header() {
                                     <ActivePath>네트워크</ActivePath>
                                 </>
                             )}
-                            <LoginOrRegiBtn onClick={() => setIsLogin(false)}>
+                            <LoginOrRegiBtn onClick={() => setCurUser(null)}>
                                 로그아웃
                             </LoginOrRegiBtn>
                         </>
