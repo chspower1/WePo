@@ -1,0 +1,34 @@
+Api정리;
+
+회원가입;
+method: put;
+req:data: email, name, password;
+
+로그인;
+method: get;
+req:{
+    data: email, password;
+}
+res:{
+    token
+}
+
+포트폴리오
+method:get
+req:{
+    user:{
+        email,name,projects,educations,cerficicates,awards
+    }
+}
+
+네트워크
+method:get
+res:{
+    users:[user,user,...user]
+            /*user:{
+                name,email,description
+            }*/
+}
+
+
+
