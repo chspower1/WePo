@@ -18,7 +18,7 @@ export interface IUser {
 export interface IEducation {
     school: string;
     major: string;
-    status: EduStatus;
+    status: EduStatus | "";
 }
 export enum EduStatus {
     attending = "재학중",
@@ -30,7 +30,7 @@ export interface IAward {
     title: string;
     grade: string;
     org: string;
-    date: Date;
+    date: string;
     description: string;
 }
 export interface ICertificate {
@@ -130,3 +130,4 @@ export const isLoginState = atom({
     key: "isLogin",
     default: false,
 });
+
