@@ -10,6 +10,7 @@ import User from "./user/User";
 import { curUserState, isLoginState, IUser } from "./../atoms";
 import { useRecoilState } from "recoil";
 import UserCard from "./user/UserCard";
+import UserDetail from "./user/UserDetail";
 
 function Portfolio() {
     const { userId } = useParams();
@@ -32,7 +33,7 @@ function Portfolio() {
         <>
             {
                 <>
-                    <User />
+                    <UserCard {...curUser} />
                     <Education {...curUser?.educations!} />
                     <Award {...curUser?.awards!} />
                     <Certificate {...curUser?.certificate!} />
