@@ -58,7 +58,7 @@ const EditOrDetailBtnBox = styled.div`
     text-align: right;
 `;
 
-function UserCard({ id, name, email, description }: IUser) {
+function UserCard({ id, name, email, description, hopeField }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const curUser = useRecoilValue(curUserState);
@@ -82,6 +82,7 @@ function UserCard({ id, name, email, description }: IUser) {
                                 {email}
                             </a>
                         </EmailTxt>
+                        <DescTit>{hopeField}</DescTit>
                     </UserInfoTxt>
                 </InfoBox>
                 <DescBox>

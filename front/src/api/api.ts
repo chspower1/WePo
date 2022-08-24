@@ -1,5 +1,6 @@
 import { ILogin } from "../components/user/LoginForm";
 import {
+    curUserState,
     IAward,
     ICertificate,
     IEducation,
@@ -13,18 +14,26 @@ import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import Certificate from "./../components/certificate/Certificate";
 
-// 에러.. type을 못잡겠음
 export async function UserLogin({ email, password }: ILogin) {
     try {
-        const newUser = await axios.post("/user/login", {
+        const setCurUser = useSetRecoilState(curUserState);
+        const { data: newUser } = await axios.post("/user/login", {
             email,
             password,
         });
-        console.log(newUser);
-        return newUser;
+        const { token } = await newUser;
+        await sessionStorage.setItem("userToken", token);
+        setCurUser(newUser);
+        return newUser as IUser;
     } catch (err) {
         console.log(err);
     }
+}
+
+export async function UserLogout() {
+    const setCurUser = useSetRecoilState(curUserState);
+    sessionStorage.remove("userToken");
+    setCurUser(null);
 }
 
 // 회원가입 완료

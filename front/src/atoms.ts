@@ -8,6 +8,7 @@ export interface IUser {
     password: string;
     picture: string;
     description: string;
+    hopeField: EHopeField;
     createdAt: Date;
     updatedAt: Date;
     educations?: IEducation[];
@@ -15,10 +16,17 @@ export interface IUser {
     certificate?: ICertificate[];
     projects?: IProject[];
 }
+export enum EHopeField {
+    undefined = "미정",
+    backEnd = "백엔드",
+    frontEnd = "프론트엔드",
+    dataAnalysis = "데이터분석",
+    AI = "인공지능",
+}
 export interface IEducation {
     school: string;
     major: string;
-    status: EduStatus | "";
+    status: EduStatus;
 }
 export enum EduStatus {
     attending = "재학중",
@@ -46,19 +54,9 @@ export interface IProject {
     description: string;
 }
 
-export const curUserState = atom<IUser>({
+export const curUserState = atom<IUser | null>({
     key: "curUser",
-    default: {
-        id: "0",
-        token: "",
-        email: "chspower1@gmail",
-        name: "조호성",
-        password: "1234",
-        picture: "",
-        description: "프론트엔드장",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    },
+    default: null,
 });
 export const usersState = atom<IUser[]>({
     key: "user",
@@ -71,6 +69,7 @@ export const usersState = atom<IUser[]>({
             password: "1",
             picture: "1",
             description: "프론트엔드장",
+            hopeField: EHopeField.frontEnd,
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -82,6 +81,7 @@ export const usersState = atom<IUser[]>({
             password: "1",
             picture: "1",
             description: "팀장",
+            hopeField: EHopeField.AI,
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -93,6 +93,7 @@ export const usersState = atom<IUser[]>({
             password: "2",
             picture: "2",
             description: "서기",
+            hopeField: EHopeField.frontEnd,
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -104,6 +105,7 @@ export const usersState = atom<IUser[]>({
             password: "3",
             picture: "3",
             description: "백엔드장",
+            hopeField: EHopeField.frontEnd,
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -115,6 +117,7 @@ export const usersState = atom<IUser[]>({
             password: "3",
             picture: "3",
             description: "응원단장",
+            hopeField: EHopeField.frontEnd,
             createdAt: new Date(),
             updatedAt: new Date(),
         },

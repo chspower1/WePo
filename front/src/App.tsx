@@ -10,9 +10,9 @@ const GlobalStyle = createGlobalStyle`
         width:100%;
         height:100%;
     }
-
     *{
         font-family: "Elice";
+        text-decoration: none;
         box-sizing: border-box;
     }
 
@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
     img{
         width:100%;
     }
+    
 `;
 export const Btn = styled.button`
     padding: 15px 10px;

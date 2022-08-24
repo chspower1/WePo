@@ -1,6 +1,7 @@
-import { IEducation } from "../../atoms";
+import { EduStatus, IEducation } from "../../atoms";
 import { useForm } from "react-hook-form";
 import { addEducation } from "../../api/api";
+import { Status } from "styled-icons/fluentui-system-filled";
 
 export default function EducationAddForm({ setEducations, setAddFormActive, id }: any) {
     const {
@@ -49,33 +50,33 @@ export default function EducationAddForm({ setEducations, setAddFormActive, id }
                         {...register("status", { required: "필수 입력 입니다." })}
                         name="status"
                         id="attending"
-                        value="재학중"
+                        value={EduStatus.attending}
                     />
-                    <label htmlFor="attending">재학중</label>
+                    <label htmlFor="attending">{EduStatus.attending}</label>
                     <input
                         type="radio"
                         {...register("status", { required: "필수 입력 입니다." })}
                         name="status"
                         id="bachelor"
-                        value="학사졸업"
+                        value={EduStatus.bachelor}
                     />
-                    <label htmlFor="bachelor">학사졸업</label>
+                    <label htmlFor="bachelor">{EduStatus.bachelor}</label>
                     <input
                         type="radio"
                         {...register("status", { required: "필수 입력 입니다." })}
                         name="status"
                         id="master"
-                        value="석사졸업"
+                        value={EduStatus.master}
                     />
-                    <label htmlFor="master">석사졸업</label>
+                    <label htmlFor="master">{EduStatus.master}</label>
                     <input
                         type="radio"
                         {...register("status", { required: "필수 입력 입니다." })}
                         name="status"
                         id="doctor"
-                        value="박사졸업"
+                        value={EduStatus.doctor}
                     />
-                    <label htmlFor="doctor">박사졸업</label>
+                    <label htmlFor="doctor">{EduStatus.doctor}</label>
                     {errors.status && <p>{errors.status.message}</p>}
                 </div>
                 <button>추가</button>
@@ -85,7 +86,7 @@ export default function EducationAddForm({ setEducations, setAddFormActive, id }
                         reset({
                             school: "",
                             major: "",
-                            status: "",
+                            status: EduStatus.attending,
                         });
                     }}
                 >
