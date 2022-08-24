@@ -13,13 +13,7 @@ export default function Certificate(info: ICertificate[]) {
     const [Editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or false
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
     const [targetIndex, setTargetIndex] = useState<Number>();
-
-    const {
-        register,
-        handleSubmit,
-        formState: { isSubmitting, errors },
-    } = useForm<ICertificate>();
-
+    
     function handleAdding() {
         setAdding((Adding) => !Adding);
     }
@@ -31,12 +25,12 @@ export default function Certificate(info: ICertificate[]) {
             <h1>자격증</h1>
             <div>
                 <ul>
-                    {projects.map((val: ICertificate, index: number) => (
+                    {projects.map((project: ICertificate, index: number) => (
                         <Li key={index}>
-                            <h1>{val.title}</h1>
-                            <h2>{val.date}</h2>
-                            <h2>{val.org}</h2>
-                            <h2>{val.description}</h2>
+                            <h1>{project.title}</h1>
+                            <h2>{project.date}</h2>
+                            <h2>{project.org}</h2>
+                            <h2>{project.description}</h2>
                             {Editing && targetIndex !== index && (
                                 <button
                                     onClick={() => {

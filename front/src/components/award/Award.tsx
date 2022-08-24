@@ -2,7 +2,6 @@ import { IAward } from "../../atoms";
 import { useState } from "react";
 import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";
-import { IUser } from "./../../atoms";
 import { useParams } from "react-router-dom";
 
 export default function Award(info: IAward[]) {

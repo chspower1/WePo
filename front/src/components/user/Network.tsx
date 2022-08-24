@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getUsers } from "../../api/api";
-import { isLoginState, IUser, usersState } from "../../atoms";
+import { isLoginState, usersState } from "../../atoms";
 import UserCard from "./UserCard";
 function Network() {
     const [users, setUsers] = useRecoilState(usersState);
