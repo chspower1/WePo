@@ -64,14 +64,13 @@ educationRouter.put("/education/:eduId", login_required, async function (req, re
     const eduId = req.params.eduId;
 
     // 학력정보을 입력했던 유저와 로그인한 유저가 같은지 비교하는 부분
-    // 주석처리한 이유 #1 :  postman으로 해보니까 토큰값이 틀리면 애초에 login_required에서 막혀서 "정상적인 토큰이 아닙니다. 다시 한 번 확인해 주세요." 에러메세지 나옴 -> 이 부분이 필요없어보임
-    // const education = await educationService.getEducationByEduId({ eduId });
-    // const currentUserId = req['currentUserId'];
-    // if(education.userId !== currentUserId) {   
-    //   throw new Error(
-    //     "학력을 추가할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
-    //   );
-    // } 
+    const education = await educationService.getEducationByEduId({ eduId });
+    const currentUserId = req['currentUserId'];
+    if(education.userId !== currentUserId) {   
+      throw new Error(
+        "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+      );
+    } 
 
     const school = req.body.school;
     const major = req.body.major;
@@ -99,6 +98,15 @@ educationRouter.put("/education/:eduId", login_required, async function (req, re
 educationRouter.delete("/education/:eduId", login_required, async function (req, res, next) {
   try {
     const eduId = req.params.eduId;
+
+    // 학력정보을 입력했던 유저와 로그인한 유저가 같은지 비교하는 부분
+    const education = await educationService.getEducationByEduId({ eduId });
+    const currentUserId = req['currentUserId'];
+    if(education.userId !== currentUserId) {   
+      throw new Error(
+        "해당 정보을 삭제할 권한이 없습니다. 본인의 정보만 삭제할 수 있습니다."
+      );
+    } 
 
     const deleteSuccessful = await educationService.deleteEducation({ eduId });
 

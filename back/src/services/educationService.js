@@ -30,11 +30,10 @@ class educationService {
   }
 
   // eduId에 해당하는 학력정보 조회
-  // 주석처리한 이유 : edicuationRouter.js의 #1 참고
-  // static async getEducationByEduId({ eduId }) {
-  //   const education = await Education.findOneByEduId({ eduId });
-  //   return education;
-  // }
+  static async getEducationByEduId({ eduId }) {
+    const education = await Education.findOneByEduId({ eduId });
+    return education;
+  }
 
 
   // 학력 수정

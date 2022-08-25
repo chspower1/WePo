@@ -65,6 +65,15 @@ certificateRouter.put("/certificate/:certId", login_required, async function (re
 
     const certId = req.params.certId;
 
+    // 자격증정보을 입력했던 유저와 로그인한 유저가 같은지 비교하는 부분
+    const certificate = await certificateService.getCertificateByCertId({ certId });
+    const currentUserId = req['currentUserId'];
+    if(certificate.userId !== currentUserId) {   
+      throw new Error(
+        "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+      );
+    } 
+
     const title = req.body.title;
     const date = req.body.date;
     const org = req.body.org;
@@ -92,6 +101,15 @@ certificateRouter.put("/certificate/:certId", login_required, async function (re
 certificateRouter.delete("/certificate/:certId", login_required, async function (req, res, next) {
   try {
     const certId = req.params.certId;
+
+    // 자격증정보을 입력했던 유저와 로그인한 유저가 같은지 비교하는 부분
+    const certificate = await certificateService.getCertificateByCertId({ certId });
+    const currentUserId = req['currentUserId'];
+    if(certificate.userId !== currentUserId) {   
+      throw new Error(
+        "해당 정보을 삭제할 권한이 없습니다. 본인의 정보만 삭제할 수 있습니다."
+      );
+    } 
 
     const deleteSuccessful = await certificateService.deleteCertificate({ certId });
 
