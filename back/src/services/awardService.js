@@ -2,10 +2,10 @@ import { Award } from "../db/models/Award";
 
 class AwardService {
 
-  static async addAward({ userId, title, startDate, endDate, description }) {
+  static async addAward({ userId, title, grade, org, date, description }) {
     // 새 수상내역 추가
     // 에러 처리 추가하기
-    return Award.create({ userId, title, startDate, endDate, description });
+    return Award.create({ userId, title, grade, org, date, description });
   }
 
   static async getAllAwards({userId}) {
@@ -15,11 +15,12 @@ class AwardService {
   }
 
   static async updateAward({AwardId, toUpdate}) {
-    const { title, startDate, endDate, description } = toUpdate;
+    const { title, grade, org, date, description } = toUpdate;
     const newValues = {
       ...(title && { title }),
-      ...(startDate && { startDate }),
-      ...(endDate && { endDate }),
+      ...(grade && { grade }),
+      ...(org && { org }),
+      ...(date && { date }),
       ...(description && { description }),
     }
     return Award.update({AwardId, newValues});
