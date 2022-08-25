@@ -26,6 +26,25 @@ const UserSchema = new Schema(
     // 프로필 사진
 		picture: {
       type: String, //Image URL
+      required: false,
+    },
+    // 관심 및 희망분야
+		field: {
+      type: Array,
+      required: false,
+      default: []
+    },
+    // 즐겨찾기/좋아요한 user의 ID들
+		likes: {
+      type: Array,
+      required: false,
+      default: []
+    },
+    // 포트폴리오 조회수
+		views: {
+      type: Number,
+      required: false,
+      default: 0
     },
     // 설명
 		description: {
