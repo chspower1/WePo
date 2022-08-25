@@ -43,12 +43,7 @@ export default function Award(info: IAward[]) {
                                 {index !== 0 && (
                                     <div style={{ width: 200 }}>
                                         <p>
-                                            {list.description.split("\n").map((text) => (
-                                                <>
-                                                    {text}
-                                                    <br />
-                                                </>
-                                            ))}
+                                            {list.description}
                                         </p>
                                         {/* shift+enter 시 \n으로 스플릿해서 그대로 보이게끔 */}
                                     </div>

@@ -28,14 +28,6 @@ const GlobalStyle = createGlobalStyle`
     img{
         width:100%;
     }
-    
-`;
-export const Btn = styled.button`
-    padding: 15px 10px;
-`;
-export const Container = styled.section`
-    display: flex;
-    flex-direction: column;
 `;
 function App() {
     

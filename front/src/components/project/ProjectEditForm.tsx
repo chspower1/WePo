@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IProject } from "../../atoms";
 import { updateProject } from "../../api/api";
+import { MvpContainer,MvpTitle,MvpTitleBox,MvpContentContainer,MvpContentBox,MvpContentName,MvpContentDetail,MvpContentDate,MvpEditButton,MvpAddButton,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
+import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
 export function ProjectEditForm({
     index,
@@ -17,6 +19,7 @@ export function ProjectEditForm({
         handleSubmit,
         formState: { isSubmitting, errors },
     } = useForm<IProject>();
+
     const onvalid = (data: IProject) => {
         updateProject(data, id);
         setProjects((project: any) => {
@@ -28,19 +31,72 @@ export function ProjectEditForm({
         setTargetIndex(null);
     };
     return (
-        <>
             <form onSubmit={handleSubmit(onvalid)}>
-                <input
-                    type="text"
-                    id="project-title"
-                    defaultValue={projects[index].title}
-                    {...register("title", {
-                        required: "프로젝트명을 입력해주세요",
+                <MvpAddInputBox>
+                    <p style={{position:"absolute",right:"20px",top:"20px"}}><RequiredLabel>*</RequiredLabel> 필수사항</p>
+                    <MvpContentName>프로젝트 명 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                    <MvpAddInput
+                        type="text"
+                        id="project-title"
+                        defaultValue={projects[index].title}
+                        {...register("title", {
+                            required: "프로젝트명을 입력해주세요",
+                            shouldUnregister: true,
+                        })}
+                    ></MvpAddInput>
+                    {errors.title && <ErrMsg><DangerIcon/>{errors.title.message}</ErrMsg>}
+                </MvpAddInputBox>
+                <MvpAddInputBox style={{display:"block"}}>
+                    <MvpContentName>프로젝트 기간 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                    <MvpAddInput
+                        type="date"
+                        width="100"
+                        maxLength={2}
+                        id="project-startDate"
+                        defaultValue={projects[index].startDate}
+                        placeholder="프로젝트 시작기간"
+                        {...register("startDate", {
+                            required: "기간을 입력해주세요",
+                            // pattern: {
+                            //     value: /^\d{4}\d{2}\d{2}$/,
+                            //     message: "20220101 형식으로 작성해주세요",
+                            // },
+                            shouldUnregister: true,
+                        })}>  
+                    </MvpAddInput>
+                    <span style={{margin:"0  5px 0 5px"}}>-</span>
+                    <MvpAddInput
+                    type="date"
+                    id="project-endDate"
+                    defaultValue={projects[index].endDate}
+                    placeholder="프로젝트 종료기간"
+                    {...register("endDate", {
+                        required: "기간을 입력해주세요",
+                        // pattern: {
+                        //     value: /^\d{4}\d{2}\d{2}$/,
+                        //     message: "20220101 형식으로 작성해주세요",
+                        // },
                         shouldUnregister: true,
                     })}
-                ></input>
-                {errors.title?.message && errors.title.message}
-                <input
+                    ></MvpAddInput>
+                {errors.startDate && <ErrMsg><DangerIcon/>{errors.startDate.message}</ErrMsg> || errors.endDate && <ErrMsg><DangerIcon/>{errors.endDate.message}</ErrMsg>}
+                </MvpAddInputBox>
+                    <MvpAddInputBox>
+                    <MvpContentName>간단한 설명</MvpContentName>
+                    <MvpAddInput
+                        type="text"
+                        id="project-description"
+                        defaultValue={projects[index].description}
+                        placeholder="추가설명"
+                        {...register("description", { shouldUnregister: true })}>
+
+                    </MvpAddInput>
+                </MvpAddInputBox>
+                <div style={{float:"right",marginBottom:"10px"}}>
+                    <Button type="submit" color="#3687FF">수정</Button>
+                    <Button onClick={()=> {setIsEditing(false); setTargetIndex(null)}}>취소</Button>
+                </div>
+                {/* <input
                     type="Date"
                     id="project-startDate"
                     defaultValue={projects[index].startDate}
@@ -67,8 +123,7 @@ export function ProjectEditForm({
                     {...register("description", { shouldUnregister: true })}
                 ></input>
                 <button>수정</button>
-                <button>닫기</button>
+                <button>닫기</button> */}
             </form>
-        </>
     );
 }
