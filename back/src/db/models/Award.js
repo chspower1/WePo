@@ -9,12 +9,12 @@ class Award {
 
   // 한 유저의 수상내역 모두 불러오기
   static async findByUserId({ userId }) {
-    return AwardModel.find({ userId });;
+    return AwardModel.find({ userId });
   }
 
   // 한 수상내역 아이디로 수상내역 찾아오기
   static async findByAwardId({ awardId }) {
-    return AwardModel.findById(awardId);;
+    return AwardModel.findById(awardId);
   }
 
   // 수상내역 삭제하기
