@@ -34,9 +34,11 @@ const ProjectSchema = new Schema(
 		type: Array,
 	},
 */
-  },
+	},
+	{
+	timestamps: true,
+	}
 );
-
 const ProjectModel = model("Project", ProjectSchema);
 
 export { ProjectModel };
