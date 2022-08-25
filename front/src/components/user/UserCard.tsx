@@ -58,11 +58,11 @@ const EditOrDetailBtnBox = styled.div`
     text-align: right;
 `;
 
-function UserCard({ id, name, email, description }: IUser) {
+function UserCard({ id, name, email, description, hopeField }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const curUser = useRecoilValue(curUserState);
-    const valid = id === curUser.id;
+    const valid = id === curUser?.id;
     const [onEdit, setOnEdit] = useState(false);
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -82,6 +82,7 @@ function UserCard({ id, name, email, description }: IUser) {
                                 {email}
                             </a>
                         </EmailTxt>
+                        <DescTit>{hopeField}</DescTit>
                     </UserInfoTxt>
                 </InfoBox>
                 <DescBox>

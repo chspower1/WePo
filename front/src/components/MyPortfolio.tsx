@@ -7,7 +7,7 @@ import Certificate from "./certificate/Certificate";
 import Project from "./project/Project";
 import { getUser } from "../api/api";
 import { curUserState, isLoginState, IUser } from "../atoms";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import UserCard from "./user/UserCard";
 import UserDetail from "./user/UserDetail";
 import styled from 'styled-components'  
@@ -113,7 +113,7 @@ export const Button = styled.button`
 function MyPortfolio() {
     const { userId } = useParams();
     const navigator = useNavigate();
-    const [isLogin, setLogin] = useRecoilState(isLoginState);
+    const isLogin = useRecoilValue(isLoginState);
     const [curUser, setCurUser] = useRecoilState(curUserState);
     // API
     // const { isLoading } = useQuery(["user"], () => getUser(userId!), {
@@ -128,15 +128,15 @@ function MyPortfolio() {
     }, [isLogin]);
     return (
         <>
-            {
+            {curUser && (
                 <>
-                    <UserCard {...curUser} />
+                    <UserCard {...curUser}  />
                     <Education {...curUser?.educations!} />
                     <Award {...curUser?.awards!} />
                     <Certificate {...curUser?.certificate!} />
                     <Project {...curUser?.projects!} />
                 </>
-            }
+            )}
         </>
     );
 }
