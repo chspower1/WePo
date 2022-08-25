@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
 import { projectRouter } from "./routers/projectRouter";
+import { awardRouter } from "./routers/awardRouter";
 import { educationRouter } from "./routers/educationRouter";
 import { certificateRouter } from "./routers/certificateRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
 app.use(projectRouter);
+app.use(awardRouter);
 app.use(educationRouter);
 app.use(certificateRouter);
 
