@@ -57,17 +57,7 @@ export interface IProject {
 
 export const curUserState = atom<IUser | null>({
     key: "curUser",
-    default: {
-        _id: "63032ae1b12eabb15061cc64",
-        id: "6e641761-edc7-41f7-b8a9-25e734760087",
-        token: "asdasdafqwer23413wdfaas",
-        email: "testSohi@naver.com",
-        name: "test수정",
-        password: "$2b$10$xwLKiGIsWqld/GnD1UlQ8uPGl6dBpR4xQ2MdaMUH5dbulPKo/1fvW",
-        description: "프론트엔드 개발자입니다.",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    },
+    default: null,
 });
 export const usersState = atom<IUser[]>({
     key: "user",

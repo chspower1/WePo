@@ -23,6 +23,7 @@ export default function Education(info: IEducation[]) {
     function handleAdding() {
         setAddFormActive((current) => !current);
     }
+    console.log(curUser);
     return (
         <div className="EduacationWrap">
             <div className="title">
@@ -73,7 +74,7 @@ export default function Education(info: IEducation[]) {
                     id={id}
                 />
             )}
-            {curUser?.id === id && <button onClick={handleAdding}>+</button>}
+            {curUser?.id === id && addFormActive ? null : <button onClick={handleAdding}>+</button>}
         </div>
     );
 }

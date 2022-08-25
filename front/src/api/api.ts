@@ -42,7 +42,7 @@ export async function createtUser({ email, password, name }: IUser) {
             password,
             name,
         });
-        console.log(data);
+        // console.log(data);
         const newUser: IUser = await {
             ...data,
             description: "",
