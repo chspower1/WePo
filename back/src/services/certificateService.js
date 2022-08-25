@@ -29,6 +29,12 @@ class certificateService {
     return certificateList;
   }
 
+  // certId에 해당하는 자겨증정보 조회
+  static async getCertificateByCertId({ certId }) {
+    const certificate = await Certificate.findOneByCertId({ certId });
+    return certificate;
+  }
+
 
   // 자격증 수정
   static async updateCertificate({ certId, toUpdate }) {
