@@ -15,8 +15,52 @@ class User {
   }
 
   // userId에 해당하는 유저 조회
+  // static async findById({ userId }) {
+  //   const user = await UserModel.findById(userId);
+  //   return user;
+  // }
+
   static async findById({ userId }) {
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.aggregate([
+      {
+        $match: {
+          _id: userId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'awards', // 참고 할 테이블
+          localField: '_id', // User.id
+          foreignField: 'userId', // Award.userId
+          as: 'awards', // 추가 할 프로퍼티
+        },
+      },
+      {
+        $lookup: {
+          from: 'projects',
+          localField: '_id',
+          foreignField: 'userId',
+          as: 'projects',
+        },
+      },
+      {
+        $lookup: {
+          from: 'educations',
+          localField: '_id',
+          foreignField: 'userId',
+          as: 'educations',
+        },
+      },
+      {
+        $lookup: {
+          from: 'certificates',
+          localField: '_id',
+          foreignField: 'userId',
+          as: 'certificates',
+        },
+      },
+    ]);
+
     return user;
   }
 

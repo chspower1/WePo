@@ -60,6 +60,7 @@ class userAuthService {
     const id = user._id;
     const name = user.name;
     const description = user.description;
+    const userSeq = user.userSeq;
 
     const loginUser = {
       token,
@@ -68,6 +69,7 @@ class userAuthService {
       name,
       description,
       errorMessage: null,
+      userSeq
     };
 
     return loginUser;
