@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -28,29 +28,29 @@ const Nav = styled.nav`
     align-items: center;
 `;
 
-export const LinkButton = styled.button`
+export const LinkButton = styled(NavLink)`
     position: relative;
     background-color: transparent;
     margin: 0 8px;
     font-weight: bold;
     color: #343434;
-`;
-export const ActivePath = styled.p`
-    position: relative;
-    margin: 0 10px;
-    font-weight: bold;
     font-size: 14px;
-    cursor: default;
-    color: ${(props) => props.theme.btnColor};
-    &:after {
-        content: "";
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 70%;
-        height: 3px;
-        background-color: ${(props) => props.theme.btnColor};
+    &.active{
+        position: relative;
+        margin: 0 10px;
+        font-weight: bold;
+        cursor: default;
+        color: ${(props) => props.theme.btnColor};
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background-color: ${(props) => props.theme.btnColor};
+        }
     }
 `;
 
@@ -89,50 +89,24 @@ function Header() {
                 <Nav>
                     {isLogin ? (
                         <>
-                            {pathName === "/" ? (
-                                <>
-                                    <ActivePath>나의페이지</ActivePath>
-                                    <Link to="/network">
-                                        <LinkButton>네트워크</LinkButton>
-                                    </Link>
-                                </>
-                            ) : pathName === "/network" ? (
-                                <>
-                                    <Link to={`/`}>
-                                        <LinkButton>나의페이지</LinkButton>
-                                    </Link>
-                                    <ActivePath>네트워크</ActivePath>
-                                </>
-                            ) : (
-                                <>
-                                    <Link to={`/`}>
-                                        <LinkButton>나의페이지</LinkButton>
-                                    </Link>
-                                    <Link to="/network">
-                                        <LinkButton>네트워크</LinkButton>
-                                    </Link>
-                                </>
-                            )}
+                            <LinkButton to="/" >나의페이지</LinkButton>
+                            <LinkButton to="/network" >네트워크</LinkButton>
                             <LoginOrRegiBtn onClick={() => setCurUser(null)}>
                                 로그아웃
                             </LoginOrRegiBtn>
                         </>
                     ) : pathName === "/login" ? (
                         <>
-                            <Link to="/network">
-                                <LinkButton>네트워크</LinkButton>
-                            </Link>
-                            <ActivePath>로그인</ActivePath>
+                            <LinkButton to="/network">네트워크</LinkButton>
+                            <LinkButton to="/login">로그인</LinkButton>
                             <Link to={`/register`}>
                                 <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
                             </Link>
                         </>
                     ) : (
                         <>
-                            <Link to="/network">
-                                <LinkButton>네트워크</LinkButton>
-                            </Link>
-                            <ActivePath>회원가입</ActivePath>
+                            <LinkButton to="/network">네트워크</LinkButton>
+                            <LinkButton to="/register">회원가입</LinkButton>
                             <Link to={`/login`}>
                                 <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
                             </Link>
