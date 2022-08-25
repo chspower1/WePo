@@ -115,6 +115,9 @@ function Header() {
                         </>
                     ) : pathName === "/login" ? (
                         <>
+                            <Link to="/network">
+                                <LinkButton>네트워크</LinkButton>
+                            </Link>
                             <ActivePath>로그인</ActivePath>
                             <Link to={`/register`}>
                                 <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
@@ -122,6 +125,9 @@ function Header() {
                         </>
                     ) : (
                         <>
+                            <Link to="/network">
+                                <LinkButton>네트워크</LinkButton>
+                            </Link>
                             <ActivePath>회원가입</ActivePath>
                             <Link to={`/login`}>
                                 <LoginOrRegiBtn>로그인</LoginOrRegiBtn>

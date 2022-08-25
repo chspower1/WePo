@@ -31,7 +31,7 @@ function MyPortfolio() {
         <>
             {curUser && (
                 <>
-                    <UserCard {...curUser} />
+                    <UserCard {...curUser}  />
                     <Education {...curUser?.educations!} />
                     <Award {...curUser?.awards!} />
                     <Certificate {...curUser?.certificate!} />

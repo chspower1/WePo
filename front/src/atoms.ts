@@ -1,14 +1,15 @@
 import { atom, selector } from "recoil";
 
 export interface IUser {
+    _id?: string;
     id: string;
     token: string;
     email: string;
     name: string;
     password: string;
-    picture: string;
+    picture?: string;
     description: string;
-    hopeField: EHopeField;
+    hopeField?: EHopeField[];
     createdAt: Date;
     updatedAt: Date;
     educations?: IEducation[];
@@ -49,14 +50,24 @@ export interface ICertificate {
 }
 export interface IProject {
     title: string;
-    startDate: number; //Date
-    endDate: number; //Date
+    startDate: Date; //Date
+    endDate: Date; //Date
     description: string;
 }
 
 export const curUserState = atom<IUser | null>({
     key: "curUser",
-    default: null,
+    default: {
+        _id: "63032ae1b12eabb15061cc64",
+        id: "6e641761-edc7-41f7-b8a9-25e734760087",
+        token: "asdasdafqwer23413wdfaas",
+        email: "testSohi@naver.com",
+        name: "test수정",
+        password: "$2b$10$xwLKiGIsWqld/GnD1UlQ8uPGl6dBpR4xQ2MdaMUH5dbulPKo/1fvW",
+        description: "프론트엔드 개발자입니다.",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
 });
 export const usersState = atom<IUser[]>({
     key: "user",
@@ -69,7 +80,7 @@ export const usersState = atom<IUser[]>({
             password: "1",
             picture: "1",
             description: "프론트엔드장",
-            hopeField: EHopeField.frontEnd,
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -81,7 +92,7 @@ export const usersState = atom<IUser[]>({
             password: "1",
             picture: "1",
             description: "팀장",
-            hopeField: EHopeField.AI,
+            hopeField: [EHopeField.AI],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -93,7 +104,7 @@ export const usersState = atom<IUser[]>({
             password: "2",
             picture: "2",
             description: "서기",
-            hopeField: EHopeField.frontEnd,
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -105,7 +116,7 @@ export const usersState = atom<IUser[]>({
             password: "3",
             picture: "3",
             description: "백엔드장",
-            hopeField: EHopeField.frontEnd,
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -117,7 +128,7 @@ export const usersState = atom<IUser[]>({
             password: "3",
             picture: "3",
             description: "응원단장",
-            hopeField: EHopeField.frontEnd,
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -133,7 +144,7 @@ export const isLoginState = selector({
     key: "isLogin",
     get: ({ get }) => {
         const curUser = get(curUserState);
-        const checkLogin = curUser?.token && true;
+        const checkLogin = curUser?.token ? true : false;
         return checkLogin;
     },
 });

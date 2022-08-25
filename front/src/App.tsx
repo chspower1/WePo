@@ -3,6 +3,10 @@ import reset from "styled-reset";
 import { lightTheme } from "./theme";
 import Router from "./Router";
 import "./font/font.css";
+import { useRecoilValue } from "recoil";
+import { isLoginState } from "./atoms";
+import { useNavigate, Navigator } from "react-router-dom";
+import { useEffect } from "react";
 const GlobalStyle = createGlobalStyle`
     ${reset}
     html,body,#root{
@@ -34,6 +38,7 @@ export const Container = styled.section`
     flex-direction: column;
 `;
 function App() {
+    
     return (
         <>
             <ThemeProvider theme={lightTheme}>
