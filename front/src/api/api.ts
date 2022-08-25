@@ -20,7 +20,7 @@ export async function UserLogin({ email, password }: ILogin) {
             email,
             password,
         });
-        await sessionStorage.setItem("userToken", JSON.stringify(newUser));
+        await sessionStorage.setItem("userToken", newUser.token);
         return newUser as IUser;
     } catch (err) {
         alert("dd");
@@ -75,9 +75,9 @@ export async function getUser(id: any) {
 // -----------------------MVP 추가 수정 ----------------------
 // Award 추가,수정
 export async function addAward(data: IAward, id: string) {
+    
     try {
         await axios.post(`http://localhost:5001/award`, { ...data, id })
-            .then(res=>console.log(res));
     } catch (err) {
         console.log(err);
     }
