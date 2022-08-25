@@ -6,7 +6,7 @@ import { certificateService } from "../services/certificateService";
 const certificateRouter = Router();
 
 // 자격증 조회
-certificateRouter.get("/educationList", async function (req, res, next) {
+certificateRouter.get("/certificateList", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
