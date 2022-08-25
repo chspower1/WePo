@@ -76,14 +76,15 @@ export async function getUser(id: any) {
 // Award 추가,수정
 export async function addAward(data: IAward, id: string) {
     try {
-        await axios.post(`/award`, { ...data, id });
+        await axios.post(`http://localhost:5001/award`, { ...data, id })
+            .then(res=>console.log(res));
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateAward(data: IAward, id: string) {
     try {
-        await axios.put(`/award/${id}`, { ...data, id });
+        await axios.put(`http://localhost:5001/award/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
@@ -92,14 +93,14 @@ export async function updateAward(data: IAward, id: string) {
 // Certificate 추가,수정
 export async function addCertificate(data: ICertificate, id: string) {
     try {
-        await axios.post(`/certificate`, { ...data, id });
+        await axios.post(`http://localhost:5001/certificate`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateCertificate(data: ICertificate, id: string) {
     try {
-        await axios.put(`/certificate/${id}`, { ...data, id });
+        await axios.put(`http://localhost:5001/certificate/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
@@ -108,14 +109,14 @@ export async function updateCertificate(data: ICertificate, id: string) {
 // Education 추가,수정
 export async function addEducation(data: IEducation, id: string) {
     try {
-        await axios.post(`/educatio`, { ...data, id });
+        await axios.post(`http://localhost:5001/education`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateEducation(data: IEducation, id: string) {
     try {
-        await axios.put(`/education/${id}`, { ...data, id });
+        await axios.put(`http://localhost:5001/education/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
@@ -123,14 +124,14 @@ export async function updateEducation(data: IEducation, id: string) {
 // Project 추가,수정
 export async function addProject(data: IProject, id: string) {
     try {
-        await axios.post(`/project`, { ...data, id });
+        await axios.post(`http://localhost:5001/project`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateProject(data: IProject, id: string) {
     try {
-        await axios.put(`/project/${id}`, { ...data, id });
+        await axios.put(`http://localhost:5001/project/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
