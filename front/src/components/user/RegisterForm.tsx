@@ -7,7 +7,7 @@ import { createtUser } from "../../api/api";
 import { usersState } from "../../atoms";
 import { IUser } from "./../../atoms";
 import { useQuery } from "react-query";
-import {  ButtonReset, DangerIcon, ErrMsg, FromWrap, Input, InputBox, SubmitButton, SubmitButtonBox, Title, TitleBox } from "./LoginForm";
+import {  Wrapper, DangerIcon, ErrMsg, FromContainer, Input, InputBox, SubmitButton, SubmitButtonBox, Title, TitleBox } from "./LoginForm";
 import { useNavigate } from "react-router-dom";
 export interface IRegister {
     email: string;
@@ -16,12 +16,15 @@ export interface IRegister {
     checkPassword?: string;
 }
 
-const RegisterWrap = styled(FromWrap)`
+const RegisterFromContainer = styled(FromContainer)`
     padding : 60px 80px;
     height:700px;
     margin: 20px auto 0;
 `
 
+const RegisterWrapper = styled(Wrapper)`
+    padding : 30px 0 50px;
+`
 
 const SuccessMsg = styled.p`
     font-size: 12px;
@@ -77,77 +80,79 @@ export default function RegisterForm() {
         });
     }, []);
     return (
-        <RegisterWrap>
-            <TitleBox>
-                <Title>회원가입</Title>
-            </TitleBox>
-            <form onSubmit={handleSubmit(onvalid)}>
-                <InputBox>
-                    <Input
-                        type="text"
-                        placeholder="Email"
-                        {...register("email", {
-                            required: "이메일을 입력해 주세요",
-                            pattern: {
-                                value: /^\S+@\S+$/i,
-                                message: "이메일 형식에 맞지 않습니다!",
-                            },
-                        })}
-                    />
-                    {errors.email ? <ErrMsg><DangerIcon></DangerIcon>{errors.email.message}</ErrMsg> : <SuccessMsg>✔️적합한 Email이에요</SuccessMsg>}
-                </InputBox>
-                <InputBox>
-                    <Input
-                        type="text"
-                        placeholder="Name"
-                        {...register("name", {
-                            required: "이름을 입력해 주세요",
-                            minLength: {
-                                value: 2,
-                                message: "2글자 이상 입력해주세요!",
-                            },
-                        })}
-                    />
-                    {errors.name ? <ErrMsg><DangerIcon></DangerIcon>{errors.name.message}</ErrMsg> : <SuccessMsg>✔️멋진 이름이에요</SuccessMsg>}
-                </InputBox>
-                <InputBox>
-                    <Input
-                        type="password"
-                        placeholder="Password"
-                        {...register("password", {
-                            required: "비밀번호를 입력해 주세요",
-                            minLength: {
-                                value: 4,
-                                message: "비밀번호는 4글자 이상입니다!",
-                            },
-                        })}
-                    />
-                    {errors.password ? <ErrMsg><DangerIcon></DangerIcon>{errors.password.message}</ErrMsg> : <SuccessMsg>✔️적합한 비밀번호에요</SuccessMsg>}
-                </InputBox>
-                <InputBox>
-                    <Input
-                        type="password"
-                        placeholder="Check your Password"
-                        {...register("checkPassword", {
-                            required: "비밀번호를 한번 더 입력해 주세요",
-                            validate: {
-                                mathchesPreviousPassword: (value) => {
-                                    const { password } = getValues();
-                                    return password === value || "비밀번호가 일치하지 않습니다.";
+        <RegisterWrapper>
+            <RegisterFromContainer>
+                <TitleBox>
+                    <Title>회원가입</Title>
+                </TitleBox>
+                <form onSubmit={handleSubmit(onvalid)}>
+                    <InputBox>
+                        <Input
+                            type="text"
+                            placeholder="Email"
+                            {...register("email", {
+                                required: "이메일을 입력해 주세요",
+                                pattern: {
+                                    value: /^\S+@\S+$/i,
+                                    message: "이메일 형식에 맞지 않습니다!",
                                 },
-                            },
-                        })}
-                    />
-                    {errors.checkPassword ? (
-                        <ErrMsg><DangerIcon></DangerIcon>{errors.checkPassword.message}</ErrMsg>
-                    ) : (
-                        <SuccessMsg>✔️비밀번호가 일치해요</SuccessMsg>
-                    )}
-                </InputBox>
-                <SubmitButtonBox>
-                    <SubmitButton disabled={!valid}>작성완료</SubmitButton>
-                </SubmitButtonBox>
-            </form>
-        </RegisterWrap>
+                            })}
+                        />
+                        {errors.email ? <ErrMsg><DangerIcon></DangerIcon>{errors.email.message}</ErrMsg> : <SuccessMsg>✔️적합한 Email이에요</SuccessMsg>}
+                    </InputBox>
+                    <InputBox>
+                        <Input
+                            type="text"
+                            placeholder="Name"
+                            {...register("name", {
+                                required: "이름을 입력해 주세요",
+                                minLength: {
+                                    value: 2,
+                                    message: "2글자 이상 입력해주세요!",
+                                },
+                            })}
+                        />
+                        {errors.name ? <ErrMsg><DangerIcon></DangerIcon>{errors.name.message}</ErrMsg> : <SuccessMsg>✔️멋진 이름이에요</SuccessMsg>}
+                    </InputBox>
+                    <InputBox>
+                        <Input
+                            type="password"
+                            placeholder="Password"
+                            {...register("password", {
+                                required: "비밀번호를 입력해 주세요",
+                                minLength: {
+                                    value: 4,
+                                    message: "비밀번호는 4글자 이상입니다!",
+                                },
+                            })}
+                        />
+                        {errors.password ? <ErrMsg><DangerIcon></DangerIcon>{errors.password.message}</ErrMsg> : <SuccessMsg>✔️적합한 비밀번호에요</SuccessMsg>}
+                    </InputBox>
+                    <InputBox>
+                        <Input
+                            type="password"
+                            placeholder="Check your Password"
+                            {...register("checkPassword", {
+                                required: "비밀번호를 한번 더 입력해 주세요",
+                                validate: {
+                                    mathchesPreviousPassword: (value) => {
+                                        const { password } = getValues();
+                                        return password === value || "비밀번호가 일치하지 않습니다.";
+                                    },
+                                },
+                            })}
+                        />
+                        {errors.checkPassword ? (
+                            <ErrMsg><DangerIcon></DangerIcon>{errors.checkPassword.message}</ErrMsg>
+                        ) : (
+                            <SuccessMsg>✔️비밀번호가 일치해요</SuccessMsg>
+                        )}
+                    </InputBox>
+                    <SubmitButtonBox>
+                        <SubmitButton disabled={!valid}>작성완료</SubmitButton>
+                    </SubmitButtonBox>
+                </form>
+            </RegisterFromContainer>
+        </RegisterWrapper>
     );
 }
