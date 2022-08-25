@@ -7,7 +7,7 @@ const awardRouter = Router();
 
 
 // 주어진 ID의 User의 수상내역 목록 get
-awardRouter.get("/award", async function (req, res, next) {
+awardRouter.get("/awardList", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
