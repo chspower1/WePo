@@ -1,4 +1,6 @@
 import { UserModel } from "../schemas/user";
+import { Types } from "mongoose";
+const ObjectId = Types.ObjectId;
 
 class User {
 
@@ -24,13 +26,17 @@ class User {
     const user = await UserModel.aggregate([
       {
         $match: {
-          _id: userId,
+          // @ts-ignore
+          _id: ObjectId(`${userId}`)
         },
+      },
+      {
+        $addFields: { id: { $toString: "$_id"}}
       },
       {
         $lookup: {
           from: 'awards', // 참고 할 테이블
-          localField: '_id', // User.id
+          localField: 'id', // User.id
           foreignField: 'userId', // Award.userId
           as: 'awards', // 추가 할 프로퍼티
         },
@@ -38,7 +44,7 @@ class User {
       {
         $lookup: {
           from: 'projects',
-          localField: '_id',
+          localField: 'id',
           foreignField: 'userId',
           as: 'projects',
         },
@@ -46,7 +52,7 @@ class User {
       {
         $lookup: {
           from: 'educations',
-          localField: '_id',
+          localField: 'id',
           foreignField: 'userId',
           as: 'educations',
         },
@@ -54,11 +60,14 @@ class User {
       {
         $lookup: {
           from: 'certificates',
-          localField: '_id',
+          localField: 'id',
           foreignField: 'userId',
           as: 'certificates',
         },
       },
+      {
+        $unset: 'id'
+      }
     ]);
 
     return user;
