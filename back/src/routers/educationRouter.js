@@ -27,6 +27,10 @@ educationRouter.post("/education", login_required, async function (req, res, nex
       status,
     });
 
+    if(newEducation.errorMessage) {
+      throw new Error(newEducation.errorMessage);
+    }
+
     res.status(200).json(newEducation);
   } catch (error) {
     next(error);
@@ -60,7 +64,7 @@ educationRouter.put("/education/:eduId", login_required, async function (req, re
     const eduId = req.params.eduId;
 
     // 학력정보을 입력했던 유저와 로그인한 유저가 같은지 비교하는 부분
-    // 주석처리한 이유 :  postman으로 해보니까 토큰값이 틀리면 애초에 login_required에서 막혀서 "정상적인 토큰이 아닙니다. 다시 한 번 확인해 주세요." 에러메세지 나옴
+    // 주석처리한 이유 #1 :  postman으로 해보니까 토큰값이 틀리면 애초에 login_required에서 막혀서 "정상적인 토큰이 아닙니다. 다시 한 번 확인해 주세요." 에러메세지 나옴 -> 이 부분이 필요없어보임
     // const education = await educationService.getEducationByEduId({ eduId });
     // const currentUserId = req['currentUserId'];
     // if(education.userId !== currentUserId) {   

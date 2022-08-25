@@ -26,6 +26,7 @@ const EducationSchema = new Schema(
     // 졸업상태
 		status: {
       type: String,
+      enum : ['학사졸업', '석사졸업', '박사졸업', '재학중'],
       required: true,
     },
   },
