@@ -2,10 +2,21 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { getUsers } from "../../api/api";
 import { isLoginState, usersState } from "../../atoms";
 import UserCard from "./UserCard";
+import { ArrowRepeat }from "@styled-icons/bootstrap/ArrowRepeat"
+
+const LoadingMotion = keyframes`
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`
+
 
 const NetworkWrap = styled.div`
     width:100%;
@@ -48,6 +59,27 @@ const CheckBoxWrap = styled.div`
     align-items: center;
 `;
 
+const Label = styled.label`
+    user-select:none;
+`
+
+const LoadingBox = styled.div`
+    width:100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    user-select: none;
+`
+const LoadingIcon = styled(ArrowRepeat)`
+    width: 26px;
+    height: 26px;
+    margin-right:10px;
+    animation:${LoadingMotion} 2s infinite
+`
+
+
 function Network() {
     const location = useLocation();
     const pathName = location.pathname;
@@ -73,25 +105,31 @@ function Network() {
                 <SelectBox>
                     <CheckBoxWrap>
                         <input type="checkbox" name="frontEnd" id="frontEnd" />
-                        <label htmlFor="frontEnd">프론트엔드</label>
+                        <Label htmlFor="frontEnd">프론트엔드</Label>
                     </CheckBoxWrap>
                     <CheckBoxWrap>
                         <input type="checkbox" name="backEnd" id="backEnd" />
-                        <label htmlFor="backEnd">백엔드</label>
+                        <Label htmlFor="backEnd">백엔드</Label>
                     </CheckBoxWrap>
                     <CheckBoxWrap>
                         <input type="checkbox" name="dataAnalysis" id="dataAnalysis" />
-                        <label htmlFor="dataAnalysis">데이터분석</label>
+                        <Label htmlFor="dataAnalysis">데이터분석</Label>
                     </CheckBoxWrap>
                     <CheckBoxWrap>
                         <input type="checkbox" name="AI" id="AI" />
-                        <label htmlFor="AI">AI</label>
+                        <Label htmlFor="AI">AI</Label>
                     </CheckBoxWrap>
                 </SelectBox>
             </NetworkHeadingSelectBox>
-            <NetworkContainer>
-                {isLoading ? "loding" : users?.map((user) => <UserCard key={user.id} {...user} />)}
-            </NetworkContainer>
+                {isLoading ? 
+                <LoadingBox>
+                    <LoadingIcon/>Loading... 
+                </LoadingBox>
+                : 
+                <NetworkContainer>
+                    {users?.map((user) => <UserCard key={user.id} {...user} />)}
+                </NetworkContainer>
+                }
         </NetworkWrap>
     );
 }

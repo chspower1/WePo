@@ -31,7 +31,7 @@ const Nav = styled.nav`
 export const LinkButton = styled.button`
     position: relative;
     background-color: transparent;
-    margin: 0 10px;
+    margin: 0 8px;
     font-weight: bold;
     color: #343434;
 `;
@@ -41,7 +41,7 @@ export const ActivePath = styled.p`
     font-weight: bold;
     font-size: 14px;
     cursor: default;
-    color: #3687ff;
+    color: ${(props)=> props.theme.btnColor};
     &:after {
         content: "";
         position: absolute;
@@ -50,16 +50,10 @@ export const ActivePath = styled.p`
         transform: translateX(-50%);
         width: 70%;
         height: 3px;
-        background-color: #3687ff;
+        background-color: ${(props)=> props.theme.btnColor};
     }
 `;
 
-export const LoginRegiButton = styled.button`
-    padding: 6px 20px;
-    background: #000;
-    color: #fff;
-    border-radius: 30px;
-`;
 
 export const LogoBox = styled.div`
     width: 150px;
@@ -75,7 +69,7 @@ const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
     background: #343434;
     border-radius: 20px;
-    color: #fff;
+    color: ${(props)=> props.theme.bgColor};
     margin-left: 20px;
     letter-spacing: -0.4px;
 `;
@@ -89,7 +83,7 @@ function Header() {
             <HeaderContainer>
                 <Link to="/">
                     <LogoBox>
-                        <LogoImg src="./assets/image/Logo.svg" alt="" />
+                        <LogoImg src="./assets/image/Logo.svg" alt="WepoLogo" />
                     </LogoBox>
                 </Link>
                 <Nav>
@@ -102,12 +96,21 @@ function Header() {
                                         <LinkButton>네트워크</LinkButton>
                                     </Link>
                                 </>
-                            ) : (
+                            ) : pathName === "/network" ? (
                                 <>
                                     <Link to={`/`}>
                                         <LinkButton>나의페이지</LinkButton>
                                     </Link>
                                     <ActivePath>네트워크</ActivePath>
+                                </>
+                            ):(
+                                <>
+                                    <Link to={`/`}>
+                                        <LinkButton>나의페이지</LinkButton>
+                                    </Link>
+                                    <Link to="/network">
+                                        <LinkButton>네트워크</LinkButton>
+                                    </Link>
                                 </>
                             )}
                             <LoginOrRegiBtn onClick={() => setIsLogin(false)}>

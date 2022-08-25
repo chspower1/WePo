@@ -4,6 +4,8 @@ import { useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
+import {ArrowRightShort} from "@styled-icons/bootstrap/ArrowRightShort";
+
 
 const ItemWrap = styled.div`
     position: relative;
@@ -40,7 +42,7 @@ const NameTxt = styled.h2`
 `;
 const EmailTxt = styled.h3`
     a {
-        color: #3687ff;
+        color: ${(props)=> props.theme.btnColor};
     }
 `;
 const DescBox = styled.div``;
@@ -57,6 +59,16 @@ const DescTxt = styled.p`
 const EditOrDetailBtnBox = styled.div`
     text-align: right;
 `;
+
+const ArrowIcon = styled(ArrowRightShort)`
+width: 18px;
+height: 18px;
+margin-top:-3px;
+`
+const DetailBtn = styled.button`
+color: #5573df;
+`
+
 
 function UserCard({ id, name, email, description }: IUser) {
     const location = useLocation();
@@ -95,7 +107,7 @@ function UserCard({ id, name, email, description }: IUser) {
                         <button title="Edit(편집)">edit</button>
                     ) : (
                         <Link to={`${id}`}>
-                            <button title="더보기">더보기</button>
+                            <DetailBtn title="더보기">더보기<ArrowIcon/></DetailBtn>
                         </Link>
                     )}
                 </EditOrDetailBtnBox>
