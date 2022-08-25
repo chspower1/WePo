@@ -76,14 +76,14 @@ export async function getUser(id: any) {
 // Award 추가,수정
 export async function addAward(data: IAward, id: string) {
     try {
-        await axios.post(`/${id}/award`, { ...data, id });
+        await axios.post(`/award`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateAward(data: IAward, id: string) {
     try {
-        await axios.put(`/${id}/award`, { ...data, id });
+        await axios.put(`/award/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
@@ -92,14 +92,14 @@ export async function updateAward(data: IAward, id: string) {
 // Certificate 추가,수정
 export async function addCertificate(data: ICertificate, id: string) {
     try {
-        await axios.post(`/${id}/certificate`, { ...data, id });
+        await axios.post(`/certificate`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateCertificate(data: ICertificate, id: string) {
     try {
-        await axios.put(`/${id}/certificate`, { ...data, id });
+        await axios.put(`/certificate/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
@@ -108,14 +108,14 @@ export async function updateCertificate(data: ICertificate, id: string) {
 // Education 추가,수정
 export async function addEducation(data: IEducation, id: string) {
     try {
-        await axios.post(`/${id}/education`, { ...data, id });
+        await axios.post(`/educatio`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateEducation(data: IEducation, id: string) {
     try {
-        await axios.put(`/${id}/education`, { ...data, id });
+        await axios.put(`/education/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
@@ -123,14 +123,14 @@ export async function updateEducation(data: IEducation, id: string) {
 // Project 추가,수정
 export async function addProject(data: IProject, id: string) {
     try {
-        await axios.post(`/${id}/project`, { ...data, id });
+        await axios.post(`/project`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateProject(data: IProject, id: string) {
     try {
-        await axios.put(`/${id}/project`, { ...data, id });
+        await axios.put(`/project/${id}`, { ...data, id });
     } catch (err) {
         console.log(err);
     }
