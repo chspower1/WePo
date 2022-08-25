@@ -19,21 +19,20 @@ export const ButtonReset = styled.button`
     cursor: pointer;
     border: 0;
     background: transparent;
-`
+`;
 export const Wrapper = styled.div`
-    width:100%;
+    width: 100%;
     padding: 80px 0 50px;
-`
-
+`;
 
 export const FromContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-width:570px;
-    width:100%;
+    max-width: 570px;
+    width: 100%;
     height: 560px;
-    padding : 70px 80px;
+    padding: 70px 80px;
     margin: 0 auto;
     border-radius: 15px;
     background: rgba(162, 190, 231, 0.1);
@@ -90,22 +89,21 @@ export const SubmitButtonBox = styled.div`
 export const SubmitButton = styled.button`
     width: 50%;
     height: 50px;
-    background: ${(props)=> props.theme.btnColor};
-    color: ${(props)=> props.theme.bgColor};
+    background: ${(props) => props.theme.btnColor};
+    color: ${(props) => props.theme.bgColor};
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgba(90, 156, 255, 0.4);
     &:disabled {
         background: #8a929e;
-        box-shadow:  10px 10px 15px rgba(138, 146, 158, 0.4);
-        cursor:not-allowed;
+        box-shadow: 10px 10px 15px rgba(138, 146, 158, 0.4);
+        cursor: not-allowed;
     }
 `;
 
 export const RegisterButton = styled.button`
     text-decoration: underline;
-    color: ${(props)=> props.theme.btnColor};
-`
-
+    color: ${(props) => props.theme.btnColor};
+`;
 
 export const RegisterCommentBox = styled.div`
     margin: 20px 0 0;
@@ -126,6 +124,7 @@ export default function LoginForm() {
     const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
     const setCurUser = useSetRecoilState(curUserState);
+
     const onvalid = async (formData: ILogin) => {
         try {
             const newUser = await UserLogin({ ...formData });
@@ -169,7 +168,12 @@ export default function LoginForm() {
                                 },
                             })}
                         />
-                        {errors.email && <ErrMsg><DangerIcon/>{errors.email.message}</ErrMsg>}
+                        {errors.email && (
+                            <ErrMsg>
+                                <DangerIcon />
+                                {errors.email.message}
+                            </ErrMsg>
+                        )}
                     </InputBox>
                     <InputBox>
                         <Input
@@ -183,14 +187,21 @@ export default function LoginForm() {
                                 },
                             })}
                         />
-                        {errors.password && <ErrMsg><DangerIcon/>{errors.password.message}</ErrMsg>}
+                        {errors.password && (
+                            <ErrMsg>
+                                <DangerIcon />
+                                {errors.password.message}
+                            </ErrMsg>
+                        )}
                     </InputBox>
-                    <SubmitButtonBox><SubmitButton>로그인</SubmitButton></SubmitButtonBox>
+                    <SubmitButtonBox>
+                        <SubmitButton>로그인</SubmitButton>
+                    </SubmitButtonBox>
                     <RegisterCommentBox>
-                    아직 회원이 아니신가요? 
-                    <Link to="/register">
-                        <RegisterButton>회원가입</RegisterButton>
-                    </Link>
+                        아직 회원이 아니신가요?
+                        <Link to="/register">
+                            <RegisterButton>회원가입</RegisterButton>
+                        </Link>
                     </RegisterCommentBox>
                 </form>
             </FromContainer>

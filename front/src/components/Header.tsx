@@ -11,8 +11,8 @@ const HeaderWrap = styled.header`
 
 export const HeaderContainer = styled.div`
     max-width: 1300px;
-    min-width:480px;
-    width:100%;
+    min-width: 480px;
+    width: 100%;
     height: 100px;
     margin: 0 auto;
     padding: 0 30px;
@@ -41,7 +41,7 @@ export const ActivePath = styled.p`
     font-weight: bold;
     font-size: 14px;
     cursor: default;
-    color: ${(props)=> props.theme.btnColor};
+    color: ${(props) => props.theme.btnColor};
     &:after {
         content: "";
         position: absolute;
@@ -50,10 +50,9 @@ export const ActivePath = styled.p`
         transform: translateX(-50%);
         width: 70%;
         height: 3px;
-        background-color: ${(props)=> props.theme.btnColor};
+        background-color: ${(props) => props.theme.btnColor};
     }
 `;
-
 
 export const LogoBox = styled.div`
     width: 150px;
@@ -69,7 +68,7 @@ const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
     background: #343434;
     border-radius: 20px;
-    color: ${(props)=> props.theme.bgColor};
+    color: ${(props) => props.theme.bgColor};
     margin-left: 20px;
     letter-spacing: -0.4px;
 `;
@@ -104,7 +103,7 @@ function Header() {
                                     </Link>
                                     <ActivePath>네트워크</ActivePath>
                                 </>
-                            ):(
+                            ) : (
                                 <>
                                     <Link to={`/`}>
                                         <LinkButton>나의페이지</LinkButton>

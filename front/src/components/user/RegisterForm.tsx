@@ -7,7 +7,18 @@ import { createtUser } from "../../api/api";
 import { usersState } from "../../atoms";
 import { IUser } from "./../../atoms";
 import { useQuery } from "react-query";
-import {  Wrapper, DangerIcon, ErrMsg, FromContainer, Input, InputBox, SubmitButton, SubmitButtonBox, Title, TitleBox } from "./LoginForm";
+import {
+    Wrapper,
+    DangerIcon,
+    ErrMsg,
+    FromContainer,
+    Input,
+    InputBox,
+    SubmitButton,
+    SubmitButtonBox,
+    Title,
+    TitleBox,
+} from "./LoginForm";
 import { useNavigate } from "react-router-dom";
 export interface IRegister {
     email: string;
@@ -17,14 +28,14 @@ export interface IRegister {
 }
 
 const RegisterFromContainer = styled(FromContainer)`
-    padding : 60px 80px;
-    height:700px;
+    padding: 60px 80px;
+    height: 700px;
     margin: 20px auto 0;
-`
+`;
 
 const RegisterWrapper = styled(Wrapper)`
-    padding : 30px 0 50px;
-`
+    padding: 30px 0 50px;
+`;
 
 const SuccessMsg = styled.p`
     font-size: 12px;
@@ -32,12 +43,7 @@ const SuccessMsg = styled.p`
     align-items: center;
     color: #198754;
     margin: 0 0 0 5px;
-`
-
-
-
-
-
+`;
 
 export default function RegisterForm() {
     const [users, setUsers] = useRecoilState(usersState);
@@ -98,7 +104,14 @@ export default function RegisterForm() {
                                 },
                             })}
                         />
-                        {errors.email ? <ErrMsg><DangerIcon></DangerIcon>{errors.email.message}</ErrMsg> : <SuccessMsg>✔️적합한 Email이에요</SuccessMsg>}
+                        {errors.email ? (
+                            <ErrMsg>
+                                <DangerIcon></DangerIcon>
+                                {errors.email.message}
+                            </ErrMsg>
+                        ) : (
+                            <SuccessMsg>✔️적합한 Email이에요</SuccessMsg>
+                        )}
                     </InputBox>
                     <InputBox>
                         <Input
@@ -112,7 +125,14 @@ export default function RegisterForm() {
                                 },
                             })}
                         />
-                        {errors.name ? <ErrMsg><DangerIcon></DangerIcon>{errors.name.message}</ErrMsg> : <SuccessMsg>✔️멋진 이름이에요</SuccessMsg>}
+                        {errors.name ? (
+                            <ErrMsg>
+                                <DangerIcon></DangerIcon>
+                                {errors.name.message}
+                            </ErrMsg>
+                        ) : (
+                            <SuccessMsg>✔️멋진 이름이에요</SuccessMsg>
+                        )}
                     </InputBox>
                     <InputBox>
                         <Input
@@ -126,7 +146,14 @@ export default function RegisterForm() {
                                 },
                             })}
                         />
-                        {errors.password ? <ErrMsg><DangerIcon></DangerIcon>{errors.password.message}</ErrMsg> : <SuccessMsg>✔️적합한 비밀번호에요</SuccessMsg>}
+                        {errors.password ? (
+                            <ErrMsg>
+                                <DangerIcon></DangerIcon>
+                                {errors.password.message}
+                            </ErrMsg>
+                        ) : (
+                            <SuccessMsg>✔️적합한 비밀번호에요</SuccessMsg>
+                        )}
                     </InputBox>
                     <InputBox>
                         <Input
@@ -137,13 +164,18 @@ export default function RegisterForm() {
                                 validate: {
                                     mathchesPreviousPassword: (value) => {
                                         const { password } = getValues();
-                                        return password === value || "비밀번호가 일치하지 않습니다.";
+                                        return (
+                                            password === value || "비밀번호가 일치하지 않습니다."
+                                        );
                                     },
                                 },
                             })}
                         />
                         {errors.checkPassword ? (
-                            <ErrMsg><DangerIcon></DangerIcon>{errors.checkPassword.message}</ErrMsg>
+                            <ErrMsg>
+                                <DangerIcon></DangerIcon>
+                                {errors.checkPassword.message}
+                            </ErrMsg>
                         ) : (
                             <SuccessMsg>✔️비밀번호가 일치해요</SuccessMsg>
                         )}

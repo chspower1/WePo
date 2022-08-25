@@ -12,6 +12,7 @@ import { getUser } from "../../api/api";
 function UserDetail() {
     const { id } = useParams();
     const [user, setUser] = useState<IUser>();
+
     const { isLoading } = useQuery(["getUser"], () => getUser(id), {
         onSuccess(user) {
             setUser(user);

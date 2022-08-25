@@ -6,7 +6,7 @@ import styled, { keyframes } from "styled-components";
 import { getUsers } from "../../api/api";
 import { isLoginState, usersState } from "../../atoms";
 import UserCard from "./UserCard";
-import { ArrowRepeat }from "@styled-icons/bootstrap/ArrowRepeat"
+import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
 
 const LoadingMotion = keyframes`
     0% {
@@ -15,13 +15,12 @@ const LoadingMotion = keyframes`
     100% {
         transform: rotate(360deg);
     }
-`
-
+`;
 
 const NetworkWrap = styled.div`
-    width:100%;
+    width: 100%;
     max-width: 1300px;
-    min-width:480px;
+    min-width: 480px;
     height: 81%;
     margin: 0 auto;
     padding: 0 50px;
@@ -33,7 +32,6 @@ const NetworkContainer = styled.div`
     grid-row-gap: 80px;
     grid-column-gap: 50px;
     padding: 20px 0 90px;
-
 `;
 
 const NetworkHeadingSelectBox = styled.div`
@@ -60,25 +58,24 @@ const CheckBoxWrap = styled.div`
 `;
 
 const Label = styled.label`
-    user-select:none;
-`
+    user-select: none;
+`;
 
 const LoadingBox = styled.div`
-    width:100%;
+    width: 100%;
     height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     user-select: none;
-`
+`;
 const LoadingIcon = styled(ArrowRepeat)`
     width: 26px;
     height: 26px;
-    margin-right:10px;
-    animation:${LoadingMotion} 2s infinite
-`
-
+    margin-right: 10px;
+    animation: ${LoadingMotion} 2s infinite;
+`;
 
 function Network() {
     const location = useLocation();
@@ -121,15 +118,18 @@ function Network() {
                     </CheckBoxWrap>
                 </SelectBox>
             </NetworkHeadingSelectBox>
-                {isLoading ? 
+            {isLoading ? (
                 <LoadingBox>
-                    <LoadingIcon/>Loading... 
+                    <LoadingIcon />
+                    Loading...
                 </LoadingBox>
-                : 
+            ) : (
                 <NetworkContainer>
-                    {users?.map((user) => <UserCard key={user.id} {...user} />)}
+                    {users?.map((user) => (
+                        <UserCard key={user.id} {...user} />
+                    ))}
                 </NetworkContainer>
-                }
+            )}
         </NetworkWrap>
     );
 }
