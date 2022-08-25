@@ -20,7 +20,7 @@ export async function UserLogin({ email, password }: ILogin) {
             email,
             password,
         });
-        await sessionStorage.setItem("userToken", JSON.stringify(newUser));
+        await sessionStorage.setItem("userToken", JSON.stringify(newUser.token));
         return newUser as IUser;
     } catch (err) {
         alert("dd");
@@ -93,6 +93,7 @@ export async function updateAward(data: IAward, id: string) {
 export async function addCertificate(data: ICertificate, id: string) {
     try {
         await axios.post(`/${id}/certificate`, { ...data, id });
+        
     } catch (err) {
         console.log(err);
     }

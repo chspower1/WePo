@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-
+import { recoilPersist } from "recoil-persist";
 export interface IUser {
     _id?: string;
     id: string;
@@ -54,10 +54,11 @@ export interface IProject {
     endDate: Date; //Date
     description: string;
 }
-
+const { persistAtom } = recoilPersist();
 export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,
+    effects_UNSTABLE: [persistAtom],
 });
 export const usersState = atom<IUser[]>({
     key: "user",

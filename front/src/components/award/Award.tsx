@@ -42,9 +42,7 @@ export default function Award(info: IAward[]) {
                                 <p>{list.grade}</p>
                                 {index !== 0 && (
                                     <div style={{ width: 200 }}>
-                                        <p>
-                                            {list.description}
-                                        </p>
+                                        <p>{list.description}</p>
                                         {/* shift+enter 시 \n으로 스플릿해서 그대로 보이게끔 */}
                                     </div>
                                 )}
@@ -86,7 +84,7 @@ export default function Award(info: IAward[]) {
                     id={id}
                 />
             )}
-            {curUser?.id === id && <button onClick={handleAdding}>+</button>}
+            {curUser?.id === id && !addFormActive && <button onClick={handleAdding}>+</button>}
         </div>
     );
 }

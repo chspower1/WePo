@@ -74,7 +74,7 @@ export default function Education(info: IEducation[]) {
                     id={id}
                 />
             )}
-            {curUser?.id === id && addFormActive ? null : <button onClick={handleAdding}>+</button>}
+            {curUser?.id === id && !addFormActive && <button onClick={handleAdding}>+</button>}
         </div>
     );
 }

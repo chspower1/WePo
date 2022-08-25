@@ -4,8 +4,7 @@ import { useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
-import {ArrowRightShort} from "@styled-icons/bootstrap/ArrowRightShort";
-
+import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -42,7 +41,7 @@ const NameTxt = styled.h2`
 `;
 const EmailTxt = styled.h3`
     a {
-        color: ${(props)=> props.theme.btnColor};
+        color: ${(props) => props.theme.btnColor};
     }
 `;
 const DescBox = styled.div``;
@@ -61,13 +60,13 @@ const EditOrDetailBtnBox = styled.div`
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
-width: 18px;
-height: 18px;
-margin-top:-3px;
-`
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+`;
 const DetailBtn = styled.button`
-color: #5573df;
-`
+    color: #5573df;
+`;
 
 function UserCard({ id, name, email, description, hopeField }: IUser) {
     const location = useLocation();
@@ -103,11 +102,12 @@ function UserCard({ id, name, email, description, hopeField }: IUser) {
                     </DescTxt>
                 </DescBox>
                 <EditOrDetailBtnBox>
-                    {pathName === "/" ? (
-                        <button title="Edit(편집)">edit</button>
-                    ) : (
+                    {pathName === `/network/${id}` || (
                         <Link to={`${id}`}>
-                            <DetailBtn title="더보기">더보기<ArrowIcon/></DetailBtn>
+                            <DetailBtn title="더보기">
+                                더보기
+                                <ArrowIcon />
+                            </DetailBtn>
                         </Link>
                     )}
                 </EditOrDetailBtnBox>

@@ -111,16 +111,9 @@ export const Button = styled.button`
 `;
 
 function MyPortfolio() {
-    const { userId } = useParams();
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
-    const [curUser, setCurUser] = useRecoilState(curUserState);
-    // API
-    // const { isLoading } = useQuery(["user"], () => getUser(userId!), {
-    //     onSuccess(data) {
-    //         setUser(data!);
-    //     },
-    // });
+    const curUser = useRecoilValue(curUserState);
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
@@ -128,15 +121,11 @@ function MyPortfolio() {
     }, [isLogin]);
     return (
         <>
-            {curUser && (
-                <>
-                    <UserCard {...curUser} />
-                    <Education {...curUser?.educations!} />
-                    <Award {...curUser?.awards!} />
-                    <Certificate {...curUser?.certificate!} />
-                    <Project {...curUser?.projects!} />
-                </>
-            )}
+            {curUser && <UserCard {...curUser} />}
+            <Education {...curUser?.educations!} />
+            <Award {...curUser?.awards!} />
+            <Certificate {...curUser?.certificate!} />
+            <Project {...curUser?.projects!} />
         </>
     );
 }
