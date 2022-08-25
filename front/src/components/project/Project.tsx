@@ -13,14 +13,12 @@ import {
     MvpTitleBox,
     MvpContentContainer,
     MvpContentBox,
-    MvpContentName,
     MvpContentDetail,
     MvpContentDate,
     MvpEditButton,
     MvpAddButton,
-    MvpAddInput,
-    MvpAddInputBox,
     MvpDeleteButton,
+    MvpContentAccent,
 } from "../MyPortfolio";
 import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
@@ -32,14 +30,14 @@ export default function Project(info: IProject[]) {
     const curUser = useRecoilValue(curUserState);
 
     // form 관리
-    const [Adding, setAdding] = useState(false);
-    const [Editing, setEditing] = useState(true);
+    const [addFormActive, setAddFormActive] = useState(false);
+    const [editing, setEditing] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [targetIndex, setTargetIndex] = useState<Number>();
 
     // 추가사항 on/off
     function handleAdding() {
-        setAdding((Adding) => !Adding);
+        setAddFormActive((addFormActive) => !addFormActive);
     }
 
     const [projects, setProjects] = useState<IProject[]>([]);
@@ -50,16 +48,21 @@ export default function Project(info: IProject[]) {
                 <MvpTitle>프로젝트</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-                {Adding && <ProjectAddForm setAdding={setAdding} setProjects={setProjects} />}
-                {!Adding &&
+                {addFormActive && (
+                    <ProjectAddForm
+                        setAddFormActive={setAddFormActive}
+                        setProjects={setProjects}
+                    />
+                )}
+                {!addFormActive &&
                     projects.map((val: IProject, index: number) => (
                         <MvpContentBox>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentName>{val.title}</MvpContentName>
+                                    <MvpContentAccent>{val.title}</MvpContentAccent>
                                     <MvpContentDetail>{val.description}</MvpContentDetail>
                                     <MvpContentDate>{`${val.startDate} ~ ${val.endDate}`}</MvpContentDate>
-                                    {Editing && targetIndex !== index && (
+                                    {editing && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -90,14 +93,48 @@ export default function Project(info: IProject[]) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser?.id === id && (
-                <MvpAddButton onClick={handleAdding}>
-                    <PlusSquareFill color="#3687FF" />
-                </MvpAddButton>
-            )}
+            <MvpAddButton onClick={handleAdding}>
+                <PlusSquareFill color="#3687FF" />
+            </MvpAddButton>
+            {/* {curUser?.id === id && <MvpAddButton onClick={handleAdding}>
+                <PlusSquareFill color="#3687FF" />
+            </MvpAddButton>} */}
+            {/* <div>
+                <ul>
+                    {projects.map((val: IProject, index: number) => (
+                        <Li key={index}>
+                            <h1>{val.title}</h1>
+                            <h2>{`${val.startDate} ~ ${val.endDate}`}</h2>
+                            <h2>{val.description}</h2>
+                            {Editing && targetIndex !== index && (
+                                <button
+                                    onClick={() => {
+                                        setIsEditing(true);
+                                        setTargetIndex(index);
+                                    }}
+                                >
+                                    수정
+                                </button>
+                            )}
+                            {isEditing && targetIndex === index && (
+                                <ProjectEditForm
+                                    index={index}
+                                    projects={projects}
+                                    setProjects={setProjects}
+                                    setEditing={setEditing}
+                                    setIsEditing={setIsEditing}
+                                    setTargetIndex={setTargetIndex}
+                                    id={id}
+                                />
+                            )}
+                        </Li>
+                    ))}
+                </ul>
+            </div>
+            <div>
+                {Adding && <ProjectAddForm setAdding={setAdding} setProjects={setProjects} />}
+                <button onClick={handleAdding}>추가</button>
+            </div> */}
         </MvpContainer>
     );
 }
-const Li = styled.li`
-    background-color: yellow;
-`;

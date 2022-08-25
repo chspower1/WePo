@@ -6,8 +6,8 @@ import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
 export function CertificateEditForm({
     index,
-    projects,
-    setProjects,
+    certificates,
+    setCertificates,
     setEditing,
     setIsEditing,
     setTargetIndex,
@@ -21,7 +21,7 @@ export function CertificateEditForm({
 
     const onvalid = (data: ICertificate) => {
         addCertificate(data, id);
-        setProjects((project: any) => {
+        setCertificates((project: any) => {
             const editProject = [...project];
             editProject[index] = data;
             return editProject;
@@ -39,7 +39,7 @@ export function CertificateEditForm({
                     type="text"
                     width="300"
                     id="project-title"
-                    defaultValue={projects[index].title}
+                    defaultValue={certificates[index].title}
                     {...register("title", {
                         required: "자격증명을 입력해주세요",
                         shouldUnregister: true,
@@ -53,7 +53,7 @@ export function CertificateEditForm({
                     type="date"
                     width="100"
                     id="project-startDate"
-                    defaultValue={projects[index].date}
+                    defaultValue={certificates[index].date}
                     {...register("date", {
                         required: "발급날짜을 입력해주세요",
                         pattern: {
@@ -71,7 +71,7 @@ export function CertificateEditForm({
                     type="text"
                     width="300"
                     id="project-endDate"
-                    defaultValue={projects[index].org}
+                    defaultValue={certificates[index].org}
                     {...register("org", {
                         required: "발급기관을 입력해주세요",
                         shouldUnregister: true,
@@ -84,7 +84,7 @@ export function CertificateEditForm({
                 <MvpAddInput
                     type="text"
                     id="project-description"
-                    defaultValue={projects[index].description}
+                    defaultValue={certificates[index].description}
                     {...register("description", { shouldUnregister: true })}
                 ></MvpAddInput>
             </MvpAddInputBox>
