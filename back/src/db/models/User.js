@@ -1,28 +1,34 @@
 import { UserModel } from "../schemas/user";
 
 class User {
+
+  // 새로운 유저 생성
   static async create({ newUser }) {
     const createdNewUser = await UserModel.create(newUser);
     return createdNewUser;
   }
 
+  // email로 유저 조회
   static async findByEmail({ email }) {
     const user = await UserModel.findOne({ email });
     return user;
   }
 
-  static async findById({ user_id }) {
-    const user = await UserModel.findOne({ id: user_id });
+  // userId에 해당하는 유저 조회
+  static async findById({ userId }) {
+    const user = await UserModel.findById(userId);
     return user;
   }
 
+  // 모든 유저 조회
   static async findAll() {
     const users = await UserModel.find({});
     return users;
   }
 
-  static async update({ user_id, fieldToUpdate, newValue }) {
-    const filter = { id: user_id };
+  // 유저 정보 수정
+  static async update({ userId, fieldToUpdate, newValue }) {
+    const filter = { _id: userId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 

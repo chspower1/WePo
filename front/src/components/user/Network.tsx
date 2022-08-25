@@ -126,7 +126,7 @@ function Network() {
             ) : (
                 <NetworkContainer>
                     {users?.map((user) => (
-                        <UserCard key={user.id} {...user} />
+                        <UserCard key={user._id} {...user} />
                     ))}
                 </NetworkContainer>
             )}

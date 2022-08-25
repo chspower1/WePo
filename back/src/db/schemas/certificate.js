@@ -1,31 +1,30 @@
 import { Schema, model } from "mongoose";
 
-const ProjectSchema = new Schema(
+const CertificateSchema = new Schema(
   {
     // User 식별 id
     userId: {
       type: String,
       required: true,
     },
-    // 프로젝트명
+    // 자격증 명칭
     title: {
       type: String,
       required: true,
     },
-    // 시작일
-    startDate: {
+    // 발급일
+    date: {
       type: Date,
       required: true,
     },
-    // 종료일
-    endDate: {
-      type: Date,
+    // 발급기관
+    org: {
+      type: String,
       required: true,
     },
     // 설명
     description: {
       type: String,
-      required: false,
     },
   },
   {
@@ -33,6 +32,6 @@ const ProjectSchema = new Schema(
   }
 );
 
-const ProjectModel = model("Project", ProjectSchema);
+const CertificateModel = model("Certificate", CertificateSchema);
 
-export { ProjectModel };
+export { CertificateModel };

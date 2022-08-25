@@ -11,6 +11,7 @@ export default function Education(info: IEducation[]) {
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
+    const userToken = sessionStorage.getItem("userToken");
     // 학력 상태
     const [educations, setEducations] = useState<IEducation[]>([]); // 더미educations 초기값
 
@@ -23,7 +24,6 @@ export default function Education(info: IEducation[]) {
     function handleAdding() {
         setAddFormActive((current) => !current);
     }
-    console.log(curUser);
     return (
         <div className="EduacationWrap">
             <div className="title">
@@ -74,7 +74,9 @@ export default function Education(info: IEducation[]) {
                     id={id}
                 />
             )}
-            {curUser?.id === id && !addFormActive && <button onClick={handleAdding}>+</button>}
+            {`${curUser?.token} === ${userToken}` && !addFormActive && (
+                <button onClick={handleAdding}>+</button>
+            )}
         </div>
     );
 }

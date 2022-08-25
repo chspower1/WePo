@@ -14,7 +14,6 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, id 
         setAwards((prev: any) => [...prev, data]); // 기존 DB에 data추가
         setAddFormActive(false);
         addAward(data, id!);
-        console.log(data);
         reset({
             title: "",
             grade: "",

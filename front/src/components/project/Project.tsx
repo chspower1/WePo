@@ -30,6 +30,7 @@ export default function Project(info: IProject[]) {
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
+    const userToken = sessionStorage.getItem("userToken");
 
     // form 관리
     const [Adding, setAdding] = useState(false);
@@ -90,7 +91,7 @@ export default function Project(info: IProject[]) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser?.id === id && (
+            {`${curUser?.token} === ${userToken}` && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

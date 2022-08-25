@@ -79,7 +79,6 @@ export const MvpAddButton = styled.button`
     width: 45px;
     height: 45px;
 `;
-
 export const MvpAddInput = styled.input.attrs((props) => ({
     type: props.type || "text",
 }))`
@@ -90,6 +89,7 @@ export const MvpAddInput = styled.input.attrs((props) => ({
     border: solid 1px #3687ff;
     margin-bottom: 10px;
 `;
+
 export const MvpAddInputBox = styled.div`
     position: relative;
     width: auto;
@@ -124,7 +124,7 @@ function MyPortfolio() {
             {curUser && <UserCard {...curUser} />}
             <Education {...curUser?.educations!} />
             <Award {...curUser?.awards!} />
-            <Certificate {...curUser?.certificate!} />
+            <Certificate {...curUser?.certificates!} />
             <Project {...curUser?.projects!} />
         </>
     );

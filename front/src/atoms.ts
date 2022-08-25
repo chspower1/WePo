@@ -14,7 +14,7 @@ export interface IUser {
     updatedAt: Date;
     educations?: IEducation[];
     awards?: IAward[];
-    certificate?: ICertificate[];
+    certificates?: ICertificate[];
     projects?: IProject[];
 }
 export enum EHopeField {

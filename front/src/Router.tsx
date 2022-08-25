@@ -9,20 +9,14 @@ import { isLoginState } from "./atoms";
 import { useEffect } from "react";
 import UserDetail from "./components/user/UserDetail";
 import NotFound from "./components/NotFound";
+import UserEditForm from "./components/user/UserEditForm";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
-    useEffect(() => {
-        console.log(isLogin);
-    }, [isLogin]);
+    useEffect(() => {}, [isLogin]);
     return (
         <BrowserRouter>
             <Header />
             <Routes>
-                {/* {isLogin ? (
-                    <Route path="/network" element={<Network />} />
-                ) : (
-                    <Route path="/network" element={<Navigate replace to="/login" />} />
-                )} */}
                 <Route path="*" element={<NotFound />} />
                 <Route path="/" element={<MyPortfolio />} />
                 <Route path="/login" element={<LoginForm />} />

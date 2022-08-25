@@ -10,6 +10,7 @@ export default function Award(info: IAward[]) {
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
+    const userToken = sessionStorage.getItem("userToken");
     // 자격증 상태
     const [awards, setAwards] = useState<IAward[]>([]);
 
@@ -84,7 +85,9 @@ export default function Award(info: IAward[]) {
                     id={id}
                 />
             )}
-            {curUser?.id === id && !addFormActive && <button onClick={handleAdding}>+</button>}
+            {`${curUser?.token} === ${userToken}` && !addFormActive && (
+                <button onClick={handleAdding}>+</button>
+            )}
         </div>
     );
 }

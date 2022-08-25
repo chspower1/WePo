@@ -28,6 +28,7 @@ export default function Certificate(info: ICertificate[]) {
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
+    const userToken = sessionStorage.getItem("userToken");
     // 자격증 상태
     const [certificates, setCertificates] = useState<ICertificate[]>([]);
 
@@ -92,7 +93,7 @@ export default function Certificate(info: ICertificate[]) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser?.id === id && !Adding && (
+            {`${curUser?.token} === ${userToken}` && !Adding && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
