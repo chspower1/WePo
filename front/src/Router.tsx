@@ -1,5 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Portfolio from "./components/Portfolio";
+import { BrowserRouter, Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import MyPortfolio from "./components/MyPortfolio";
 import RegisterForm from "./components/user/RegisterForm";
 import Network from "./components/user/Network";
 import Header from "./components/Header";
@@ -8,21 +8,21 @@ import { useRecoilValue } from "recoil";
 import { isLoginState } from "./atoms";
 import { useEffect } from "react";
 import UserDetail from "./components/user/UserDetail";
+import NotFound from "./components/NotFound";
+import UserEditForm from "./components/user/UserEditForm";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
-    useEffect(() => {
-        if (isLogin) return;
-    }, [isLogin]);
+    useEffect(() => {}, [isLogin]);
     return (
         <BrowserRouter>
             <Header />
             <Routes>
-                <Route path="/" element={<Portfolio />} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="/" element={<MyPortfolio />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
-                <Route path="/users/:userId" element={<UserDetail />} />
+                <Route path="/network/:id" element={<UserDetail />} />
                 <Route path="/network" element={<Network />} />
-                <Route path="*" element={<Portfolio />} />
             </Routes>
         </BrowserRouter>
     );

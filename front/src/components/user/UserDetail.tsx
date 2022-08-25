@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Award from "../award/Award";
 import Certificate from "../certificate/Certificate";
 import Education from "../education/Education";
@@ -8,23 +8,36 @@ import UserCard from "./UserCard";
 import { IUser } from "./../../atoms";
 import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
+import styled from "styled-components";
 
+const PortfolioContainer = styled.section`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 function UserDetail() {
-    const userId = useParams();
+    const { id } = useParams();
     const [user, setUser] = useState<IUser>();
-    // API
-    // const { inLoading } = useQuery(["getUser"], () => getUser(userId), {
-    //     onSuccess(data) {
-    //         setUser(data);
-    //     },
-    // });
+
+    const { isLoading } = useQuery(["getUser"], () => getUser(id), {
+        onSuccess(user) {
+            setUser(user);
+        },
+    });
     return (
         <>
-            <UserCard {...user!} />
-            <Education {...user?.educations!} />
-            <Award {...user?.awards!} />
-            <Certificate {...user?.certificate!} />
-            <Project {...user?.projects!} />
+            {isLoading ? (
+                "로딩중"
+            ) : (
+                <PortfolioContainer>
+                    {user && <UserCard {...user} />}
+                    <Education {...user?.educations!} />
+                    <Award {...user?.awards!} />
+                    <Certificate {...user?.certificates!} />
+                    <Project {...user?.projects!} />{" "}
+                </PortfolioContainer>
+            )}
         </>
     );
 }
