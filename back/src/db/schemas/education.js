@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Schema, model } from "mongoose";
 
 const EducationSchema = new Schema(
@@ -24,9 +23,9 @@ const EducationSchema = new Schema(
       required: true,
     },
     // 졸업상태
-		status: {
+    status: {
       type: String,
-      enum : ['학사졸업', '석사졸업', '박사졸업', '재학중'],
+      enum: ['학사졸업', '석사졸업', '박사졸업', '재학중'],
       required: true,
     },
   },

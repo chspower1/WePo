@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Schema, model } from "mongoose";
 
 const CertificateSchema = new Schema(
@@ -24,12 +23,12 @@ const CertificateSchema = new Schema(
       required: true,
     },
     // 발급기관
-		org: {
+    org: {
       type: String,
       required: true,
     },
-    // 자격증 설명
-		description: {
+    // 설명
+    description: {
       type: String,
     },
   },
