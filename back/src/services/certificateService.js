@@ -1,14 +1,10 @@
 import { Certificate } from "../db";
-import { v4 as uuidv4 } from "uuid";
 
 class certificateService {
 
   // 자격증 추가
   static async addCertificate({ userId, title, date, org, description }) {
-
-    // 해당 자격증에 대한 유니크 id 부여
-    const certId = uuidv4();
-    const newCertificate = { certId, userId, title, date, org, description };
+    const newCertificate = { userId, title, date, org, description };
 
     if(!title || !date || !org) {
       const errorMessage = 
@@ -22,24 +18,15 @@ class certificateService {
     return createdNewCertificate;
   }
 
-
   // userId에 해당하는 유저의 자격증 전체 조회
   static async getCertificateListByUserId({ userId }) {
-    const certificateList = await Certificate.findByUserId({ userId });
-    return certificateList;
+    return Certificate.findByUserId({ userId });
   }
-
-  // certId에 해당하는 자겨증정보 조회
-  static async getCertificateByCertId({ certId }) {
-    const certificate = await Certificate.findOneByCertId({ certId });
-    return certificate;
-  }
-
 
   // 자격증 수정
   static async updateCertificate({ certId, toUpdate }) {
     // 해당 certId의 자격증정보가 db에 존재하는지 여부 확인
-    let certificate = await Certificate.findOneByCertId({ certId });
+    let certificate = await Certificate.findByCertId({ certId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!certificate) {
@@ -63,7 +50,7 @@ class certificateService {
   // 자격증 삭제
   static async deleteCertificate({ certId }) {
     // 해당 certId의 자격증정보가 db에 존재하는지 여부 확인
-    let certificate = await Certificate.findOneByCertId({ certId });
+    let certificate = await Certificate.findByCertId({ certId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!certificate) {
@@ -72,10 +59,8 @@ class certificateService {
       return { errorMessage };
     }
 
-    const deleteSuccessful = await Certificate.delete({ certId });
-    return deleteSuccessful;
+    return Certificate.delete({ certId });
   }
-  
 }
 
 export { certificateService };
