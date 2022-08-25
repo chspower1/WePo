@@ -80,14 +80,13 @@ class User {
   }
 
   // 유저 정보 수정
-  static async update({ userId, fieldToUpdate, newValue }) {
+  static async update({ userId, newValues }) {
     const filter = { _id: userId };
-    const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
-      update,
+      newValues,
       option
     );
     return updatedUser;

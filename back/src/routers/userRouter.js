@@ -80,7 +80,9 @@ userAuthRouter.get(
         userId,
       });
 
+      // @ts-ignore
       if (currentUserInfo.errorMessage) {
+        // @ts-ignore
         throw new Error(currentUserInfo.errorMessage);
       }
 
@@ -96,20 +98,37 @@ userAuthRouter.put(
   login_required,
   async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+
+      // User authentication
+      const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+       // URI로부터 사용자 id를 추출함.
       const userId = req.params.id;
+      if(userId !== currentUserId) {   
+        throw new Error(
+          "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+        );
+      } 
+
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
-      const email = req.body.email ?? null;
-      const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
-      const toUpdate = { name, email, password, description };
+      const toUpdate = { name, description };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedUser = await userAuthService.setUser({ userId, toUpdate });
+      const updatedUser = await userAuthService.setUser({ 
+        userId, 
+        toUpdate 
+      });
 
+      // @ts-ignore
       if (updatedUser.errorMessage) {
+        // @ts-ignore
         throw new Error(updatedUser.errorMessage);
       }
 
@@ -128,7 +147,9 @@ userAuthRouter.get(
       const userId = req.params.id;
       const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
+      // @ts-ignore
       if (currentUserInfo.errorMessage) {
+        // @ts-ignore
         throw new Error(currentUserInfo.errorMessage);
       }
 

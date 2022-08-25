@@ -57,14 +57,14 @@ class userAuthService {
     const token = jwt.sign({ userId: user._id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user._id;
+    const userId = user._id;
     const name = user.name;
     const description = user.description;
     const userSeq = user.userSeq;
 
     const loginUser = {
       token,
-      id,
+      userId,
       email,
       name,
       description,
@@ -91,32 +91,14 @@ class userAuthService {
       return { errorMessage };
     }
 
-    // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
-    if (toUpdate.name) {
-      const fieldToUpdate = "name";
-      const newValue = toUpdate.name;
-      user = await User.update({ userId, fieldToUpdate, newValue });
-    }
+    const { name, description } = toUpdate;
 
-    if (toUpdate.email) {
-      const fieldToUpdate = "email";
-      const newValue = toUpdate.email;
-      user = await User.update({ userId, fieldToUpdate, newValue });
-    }
+    const newValues = {
+      ...(name && { name }),
+      ...(description && { description }),
+    };
 
-    if (toUpdate.password) {
-      const fieldToUpdate = "password";
-      const newValue = bcrypt.hash(toUpdate.password, 10);
-      user = await User.update({ userId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.description) {
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      user = await User.update({ userId, fieldToUpdate, newValue });
-    }
-
-    return user;
+    return User.update({ userId, newValues });
   }
 
   static async getUserInfo({ userId }) {
