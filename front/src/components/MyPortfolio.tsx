@@ -50,6 +50,13 @@ export const MvpContentName = styled.h2`
     margin-bottom:10px;
     margin-top:20px;
 `
+export const MvpContentAccent = styled.h2`
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:10px;
+    margin-top:20px;
+    color:#3867FF;
+`
 export const MvpContentDetail = styled.h3`
     font-size:15px;
     margin-bottom:10px;
@@ -108,6 +115,16 @@ export const Button = styled.button`
     height:40px;
     border-radius:10px;
     margin-right:10px;
+`
+export const MajorGraduate = styled.input.attrs(props => ({
+    type:"radio",
+    name:props.name,
+    value: props.value
+}))`
+
+`
+export const MajorGraduateLabel = styled.label`
+    color:black;
 `
 
 function MyPortfolio() {

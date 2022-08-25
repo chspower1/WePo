@@ -13,14 +13,12 @@ import {
     MvpTitleBox,
     MvpContentContainer,
     MvpContentBox,
-    MvpContentName,
     MvpContentDetail,
     MvpContentDate,
     MvpEditButton,
     MvpAddButton,
-    MvpAddInput,
-    MvpAddInputBox,
     MvpDeleteButton,
+    MvpContentAccent,
 } from "../MyPortfolio";
 import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
@@ -32,14 +30,14 @@ export default function Project(info: IProject[]) {
     const curUser = useRecoilValue(curUserState);
 
     // form 관리
-    const [Adding, setAdding] = useState(false);
-    const [Editing, setEditing] = useState(true);
+    const [addFormActive, setAddFormActive] = useState(false);
+    const [editing, setEditing] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [targetIndex, setTargetIndex] = useState<Number>();
 
     // 추가사항 on/off
     function handleAdding() {
-        setAdding((Adding) => !Adding);
+        setAddFormActive((addFormActive) => !addFormActive);
     }
 
     const [projects, setProjects] = useState<IProject[]>([
@@ -51,21 +49,21 @@ export default function Project(info: IProject[]) {
                 <MvpTitle>프로젝트</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-                {Adding && (
+                {addFormActive && (
                     <ProjectAddForm
-                        setAdding={setAdding}
+                        setAddFormActive={setAddFormActive}
                         setProjects={setProjects}
                     />
                 )}
-                {!Adding &&
+                {!addFormActive &&
                     projects.map((val: IProject, index: number) => (
                         <MvpContentBox>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentName>{val.title}</MvpContentName>
+                                    <MvpContentAccent>{val.title}</MvpContentAccent>
                                     <MvpContentDetail>{val.description}</MvpContentDetail>
                                     <MvpContentDate>{`${val.startDate} ~ ${val.endDate}`}</MvpContentDate>
-                                    {Editing && targetIndex !== index && (
+                                    {editing && targetIndex !== index && (
                                         <>
                                         <MvpEditButton onClick={() => {
                                                 setIsEditing(true);
@@ -92,9 +90,12 @@ export default function Project(info: IProject[]) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser?.id === id && <MvpAddButton onClick={handleAdding}>
+            <MvpAddButton onClick={handleAdding}>
                 <PlusSquareFill color="#3687FF" />
-            </MvpAddButton>}
+            </MvpAddButton>
+            {/* {curUser?.id === id && <MvpAddButton onClick={handleAdding}>
+                <PlusSquareFill color="#3687FF" />
+            </MvpAddButton>} */}
             {/* <div>
                 <ul>
                     {projects.map((val: IProject, index: number) => (
@@ -129,12 +130,8 @@ export default function Project(info: IProject[]) {
             </div>
             <div>
                 {Adding && <ProjectAddForm setAdding={setAdding} setProjects={setProjects} />}
-<<<<<<< HEAD
                 <button onClick={handleAdding}>추가</button>
             </div> */}
         </MvpContainer>
     );
 }
-const Li = styled.li`
-    background-color: yellow;
-`;
