@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { addProject } from "../../api/api";
 import { IProject } from "../../atoms";
-import { MvpContainer,MvpTitle,MvpTitleBox,MvpContentContainer,MvpContentBox,MvpContentName,MvpContentDetail,MvpContentDate,MvpEditButton,MvpAddButton,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
+import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
-export const ProjectAddForm = ({ setAdding, setProjects, id }: any) => {
+export const ProjectAddForm = ({ setAddFormActive, setProjects, id }: any) => {
     const {
         register,
         handleSubmit,
@@ -16,7 +16,7 @@ export const ProjectAddForm = ({ setAdding, setProjects, id }: any) => {
     const onvalid = (data: IProject) => {
         addProject(data, id);
         setProjects((project: any) => [...project, data]);
-        setAdding(false);
+        setAddFormActive(false);
     };
 
     useEffect(()=>{
@@ -46,7 +46,6 @@ export const ProjectAddForm = ({ setAdding, setProjects, id }: any) => {
                     placeholder="프로젝트 명"
                     {...register("title", {
                         required: "프로젝트명을 입력해주세요",
-                        shouldUnregister: true,
                     })}
                 ></MvpAddInput>
                 {errors.title && <ErrMsg><DangerIcon/>{errors.title.message}</ErrMsg>}
@@ -64,7 +63,6 @@ export const ProjectAddForm = ({ setAdding, setProjects, id }: any) => {
                         //     value: /^\d{4}\d{2}\d{2}$/,
                         //     message: "20220101 형식으로 작성해주세요",
                         // },
-                        shouldUnregister: true,
                     })}>  
                 </MvpAddInput>
                 <span style={{margin:"0  5px 0 5px"}}>-</span>
@@ -78,7 +76,6 @@ export const ProjectAddForm = ({ setAdding, setProjects, id }: any) => {
                     //     value: /^\d{4}\d{2}\d{2}$/,
                     //     message: "20220101 형식으로 작성해주세요",
                     // },
-                    shouldUnregister: true,
                 })}
                 ></MvpAddInput>
                 {errors.startDate && <ErrMsg><DangerIcon/>{errors.startDate.message}</ErrMsg> || errors.endDate && <ErrMsg><DangerIcon/>{errors.endDate.message}</ErrMsg>}
@@ -89,13 +86,13 @@ export const ProjectAddForm = ({ setAdding, setProjects, id }: any) => {
                     type="text"
                     id="project-description"
                     placeholder="추가설명"
-                    {...register("description", { shouldUnregister: true })}>
+                    {...register("description")}>
 
                 </MvpAddInput>
             </MvpAddInputBox>
             <div style={{float:"right"}}>
                 <Button color="#3687FF" type="submit">추가</Button>
-                <Button onClick={() => setAdding(false)}>취소</Button>
+                <Button onClick={() => setAddFormActive(false)}>취소</Button>
             </div>
         </form>
     );

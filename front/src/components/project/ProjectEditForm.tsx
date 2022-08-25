@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IProject } from "../../atoms";
 import { updateProject } from "../../api/api";
-import { MvpContainer,MvpTitle,MvpTitleBox,MvpContentContainer,MvpContentBox,MvpContentName,MvpContentDetail,MvpContentDate,MvpEditButton,MvpAddButton,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
+import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
 export function ProjectEditForm({
@@ -41,7 +41,6 @@ export function ProjectEditForm({
                         defaultValue={projects[index].title}
                         {...register("title", {
                             required: "프로젝트명을 입력해주세요",
-                            shouldUnregister: true,
                         })}
                     ></MvpAddInput>
                     {errors.title && <ErrMsg><DangerIcon/>{errors.title.message}</ErrMsg>}
@@ -61,7 +60,6 @@ export function ProjectEditForm({
                             //     value: /^\d{4}\d{2}\d{2}$/,
                             //     message: "20220101 형식으로 작성해주세요",
                             // },
-                            shouldUnregister: true,
                         })}>  
                     </MvpAddInput>
                     <span style={{margin:"0  5px 0 5px"}}>-</span>
@@ -76,7 +74,6 @@ export function ProjectEditForm({
                         //     value: /^\d{4}\d{2}\d{2}$/,
                         //     message: "20220101 형식으로 작성해주세요",
                         // },
-                        shouldUnregister: true,
                     })}
                     ></MvpAddInput>
                 {errors.startDate && <ErrMsg><DangerIcon/>{errors.startDate.message}</ErrMsg> || errors.endDate && <ErrMsg><DangerIcon/>{errors.endDate.message}</ErrMsg>}
@@ -88,7 +85,7 @@ export function ProjectEditForm({
                         id="project-description"
                         defaultValue={projects[index].description}
                         placeholder="추가설명"
-                        {...register("description", { shouldUnregister: true })}>
+                        {...register("description")}>
 
                     </MvpAddInput>
                 </MvpAddInputBox>

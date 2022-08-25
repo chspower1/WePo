@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { addCertificate } from "../../api/api";
 import { ICertificate } from "../../atoms";
-import { MvpContainer,MvpTitle,MvpTitleBox,MvpContentContainer,MvpContentBox,MvpContentName,MvpContentDetail,MvpContentDate,MvpEditButton,MvpAddButton,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
+import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
-export function CertificateAddForm({ setAdding, setProjects, id }: any) {
+export function CertificateAddForm({ setAddFormActive, setCertificates, id }: any) {
     console.log(id);
     const {
         register,
@@ -14,8 +14,8 @@ export function CertificateAddForm({ setAdding, setProjects, id }: any) {
     } = useForm<ICertificate>({mode:"onChange"});
 
     const onvalid = (data: ICertificate) => {
-        setProjects((project: any) => [...project, data]);
-        setAdding(false);
+        setCertificates((project: any) => [...project, data]);
+        setAddFormActive(false);
         addCertificate(data, id);
     };
 
@@ -70,6 +70,7 @@ export function CertificateAddForm({ setAdding, setProjects, id }: any) {
                 <MvpAddInput
                     type="string"
                     id="issuer"
+                    width="300"
                     placeholder="발급기관"
                     {...register("org", {
                         required: "발급기관을 입력해주세요",
@@ -89,7 +90,7 @@ export function CertificateAddForm({ setAdding, setProjects, id }: any) {
             </MvpAddInputBox>
             <div style={{float:"right"}}>
                 <Button color="#3687FF" type="submit">추가</Button>
-                <Button onClick={() => setAdding(false)}>취소</Button>
+                <Button onClick={() => setAddFormActive(false)}>취소</Button>
             </div>
         </form>
     );
