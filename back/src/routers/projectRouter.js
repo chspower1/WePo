@@ -8,7 +8,7 @@ const projectRouter = Router();
 
 
 // 주어진 ID의 User의 프로젝트 목록 get
-projectRouter.get("/user/project", async function (req, res, next) {
+projectRouter.get("/projectList", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -29,7 +29,7 @@ projectRouter.get("/user/project", async function (req, res, next) {
 
 
 // 주어진 ID의 User에게 신규 프로젝트 post
-projectRouter.post("/user/project", login_required, async function (req, res, next) {
+projectRouter.post("/project", login_required, async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -53,7 +53,7 @@ projectRouter.post("/user/project", login_required, async function (req, res, ne
 
 
 // 주어진 projectId에 해당되는 프로젝트 수정
-projectRouter.put("/user/project/:projectId", login_required, async function (req, res, next) {
+projectRouter.put("/project/:projectId", login_required, async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -88,7 +88,7 @@ projectRouter.put("/user/project/:projectId", login_required, async function (re
 
 
 // 주어진 projectId에 해당되는 프로젝트 삭제
-projectRouter.delete("/user/project/:projectId", login_required, async function (req, res, next) {
+projectRouter.delete("/project/:projectId", login_required, async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
