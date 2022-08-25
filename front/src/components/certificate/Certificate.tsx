@@ -1,11 +1,14 @@
 import { ICertificate } from "./../../atoms";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { errorSelector, useRecoilState } from "recoil";
 import { CertificateAddForm } from "./CertificateAddForm";
 import { CertificateEditForm } from "./CertificateEditForm";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import { MvpContainer,MvpTitleBox,MvpTitle,MvpContentContainer,MvpContentBox,MvpContentName,MvpContentDate, MvpContentDetail, MvpEditButton, MvpAddButton, MvpDeleteButton } from "../MyPortfolio";
+import { Pencil } from "styled-icons/boxicons-solid";
+import { PlusSquareFill} from "styled-icons/bootstrap";
+import { Trash2 } from "@styled-icons/feather/Trash2";
 
 export default function Certificate(info: ICertificate[]) {
     const { id } = useParams();
@@ -18,12 +21,57 @@ export default function Certificate(info: ICertificate[]) {
         setAdding((Adding) => !Adding);
     }
 
-    const [projects, setProjects] = useState<ICertificate[]>([]);
+    const [projects, setProjects] = useState<ICertificate[]>([
+    ]);
 
     return (
-        <>
-            <h1>자격증</h1>
-            <div>
+        <MvpContainer>
+            <MvpTitleBox>
+                <MvpTitle>자격증</MvpTitle>
+            </MvpTitleBox>
+            <MvpContentContainer>
+                {Adding && (
+                    <CertificateAddForm setAdding={setAdding} setProjects={setProjects} id={id}/>
+                )}
+                {!Adding && projects.map((val: ICertificate, index: number) => (
+                        <MvpContentBox key={index}>
+                            {targetIndex !== index && (
+                                <>
+                                    <MvpContentName>{val.title}</MvpContentName>
+                                    <MvpContentDate>{val.date}</MvpContentDate>
+                                    <MvpContentDetail>{val.org}</MvpContentDetail>
+                                    <MvpContentDetail>{val.description}</MvpContentDetail>
+                                    {Editing && targetIndex !== index && (
+                                        <>
+                                        <MvpEditButton onClick={() => {
+                                                setIsEditing(true);
+                                                setTargetIndex(index);
+                                        }}>
+                                            <Pencil color="#3687FF"/>
+                                        </MvpEditButton>
+                                        <MvpDeleteButton><Trash2 color="#3687FF"/></MvpDeleteButton>
+                                        </>
+                                    )}
+                                </>
+                            )}
+                            {isEditing && targetIndex == index && (
+                                <CertificateEditForm
+                                    index={index}
+                                    projects={projects}
+                                    setProjects={setProjects}
+                                    setEditing={setEditing}
+                                    setIsEditing={setIsEditing}
+                                    setTargetIndex={setTargetIndex}
+                                    id={id}
+                                />
+                            )}
+                        </MvpContentBox>
+                    ))}
+            </MvpContentContainer>
+            <MvpAddButton onClick={handleAdding}>
+                <PlusSquareFill color="#3687FF"/>
+            </MvpAddButton>
+            {/* <div>
                 <ul>
                     {projects.map((project: ICertificate, index: number) => (
                         <Li key={index}>
@@ -61,11 +109,7 @@ export default function Certificate(info: ICertificate[]) {
                     <CertificateAddForm setAdding={setAdding} setProjects={setProjects} id={id} />
                 )}
                 <button onClick={handleAdding}>추가</button>
-            </div>
-        </>
+            </div> */}
+        </MvpContainer>
     );
 }
-
-const Li = styled.li`
-    background-color: skyblue;
-`;

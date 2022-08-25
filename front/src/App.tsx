@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
     img{
         width:100%;
     }
+
 `;
 export const Btn = styled.button`
     padding: 15px 10px;
