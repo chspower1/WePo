@@ -16,7 +16,7 @@ import Certificate from "./../components/certificate/Certificate";
 
 export async function UserLogin({ email, password }: ILogin) {
     try {
-        const { data: newUser } = await axios.post("/user/login", {
+        const { data: newUser } = await axios.post("http://localhost:5001/user/login", {
             email,
             password,
         });
