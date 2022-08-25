@@ -13,18 +13,18 @@ class Award {
   }
 
   // 한 수상내역 아이디로 수상내역 찾아오기
-  static async findByAwardId({ AwardId }) {
-    return AwardModel.findById(AwardId);;
+  static async findByAwardId({ awardId }) {
+    return AwardModel.findById(awardId);;
   }
 
   // 수상내역 삭제하기
-  static async delete({ AwardId }) {
-    return AwardModel.findByIdAndDelete(AwardId);
+  static async delete({ awardId }) {
+    return AwardModel.findByIdAndDelete(awardId);
   }
 
   // 수상내역 속성 update하기
-  static async update({ AwardId, newValues }) {
-    const filter = { _id: AwardId };
+  static async update({ awardId, newValues }) {
+    const filter = { _id: awardId };
     const option = { returnOriginal: false };
 
     const updatedAward = await AwardModel.findOneAndUpdate(

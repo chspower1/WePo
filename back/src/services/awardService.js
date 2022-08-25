@@ -1,6 +1,6 @@
 import { Award } from "../db/models/Award";
 
-class AwardService {
+class awardService {
 
   static async addAward({ userId, title, grade, org, date, description }) {
     // 새 수상내역 추가
@@ -14,7 +14,7 @@ class AwardService {
     return Award.findByUserId({userId});
   }
 
-  static async updateAward({AwardId, toUpdate}) {
+  static async updateAward({awardId, toUpdate}) {
     const { title, grade, org, date, description } = toUpdate;
     const newValues = {
       ...(title && { title }),
@@ -23,12 +23,12 @@ class AwardService {
       ...(date && { date }),
       ...(description && { description }),
     }
-    return Award.update({AwardId, newValues});
+    return Award.update({awardId, newValues});
   }
 
-  static async deleteAward({AwardId}){
-    return Award.delete({AwardId})
+  static async deleteAward({awardId}){
+    return Award.delete({awardId})
   }
 }
 
-export { AwardService };
+export { awardService };
