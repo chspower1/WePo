@@ -9,7 +9,7 @@ class projectService {
   }
 
   // userId에 해당하는 유저의 프로젝트 전체 조회
-  static async getAllProjects({ userId }) {
+  static async getProjectListByUserId({ userId }) {
     // 에러 처리 추가하기 
     return Project.findByUserId({ userId });
   }
