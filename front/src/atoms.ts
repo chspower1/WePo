@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-
+import { recoilPersist } from "recoil-persist";
 export interface IUser {
     _id?: string;
     id: string;
@@ -14,7 +14,7 @@ export interface IUser {
     updatedAt: Date;
     educations?: IEducation[];
     awards?: IAward[];
-    certificate?: ICertificate[];
+    certificates?: ICertificate[];
     projects?: IProject[];
 }
 export enum EHopeField {
@@ -54,10 +54,11 @@ export interface IProject {
     endDate: Date; //Date
     description: string;
 }
-
+const { persistAtom } = recoilPersist();
 export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,
+    effects_UNSTABLE: [persistAtom],
 });
 export const usersState = atom<IUser[]>({
     key: "user",
@@ -135,6 +136,6 @@ export const isLoginState = selector({
     get: ({ get }) => {
         const curUser = get(curUserState);
         const checkLogin = curUser?.token ? true : false;
-        return checkLogin;
+        return true;
     },
 });

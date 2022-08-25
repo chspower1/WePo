@@ -26,6 +26,7 @@ export default function Education(info: IEducation[]) {
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
+    const userToken = sessionStorage.getItem("userToken");
     // 학력 상태
     const [educations, setEducations] = useState<IEducation[]>([]); // 더미educations 초기값
 
@@ -38,98 +39,68 @@ export default function Education(info: IEducation[]) {
     function handleAdding() {
         setAddFormActive((current) => !current);
     }
-    console.log(curUser);
     return (
         <MvpContainer>
             <MvpTitleBox>
                 <MvpTitle>학력</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-            {addFormActive && (
-                <EducationAddForm setAddFormActive={setAddFormActive} setEducations={setEducations} id={id}/>
-            )}
-            {!addFormActive && educations.map((list,index:number) => (
-                    <MvpContentBox>
-                        {targetIndex !== index && (
-                            <>
-                                <MvpContentAccent>{list.school}</MvpContentAccent>
-                                <div style={{display:"flex"}}>
-                                    <MvpContentDetail style={{marginRight:"10px"}}>{list.major}</MvpContentDetail>
-                                    <MvpContentDetail>({list.status})</MvpContentDetail>
-                                </div>
-                                {editing && targetIndex !== index && (
-                                    <>
-                                        <MvpEditButton onClick={()=>{
-                                            setIsEditing(true);
-                                            setTargetIndex(index);
-                                        }}>
-                                            <Pencil color="#3867FF"/>
-                                        </MvpEditButton>
-                                        <MvpDeleteButton>
-                                            <Trash2 color="#3867FF"/>
-                                        </MvpDeleteButton>
-                                    </>
-                                )}
-                            </>
-                        )}
-                        {isEditing && targetIndex == index && (
-                            <EducationEditForm index={index} educations={educations} setEducations={setEducations} setIsEditing={setIsEditing} id={id} setTargetIndex={setTargetIndex}/>
-                        )}
-                    </MvpContentBox>
-            ))}
+                {addFormActive && (
+                    <EducationAddForm
+                        setAddFormActive={setAddFormActive}
+                        setEducations={setEducations}
+                        id={id}
+                    />
+                )}
+                {!addFormActive &&
+                    educations.map((list, index: number) => (
+                        <MvpContentBox>
+                            {targetIndex !== index && (
+                                <>
+                                    <MvpContentAccent>{list.school}</MvpContentAccent>
+                                    <div style={{ display: "flex" }}>
+                                        <MvpContentDetail style={{ marginRight: "10px" }}>
+                                            {list.major}
+                                        </MvpContentDetail>
+                                        <MvpContentDetail>({list.status})</MvpContentDetail>
+                                    </div>
+                                    {editing && targetIndex !== index && (
+                                        <>
+                                            <MvpEditButton
+                                                onClick={() => {
+                                                    setIsEditing(true);
+                                                    setTargetIndex(index);
+                                                }}
+                                            >
+                                                <Pencil color="#3867FF" />
+                                            </MvpEditButton>
+                                            <MvpDeleteButton>
+                                                <Trash2 color="#3867FF" />
+                                            </MvpDeleteButton>
+                                        </>
+                                    )}
+                                </>
+                            )}
+                            {isEditing && targetIndex == index && (
+                                <EducationEditForm
+                                    index={index}
+                                    educations={educations}
+                                    setEducations={setEducations}
+                                    setIsEditing={setIsEditing}
+                                    id={id}
+                                    setTargetIndex={setTargetIndex}
+                                />
+                            )}
+                        </MvpContentBox>
+                    ))}
             </MvpContentContainer>
-            {curUser?.id === id && addFormActive ? null : <button onClick={handleAdding}><MvpAddButton><PlusSquareFill color="#3687FF"/></MvpAddButton></button>}
+            {`${curUser?.token} === ${userToken}` && addFormActive ? null : (
+                <button onClick={handleAdding}>
+                    <MvpAddButton>
+                        <PlusSquareFill color="#3687FF" />
+                    </MvpAddButton>
+                </button>
+            )}
         </MvpContainer>
-        // <div className="EduacationWrap">
-        //     <div className="title">
-        //         <h1>학력</h1>
-        //     </div>
-        //     {educations && (
-        //         <ul>
-        //             {educations.map((list, index) => (
-        //                 <li key={list.school + index}>
-        //                     <div className="listInner">
-        //                         <div className="contents">
-        //                             <div className="schoolName">{list.school}</div>
-        //                             <div className="descBox">
-        //                                 <span className="majorName">{list.major}</span>
-        //                                 <span className="status">{`(${list.status})`}</span>
-        //                             </div>
-        //                         </div>
-        //                         <div className="editBox">
-        //                             {editing && (
-        //                                 <button
-        //                                     onClick={() => {
-        //                                         setIsEditing(true);
-        //                                         setOneByOne(index);
-        //                                     }}
-        //                                 >
-        //                                     Edit
-        //                                 </button>
-        //                             )}
-        //                         </div>
-        //                     </div>
-        //                     {isEditing && index === oneByOne && (
-        //                         <EducationEditForm
-        //                             index={index}
-        //                             educations={educations}
-        //                             setEducations={setEducations}
-        //                             setIsEditing={setIsEditing}
-        //                             id={id}
-        //                         />
-        //                     )}
-        //                 </li>
-        //             ))}
-        //         </ul>
-        //     )}
-        //     {addFormActive && (
-        //         <EducationAddForm
-        //             setAddFormActive={setAddFormActive}
-        //             setEducations={setEducations}
-        //             id={id}
-        //         />
-        //     )}
-        //     {curUser?.id === id && <button onClick={handleAdding}>+</button>}
-        // </div>
     );
 }

@@ -4,8 +4,7 @@ import { useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
-import {ArrowRightShort} from "@styled-icons/bootstrap/ArrowRightShort";
-
+import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -42,7 +41,7 @@ const NameTxt = styled.h2`
 `;
 const EmailTxt = styled.h3`
     a {
-        color: ${(props)=> props.theme.btnColor};
+        color: ${(props) => props.theme.btnColor};
     }
 `;
 const DescBox = styled.div``;
@@ -61,19 +60,19 @@ const EditOrDetailBtnBox = styled.div`
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
-width: 18px;
-height: 18px;
-margin-top:-3px;
-`
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+`;
 const DetailBtn = styled.button`
-color: #5573df;
-`
+    color: #5573df;
+`;
 
-function UserCard({ id, name, email, description, hopeField }: IUser) {
+function UserCard({ _id, name, email, description, hopeField }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const curUser = useRecoilValue(curUserState);
-    const valid = id === curUser?.id;
+    const val_id = _id === curUser?._id;
     const [onEdit, setOnEdit] = useState(false);
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -81,37 +80,49 @@ function UserCard({ id, name, email, description, hopeField }: IUser) {
     };
     return (
         <>
-            <ItemWrap>
-                <InfoBox>
-                    <ProfileImageBox>
-                        <img src="https://placeimg.com/32/32/animals" alt="" />
-                    </ProfileImageBox>
-                    <UserInfoTxt>
-                        <NameTxt>{name}</NameTxt>
-                        <EmailTxt>
-                            <a href={`mailto:${email}`} title="메일 보내기">
-                                {email}
-                            </a>
-                        </EmailTxt>
-                        <DescTit>{hopeField}</DescTit>
-                    </UserInfoTxt>
-                </InfoBox>
-                <DescBox>
-                    <DescTit>한마디</DescTit>
-                    <DescTxt>
-                        {description.length > 70 ? description.slice(0, 70) + "..." : description}
-                    </DescTxt>
-                </DescBox>
-                <EditOrDetailBtnBox>
-                    {pathName === "/" ? (
-                        <button title="Edit(편집)">edit</button>
-                    ) : (
-                        <Link to={`${id}`}>
-                            <DetailBtn title="더보기">더보기<ArrowIcon/></DetailBtn>
-                        </Link>
-                    )}
-                </EditOrDetailBtnBox>
-            </ItemWrap>
+            {onEdit ? (
+                <>dd</>
+            ) : (
+                <ItemWrap>
+                    <InfoBox>
+                        <ProfileImageBox>
+                            <img src="https://placeimg.com/32/32/animals" alt="" />
+                        </ProfileImageBox>
+                        <UserInfoTxt>
+                            <NameTxt>{name}</NameTxt>
+                            <EmailTxt>
+                                <a href={`mailto:${email}`} title="메일 보내기">
+                                    {email}
+                                </a>
+                            </EmailTxt>
+                            <DescTit>{hopeField}</DescTit>
+                        </UserInfoTxt>
+                    </InfoBox>
+                    <DescBox>
+                        <DescTit>한마디</DescTit>
+                        <DescTxt>
+                            {description.length > 70
+                                ? description.slice(0, 70) + "..."
+                                : description}
+                        </DescTxt>
+                    </DescBox>
+                    <EditOrDetailBtnBox>
+                        {pathName === `/network` && (
+                            <Link to={`${_id}`}>
+                                <DetailBtn title="더보기">
+                                    더보기
+                                    <ArrowIcon />
+                                </DetailBtn>
+                            </Link>
+                        )}
+                        {_id === curUser?._id && (
+                            <DetailBtn title="편집" onClick={onClickEdit}>
+                                편집
+                            </DetailBtn>
+                        )}
+                    </EditOrDetailBtnBox>
+                </ItemWrap>
+            )}
         </>
     );
 }

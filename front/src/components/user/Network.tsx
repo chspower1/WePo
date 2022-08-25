@@ -83,11 +83,11 @@ function Network() {
     const [users, setUsers] = useRecoilState(usersState);
     const isLogin = useRecoilValue(isLoginState);
 
-    const { isLoading } = useQuery(["users"], getUsers, {
-        onSuccess(data) {
-            setUsers(data!);
-        },
-    });
+    // const { isLoading } = useQuery(["users"], getUsers, {
+    //     onSuccess(data) {
+    //         setUsers(data!);
+    //     },
+    // });
 
     const navigator = useNavigate();
     useEffect(() => {
@@ -118,7 +118,8 @@ function Network() {
                     </CheckBoxWrap>
                 </SelectBox>
             </NetworkHeadingSelectBox>
-            {isLoading ? (
+            {/* {isLoading  */}
+            {false ? (
                 <LoadingBox>
                     <LoadingIcon />
                     Loading...
@@ -126,7 +127,7 @@ function Network() {
             ) : (
                 <NetworkContainer>
                     {users?.map((user) => (
-                        <UserCard key={user.id} {...user} />
+                        <UserCard key={user._id} {...user} />
                     ))}
                 </NetworkContainer>
             )}

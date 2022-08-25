@@ -6,7 +6,20 @@ import { CertificateAddForm } from "./CertificateAddForm";
 import { CertificateEditForm } from "./CertificateEditForm";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { MvpContainer,MvpTitleBox,MvpTitle,MvpContentContainer,MvpContentBox,MvpContentName,MvpContentDate, MvpContentDetail, MvpEditButton, MvpAddButton, MvpDeleteButton,MvpContentAccent} from "../MyPortfolio";
+import {
+    MvpContainer,
+    MvpTitleBox,
+    MvpTitle,
+    MvpContentContainer,
+    MvpContentBox,
+    MvpContentName,
+    MvpContentDate,
+    MvpContentDetail,
+    MvpEditButton,
+    MvpAddButton,
+    MvpDeleteButton,
+    MvpContentAccent,
+} from "../MyPortfolio";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
@@ -16,6 +29,7 @@ export default function Certificate(info: ICertificate[]) {
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
+    const userToken = sessionStorage.getItem("userToken");
 
     // form 관리
     const [Adding, setAdding] = useState(false);
@@ -28,9 +42,8 @@ export default function Certificate(info: ICertificate[]) {
         setAdding((Adding) => !Adding);
     }
 
-    const [certificates, setCertificates] = useState<ICertificate[]>([
-    ]);
-
+    // 자격증 상태
+    const [certificates, setCertificates] = useState<ICertificate[]>([]);
 
     return (
         <MvpContainer>
@@ -39,9 +52,14 @@ export default function Certificate(info: ICertificate[]) {
             </MvpTitleBox>
             <MvpContentContainer>
                 {Adding && (
-                    <CertificateAddForm setAdding={setAdding} setCertificates={setCertificates} id={id}/>
+                    <CertificateAddForm
+                        setAdding={setAdding}
+                        setCertificates={setCertificates}
+                        id={id}
+                    />
                 )}
-                {!Adding && certificates.map((val: ICertificate, index: number) => (
+                {!Adding &&
+                    certificates.map((val: ICertificate, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
@@ -80,55 +98,12 @@ export default function Certificate(info: ICertificate[]) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            <MvpAddButton onClick={handleAdding}>
-                <PlusSquareFill color="#3687FF" />
-            </MvpAddButton>
-            {/* {curUser?.id === id && <MvpAddButton onClick={handleAdding}>
-                <PlusSquareFill color="#3687FF"/>
-            </MvpAddButton>} */}
-            {/* <div>
-                <ul>
-                    {certificates.map((certificate: ICertificate, index: number) => (
-                        <Li key={index}>
-                            <h1>{certificate.title}</h1>
-                            <h2>{certificate.date}</h2>
-                            <h2>{certificate.org}</h2>
-                            <h2>{certificate.description}</h2>
-                            {Editing && targetIndex !== index && (
-                                <button
-                                    onClick={() => {
-                                        setIsEditing(true);
-                                        setTargetIndex(index);
-                                    }}
-                                >
-                                    수정
-                                </button>
-                            )}
-                            {isEditing && targetIndex === index && (
-                                <CertificateEditForm
-                                    index={index}
-                                    certificates={certificates}
-                                    setCertificates={setCertificates}
-                                    setEditing={setEditing}
-                                    setIsEditing={setIsEditing}
-                                    setTargetIndex={setTargetIndex}
-                                    id={id}
-                                />
-                            )}
-                        </Li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                {Adding && (
-                    <CertificateAddForm
-                        setAdding={setAdding}
-                        setCertificates={setCertificates}
-                        id={id}
-                    />
-                )}
-                <button onClick={handleAdding}>추가</button>
-            </div> */}
+
+            {`${curUser?.token} === ${userToken}` && !Adding && (
+                <MvpAddButton onClick={handleAdding}>
+                    <PlusSquareFill color="#3687FF" />
+                </MvpAddButton>
+            )}
         </MvpContainer>
     );
 }

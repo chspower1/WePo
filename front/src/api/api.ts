@@ -42,7 +42,6 @@ export async function createtUser({ email, password, name }: IUser) {
             password,
             name,
         });
-        // console.log(data);
         const newUser: IUser = await {
             ...data,
             description: "",
@@ -58,7 +57,11 @@ export async function createtUser({ email, password, name }: IUser) {
 
 export async function getUsers() {
     try {
-        const { data: users } = await axios.get(`http://localhost:5001/userlist`);
+        const { data: users } = await axios.get(`http://localhost:5001/userlist`, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+            },
+        });
         return users as IUser[];
     } catch (err) {
         console.log(err);
@@ -66,7 +69,11 @@ export async function getUsers() {
 }
 export async function getUser(id: any) {
     try {
-        const { data: user } = await axios.get(`http://localhost:5001/users/${id}`);
+        const { data: user } = await axios.get(`http://localhost:5001/users/${id}`, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+            },
+        });
         return user as IUser;
     } catch (err) {
         console.log(err);
@@ -75,9 +82,17 @@ export async function getUser(id: any) {
 // -----------------------MVP 추가 수정 ----------------------
 // Award 추가,수정
 export async function addAward(data: IAward, id: string) {
-    
     try {
-        await axios.post(`http://localhost:5001/award`, { ...data, id })
+        await axios.post(
+            `/award`,
+            { ...data, id },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }

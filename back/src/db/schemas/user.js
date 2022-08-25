@@ -1,14 +1,8 @@
-// @ts-ignore
 import { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
   {
-    // User 식별 id
-    id: {
-      type: String,
-      required: true,
-    },
-    // User email
+    // User 이메일
     email: {
       type: String,
       required: true,
@@ -24,30 +18,42 @@ const UserSchema = new Schema(
       required: true,
     },
     // 프로필 사진
-		picture: {
+    picture: {
       type: String, //Image URL
       required: false,
     },
     // 관심 및 희망분야
+<<<<<<< HEAD
 		field: {
+=======
+    field: {
+>>>>>>> feat/Login
       type: Array,
       required: false,
       default: []
     },
     // 즐겨찾기/좋아요한 user의 ID들
+<<<<<<< HEAD
 		likes: {
+=======
+    likes: {
+>>>>>>> feat/Login
       type: Array,
       required: false,
       default: []
     },
     // 포트폴리오 조회수
+<<<<<<< HEAD
 		views: {
+=======
+    views: {
+>>>>>>> feat/Login
       type: Number,
       required: false,
       default: 0
     },
     // 설명
-		description: {
+    description: {
       type: String,
       required: false,
       default: "설명이 아직 없습니다. 추가해 주세요.",

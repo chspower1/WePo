@@ -28,6 +28,7 @@ export default function Project(info: IProject[]) {
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
+    const userToken = sessionStorage.getItem("userToken");
 
     // form 관리
     const [addFormActive, setAddFormActive] = useState(false);
@@ -49,10 +50,7 @@ export default function Project(info: IProject[]) {
             </MvpTitleBox>
             <MvpContentContainer>
                 {addFormActive && (
-                    <ProjectAddForm
-                        setAddFormActive={setAddFormActive}
-                        setProjects={setProjects}
-                    />
+                    <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} />
                 )}
                 {!addFormActive &&
                     projects.map((val: IProject, index: number) => (
@@ -93,48 +91,12 @@ export default function Project(info: IProject[]) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            <MvpAddButton onClick={handleAdding}>
-                <PlusSquareFill color="#3687FF" />
-            </MvpAddButton>
-            {/* {curUser?.id === id && <MvpAddButton onClick={handleAdding}>
-                <PlusSquareFill color="#3687FF" />
-            </MvpAddButton>} */}
-            {/* <div>
-                <ul>
-                    {projects.map((val: IProject, index: number) => (
-                        <Li key={index}>
-                            <h1>{val.title}</h1>
-                            <h2>{`${val.startDate} ~ ${val.endDate}`}</h2>
-                            <h2>{val.description}</h2>
-                            {Editing && targetIndex !== index && (
-                                <button
-                                    onClick={() => {
-                                        setIsEditing(true);
-                                        setTargetIndex(index);
-                                    }}
-                                >
-                                    수정
-                                </button>
-                            )}
-                            {isEditing && targetIndex === index && (
-                                <ProjectEditForm
-                                    index={index}
-                                    projects={projects}
-                                    setProjects={setProjects}
-                                    setEditing={setEditing}
-                                    setIsEditing={setIsEditing}
-                                    setTargetIndex={setTargetIndex}
-                                    id={id}
-                                />
-                            )}
-                        </Li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                {Adding && <ProjectAddForm setAdding={setAdding} setProjects={setProjects} />}
-                <button onClick={handleAdding}>추가</button>
-            </div> */}
+
+            {`${curUser?.token} === ${userToken}` && (
+                <MvpAddButton onClick={handleAdding}>
+                    <PlusSquareFill color="#3687FF" />
+                </MvpAddButton>
+            )}
         </MvpContainer>
     );
 }

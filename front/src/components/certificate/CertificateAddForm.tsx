@@ -2,16 +2,31 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { addCertificate } from "../../api/api";
 import { ICertificate } from "../../atoms";
-import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
+import {
+    MvpContainer,
+    MvpTitle,
+    MvpTitleBox,
+    MvpContentContainer,
+    MvpContentBox,
+    MvpContentName,
+    MvpContentDetail,
+    MvpContentDate,
+    MvpEditButton,
+    MvpAddButton,
+    MvpAddInput,
+    MvpAddInputBox,
+    RequiredLabel,
+    Button,
+} from "../MyPortfolio";
+
 export function CertificateAddForm({ setAddFormActive, setCertificates, id }: any) {
-    console.log(id);
     const {
         register,
         handleSubmit,
         setError,
         formState: { errors },
-    } = useForm<ICertificate>({mode:"onChange"});
+    } = useForm<ICertificate>({ mode: "onChange" });
 
     const onvalid = (data: ICertificate) => {
         setCertificates((project: any) => [...project, data]);
@@ -19,26 +34,30 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
         addCertificate(data, id);
     };
 
-    useEffect(()=>{
-        setError("title",{
-            type:'custom',
-            message:"자격증 명을 입력해주세요"
+    useEffect(() => {
+        setError("title", {
+            type: "custom",
+            message: "자격증 명을 입력해주세요",
         });
-        setError("date",{
-            type:'custom',
-            message:"발급일을 입력해주세요"
-        })
-        setError("org",{
-            type:'custom',
-            message:"발급기관을 입력해주세요"
-        })
-    },[])
+        setError("date", {
+            type: "custom",
+            message: "발급일을 입력해주세요",
+        });
+        setError("org", {
+            type: "custom",
+            message: "발급기관을 입력해주세요",
+        });
+    }, []);
 
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <MvpAddInputBox>
-                <p style={{position:"absolute",right:"20px",top:"20px"}}><RequiredLabel>*</RequiredLabel> 필수사항</p>
-                <MvpContentName>자격증 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                    <RequiredLabel>*</RequiredLabel> 필수사항
+                </p>
+                <MvpContentName>
+                    자격증 <RequiredLabel>*</RequiredLabel>
+                </MvpContentName>
                 <MvpAddInput
                     type="text"
                     id="certificate"
@@ -49,10 +68,17 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
                         shouldUnregister: true,
                     })}
                 ></MvpAddInput>
-                {errors.title && <ErrMsg><DangerIcon/>{errors.title.message}</ErrMsg>}    
+                {errors.title && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.title.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>발급일 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                <MvpContentName>
+                    발급일 <RequiredLabel>*</RequiredLabel>
+                </MvpContentName>
                 <MvpAddInput
                     type="Date"
                     width="130"
@@ -63,10 +89,17 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
                         shouldUnregister: true,
                     })}
                 ></MvpAddInput>
-                {errors.date && <ErrMsg><DangerIcon/>{errors.date.message}</ErrMsg>}
+                {errors.date && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.date.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>발급기관 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                <MvpContentName>
+                    발급기관 <RequiredLabel>*</RequiredLabel>
+                </MvpContentName>
                 <MvpAddInput
                     type="string"
                     id="issuer"
@@ -77,7 +110,12 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
                         shouldUnregister: true,
                     })}
                 ></MvpAddInput>
-                {errors.org && <ErrMsg><DangerIcon/>{errors.org.message}</ErrMsg>}
+                {errors.org && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.org.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
                 <MvpContentName>자격증 설명</MvpContentName>
@@ -88,8 +126,11 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
                     {...register("description", { shouldUnregister: true })}
                 ></MvpAddInput>
             </MvpAddInputBox>
-            <div style={{float:"right"}}>
-                <Button color="#3687FF" type="submit">추가</Button>
+
+            <div style={{ float: "right" }}>
+                <Button color="#3687FF" type="submit">
+                    추가
+                </Button>
                 <Button onClick={() => setAddFormActive(false)}>취소</Button>
             </div>
         </form>

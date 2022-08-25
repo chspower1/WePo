@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Award from "../award/Award";
 import Certificate from "../certificate/Certificate";
 import Education from "../education/Education";
@@ -27,7 +27,7 @@ function UserDetail() {
                     {user && <UserCard {...user} />}
                     <Education {...user?.educations!} />
                     <Award {...user?.awards!} />
-                    <Certificate {...user?.certificate!} />
+                    <Certificate {...user?.certificates!} />
                     <Project {...user?.projects!} />{" "}
                 </>
             )}
