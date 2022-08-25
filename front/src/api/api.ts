@@ -28,12 +28,6 @@ export async function UserLogin({ email, password }: ILogin) {
     }
 }
 
-export async function UserLogout() {
-    const setCurUser = useSetRecoilState(curUserState);
-    sessionStorage.remove("userToken");
-    setCurUser(null);
-}
-
 // 회원가입 완료
 export async function createtUser({ email, password, name }: IUser) {
     try {
@@ -67,13 +61,14 @@ export async function getUsers() {
         console.log(err);
     }
 }
-export async function getUser(id: any) {
+export async function getUser(id: string) {
     try {
-        const { data: user } = await axios.get(`http://localhost:5001/users/${id}`, {
+        const { data } = await axios.get(`http://localhost:5001/users/${id}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+        const { 0: user } = data;
         return user as IUser;
     } catch (err) {
         console.log(err);
@@ -84,7 +79,7 @@ export async function getUser(id: any) {
 export async function addAward(data: IAward, id: string) {
     try {
         await axios.post(
-            `/award`,
+            `http://localhost:5001/award`,
             { ...data, id },
             {
                 headers: {
@@ -108,7 +103,16 @@ export async function updateAward(data: IAward, id: string) {
 // Certificate 추가,수정
 export async function addCertificate(data: ICertificate, id: string) {
     try {
-        await axios.post(`http://localhost:5001/certificate`, { ...data, id });
+        await axios.post(
+            `http://localhost:5001/certificate`,
+            { ...data, id },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }
@@ -124,14 +128,32 @@ export async function updateCertificate(data: ICertificate, id: string) {
 // Education 추가,수정
 export async function addEducation(data: IEducation, id: string) {
     try {
-        await axios.post(`http://localhost:5001/education`, { ...data, id });
+        await axios.post(
+            `http://localhost:5001/education`,
+            { ...data, id },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }
 }
 export async function updateEducation(data: IEducation, id: string) {
     try {
-        await axios.put(`http://localhost:5001/education/${id}`, { ...data, id });
+        await axios.put(
+            `http://localhost:5001/education/${id}`,
+            { ...data, id },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }
@@ -139,14 +161,32 @@ export async function updateEducation(data: IEducation, id: string) {
 // Project 추가,수정
 export async function addProject(data: IProject, id: string) {
     try {
-        await axios.post(`http://localhost:5001/project`, { ...data, id });
+        await axios.post(
+            `http://localhost:5001/project`,
+            { ...data, id },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }
 }
-export async function updateProject(data: IProject, id: string) {
+export async function updateProject(data: IProject, userId: string, projectId: string) {
     try {
-        await axios.put(`http://localhost:5001/project/${id}`, { ...data, id });
+        await axios.put(
+            `http://localhost:5001/project/${projectId}`,
+            { ...data, userId },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }

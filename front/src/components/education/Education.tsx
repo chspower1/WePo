@@ -21,13 +21,13 @@ import {
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
-export default function Education(info: IEducation[]) {
+export default function Education({ info }: any) {
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     // 학력 상태
-    const [educations, setEducations] = useState<IEducation[]>([]); // 더미educations 초기값
+    const [educations, setEducations] = useState<IEducation[]>(info); // 더미educations 초기값
 
     // form 관리
     const [addFormActive, setAddFormActive] = useState(false);
@@ -52,8 +52,8 @@ export default function Education(info: IEducation[]) {
                     />
                 )}
                 {!addFormActive &&
-                    educations.map((list, index: number) => (
-                        <MvpContentBox>
+                    educations?.map((list, index) => (
+                        <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
                                     <MvpContentAccent>{list.school}</MvpContentAccent>
@@ -63,7 +63,7 @@ export default function Education(info: IEducation[]) {
                                         </MvpContentDetail>
                                         <MvpContentDetail>({list.status})</MvpContentDetail>
                                     </div>
-                                    {editing && targetIndex !== index && (
+                                    {id === curUser?.userId! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {

@@ -21,8 +21,8 @@ function Router() {
                 <Route path="/" element={<MyPortfolio />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
-                <Route path="/network/:id" element={<UserDetail />} />
                 <Route path="/network" element={<Network />} />
+                <Route path="/network/:id" element={<UserDetail />} />
             </Routes>
         </BrowserRouter>
     );

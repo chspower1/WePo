@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Award from "../award/Award";
 import Certificate from "../certificate/Certificate";
@@ -18,11 +18,12 @@ const PortfolioContainer = styled.section`
 `;
 function UserDetail() {
     const { id } = useParams();
-    const [user, setUser] = useState<IUser>();
+    const [user, setUser] = useState<IUser | null>(null);
 
-    const { isLoading } = useQuery(["getUser"], () => getUser(id), {
+    const { isLoading } = useQuery(["UserInfo"], () => getUser(id!), {
         onSuccess(user) {
-            setUser(user);
+            console.log(user);
+            setUser(user!);
         },
     });
     return (
@@ -30,13 +31,19 @@ function UserDetail() {
             {isLoading ? (
                 "로딩중"
             ) : (
-                <PortfolioContainer>
-                    {user && <UserCard {...user} />}
-                    <Education {...user?.educations!} />
-                    <Award {...user?.awards!} />
-                    <Certificate {...user?.certificates!} />
-                    <Project {...user?.projects!} />{" "}
-                </PortfolioContainer>
+                <>
+                    <PortfolioContainer>
+                        {user && (
+                            <>
+                                <UserCard {...user} />
+                                <Education info={[...user?.educations!]} />
+                                <Award info={[...user?.awards!]} />
+                                <Certificate info={[...user?.certificates!]} />
+                                <Project info={[...user?.projects!]} />
+                            </>
+                        )}
+                    </PortfolioContainer>
+                </>
             )}
         </>
     );

@@ -132,18 +132,29 @@ function MyPortfolio() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
     const curUser = useRecoilValue(curUserState);
+    const { isLoading, data } = useQuery(
+        ["curEducations"],
+        async () => await getUser(curUser?._id!)
+    );
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
         }
+        console.log(curUser);
     }, [isLogin]);
     return (
         <>
-            {curUser && <UserCard {...curUser} />}
-            <Education {...curUser?.educations!} />
-            <Award {...curUser?.awards!} />
-            <Certificate {...curUser?.certificates!} />
-            <Project {...curUser?.projects!} />
+            {isLoading ? (
+                <>로딩중</>
+            ) : (
+                <>
+                    {curUser && <UserCard {...curUser} />}
+                    <Education {...curUser?.educations!} />
+                    <Award {...curUser?.awards!} />
+                    <Certificate {...curUser?.certificates!} />
+                    <Project {...curUser?.projects!} />
+                </>
+            )}
         </>
     );
 }

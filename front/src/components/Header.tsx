@@ -35,7 +35,7 @@ export const LinkButton = styled(NavLink)`
     font-weight: bold;
     color: #343434;
     font-size: 14px;
-    &.active{
+    &.active {
         position: relative;
         margin: 0 10px;
         font-weight: bold;
@@ -78,6 +78,11 @@ function Header() {
     const setCurUser = useSetRecoilState(curUserState);
     const location = useLocation();
     const pathName = location.pathname;
+
+    const UserLogout = () => {
+        sessionStorage.removeItem("userToken");
+        setCurUser(null);
+    };
     return (
         <HeaderWrap>
             <HeaderContainer>
@@ -89,11 +94,9 @@ function Header() {
                 <Nav>
                     {isLogin ? (
                         <>
-                            <LinkButton to="/" >나의페이지</LinkButton>
-                            <LinkButton to="/network" >네트워크</LinkButton>
-                            <LoginOrRegiBtn onClick={() => setCurUser(null)}>
-                                로그아웃
-                            </LoginOrRegiBtn>
+                            <LinkButton to="/">나의페이지</LinkButton>
+                            <LinkButton to="/network">네트워크</LinkButton>
+                            <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                         </>
                     ) : pathName === "/login" ? (
                         <>

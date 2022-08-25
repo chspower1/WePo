@@ -23,7 +23,7 @@ import {
 import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
-export default function Project(info: IProject[]) {
+export default function Project({ info }: any) {
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
@@ -41,7 +41,7 @@ export default function Project(info: IProject[]) {
         setAddFormActive((addFormActive) => !addFormActive);
     }
 
-    const [projects, setProjects] = useState<IProject[]>([]);
+    const [projects, setProjects] = useState<IProject[]>(info);
 
     return (
         <MvpContainer>
@@ -53,14 +53,14 @@ export default function Project(info: IProject[]) {
                     <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} />
                 )}
                 {!addFormActive &&
-                    projects.map((val: IProject, index: number) => (
-                        <MvpContentBox>
+                    projects?.map((project: IProject, index: number) => (
+                        <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentAccent>{val.title}</MvpContentAccent>
-                                    <MvpContentDetail>{val.description}</MvpContentDetail>
-                                    <MvpContentDate>{`${val.startDate} ~ ${val.endDate}`}</MvpContentDate>
-                                    {editing && targetIndex !== index && (
+                                    <MvpContentAccent>{project.title}</MvpContentAccent>
+                                    <MvpContentDetail>{project.description}</MvpContentDetail>
+                                    <MvpContentDate>{`${project.startDate} ~ ${project.endDate}`}</MvpContentDate>
+                                    {id === curUser?.userId! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -86,6 +86,7 @@ export default function Project(info: IProject[]) {
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
                                     id={id}
+                                    _id={project._id}
                                 />
                             )}
                         </MvpContentBox>

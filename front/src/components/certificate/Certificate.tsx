@@ -24,7 +24,7 @@ import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 
-export default function Certificate(info: ICertificate[]) {
+export default function Certificate({ info }: any) {
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
@@ -43,7 +43,7 @@ export default function Certificate(info: ICertificate[]) {
     }
 
     // 자격증 상태
-    const [certificates, setCertificates] = useState<ICertificate[]>([]);
+    const [certificates, setCertificates] = useState<ICertificate[]>(info);
 
     return (
         <MvpContainer>
@@ -59,15 +59,15 @@ export default function Certificate(info: ICertificate[]) {
                     />
                 )}
                 {!Adding &&
-                    certificates.map((val: ICertificate, index: number) => (
+                    certificates?.map((val: ICertificate, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
                                     <MvpContentAccent>{val.title}</MvpContentAccent>
-                                    <MvpContentDate>{val.date}</MvpContentDate>
+                                    <MvpContentDate>{String(val.date)}</MvpContentDate>
                                     <MvpContentDetail>{val.org}</MvpContentDetail>
                                     <MvpContentDetail>{val.description}</MvpContentDetail>
-                                    {Editing && targetIndex !== index && (
+                                    {id === curUser?.userId! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {

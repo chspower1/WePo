@@ -8,7 +8,8 @@ import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 
 const ItemWrap = styled.div`
     position: relative;
-    width: 100%;
+    width: 20%;
+    min-width: 350px;
     padding: 20px 30px;
     border-radius: 10px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
@@ -68,7 +69,7 @@ const DetailBtn = styled.button`
     color: #5573df;
 `;
 
-function UserCard({ _id, name, email, description, hopeField }: IUser) {
+function UserCard({ _id, name, email, description, field }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const curUser = useRecoilValue(curUserState);
@@ -102,13 +103,13 @@ function UserCard({ _id, name, email, description, hopeField }: IUser) {
                                     {email}
                                 </a>
                             </EmailTxt>
-                            <DescTit>{hopeField}</DescTit>
+                            <DescTit>{field}</DescTit>
                         </UserInfoTxt>
                     </InfoBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
                         <DescTxt>
-                            {description.length > 70
+                            {description?.length > 70
                                 ? description.slice(0, 70) + "..."
                                 : description}
                         </DescTxt>

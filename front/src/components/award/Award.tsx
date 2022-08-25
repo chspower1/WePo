@@ -21,14 +21,14 @@ import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 
-export default function Award(info: IAward[]) {
+export default function Award({ info }: any) {
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     const userToken = sessionStorage.getItem("userToken");
     // 자격증 상태
-    const [awards, setAwards] = useState<IAward[]>([]);
+    const [awards, setAwards] = useState<IAward[]>(info);
 
     // form관리
     const [addFormActive, setAddFormActive] = useState(false);
@@ -60,8 +60,8 @@ export default function Award(info: IAward[]) {
                     />
                 )}
                 {!addFormActive &&
-                    awards.map((list, index) => (
-                        <MvpContentBox>
+                    awards?.map((list, index) => (
+                        <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
                                     <div style={{ display: "flex", alignItems: "center" }}>
@@ -73,9 +73,9 @@ export default function Award(info: IAward[]) {
                                         </MvpContentDetail>
                                     </div>
                                     <MvpContentDetail>{list.org}</MvpContentDetail>
-                                    <MvpContentDate>{list.date}</MvpContentDate>
+                                    <MvpContentDate>{String(list.date)}</MvpContentDate>
                                     <MvpContentDetail>{list.description}</MvpContentDetail>
-                                    {editing && targetIndex !== index && (
+                                    {id === curUser?.userId! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {

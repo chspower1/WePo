@@ -83,11 +83,11 @@ function Network() {
     const [users, setUsers] = useRecoilState(usersState);
     const isLogin = useRecoilValue(isLoginState);
 
-    // const { isLoading } = useQuery(["users"], getUsers, {
-    //     onSuccess(data) {
-    //         setUsers(data!);
-    //     },
-    // });
+    const { isLoading } = useQuery(["users"], getUsers, {
+        onSuccess(data) {
+            setUsers(data!);
+        },
+    });
 
     const navigator = useNavigate();
     useEffect(() => {
@@ -96,42 +96,47 @@ function Network() {
         }
     }, [isLogin]);
     return (
-        <NetworkWrap>
-            <NetworkHeadingSelectBox>
-                <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
-                <SelectBox>
-                    <CheckBoxWrap>
-                        <input type="checkbox" name="frontEnd" id="frontEnd" />
-                        <Label htmlFor="frontEnd">프론트엔드</Label>
-                    </CheckBoxWrap>
-                    <CheckBoxWrap>
-                        <input type="checkbox" name="backEnd" id="backEnd" />
-                        <Label htmlFor="backEnd">백엔드</Label>
-                    </CheckBoxWrap>
-                    <CheckBoxWrap>
-                        <input type="checkbox" name="dataAnalysis" id="dataAnalysis" />
-                        <Label htmlFor="dataAnalysis">데이터분석</Label>
-                    </CheckBoxWrap>
-                    <CheckBoxWrap>
-                        <input type="checkbox" name="AI" id="AI" />
-                        <Label htmlFor="AI">AI</Label>
-                    </CheckBoxWrap>
-                </SelectBox>
-            </NetworkHeadingSelectBox>
-            {/* {isLoading  */}
-            {false ? (
-                <LoadingBox>
-                    <LoadingIcon />
-                    Loading...
-                </LoadingBox>
+        <>
+            {isLoading ? (
+                <>로딩중</>
             ) : (
-                <NetworkContainer>
-                    {users?.map((user) => (
-                        <UserCard key={user._id} {...user} />
-                    ))}
-                </NetworkContainer>
+                <NetworkWrap>
+                    <NetworkHeadingSelectBox>
+                        <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
+                        <SelectBox>
+                            <CheckBoxWrap>
+                                <input type="checkbox" name="frontEnd" id="frontEnd" />
+                                <Label htmlFor="frontEnd">프론트엔드</Label>
+                            </CheckBoxWrap>
+                            <CheckBoxWrap>
+                                <input type="checkbox" name="backEnd" id="backEnd" />
+                                <Label htmlFor="backEnd">백엔드</Label>
+                            </CheckBoxWrap>
+                            <CheckBoxWrap>
+                                <input type="checkbox" name="dataAnalysis" id="dataAnalysis" />
+                                <Label htmlFor="dataAnalysis">데이터분석</Label>
+                            </CheckBoxWrap>
+                            <CheckBoxWrap>
+                                <input type="checkbox" name="AI" id="AI" />
+                                <Label htmlFor="AI">AI</Label>
+                            </CheckBoxWrap>
+                        </SelectBox>
+                    </NetworkHeadingSelectBox>
+                    {isLoading ? (
+                        <LoadingBox>
+                            <LoadingIcon />
+                            Loading...
+                        </LoadingBox>
+                    ) : (
+                        <NetworkContainer>
+                            {users?.map((user) => (
+                                <UserCard key={user._id} {...user} />
+                            ))}
+                        </NetworkContainer>
+                    )}
+                </NetworkWrap>
             )}
-        </NetworkWrap>
+        </>
     );
 }
 
