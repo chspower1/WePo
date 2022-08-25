@@ -3,6 +3,10 @@ import reset from "styled-reset";
 import { lightTheme } from "./theme";
 import Router from "./Router";
 import "./font/font.css";
+import { useRecoilValue } from "recoil";
+import { isLoginState } from "./atoms";
+import { useNavigate, Navigator } from "react-router-dom";
+import { useEffect } from "react";
 const GlobalStyle = createGlobalStyle`
     ${reset}
     html,body,#root{
@@ -10,9 +14,9 @@ const GlobalStyle = createGlobalStyle`
         width:100%;
         height:100%;
     }
-
     *{
         font-family: "Elice";
+        text-decoration: none;
         box-sizing: border-box;
     }
 
@@ -25,14 +29,8 @@ const GlobalStyle = createGlobalStyle`
         width:100%;
     }
 `;
-export const Btn = styled.button`
-    padding: 15px 10px;
-`;
-export const Container = styled.section`
-    display: flex;
-    flex-direction: column;
-`;
 function App() {
+    
     return (
         <>
             <ThemeProvider theme={lightTheme}>

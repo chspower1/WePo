@@ -1,13 +1,15 @@
 import { atom, selector } from "recoil";
 
 export interface IUser {
+    _id?: string;
     id: string;
     token: string;
     email: string;
     name: string;
     password: string;
-    picture: string;
+    picture?: string;
     description: string;
+    hopeField?: EHopeField[];
     createdAt: Date;
     updatedAt: Date;
     educations?: IEducation[];
@@ -15,10 +17,17 @@ export interface IUser {
     certificate?: ICertificate[];
     projects?: IProject[];
 }
+export enum EHopeField {
+    undefined = "미정",
+    backEnd = "백엔드",
+    frontEnd = "프론트엔드",
+    dataAnalysis = "데이터분석",
+    AI = "인공지능",
+}
 export interface IEducation {
     school: string;
     major: string;
-    status: EduStatus | "";
+    status: EduStatus;
 }
 export enum EduStatus {
     attending = "재학중",
@@ -41,21 +50,21 @@ export interface ICertificate {
 }
 export interface IProject {
     title: string;
-    startDate: number; //Date
-    endDate: number; //Date
+    startDate: Date; //Date
+    endDate: Date; //Date
     description: string;
 }
 
-export const curUserState = atom<IUser>({
+export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: {
-        id: "0",
-        token: "",
-        email: "chspower1@gmail",
-        name: "조호성",
-        password: "1234",
-        picture: "",
-        description: "프론트엔드장",
+        _id: "63032ae1b12eabb15061cc64",
+        id: "6e641761-edc7-41f7-b8a9-25e734760087",
+        token: "asdasdafqwer23413wdfaas",
+        email: "testSohi@naver.com",
+        name: "test수정",
+        password: "$2b$10$xwLKiGIsWqld/GnD1UlQ8uPGl6dBpR4xQ2MdaMUH5dbulPKo/1fvW",
+        description: "프론트엔드 개발자입니다.",
         createdAt: new Date(),
         updatedAt: new Date(),
     },
@@ -71,6 +80,7 @@ export const usersState = atom<IUser[]>({
             password: "1",
             picture: "1",
             description: "프론트엔드장",
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -82,6 +92,7 @@ export const usersState = atom<IUser[]>({
             password: "1",
             picture: "1",
             description: "팀장",
+            hopeField: [EHopeField.AI],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -93,6 +104,7 @@ export const usersState = atom<IUser[]>({
             password: "2",
             picture: "2",
             description: "서기",
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -104,6 +116,7 @@ export const usersState = atom<IUser[]>({
             password: "3",
             picture: "3",
             description: "백엔드장",
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -115,6 +128,7 @@ export const usersState = atom<IUser[]>({
             password: "3",
             picture: "3",
             description: "응원단장",
+            hopeField: [EHopeField.frontEnd],
             createdAt: new Date(),
             updatedAt: new Date(),
         },
@@ -126,7 +140,11 @@ export const isDarkState = atom({
     default: false,
 });
 
-export const isLoginState = atom({
+export const isLoginState = selector({
     key: "isLogin",
-    default: true,
+    get: ({ get }) => {
+        const curUser = get(curUserState);
+        const checkLogin = curUser?.token ? true : false;
+        return checkLogin;
+    },
 });

@@ -1,6 +1,7 @@
 import { IEducation } from "../../atoms";
 import { useForm } from "react-hook-form";
 
+
 export default function EducationEditForm({ index, educations, setEducations, setIsEditing }: any) {
     const {
         register,
