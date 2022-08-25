@@ -6,9 +6,18 @@ class educationService {
   // 학력 추가
   static async addEducation({ userId, school, major, status }) {
 
+    // 해당 학력에 대한 유니크 id 부여
     const eduId = uuidv4();
     const newEducation = { eduId, userId, school, major, status };
+
+    if(!school || !major || !status) {
+      const errorMessage = 
+        "학력정보 필수값을 모두 입력해주세요."
+        return  { errorMessage };
+    }
+
     const createdNewEducation = await Education.create({ newEducation });
+    createdNewEducation.errorMessage = null;
 
     return createdNewEducation;
   }
@@ -21,10 +30,11 @@ class educationService {
   }
 
   // eduId에 해당하는 학력정보 조회
-  static async getEducationByEduId({ eduId }) {
-    const education = await Education.findOneByEduId({ eduId });
-    return education;
-  }
+  // 주석처리한 이유 : edicuationRouter.js의 #1 참고
+  // static async getEducationByEduId({ eduId }) {
+  //   const education = await Education.findOneByEduId({ eduId });
+  //   return education;
+  // }
 
 
   // 학력 수정
@@ -34,7 +44,8 @@ class educationService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!education) {
-      const errorMessage = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage 
+      = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -56,7 +67,8 @@ class educationService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!education) {
-      const errorMessage = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage 
+      = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
