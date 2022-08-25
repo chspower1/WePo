@@ -10,7 +10,9 @@ const HeaderWrap = styled.header`
 `;
 
 export const HeaderContainer = styled.div`
-    width: 1300px;
+    max-width: 1300px;
+    min-width:480px;
+    width:100%;
     height: 100px;
     margin: 0 auto;
     padding: 0 30px;

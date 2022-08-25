@@ -8,30 +8,21 @@ import { isLoginState, usersState } from "../../atoms";
 import UserCard from "./UserCard";
 
 const NetworkWrap = styled.div`
-    width: 1300px;
+    width:100%;
+    max-width: 1300px;
+    min-width:480px;
     height: 81%;
     margin: 0 auto;
     padding: 0 50px;
 `;
 const NetworkContainer = styled.div`
     width: 100%;
-    height: 89%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-row-gap: 80px;
     grid-column-gap: 50px;
-    overflow-y: scroll;
-    padding: 20px 7px 0 0;
-    &::-webkit-scrollbar {
-        width: 5px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: #5573df;
-        border-radius: 10px;
-    }
-    &::-webkit-scrollbar-track {
-        padding: 5px 0;
-    }
+    padding: 20px 0 90px;
+
 `;
 
 const NetworkHeadingSelectBox = styled.div`
@@ -42,13 +33,14 @@ const NetworkHeadingSelectBox = styled.div`
 const NetworkTitle = styled.h1`
     text-align: center;
     font-size: 24px;
-    padding: 0 0 50px;
+    padding: 0 0 30px;
 `;
 
 const SelectBox = styled.div`
     display: flex;
     justify-content: center;
     gap: 10px;
+    padding: 0 0 30px;
 `;
 
 const CheckBoxWrap = styled.div`

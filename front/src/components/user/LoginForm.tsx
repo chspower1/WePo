@@ -25,7 +25,8 @@ export const FromWrap = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width:570px;
+    max-width:570px;
+    width:100%;
     height: 560px;
     padding : 70px 80px;
     margin: 80px auto 0;
@@ -93,6 +94,7 @@ export const SubmitButton = styled.button`
     &:disabled{
         background: #8a929e;
         box-shadow:  10px 10px 15px rgba(138, 146, 158, 0.4);
+        cursor:not-allowed;
     }
 `
 
