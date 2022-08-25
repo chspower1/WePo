@@ -2,11 +2,6 @@ import { Schema, model } from "mongoose";
 
 const ProjectSchema = new Schema(
   {
-    // 프로젝트 식별 id
-    projectId: {
-      type: String,
-      required: true
-    },
     // User 식별 id
     userId: {
       type: String,

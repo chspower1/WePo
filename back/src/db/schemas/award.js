@@ -2,11 +2,6 @@ import { Schema, model } from "mongoose";
 
 const AwardSchema = new Schema(
   {
-    // 수상내역 식별 id
-    awardId: {
-      type: String,
-      required: true
-    },
     // User 식별 id
     userId: {
       type: String,

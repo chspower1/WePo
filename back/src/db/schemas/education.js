@@ -2,11 +2,6 @@ import { Schema, model } from "mongoose";
 
 const EducationSchema = new Schema(
   {
-    // 학력정보 식별 id
-    eduId: {
-      type: String,
-      required: true
-    },
     // User 식별 id
     userId: {
       type: String,

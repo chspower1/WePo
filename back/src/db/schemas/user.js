@@ -2,11 +2,6 @@ import { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
   {
-    // User 식별 id
-    id: {
-      type: String,
-      required: true,
-    },
     // User 이메일
     email: {
       type: String,

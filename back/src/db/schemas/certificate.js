@@ -2,17 +2,12 @@ import { Schema, model } from "mongoose";
 
 const CertificateSchema = new Schema(
   {
-    // 자격증정보 식별 id
-    certId: {
-      type: String,
-      required: true
-    },
     // User 식별 id
     userId: {
       type: String,
       required: true,
     },
-    // 자격증 이름
+    // 자격증 명칭
     title: {
       type: String,
       required: true,
