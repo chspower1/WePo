@@ -99,7 +99,7 @@ export default function Certificate(info: ICertificate[]) {
                     ))}
             </MvpContentContainer>
 
-            {`${curUser?.token} === ${userToken}` && !Adding && (
+            {id === curUser?._id && !Adding && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

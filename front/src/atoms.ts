@@ -57,7 +57,18 @@ export interface IProject {
 const { persistAtom } = recoilPersist();
 export const curUserState = atom<IUser | null>({
     key: "curUser",
-    default: null,
+    default: {
+        id: "1",
+        token: "1",
+        email: "chspower1@gmail.com",
+        name: "조호성",
+        password: "1",
+        picture: "1",
+        description: "프론트엔드장",
+        hopeField: [EHopeField.frontEnd],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
     effects_UNSTABLE: [persistAtom],
 });
 export const usersState = atom<IUser[]>({

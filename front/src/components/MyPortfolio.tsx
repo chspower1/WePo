@@ -14,6 +14,7 @@ import styled from "styled-components";
 
 export const MvpContainer = styled.div`
     width: 50%;
+    margin: 0px auto;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -45,18 +46,18 @@ export const MvpContentBox = styled.div`
     border-bottom: 1px solid #a9a9a9;
 `;
 export const MvpContentName = styled.h2`
-    font-size:15px;
-    font-weight:bold;
-    margin-bottom:10px;
-    margin-top:20px;
-`
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px;
+`;
 export const MvpContentAccent = styled.h2`
-    font-size:15px;
-    font-weight:bold;
-    margin-bottom:10px;
-    margin-top:20px;
-    color:#3867FF;
-`
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    color: #3867ff;
+`;
 export const MvpContentDetail = styled.h3`
     font-size: 15px;
     margin-bottom: 10px;
@@ -86,6 +87,7 @@ export const MvpAddButton = styled.button`
     width: 45px;
     height: 45px;
 `;
+
 export const MvpAddInput = styled.input.attrs((props) => ({
     type: props.type || "text",
 }))`
@@ -108,24 +110,23 @@ export const RequiredLabel = styled.span`
     color: #3687ff;
 `;
 export const Button = styled.button`
-    background-color:${props => props.color || "white"};
-    color:${props => props.color ? "white" : "default"};
-    border:${props=> !props.color && "1px solid #7A7A7A"};
-    width:80px;
-    height:40px;
-    border-radius:10px;
-    margin-right:10px;
-`
-export const MajorGraduate = styled.input.attrs(props => ({
-    type:"radio",
-    name:props.name,
-    value: props.value
-}))`
+    background-color: ${(props) => props.color || "white"};
+    color: ${(props) => (props.color ? "white" : "default")};
+    border: ${(props) => !props.color && "1px solid #7A7A7A"};
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    margin-right: 10px;
+`;
+export const MajorGraduate = styled.input.attrs((props) => ({
+    type: "radio",
+    name: props.name,
+    value: props.value,
+}))``;
 
-`
 export const MajorGraduateLabel = styled.label`
-    color:black;
-`
+    color: black;
+`;
 
 function MyPortfolio() {
     const navigator = useNavigate();

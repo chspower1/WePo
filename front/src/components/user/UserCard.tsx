@@ -76,12 +76,19 @@ function UserCard({ _id, name, email, description, hopeField }: IUser) {
     const [onEdit, setOnEdit] = useState(false);
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setOnEdit(true);
+        setOnEdit((cur) => !cur);
     };
     return (
         <>
             {onEdit ? (
-                <>dd</>
+                <>
+                    편집모드
+                    {_id === curUser?._id && (
+                        <DetailBtn title="편집" onClick={onClickEdit}>
+                            편집
+                        </DetailBtn>
+                    )}
+                </>
             ) : (
                 <ItemWrap>
                     <InfoBox>

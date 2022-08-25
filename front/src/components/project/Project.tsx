@@ -92,7 +92,7 @@ export default function Project(info: IProject[]) {
                     ))}
             </MvpContentContainer>
 
-            {`${curUser?.token} === ${userToken}` && (
+            {id === curUser?._id && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

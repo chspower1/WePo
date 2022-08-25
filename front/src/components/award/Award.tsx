@@ -106,7 +106,7 @@ export default function Award(info: IAward[]) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {`${curUser?.token} === ${userToken}` && (
+            {id === curUser?._id && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
