@@ -1,23 +1,32 @@
-import { IAward } from "../../atoms";
+import { curUserState, IAward } from "../../atoms";
 import { useState } from "react";
 import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";
-import { IUser } from "./../../atoms";
 import { useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 export default function Award(info: IAward[]) {
+    // user ID
     const { id } = useParams();
+    // 현재 로그인 유저
+    const curUser = useRecoilValue(curUserState);
+    // 자격증 상태
+    const [awards, setAwards] = useState<IAward[]>([]);
+
+    // form관리
+    const [addFormActive, setAddFormActive] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [oneByOne, setOneByOne] = useState(0);
     const newDate = new Date();
     const maxDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(
         2,
         "0"
     )}-${String(newDate.getDate()).padStart(2, "0")}`;
 
-    const [addFormActive, setAddFormActive] = useState(false);
-    const [editing, setEditing] = useState(true); // userId와 대조해서 맞으면 edit버튼 보임
-    const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
-    const [oneByOne, setOneByOne] = useState(0); // index 를 체크해서 맞는 것만 editform 활성화
-    const [awards, setAwards] = useState<IAward[]>([]); // 더미awards 초기값
+    // 추가사항 on/off
+    function handleAdding() {
+        setAddFormActive((current) => !current);
+    }
 
     return (
         <div className="awardWrap">
@@ -47,7 +56,7 @@ export default function Award(info: IAward[]) {
                                 <p>{list.date}</p>
                                 <p>{list.org}</p>
                                 <div className="editBox">
-                                    {editing && (
+                                    {curUser?.id === id && (
                                         <button
                                             onClick={() => {
                                                 setIsEditing(true);
@@ -82,13 +91,7 @@ export default function Award(info: IAward[]) {
                     id={id}
                 />
             )}
-            <button
-                onClick={() => {
-                    setAddFormActive(true);
-                }}
-            >
-                +
-            </button>
+            {curUser?.id === id && <button onClick={handleAdding}>+</button>}
         </div>
     );
 }

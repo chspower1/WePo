@@ -1,42 +1,42 @@
-import { ICertificate } from "./../../atoms";
+import { curUserState, ICertificate } from "./../../atoms";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { errorSelector, useRecoilState } from "recoil";
+import { errorSelector, useRecoilState, useRecoilValue } from "recoil";
 import { CertificateAddForm } from "./CertificateAddForm";
 import { CertificateEditForm } from "./CertificateEditForm";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
 export default function Certificate(info: ICertificate[]) {
+    // user ID
     const { id } = useParams();
+    // 현재 로그인 유저
+    const curUser = useRecoilValue(curUserState);
+    // 자격증 상태
+    const [certificates, setCertificates] = useState<ICertificate[]>([]);
+
+    // form 관리
     const [Adding, setAdding] = useState(false);
-    const [Editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or false
+    const [Editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
     const [targetIndex, setTargetIndex] = useState<Number>();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { isSubmitting, errors },
-    } = useForm<ICertificate>();
-
+    // 추가사항 on/off
     function handleAdding() {
         setAdding((Adding) => !Adding);
     }
-
-    const [projects, setProjects] = useState<ICertificate[]>([]);
 
     return (
         <>
             <h1>자격증</h1>
             <div>
                 <ul>
-                    {projects.map((val: ICertificate, index: number) => (
+                    {certificates.map((certificate: ICertificate, index: number) => (
                         <Li key={index}>
-                            <h1>{val.title}</h1>
-                            <h2>{val.date}</h2>
-                            <h2>{val.org}</h2>
-                            <h2>{val.description}</h2>
+                            <h1>{certificate.title}</h1>
+                            <h2>{certificate.date}</h2>
+                            <h2>{certificate.org}</h2>
+                            <h2>{certificate.description}</h2>
                             {Editing && targetIndex !== index && (
                                 <button
                                     onClick={() => {
@@ -47,11 +47,11 @@ export default function Certificate(info: ICertificate[]) {
                                     수정
                                 </button>
                             )}
-                            {isEditing && targetIndex == index && (
+                            {isEditing && targetIndex === index && (
                                 <CertificateEditForm
                                     index={index}
-                                    projects={projects}
-                                    setProjects={setProjects}
+                                    certificates={certificates}
+                                    setCertificates={setCertificates}
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
@@ -64,9 +64,13 @@ export default function Certificate(info: ICertificate[]) {
             </div>
             <div>
                 {Adding && (
-                    <CertificateAddForm setAdding={setAdding} setProjects={setProjects} id={id} />
+                    <CertificateAddForm
+                        setAdding={setAdding}
+                        setCertificates={setCertificates}
+                        id={id}
+                    />
                 )}
-                <button onClick={handleAdding}>추가</button>
+                {curUser?.id === id && <button onClick={handleAdding}>+</button>}
             </div>
         </>
     );

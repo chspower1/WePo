@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { curUserState, IUser } from './../../atoms';
-import { Link, useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import { useState } from "react";
+import { curUserState, IUser } from "./../../atoms";
+import { useRecoilValue } from "recoil";
+import { Link, useLocation } from "react-router-dom";
+
+import styled from "styled-components";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -57,12 +58,11 @@ const EditOrDetailBtnBox = styled.div`
     text-align: right;
 `;
 
-function UserCard({ id, name, email, description }: IUser) {
+function UserCard({ id, name, email, description, hopeField }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
-
     const curUser = useRecoilValue(curUserState);
-    const valid = id === curUser.id;
+    const valid = id === curUser?.id;
     const [onEdit, setOnEdit] = useState(false);
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -72,23 +72,34 @@ function UserCard({ id, name, email, description }: IUser) {
         <>
             <ItemWrap>
                 <InfoBox>
-                <ProfileImageBox>
-                    <img src="https://placeimg.com/32/32/animals" alt="" />
-                </ProfileImageBox>
-                <UserInfoTxt>
-                    <NameTxt>{name}</NameTxt>
-                    <EmailTxt>
-                    <a href={`mailto:${email}`} title="메일 보내기">
-                        {email}
-                    </a>
-                    </EmailTxt>
-                </UserInfoTxt>
+                    <ProfileImageBox>
+                        <img src="https://placeimg.com/32/32/animals" alt="" />
+                    </ProfileImageBox>
+                    <UserInfoTxt>
+                        <NameTxt>{name}</NameTxt>
+                        <EmailTxt>
+                            <a href={`mailto:${email}`} title="메일 보내기">
+                                {email}
+                            </a>
+                        </EmailTxt>
+                        <DescTit>{hopeField}</DescTit>
+                    </UserInfoTxt>
                 </InfoBox>
                 <DescBox>
-                <DescTit>한마디</DescTit>
-                <DescTxt>{description.length > 70 ? description.slice(0, 70) + '...' : description}</DescTxt>
+                    <DescTit>한마디</DescTit>
+                    <DescTxt>
+                        {description.length > 70 ? description.slice(0, 70) + "..." : description}
+                    </DescTxt>
                 </DescBox>
-                <EditOrDetailBtnBox>{pathName === '/' ? <button title="Edit(편집)">edit</button> : <button title="더보기">더보기</button>}</EditOrDetailBtnBox>
+                <EditOrDetailBtnBox>
+                    {pathName === "/" ? (
+                        <button title="Edit(편집)">edit</button>
+                    ) : (
+                        <Link to={`${id}`}>
+                            <button title="더보기">더보기</button>
+                        </Link>
+                    )}
+                </EditOrDetailBtnBox>
             </ItemWrap>
         </>
     );

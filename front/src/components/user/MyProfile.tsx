@@ -8,12 +8,14 @@ function MyProfile() {
     const curUser = useRecoilValue(curUserState);
     return (
         <>
-            <div>
-                <h1>{curUser.name}</h1>
-                <h3>{curUser.email}</h3>
-                <p>{curUser.description}</p>
-                <button>edit</button>
-            </div>
+            {curUser && (
+                <div>
+                    <h1>{curUser.name}</h1>
+                    <h3>{curUser.email}</h3>
+                    <p>{curUser.description}</p>
+                    <button>edit</button>
+                </div>
+            )}
         </>
     );
 }

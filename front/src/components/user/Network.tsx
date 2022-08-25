@@ -4,60 +4,57 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { getUsers } from "../../api/api";
-import { isLoginState, IUser, usersState } from "../../atoms";
+import { isLoginState, usersState } from "../../atoms";
 import UserCard from "./UserCard";
 
-
 const NetworkWrap = styled.div`
-    width:1300px;
-    height:81%;
+    width: 1300px;
+    height: 81%;
     margin: 0 auto;
     padding: 0 50px;
-`
+`;
 const NetworkContainer = styled.div`
     width: 100%;
-    height:89%;
+    height: 89%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
-    grid-row-gap: 80px ;
+    grid-row-gap: 80px;
     grid-column-gap: 50px;
     overflow-y: scroll;
-    padding:20px 7px 0 0;
-    &::-webkit-scrollbar{
-        width:5px;
+    padding: 20px 7px 0 0;
+    &::-webkit-scrollbar {
+        width: 5px;
     }
-    &::-webkit-scrollbar-thumb{
+    &::-webkit-scrollbar-thumb {
         background: #5573df;
         border-radius: 10px;
     }
-    &::-webkit-scrollbar-track{
-        padding:5px 0;
+    &::-webkit-scrollbar-track {
+        padding: 5px 0;
     }
-    
-`
+`;
 
 const NetworkHeadingSelectBox = styled.div`
-width: 100%;
-margin: 70px 0 0;
-
-`
+    width: 100%;
+    margin: 70px 0 0;
+`;
 
 const NetworkTitle = styled.h1`
-text-align: center;
-font-size: 24px;
-padding: 0 0 50px;
-`
+    text-align: center;
+    font-size: 24px;
+    padding: 0 0 50px;
+`;
 
 const SelectBox = styled.div`
-    display:flex;
-    justify-content:center;
-    gap:10px;
-`
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+`;
 
 const CheckBoxWrap = styled.div`
-    display:flex;
-    align-items:center;
-`
+    display: flex;
+    align-items: center;
+`;
 
 function Network() {
     const location = useLocation();
@@ -81,7 +78,7 @@ function Network() {
         <NetworkWrap>
             <NetworkHeadingSelectBox>
                 <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
-                {/* 추가사항 <SelectBox>
+                <SelectBox>
                     <CheckBoxWrap>
                         <input type="checkbox" name="frontEnd" id="frontEnd" />
                         <label htmlFor="frontEnd">프론트엔드</label>
@@ -98,12 +95,10 @@ function Network() {
                         <input type="checkbox" name="AI" id="AI" />
                         <label htmlFor="AI">AI</label>
                     </CheckBoxWrap>
-                </SelectBox> */}
+                </SelectBox>
             </NetworkHeadingSelectBox>
             <NetworkContainer>
-                {isLoading ? "loding" : users?.map((user) => (
-                    <UserCard key={user.id} {...user} />
-                ))}
+                {isLoading ? "loding" : users?.map((user) => <UserCard key={user.id} {...user} />)}
             </NetworkContainer>
         </NetworkWrap>
     );
