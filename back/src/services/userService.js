@@ -1,4 +1,4 @@
-import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, Image } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 // import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -22,7 +22,9 @@ class userAuthService {
      */
     // id 는 유니크 값 부여
     // const id = uuidv4();
-    const newUser = { name, email, password: hashedPassword };
+
+    const picture = Image.getRandomURL()
+    const newUser = { name, email, password: hashedPassword, picture};
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
