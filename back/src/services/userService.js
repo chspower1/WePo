@@ -106,6 +106,22 @@ class userAuthService {
 
     return user;
   }
+
+  // 사용자 포트폴리오의 조회수 증가
+  static async increaseView({ userId }) {
+    const user = await User.findById({ userId });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    const newValues = { views: user.views + 1};
+
+    return User.update({ userId, newValues });
+  }
 }
 
 export { userAuthService };
