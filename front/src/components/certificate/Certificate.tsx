@@ -5,7 +5,7 @@ import { errorSelector, useRecoilState, useRecoilValue } from "recoil";
 import { CertificateAddForm } from "./CertificateAddForm";
 import { CertificateEditForm } from "./CertificateEditForm";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
     MvpContainer,
     MvpTitleBox,
@@ -38,8 +38,11 @@ export default function Certificate({ info }: any) {
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
     const [targetIndex, setTargetIndex] = useState<Number>();
 
+    const location = useLocation();
+    const pathName = location.pathname;
     // 추가사항 on/off
-    function handleAdding() {
+
+    function handleAddFormActive() {
         setAddFormActive((addFormActive) => !addFormActive);
     }
 
@@ -67,7 +70,7 @@ export default function Certificate({ info }: any) {
                                     <MvpContentDate>{String(val.date)}</MvpContentDate>
                                     <MvpContentDetail>{val.org}</MvpContentDetail>
                                     <MvpContentDetail>{val.description}</MvpContentDetail>
-                                    {id === curUser?._id! && targetIndex !== index && (
+                                    {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -77,7 +80,11 @@ export default function Certificate({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{deleteCertificate(val._id!)}}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    deleteCertificate(val._id!);
+                                                }}
+                                            >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -99,9 +106,8 @@ export default function Certificate({ info }: any) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-
-            {id === curUser?._id && !addFormActive && (
-                <MvpAddButton onClick={handleAdding}>
+            {curUser && pathName === "/" && !addFormActive && (
+                <MvpAddButton onClick={handleAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
             )}

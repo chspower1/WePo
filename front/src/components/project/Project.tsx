@@ -6,7 +6,7 @@ import { type } from "os";
 import { ProjectAddForm } from "./ProjectAddForm";
 import { ProjectEditForm } from "./ProjectEditForm";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
     MvpContainer,
     MvpTitle,
@@ -36,7 +36,8 @@ export default function Project({ info }: any) {
     const [editing, setEditing] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [targetIndex, setTargetIndex] = useState<Number>();
-
+    const location = useLocation();
+    const pathName = location.pathname;
     // 추가사항 on/off
     function handleAdding() {
         setAddFormActive((addFormActive) => !addFormActive);
@@ -61,7 +62,7 @@ export default function Project({ info }: any) {
                                     <MvpContentAccent>{project.title}</MvpContentAccent>
                                     <MvpContentDetail>{project.description}</MvpContentDetail>
                                     <MvpContentDate>{`${project.startDate} ~ ${project.endDate}`}</MvpContentDate>
-                                    {id === curUser?._id! && targetIndex !== index && (
+                                    {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -94,7 +95,7 @@ export default function Project({ info }: any) {
                     ))}
             </MvpContentContainer>
 
-            {id === curUser?._id && (
+            {curUser && pathName === "/" && !addFormActive && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

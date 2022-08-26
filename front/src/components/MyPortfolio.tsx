@@ -21,8 +21,8 @@ export const MvpContainer = styled.div`
     border-radius: 10px;
     box-shadow: 0px 4px 25px #cdcdcd;
     padding: 30px 50px 80px;
-    & + &{
-        margin-top:40px;
+    & + & {
+        margin-top: 40px;
     }
 `;
 export const MvpTitleBox = styled.div`
@@ -129,57 +129,50 @@ export const MajorGraduateLabel = styled.label`
 `;
 
 export const MyPortWrap = styled.div`
-    position:relative;
-    width:100%;
-    max-width:1300px;
-    display:flex;
-    justify-content:flex-end;
-    margin:0 auto;
-    padding:  80px 30px;
-`
+    position: relative;
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 auto;
+    padding: 80px 30px;
+`;
 export const MvpWrap = styled.div`
-    width:100%;
-    max-width:800px;
-    margin-left:100px;
-`
+    width: 100%;
+    max-width: 800px;
+    margin-left: 100px;
+`;
 export const UserCardBox = styled.div`
-    max-width:350px;
-`
-
+    max-width: 350px;
+`;
 
 function MyPortfolio() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
-    const curUser = useRecoilValue(curUserState);
-    const { isLoading, data } = useQuery(
-        ["curEducations"],
-        async () => await getUser(curUser?._id!)
-    );
+    const [curUser, setCurUser] = useRecoilState(curUserState);
+    const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?._id!), {
+        onSuccess(data) {
+            setCurUser((prev) => ({ ...prev, ...data! }));
+        },
+    });
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
         }
-        console.log(curUser);
     }, [isLogin]);
+    if (!curUser) return <></>; //이거 없으면 마이페이지에서 로그아웃하면 흰화면이 뜸
+    if (isLoading) return <></>;
     return (
         <>
-            {isLoading ? (
-                <>로딩중</>
-            ) : (
-                <>
-                    <MyPortWrap>
-                        <UserCardBox>
-                            {curUser && <UserCard {...curUser} />}
-                        </UserCardBox>
-                        <MvpWrap>
-                            <Education {...curUser?.educations!} />
-                            <Award {...curUser?.awards!} />
-                            <Certificate {...curUser?.certificates!} />
-                            <Project {...curUser?.projects!} />
-                        </MvpWrap>
-                    </MyPortWrap>
-                </>
-            )}
+            <MyPortWrap>
+                <UserCardBox>{curUser && <UserCard {...curUser} />}</UserCardBox>
+                <MvpWrap>
+                    <Education info={[...curUser?.educations!]} />
+                    <Award info={[...curUser?.awards!]} />
+                    <Certificate info={[...curUser?.certificates!]} />
+                    <Project info={[...curUser?.projects!]} />
+                </MvpWrap>
+            </MyPortWrap>
         </>
     );
 }

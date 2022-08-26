@@ -2,11 +2,10 @@ import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 export interface IUser {
     _id?: string;
-    userId?: string;
     token: string;
     email: string;
     name: string;
-    password: string;
+    password?: string;
     picture?: string;
     description: string;
     field: EHopeField[];
@@ -17,6 +16,7 @@ export interface IUser {
     awards?: IAward[];
     certificates?: ICertificate[];
     projects?: IProject[];
+    _v?: number;
 }
 export enum EHopeField {
     undefined = "미정",

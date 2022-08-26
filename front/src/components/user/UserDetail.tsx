@@ -21,7 +21,6 @@ function UserDetail() {
     const isLogin = useRecoilValue(isLoginState);
     const { isLoading } = useQuery(["UserInfo"], () => getUser(id!), {
         onSuccess(user) {
-            console.log("넘어온데이터", user);
             setUser(user!);
         },
     });

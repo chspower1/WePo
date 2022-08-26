@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { addCertificate, updateCertificate } from "../../api/api";
 import { ICertificate } from "../../atoms";
-import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
+import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
 export function CertificateEditForm({
@@ -34,8 +34,12 @@ export function CertificateEditForm({
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <MvpAddInputBox>
-                <p style={{position:"absolute",right:"20px",top:"20px"}}><RequiredLabel>*</RequiredLabel> 필수사항</p>
-                <MvpContentName>자격증명 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                    <RequiredLabel>*</RequiredLabel> 필수사항
+                </p>
+                <MvpContentName>
+                    자격증명 <RequiredLabel>*</RequiredLabel>
+                </MvpContentName>
                 <MvpAddInput
                     type="text"
                     width="300"
@@ -46,10 +50,17 @@ export function CertificateEditForm({
                         shouldUnregister: true,
                     })}
                 ></MvpAddInput>
-                {errors.title && <ErrMsg><DangerIcon/>{errors.title.message}</ErrMsg>}
+                {errors.title && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.title.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>취득날짜 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                <MvpContentName>
+                    취득날짜 <RequiredLabel>*</RequiredLabel>
+                </MvpContentName>
                 <MvpAddInput
                     type="date"
                     width="100"
@@ -64,10 +75,17 @@ export function CertificateEditForm({
                         shouldUnregister: true,
                     })}
                 ></MvpAddInput>
-                {errors.date && <ErrMsg><DangerIcon/>{errors.date.message}</ErrMsg>}
+                {errors.date && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.date.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>발급기관 <RequiredLabel>*</RequiredLabel></MvpContentName>
+                <MvpContentName>
+                    발급기관 <RequiredLabel>*</RequiredLabel>
+                </MvpContentName>
                 <MvpAddInput
                     type="text"
                     width="300"
@@ -89,9 +107,18 @@ export function CertificateEditForm({
                     {...register("description", { shouldUnregister: true })}
                 ></MvpAddInput>
             </MvpAddInputBox>
-            <div style={{float:"right",marginBottom:"10px"}}>
-                <Button type="submit" color="#3687FF">수정</Button>
-                <Button onClick={()=> {setIsEditing(false); setTargetIndex(null)}}>취소</Button>
+            <div style={{ float: "right", marginBottom: "10px" }}>
+                <Button type="submit" color="#3687FF">
+                    수정
+                </Button>
+                <Button
+                    onClick={() => {
+                        setIsEditing(false);
+                        setTargetIndex(null);
+                    }}
+                >
+                    취소
+                </Button>
             </div>
         </form>
     );
