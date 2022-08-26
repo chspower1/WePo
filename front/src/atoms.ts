@@ -90,7 +90,7 @@ const { persistAtom } = recoilPersist();
 export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });
 export const usersState = atom<IUser[]>({
     key: "user",
@@ -120,10 +120,10 @@ export const hopeJob = selector({
     key: "hopeJob",
     get: ({ get }) => {
         const currentHope = get(checkedBoxValue);
-        const userState = get(usersState);
+        let userState = get(usersState);
         for (const duty of currentHope) {
-            userState.filter((elem) => {
-                const findTarget = elem.field.findIndex((elem) => elem === duty);
+            userState = userState.filter((elem) => {
+                return elem.field.findIndex((elem) => elem === duty) >= 0;
             });
         }
         return userState;

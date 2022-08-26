@@ -20,11 +20,12 @@ export default function AwardEditForm({
         formState: { errors },
     } = useForm<IAward>({ mode: "onChange" });
     const onvalid = (data: IAward) => {
+        updateAward(data, id, _id);
         const editData = [...awards];
         editData[index] = data;
         setAwards(editData);
         setIsEditing(false);
-        updateAward(data, id, _id);
+        setTargetIndex(null)
     };
     const current = awards[index];
 
@@ -94,7 +95,7 @@ export default function AwardEditForm({
                     width="300"
                     placeholder="상세설명"
                     defaultValue={current.description}
-                    {...register("org", {
+                    {...register("description", {
                         required: "상세설명을 입력하세요!",
                         minLength: { value: 1, message: "상세설명을 입력하세요!" },
                     })}

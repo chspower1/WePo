@@ -83,7 +83,7 @@ function Network() {
     const [users, setUsers] = useRecoilState(usersState);
     const isLogin = useRecoilValue(isLoginState);
     const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
-    const filterUserState = useRecoilValue(hopeJob);
+    const filterUsersState = useRecoilValue(hopeJob);
 
     const { isLoading } = useQuery(["users"], getUsers, {
         onSuccess(data) {
@@ -99,9 +99,6 @@ function Network() {
         }
     }, [isLogin]);
 
-    useEffect(() => {
-        console.log(selectCheckBoxValues);
-    }, [selectCheckBoxValues]);
 
     function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
@@ -170,12 +167,12 @@ function Network() {
                         </LoadingBox>
                     ) : (
                         <NetworkContainer>
-                            {users?.map((user) => (
-                                <UserCard key={user._id} {...user} />
-                            ))}
-                            {/* {filterUserState.map((user) => (
+                            {/* {users?.map((user) => (
                                 <UserCard key={user._id} {...user} />
                             ))} */}
+                            {filterUsersState.map((user) => (
+                                <UserCard key={user._id} {...user} />
+                            ))}
                         </NetworkContainer>
                     )}
                 </NetworkWrap>

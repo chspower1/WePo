@@ -68,10 +68,10 @@ export function CertificateEditForm({
                     defaultValue={certificates[index].date}
                     {...register("date", {
                         required: "발급날짜을 입력해주세요",
-                        pattern: {
-                            value: /^\d{4}\d{2}\d{2}$/,
-                            message: "20220101 형식으로 작성해주세요",
-                        },
+                        // pattern: {
+                        //     value: /^\d{4}\d{2}\d{2}$/,
+                        //     message: "20220101 형식으로 작성해주세요",
+                        // },
                         shouldUnregister: true,
                     })}
                 ></MvpAddInput>
