@@ -15,7 +15,7 @@ projectRouter.get("/projectList", async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const userId = req.body._id;
+    const userId = req.body.userId;
 
     // userId 매칭되는 것들 찾아오기
     const projectList = await projectService.getProjectListByUserId({userId})
@@ -35,7 +35,7 @@ projectRouter.post("/project", login_required, async function (req, res, next) {
     }
     
     // req (request) 에서 데이터 가져오기
-    const currentUserId = req["currentUserId"];
+    const currentUserId = req["currentUserSeq"];
     const title = req.body.title;
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
@@ -66,9 +66,9 @@ projectRouter.put("/project/:projectId", login_required, async function (req, re
     }
 
     // User authentication
-    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Project 내에 저장된 userId
-    if (currentUserId!==userId) {
+    if (currentUserId !== parseInt(userId)) {
       throw new Error(
         "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
       );
@@ -104,9 +104,9 @@ projectRouter.delete("/project/:projectId", login_required, async function (req,
     }
 
     // User authentication
-    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Project 내에 저장된 userId
-    if (currentUserId!==userId) {
+    if (currentUserId !== parseInt(userId)) {
       throw new Error(
         "currentUser가 본 Project의 작성자가 아닙니다."
       );

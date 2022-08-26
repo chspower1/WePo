@@ -3,7 +3,7 @@ import { ProjectModel } from "../schemas/project";
 class Project {
 
   // 새로운 프로젝트 생성
-  static async create(newProject) {
+  static async create({ newProject }) {
     return ProjectModel.create(newProject);
   }
 

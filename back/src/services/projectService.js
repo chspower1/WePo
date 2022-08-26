@@ -5,7 +5,8 @@ class projectService {
   // 프로젝트 추가
   static async addProject({ userId, title, startDate, endDate, description }) {
     // 에러 처리 추가하기
-    return Project.create({ userId, title, startDate, endDate, description });
+    const newProject = { userId, title, startDate, endDate, description };
+    return Project.create({ newProject });
   }
 
   // userId에 해당하는 유저의 프로젝트 전체 조회

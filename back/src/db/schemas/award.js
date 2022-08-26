@@ -2,9 +2,9 @@ import { Schema, model } from "mongoose";
 
 const AwardSchema = new Schema(
   {
-    // User 식별 id
+    // User 식별 id - userSeq
     userId: {
-      type: String,
+      type: Number,
       required: true,
     },
     // 대회명
