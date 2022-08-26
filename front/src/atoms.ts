@@ -26,14 +26,14 @@ export enum EHopeField {
     AI = "인공지능",
 }
 export interface IEducation {
-    _id: string;
-    userId: string;
+    _id?: string;
+    userId?: string;
     school: string;
     major: string;
     status: EduStatus;
-    createdAt: Date;
-    updatedAt: Date;
-    __v: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    __v?: number;
 }
 export enum EduStatus {
     attending = "재학중",
@@ -42,32 +42,32 @@ export enum EduStatus {
     doctor = "박사졸업",
 }
 export interface IAward {
-    _id: string;
-    userId: string;
+    _id?: string;
+    userId?: string;
     title: string;
     grade: string;
     org: string;
     date: Date;
     description: string;
-    createdAt: Date;
-    updatedAt: Date;
-    __v: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    __v?: number;
 }
 
 export interface ICertificate {
-    _id: string;
-    userId: string;
+    _id?: string;
+    userId?: string;
     title: string;
     date: Date;
     org: string;
     description: string;
-    createdAt: Date;
-    updatedAt: Date;
-    __v: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    __v?: number;
 }
 export interface IProject {
-    _id: string;
-    userId: string;
+    _id?: string;
+    userId?: string;
     title: string;
     startDate: Date;
     endDate: Date;
