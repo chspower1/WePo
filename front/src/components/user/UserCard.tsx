@@ -67,7 +67,7 @@ const DetailBtn = styled.button`
     color: #5573df;
 `;
 
-function UserCard({ _id, name, email, description, field }: IUser) {
+function UserCard({ _id, name, email, description, field, userSeq }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
@@ -80,7 +80,7 @@ function UserCard({ _id, name, email, description, field }: IUser) {
             updateCurUser.description = description;
             return updateCurUser;
         });
-        updateUser({ name, description }, curUser?._id!);
+        updateUser({ name, description }, curUser?.userSeq!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -140,7 +140,7 @@ function UserCard({ _id, name, email, description, field }: IUser) {
                     </DescBox>
                     <EditOrDetailBtnBox>
                         {pathName === `/network` && (
-                            <Link to={`${_id}`}>
+                            <Link to={`${userSeq}`}>
                                 <DetailBtn title="더보기">
                                     더보기
                                     <ArrowIcon />

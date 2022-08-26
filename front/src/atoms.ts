@@ -112,21 +112,20 @@ export const isLoginState = selector({
 });
 
 export const checkedBoxValue = atom<string[]>({
-    key:"checkedBoxValue",
-    default: []
-})
+    key: "checkedBoxValue",
+    default: [],
+});
 
 export const hopeJob = selector({
     key: "hopeJob",
-    get: ({get})=>{
+    get: ({ get }) => {
         const currentHope = get(checkedBoxValue);
         const userState = get(usersState);
-        for (const duty of currentHope){
-            userState.filter(elem =>{
-                const findTarget = elem.field.findIndex(elem => elem == duty)
-            })
+        for (const duty of currentHope) {
+            userState.filter((elem) => {
+                const findTarget = elem.field.findIndex((elem) => elem === duty);
+            });
         }
-        return userState
-
-    }
+        return userState;
+    },
 });

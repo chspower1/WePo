@@ -56,14 +56,16 @@ export async function getUsers() {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+        console.log(users);
         return users as IUser[];
     } catch (err) {
         console.log(err);
     }
 }
-export async function getUser(id: string) {
+export async function getUser(userSeq: number) {
     try {
-        const { data } = await axios.get(`http://localhost:5001/users/${id}`, {
+        console.log(userSeq);
+        const { data } = await axios.get(`http://localhost:5001/users/${userSeq}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -74,10 +76,11 @@ export async function getUser(id: string) {
         console.log(err);
     }
 }
-export async function updateUser(data: any, id: string) {
+export async function updateUser(data: any, userSeq: number) {
     try {
+        console.log(userSeq);
         await axios.put(
-            `http://localhost:5001/users/${id}`,
+            `http://localhost:5001/users/${userSeq}`,
             { ...data },
             {
                 headers: {

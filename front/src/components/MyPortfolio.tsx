@@ -129,7 +129,7 @@ export const MajorGraduate = styled.input.attrs((props) => ({
 
 export const MajorGraduateLabel = styled.label`
     color: black;
-    margin-right:10px;
+    margin-right: 10px;
 `;
 
 export const MyPortWrap = styled.div`
@@ -165,11 +165,12 @@ function MyPortfolio() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?._id!), {
+    const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?.userSeq!), {
         onSuccess(data) {
             setCurUser((prev) => ({ ...prev, ...data! }));
         },
     });
+    console.log(curUser);
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
