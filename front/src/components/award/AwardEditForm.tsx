@@ -2,7 +2,7 @@ import { IAward } from "../../atoms";
 import { useForm } from "react-hook-form";
 import { updateAward } from "../../api/api";
 import { useParams } from "react-router-dom";
-import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
+import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 export default function AwardEditForm({
     index,
@@ -11,8 +11,8 @@ export default function AwardEditForm({
     setIsEditing,
     maxDate,
     setTargetIndex,
-    id,
-    _id
+    _id,
+    userSeq,
 }: any) {
     const {
         register,
@@ -20,20 +20,28 @@ export default function AwardEditForm({
         formState: { errors },
     } = useForm<IAward>({ mode: "onChange" });
     const onvalid = (data: IAward) => {
-        const editData = [...awards];
-        editData[index] = data;
-        setAwards(editData);
+        updateAward(data, userSeq, _id);
+        setAwards((award: any) => {
+            const editAward = [...award];
+            editAward[index] = data;
+            return editAward;
+        });
+        console.log(awards);
         setIsEditing(false);
-        updateAward(data, id, _id);
+        setTargetIndex(null);
     };
     const current = awards[index];
 
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <MvpAddInputBox>
-                <p style={{ position: "absolute", right: "20px", top: "20px" }}><RequiredLabel>*</RequiredLabel> 필수사항</p>
-                <MvpContentName>제목 <RequiredLabel>*</RequiredLabel> </MvpContentName>
-                <MvpAddInput 
+                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                    <RequiredLabel>*</RequiredLabel> 필수사항
+                </p>
+                <MvpContentName>
+                    제목 <RequiredLabel>*</RequiredLabel>{" "}
+                </MvpContentName>
+                <MvpAddInput
                     type="text"
                     width="300"
                     placeholder="제목"
@@ -42,11 +50,18 @@ export default function AwardEditForm({
                         required: "제목을 입력하세요!",
                         minLength: { value: 1, message: "제목을 입력하세요!" },
                     })}
-                    />
-                {errors.title && <ErrMsg><DangerIcon/>{errors.title.message}</ErrMsg>}
+                />
+                {errors.title && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.title.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>수상순위 <RequiredLabel>*</RequiredLabel> </MvpContentName>
+                <MvpContentName>
+                    수상순위 <RequiredLabel>*</RequiredLabel>{" "}
+                </MvpContentName>
                 <MvpAddInput
                     type="text"
                     width="300"
@@ -57,24 +72,38 @@ export default function AwardEditForm({
                         minLength: { value: 1, message: "상세제목을 입력하세요!" },
                     })}
                 />
-                {errors.grade && <ErrMsg><DangerIcon/>{errors.grade.message}</ErrMsg>}
+                {errors.grade && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.grade.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>날짜 <RequiredLabel>*</RequiredLabel> </MvpContentName>
-                    <MvpAddInput
-                        type="date"
-                        width="130"
-                        placeholder="날짜를 입력하세요"
-                        defaultValue={current.date}
-                        {...register('date',{
-                            required:"날짜를 입력하세요",
-                            max: { value: maxDate, message: "수상을 한 날짜를 입력하세요!" }
-                        })}
-                    />
-                {errors.date && <ErrMsg><DangerIcon/>{errors.date.message}</ErrMsg>}
+                <MvpContentName>
+                    날짜 <RequiredLabel>*</RequiredLabel>{" "}
+                </MvpContentName>
+                <MvpAddInput
+                    type="date"
+                    width="130"
+                    placeholder="날짜를 입력하세요"
+                    defaultValue={current.date}
+                    {...register("date", {
+                        required: "날짜를 입력하세요",
+                        max: { value: maxDate, message: "수상을 한 날짜를 입력하세요!" },
+                    })}
+                />
+                {errors.date && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.date.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>기관 <RequiredLabel>*</RequiredLabel> </MvpContentName>
+                <MvpContentName>
+                    기관 <RequiredLabel>*</RequiredLabel>{" "}
+                </MvpContentName>
                 <MvpAddInput
                     type="text"
                     width="300"
@@ -85,25 +114,46 @@ export default function AwardEditForm({
                         minLength: { value: 1, message: "기관을 입력하세요!" },
                     })}
                 />
-                {errors.org && <ErrMsg><DangerIcon/>{errors.org.message}</ErrMsg>}
+                {errors.org && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.org.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <MvpContentName>기관 <RequiredLabel>*</RequiredLabel> </MvpContentName>
+                <MvpContentName>
+                    기관 <RequiredLabel>*</RequiredLabel>{" "}
+                </MvpContentName>
                 <MvpAddInput
                     type="text"
                     width="300"
                     placeholder="상세설명"
                     defaultValue={current.description}
-                    {...register("org", {
+                    {...register("description", {
                         required: "상세설명을 입력하세요!",
                         minLength: { value: 1, message: "상세설명을 입력하세요!" },
                     })}
                 />
-                {errors.description && <ErrMsg><DangerIcon/>{errors.description.message}</ErrMsg>}
+                {errors.description && (
+                    <ErrMsg>
+                        <DangerIcon />
+                        {errors.description.message}
+                    </ErrMsg>
+                )}
             </MvpAddInputBox>
-            <div style={{float:"right",marginBottom:"10px"}}>
-                <Button type="submit" color="#3687FF">수정</Button>
-                <Button onClick={()=> {setIsEditing(false); setTargetIndex(null)}}>취소</Button>
+            <div style={{ float: "right", marginBottom: "10px" }}>
+                <Button type="submit" color="#3687FF">
+                    수정
+                </Button>
+                <Button
+                    onClick={() => {
+                        setIsEditing(false);
+                        setTargetIndex(null);
+                    }}
+                >
+                    취소
+                </Button>
             </div>
         </form>
         // <div>

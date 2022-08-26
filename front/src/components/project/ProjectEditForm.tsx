@@ -12,7 +12,7 @@ export function ProjectEditForm({
     setEditing,
     setIsEditing,
     setTargetIndex,
-    id,
+    userSeq,
     _id,
 }: any) {
     const {
@@ -22,7 +22,7 @@ export function ProjectEditForm({
     } = useForm<IProject>();
 
     const onvalid = (data: IProject) => {
-        updateProject(data, id, _id);
+        updateProject(data, userSeq, _id);
         setProjects((project: any) => {
             const editProject = [...project];
             editProject[index] = data;
