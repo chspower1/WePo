@@ -21,6 +21,7 @@ import {
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
+import { deleteEducation } from "../../api/api";
 export default function Education({ info }: any) {
     // user ID
     const { id } = useParams();
@@ -73,7 +74,7 @@ export default function Education({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton>
+                                            <MvpDeleteButton onClick={()=>{deleteEducation(list._id!)}}>
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -87,6 +88,7 @@ export default function Education({ info }: any) {
                                     setEducations={setEducations}
                                     setIsEditing={setIsEditing}
                                     id={id}
+                                    _id={list._id}
                                     setTargetIndex={setTargetIndex}
                                 />
                             )}

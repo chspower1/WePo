@@ -10,6 +10,7 @@ import {
     MajorGraduateLabel,
 } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
+import { updateEducation } from "../../api/api";
 
 export default function EducationEditForm({
     index,
@@ -17,6 +18,8 @@ export default function EducationEditForm({
     setEducations,
     setIsEditing,
     setTargetIndex,
+    id,
+    _id
 }: any) {
     const {
         register,
@@ -27,6 +30,7 @@ export default function EducationEditForm({
         const editData = [...educations];
         editData[index] = data;
         setEducations(editData);
+        updateEducation(data, id, _id)
         setIsEditing(false);
         setTargetIndex(null);
     };

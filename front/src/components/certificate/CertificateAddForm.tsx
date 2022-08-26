@@ -31,7 +31,7 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
     const onvalid = (data: ICertificate) => {
         setCertificates((project: any) => [...project, data]);
         setAddFormActive(false);
-        addCertificate(data, id);
+        addCertificate(data);
     };
 
     useEffect(() => {

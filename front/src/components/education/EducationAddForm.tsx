@@ -17,7 +17,7 @@ export default function EducationAddForm({ setEducations, setAddFormActive, id }
     const onvalid = (data: IEducation) => {
         setEducations((prev: any) => [...prev, data]);
         setAddFormActive(false);
-        addEducation(data, id);
+        addEducation(data);
     };
     useEffect(()=>{
         setError("status",{

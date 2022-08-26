@@ -9,6 +9,7 @@ import { IUser } from "./../../atoms";
 import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
 import styled from "styled-components";
+import { MyPortWrap, MvpWrap,  UserCardBox } from "../MyPortfolio";
 
 const PortfolioContainer = styled.section`
     width: 100%;
@@ -16,13 +17,14 @@ const PortfolioContainer = styled.section`
     flex-direction: column;
     align-items: center;
 `;
+
 function UserDetail() {
     const { id } = useParams();
     const [user, setUser] = useState<IUser | null>(null);
 
     const { isLoading } = useQuery(["UserInfo"], () => getUser(id!), {
         onSuccess(user) {
-            console.log(user);
+            // console.log(user);
             setUser(user!);
         },
     });
@@ -32,17 +34,21 @@ function UserDetail() {
                 "로딩중"
             ) : (
                 <>
-                    <PortfolioContainer>
+                    <MyPortWrap>
                         {user && (
                             <>
-                                <UserCard {...user} />
-                                <Education info={[...user?.educations!]} />
-                                <Award info={[...user?.awards!]} />
-                                <Certificate info={[...user?.certificates!]} />
-                                <Project info={[...user?.projects!]} />
+                                <UserCardBox>
+                                    <UserCard {...user} />
+                                </UserCardBox>
+                                <MvpWrap>
+                                    <Education info={[...user?.educations!]} />
+                                    <Award info={[...user?.awards!]} />
+                                    <Certificate info={[...user?.certificates!]} />
+                                    <Project info={[...user?.projects!]} />
+                                </MvpWrap>
                             </>
                         )}
-                    </PortfolioContainer>
+                    </MyPortWrap>
                 </>
             )}
         </>

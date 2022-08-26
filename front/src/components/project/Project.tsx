@@ -23,6 +23,7 @@ import {
 import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
+import { deleteProject } from "../../api/api";
 export default function Project({ info }: any) {
     // user ID
     const { id } = useParams();
@@ -70,7 +71,7 @@ export default function Project({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton>
+                                            <MvpDeleteButton onClick={()=>{deleteProject(project._id!)}}>
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>

@@ -12,6 +12,7 @@ export default function AwardEditForm({
     maxDate,
     setTargetIndex,
     id,
+    _id
 }: any) {
     const {
         register,
@@ -23,7 +24,7 @@ export default function AwardEditForm({
         editData[index] = data;
         setAwards(editData);
         setIsEditing(false);
-        updateAward(data, id!);
+        updateAward(data, id, _id);
     };
     const current = awards[index];
 

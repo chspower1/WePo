@@ -27,17 +27,21 @@ const Nav = styled.nav`
     justify-content: flex-end;
     align-items: center;
 `;
-
+/**
+ *  정확한 페이지로 가면 active-style
+ *  아니면 normal-style
+ * @end v6는 exact가 기본 설정되어 있지만 확실하게 end 써주세요!
+ * */
 export const LinkButton = styled(NavLink)`
+    text-align:center;
     position: relative;
     background-color: transparent;
-    margin: 0 8px;
+    margin: 0 10px;
     font-weight: bold;
     color: #343434;
     font-size: 14px;
     &.active {
         position: relative;
-        margin: 0 10px;
         font-weight: bold;
         cursor: default;
         color: ${(props) => props.theme.btnColor};
@@ -88,28 +92,28 @@ function Header() {
             <HeaderContainer>
                 <Link to="/">
                     <LogoBox>
-                        <LogoImg src="./assets/image/Logo.svg" alt="WepoLogo" />
+                        <LogoImg src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"} alt="WepoLogo" />
                     </LogoBox>
                 </Link>
                 <Nav>
                     {isLogin ? (
                         <>
                             <LinkButton to="/">나의페이지</LinkButton>
-                            <LinkButton to="/network">네트워크</LinkButton>
+                            <LinkButton to="/network" end >네트워크</LinkButton>
                             <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                         </>
                     ) : pathName === "/login" ? (
                         <>
-                            <LinkButton to="/network">네트워크</LinkButton>
-                            <LinkButton to="/login">로그인</LinkButton>
+                            <LinkButton to="/network" end >네트워크</LinkButton>
+                            <LinkButton to="/login" end >로그인</LinkButton>
                             <Link to={`/register`}>
                                 <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
                             </Link>
                         </>
                     ) : (
                         <>
-                            <LinkButton to="/network">네트워크</LinkButton>
-                            <LinkButton to="/register">회원가입</LinkButton>
+                            <LinkButton to="/network" end >네트워크</LinkButton>
+                            <LinkButton to="/register" end >회원가입</LinkButton>
                             <Link to={`/login`}>
                                 <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
                             </Link>

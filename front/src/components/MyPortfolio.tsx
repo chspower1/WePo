@@ -13,19 +13,19 @@ import UserDetail from "./user/UserDetail";
 import styled from "styled-components";
 
 export const MvpContainer = styled.div`
-    width: 50%;
-    margin: 0px auto;
-    height: auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
     box-shadow: 0px 4px 25px #cdcdcd;
-    margin-bottom: 20px;
+    padding: 30px 50px 80px;
+    & + &{
+        margin-top:40px;
+    }
 `;
 export const MvpTitleBox = styled.div`
-    margin: 40px 0 30px 60px;
     width: 100%;
 `;
 export const MvpTitle = styled.h2`
@@ -128,6 +128,25 @@ export const MajorGraduateLabel = styled.label`
     color: black;
 `;
 
+export const MyPortWrap = styled.div`
+    position:relative;
+    width:100%;
+    max-width:1300px;
+    display:flex;
+    justify-content:flex-end;
+    margin:0 auto;
+    padding:  80px 30px;
+`
+export const MvpWrap = styled.div`
+    width:100%;
+    max-width:800px;
+    margin-left:100px;
+`
+export const UserCardBox = styled.div`
+    max-width:350px;
+`
+
+
 function MyPortfolio() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
@@ -148,11 +167,17 @@ function MyPortfolio() {
                 <>로딩중</>
             ) : (
                 <>
-                    {curUser && <UserCard {...curUser} />}
-                    <Education {...curUser?.educations!} />
-                    <Award {...curUser?.awards!} />
-                    <Certificate {...curUser?.certificates!} />
-                    <Project {...curUser?.projects!} />
+                    <MyPortWrap>
+                        <UserCardBox>
+                            {curUser && <UserCard {...curUser} />}
+                        </UserCardBox>
+                        <MvpWrap>
+                            <Education {...curUser?.educations!} />
+                            <Award {...curUser?.awards!} />
+                            <Certificate {...curUser?.certificates!} />
+                            <Project {...curUser?.projects!} />
+                        </MvpWrap>
+                    </MyPortWrap>
                 </>
             )}
         </>

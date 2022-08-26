@@ -20,6 +20,7 @@ import {
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
+import { deleteAward } from "../../api/api";
 
 export default function Award({ info }: any) {
     // user ID
@@ -85,7 +86,7 @@ export default function Award({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton>
+                                            <MvpDeleteButton onClick={()=>{deleteAward(list._id!)}}>
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -100,6 +101,7 @@ export default function Award({ info }: any) {
                                     setIsEditing={setIsEditing}
                                     maxDate={maxDate}
                                     id={id}
+                                    _id={list._id}
                                     setTargetIndex={setTargetIndex}
                                 />
                             )}
