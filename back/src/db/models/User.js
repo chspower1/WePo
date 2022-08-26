@@ -12,16 +12,56 @@ class User {
 
   // email로 유저 조회
   static async findByEmail({ email }) {
-    const user = await UserModel.findOne({ email });
-    return user;
+    const user = await UserModel.aggregate([
+      {
+        $match: {
+          email
+        },
+      },
+      {
+        $addFields: { id: { $toString: "$_id"}}
+      },
+      {
+        $lookup: {
+          from: 'awards', // 참고 할 테이블
+          localField: 'id', // User.id
+          foreignField: 'userId', // Award.userId
+          as: 'awards', // 추가 할 프로퍼티
+        },
+      },
+      {
+        $lookup: {
+          from: 'projects',
+          localField: 'id',
+          foreignField: 'userId',
+          as: 'projects',
+        },
+      },
+      {
+        $lookup: {
+          from: 'educations',
+          localField: 'id',
+          foreignField: 'userId',
+          as: 'educations',
+        },
+      },
+      {
+        $lookup: {
+          from: 'certificates',
+          localField: 'id',
+          foreignField: 'userId',
+          as: 'certificates',
+        },
+      },
+      {
+        $unset: 'id'
+      }
+    ]);
+
+    return user[0];
   }
 
   // userId에 해당하는 유저 조회
-  // static async findById({ userId }) {
-  //   const user = await UserModel.findById(userId);
-  //   return user;
-  // }
-
   static async findById({ userId }) {
     const user = await UserModel.aggregate([
       {
@@ -70,7 +110,7 @@ class User {
       }
     ]);
 
-    return user;
+    return user[0];
   }
 
   // 모든 유저 조회
