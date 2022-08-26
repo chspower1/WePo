@@ -32,7 +32,7 @@ class Certificate {
 
   // certId에 해당하는 자격증정보 삭제
   static async delete({ certId }) {
-    return CertificateModel.findOneAndDelete(certId);
+    return CertificateModel.findByIdAndDelete(certId);
   }
 }
 
