@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, connection } from "mongoose";
 
 const UserSchema = new Schema(
   {
@@ -55,6 +55,27 @@ const UserSchema = new Schema(
     timestamps: true,
   }
 );
+
+
+UserSchema.pre('save', async function () {
+  const sequenceCollection = connection.collection('sequences');
+
+  const sequence = (
+    await sequenceCollection.findOneAndUpdate(
+      {
+        collectionName: 'users',
+      },
+      { $inc: { value: 1 } },
+      {
+        upsert: true,
+        returnDocument: 'after',
+      }
+    )
+  ).value;
+
+  this.set({ userSeq: sequence.value });
+});
+
 
 const UserModel = model("User", UserSchema);
 
