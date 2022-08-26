@@ -94,7 +94,37 @@ class userAuthService {
     return User.update({ userId, newValues });
   }
 
+  static async getUserId({ userSeq }) {
+
+    const userId = await User.findUserIdByUserSeq({ userSeq });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!userId) {
+      const errorMessage =
+        "해당 seq값을 갖는 유저id는 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    return userId;
+  }
+
   static async getUserInfo({ userId }) {
+
+    const user = await User.findById({ userId });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    return user;
+  }
+
+  static async getUserInfoByUserSeq({ userSeq }) {
+
+    const userId = await User.findUserIdByUserSeq({ userSeq });
     const user = await User.findById({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환

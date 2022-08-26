@@ -94,7 +94,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  "/users/:id",
+  "/users/:seq",
   login_required,
   async function (req, res, next) {
     try {
@@ -107,10 +107,16 @@ userAuthRouter.put(
       // User authentication
       const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
        // URI로부터 사용자 id를 추출함.
-      const userId = req.params.id;
-      if(userId !== currentUserId) {   
-        throw new Error(
-          "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+      const userSeq = req.params.seq;
+      const userId = await userAuthService.getUserId({ userSeq });
+
+      if (userId.errorMessage) {
+        throw new Error(userId.errorMessage);
+      }
+
+      if(userId.toString() !== currentUserId) {
+        console.log(userId, currentUserId); 
+        throw new Error("해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
         );
       } 
 
@@ -140,12 +146,12 @@ userAuthRouter.put(
 );
 
 userAuthRouter.get(
-  "/users/:id",
+  "/users/:seq",
   login_required,
   async function (req, res, next) {
     try {
-      const userId = req.params.id;
-      const currentUserInfo = await userAuthService.getUserInfo({ userId });
+      const userSeq = req.params.seq;
+      const currentUserInfo = await userAuthService.getUserInfoByUserSeq({ userSeq });
 
       // @ts-ignore
       if (currentUserInfo.errorMessage) {
