@@ -2,8 +2,8 @@ import { Schema, model } from "mongoose";
 
 const ImageSchema = new Schema(
   {
-    // User 식별 id
-    url: {
+    //이미지 URL들을 담고 있는 배열
+    urls: {
       type: Array
     }
   }

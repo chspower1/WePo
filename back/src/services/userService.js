@@ -23,7 +23,7 @@ class userAuthService {
     // id 는 유니크 값 부여
     // const id = uuidv4();
 
-    const picture = Image.getRandomURL()
+    const picture = await Image.getRandomURL()
     const newUser = { name, email, password: hashedPassword, picture};
 
     // db에 저장
