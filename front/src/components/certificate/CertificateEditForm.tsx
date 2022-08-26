@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { addCertificate } from "../../api/api";
+import { addCertificate, updateCertificate } from "../../api/api";
 import { ICertificate } from "../../atoms";
 import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
@@ -12,6 +12,7 @@ export function CertificateEditForm({
     setIsEditing,
     setTargetIndex,
     id,
+    _id
 }: any) {
     const {
         register,
@@ -20,7 +21,7 @@ export function CertificateEditForm({
     } = useForm<ICertificate>();
 
     const onvalid = (data: ICertificate) => {
-        addCertificate(data, id);
+        updateCertificate(data, id, _id);
         setCertificates((project: any) => {
             const editProject = [...project];
             editProject[index] = data;

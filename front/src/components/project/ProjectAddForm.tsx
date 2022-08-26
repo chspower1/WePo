@@ -14,7 +14,7 @@ export const ProjectAddForm = ({ setAddFormActive, setProjects, id }: any) => {
     } = useForm<IProject>({mode : "onChange"});
 
     const onvalid = (data: IProject) => {
-        addProject(data, id);
+        addProject(data);
         setProjects((project: any) => [...project, data]);
         setAddFormActive(false);
     };

@@ -23,6 +23,7 @@ import {
 import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
+import { deleteCertificate } from "../../api/api";
 
 export default function Certificate({ info }: any) {
     // user ID
@@ -77,7 +78,7 @@ export default function Certificate({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton>
+                                            <MvpDeleteButton onClick={()=>{deleteCertificate(val._id!)}}>
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -93,6 +94,7 @@ export default function Certificate({ info }: any) {
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
                                     id={id}
+                                    _id={val._id}
                                 />
                             )}
                         </MvpContentBox>

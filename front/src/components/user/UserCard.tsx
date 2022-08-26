@@ -7,8 +7,6 @@ import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 
 const ItemWrap = styled.div`
-    position: relative;
-    width: 20%;
     min-width: 350px;
     padding: 20px 30px;
     border-radius: 10px;
@@ -21,9 +19,7 @@ const InfoBox = styled.div`
     margin-bottom: 40px;
 `;
 const ProfileImageBox = styled.div`
-    position: absolute;
-    left: 0px;
-    top: -40px;
+    transform:translateY(-40px);
     width: 90px;
     height: 90px;
     border-radius: 50%;
@@ -33,7 +29,7 @@ const ProfileImageBox = styled.div`
 `;
 
 const UserInfoTxt = styled.div`
-    margin-left: 110px;
+    margin-left: 20px;
 `;
 const NameTxt = styled.h2`
     font-size: 18px;
@@ -68,6 +64,7 @@ const ArrowIcon = styled(ArrowRightShort)`
 const DetailBtn = styled.button`
     color: #5573df;
 `;
+
 
 function UserCard({ _id, name, email, description, field }: IUser) {
     const location = useLocation();
