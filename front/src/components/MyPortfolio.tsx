@@ -148,11 +148,11 @@ function MyPortfolio() {
                 <>로딩중</>
             ) : (
                 <>
-                    {curUser && <UserCard {...curUser} />}
-                    <Education {...curUser?.educations!} />
-                    <Award {...curUser?.awards!} />
-                    <Certificate {...curUser?.certificates!} />
-                    <Project {...curUser?.projects!} />
+                    <UserCard {...curUser} />
+                    <Education info={[...curUser?.educations!]} />
+                    <Award info={[...curUser?.awards!]} />
+                    <Certificate info={[...curUser?.certificates!]} />
+                    <Project info={[...curUser?.projects!]} />
                 </>
             )}
         </>

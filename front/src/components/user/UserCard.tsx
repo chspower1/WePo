@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { curUserState, IUser } from "./../../atoms";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
+import { useForm } from "react-hook-form";
+import { updateUser } from "../../api/api";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -72,46 +74,81 @@ const DetailBtn = styled.button`
 function UserCard({ _id, name, email, description, field }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
-    const curUser = useRecoilValue(curUserState);
-    const val_id = _id === curUser?._id;
+    const [curUser, setCurUser] = useRecoilState(curUserState);
+    const { register, handleSubmit } = useForm();
     const [onEdit, setOnEdit] = useState(false);
+    const onvalid = (data: any) => {
+        setCurUser((prev: any) => {
+            const updateCurUser = { ...prev };
+            updateCurUser.email = data.email;
+            updateCurUser.name = data.name;
+            updateCurUser.description = data.description;
+            return updateCurUser;
+        });
+        updateUser(data, curUser?._id!);
+    };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
     return (
         <>
-            {onEdit ? (
-                <>
-                    편집모드
-                    {_id === curUser?._id && (
-                        <DetailBtn title="편집" onClick={onClickEdit}>
-                            편집
-                        </DetailBtn>
-                    )}
-                </>
-            ) : (
-                <ItemWrap>
+            <ItemWrap>
+                <form onSubmit={() => handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
                             <img src="https://placeimg.com/32/32/animals" alt="" />
                         </ProfileImageBox>
                         <UserInfoTxt>
-                            <NameTxt>{name}</NameTxt>
+                            <NameTxt>
+                                {onEdit || name}
+                                {onEdit && (
+                                    <input
+                                        type="text"
+                                        defaultValue={name}
+                                        {...register("reName", {
+                                            required: "이름을 입력해주세요",
+                                        })}
+                                    />
+                                )}
+                            </NameTxt>
+
                             <EmailTxt>
-                                <a href={`mailto:${email}`} title="메일 보내기">
-                                    {email}
-                                </a>
+                                {onEdit || (
+                                    <a href={`mailto:${email}`} title="메일 보내기">
+                                        {email}
+                                    </a>
+                                )}
+                                {onEdit && (
+                                    <input
+                                        type="reEmail"
+                                        defaultValue={email}
+                                        {...register("rename", {
+                                            required: "이메일을 입력해주세요",
+                                        })}
+                                    />
+                                )}
                             </EmailTxt>
+
                             <DescTit>{field}</DescTit>
                         </UserInfoTxt>
                     </InfoBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
                         <DescTxt>
-                            {description?.length > 70
-                                ? description.slice(0, 70) + "..."
-                                : description}
+                            {onEdit ||
+                                (description?.length > 70
+                                    ? description.slice(0, 70) + "..."
+                                    : description)}
+                            {onEdit && (
+                                <input
+                                    type="text"
+                                    defaultValue={description}
+                                    {...register("reDescription", {
+                                        required: "나에 대한 설명을 입력해주세요",
+                                    })}
+                                />
+                            )}
                         </DescTxt>
                     </DescBox>
                     <EditOrDetailBtnBox>
@@ -123,14 +160,23 @@ function UserCard({ _id, name, email, description, field }: IUser) {
                                 </DetailBtn>
                             </Link>
                         )}
-                        {_id === curUser?._id && (
-                            <DetailBtn title="편집" onClick={onClickEdit}>
-                                편집
-                            </DetailBtn>
+                        {onEdit ||
+                            (_id === curUser?._id && pathName === "/" && (
+                                <DetailBtn title="편집" onClick={onClickEdit}>
+                                    편집
+                                </DetailBtn>
+                            ))}
+                        {onEdit && (
+                            <>
+                                <DetailBtn title="수정완료">수정완료</DetailBtn>
+                                <DetailBtn title="취소" onClick={onClickEdit}>
+                                    취소
+                                </DetailBtn>
+                            </>
                         )}
                     </EditOrDetailBtnBox>
-                </ItemWrap>
-            )}
+                </form>
+            </ItemWrap>
         </>
     );
 }

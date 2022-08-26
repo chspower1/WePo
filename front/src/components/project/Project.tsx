@@ -6,7 +6,7 @@ import { type } from "os";
 import { ProjectAddForm } from "./ProjectAddForm";
 import { ProjectEditForm } from "./ProjectEditForm";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
     MvpContainer,
     MvpTitle,
@@ -35,7 +35,7 @@ export default function Project({ info }: any) {
     const [editing, setEditing] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [targetIndex, setTargetIndex] = useState<Number>();
-
+    const pathName = useLocation();
     // 추가사항 on/off
     function handleAdding() {
         setAddFormActive((addFormActive) => !addFormActive);

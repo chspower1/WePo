@@ -6,7 +6,7 @@ export interface IUser {
     token: string;
     email: string;
     name: string;
-    password: string;
+    password?: string;
     picture?: string;
     description: string;
     field: EHopeField[];
@@ -17,6 +17,7 @@ export interface IUser {
     awards?: IAward[];
     certificates?: ICertificate[];
     projects?: IProject[];
+    _v?: number;
 }
 export enum EHopeField {
     undefined = "미정",
@@ -87,7 +88,7 @@ const { persistAtom } = recoilPersist();
 //     userId: string;
 //     userSeq: number;
 // }
-export const curUserState = atom<IUser | null>({
+export const curUserState = atom({
     key: "curUser",
     default: null,
     effects_UNSTABLE: [persistAtom],

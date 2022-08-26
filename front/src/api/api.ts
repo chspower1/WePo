@@ -68,13 +68,28 @@ export async function getUser(id: string) {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
-        console.log("API", data);
-        const { 0: user } = data;
-        return user as IUser;
+
+        return data as IUser;
     } catch (err) {
         console.log(err);
     }
 }
+export async function updateUser(data: IUser, id: string) {
+    try {
+        await axios.put(
+            `http://localhost:5001/users/${id}`,
+            { ...data, id },
+            {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // -----------------------MVP 추가 수정 ----------------------
 // Award 추가,수정
 export async function addAward(data: IAward, id: string) {
