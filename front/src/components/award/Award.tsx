@@ -22,6 +22,7 @@ import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 
 export default function Award({ info }: any) {
+    console.log("어워드", info);
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
@@ -75,7 +76,7 @@ export default function Award({ info }: any) {
                                     <MvpContentDetail>{list.org}</MvpContentDetail>
                                     <MvpContentDate>{String(list.date)}</MvpContentDate>
                                     <MvpContentDetail>{list.description}</MvpContentDetail>
-                                    {id === curUser?.userId! && targetIndex !== index && (
+                                    {id === curUser?._id! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {

@@ -67,7 +67,7 @@ export default function Certificate({ info }: any) {
                                     <MvpContentDate>{String(val.date)}</MvpContentDate>
                                     <MvpContentDetail>{val.org}</MvpContentDetail>
                                     <MvpContentDetail>{val.description}</MvpContentDetail>
-                                    {id === curUser?.userId! && targetIndex !== index && (
+                                    {id === curUser?._id! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {

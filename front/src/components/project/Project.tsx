@@ -60,7 +60,7 @@ export default function Project({ info }: any) {
                                     <MvpContentAccent>{project.title}</MvpContentAccent>
                                     <MvpContentDetail>{project.description}</MvpContentDetail>
                                     <MvpContentDate>{`${project.startDate} ~ ${project.endDate}`}</MvpContentDate>
-                                    {id === curUser?.userId! && targetIndex !== index && (
+                                    {id === curUser?._id! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {

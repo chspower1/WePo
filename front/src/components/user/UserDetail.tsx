@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Award from "../award/Award";
 import Certificate from "../certificate/Certificate";
 import Education from "../education/Education";
 import Project from "../project/Project";
 import UserCard from "./UserCard";
-import { IUser } from "./../../atoms";
+import { isLoginState, IUser } from "./../../atoms";
 import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
 
 const PortfolioContainer = styled.section`
     width: 100%;
@@ -19,13 +20,19 @@ const PortfolioContainer = styled.section`
 function UserDetail() {
     const { id } = useParams();
     const [user, setUser] = useState<IUser | null>(null);
-
+    const navigator = useNavigate();
+    const isLogin = useRecoilValue(isLoginState);
     const { isLoading } = useQuery(["UserInfo"], () => getUser(id!), {
         onSuccess(user) {
-            console.log(user);
+            console.log("넘어온데이터", user);
             setUser(user!);
         },
     });
+    useEffect(() => {
+        if (!isLogin) {
+            navigator("/login", { replace: true });
+        }
+    }, [isLogin]);
     return (
         <>
             {isLoading ? (
