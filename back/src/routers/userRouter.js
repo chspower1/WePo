@@ -75,14 +75,12 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      const userId = req['currentUserId'];
+      const userSeq = req['currentUserSeq'];
       const currentUserInfo = await userAuthService.getUserInfo({
-        userId,
+        userSeq,
       });
 
-      // @ts-ignore
       if (currentUserInfo.errorMessage) {
-        // @ts-ignore
         throw new Error(currentUserInfo.errorMessage);
       }
 
@@ -105,17 +103,12 @@ userAuthRouter.put(
       }
 
       // User authentication
-      const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+      const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userSeq값
        // URI로부터 사용자 id를 추출함.
       const userSeq = req.params.seq;
-      const userId = await userAuthService.getUserId({ userSeq });
 
-      if (userId.errorMessage) {
-        throw new Error(userId.errorMessage);
-      }
-
-      if(userId.toString() !== currentUserId) {
-        console.log(userId, currentUserId); 
+      if(userSeq !== currentUserId) {
+        console.log(userSeq, currentUserId); 
         throw new Error("해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
         );
       } 
@@ -128,13 +121,11 @@ userAuthRouter.put(
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ 
-        userId, 
+        userSeq, 
         toUpdate 
       });
 
-      // @ts-ignore
       if (updatedUser.errorMessage) {
-        // @ts-ignore
         throw new Error(updatedUser.errorMessage);
       }
 
@@ -150,18 +141,16 @@ userAuthRouter.get(
   login_required,
   async function (req, res, next) {
     try {
-      const userSeq = req.params.seq;
-      const currentUserInfo = await userAuthService.getUserInfoByUserSeq({ userSeq });
+      const userSeq = parseInt(req.params.seq);
+      const currentUserInfo = await userAuthService.getUserInfo({ userSeq });
 
-      // @ts-ignore
       if (currentUserInfo.errorMessage) {
-        // @ts-ignore
         throw new Error(currentUserInfo.errorMessage);
       }
 
       // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
-      if (userId !== req["currentUserId"]){
-        await userAuthService.increaseView({ userId });
+      if (userSeq !== req["currentUserSeq"]){
+        await userAuthService.increaseView({ userSeq });
       }
 
       res.status(200).send(currentUserInfo);

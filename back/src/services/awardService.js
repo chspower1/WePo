@@ -5,7 +5,8 @@ class awardService {
   // 수상내역 추가
   static async addAward({ userId, title, grade, org, date, description }) {
     // 에러 처리 추가하기
-    return Award.create({ userId, title, grade, org, date, description });
+    const newAward = { userId, title, grade, org, date, description }
+    return Award.create({ newAward });
   }
 
   // userId에 해당하는 유저의 수상내역 전체 조회

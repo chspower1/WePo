@@ -3,7 +3,7 @@ import { AwardModel } from "../schemas/award";
 class Award {
 
   // 새로운 수상내역 생성
-  static async create(newAward) {
+  static async create({ newAward }) {
     return AwardModel.create(newAward);
   }
 

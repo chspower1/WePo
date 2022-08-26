@@ -15,7 +15,7 @@ certificateRouter.get("/certificateList", async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const userId = req.body._id;
+    const userId = req.body.userId;
 
     // userId 매칭되는 것들 찾아오기
     const certificateList = await certificateService.getCertificateListByUserId({ userId })
@@ -35,7 +35,7 @@ certificateRouter.post("/certificate", login_required, async function (req, res,
     }
 
     // req (request) 에서 데이터 가져오기
-    const currentUserId = req['currentUserId'];
+    const currentUserId = req['currentUserSeq'];
     const title = req.body.title;
     const date = req.body.date;
     const org = req.body.org;
@@ -70,9 +70,9 @@ certificateRouter.put("/certificate/:certId", login_required, async function (re
     }
 
     // User authentication
-    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Certificate 내에 저장된 userId
-    if(userId !== currentUserId) {   
+    if (currentUserId !== parseInt(userId)) {
       throw new Error(
         "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
       );
@@ -113,9 +113,9 @@ certificateRouter.delete("/certificate/:certId", login_required, async function 
     }
     
     // User authentication
-    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Project 내에 저장된 userId
-    if (currentUserId!==userId) {
+    if (currentUserId !== parseInt(userId)) {
       throw new Error(
         "해당 정보을 삭제할 권한이 없습니다. 본인의 정보만 삭제할 수 있습니다."
       );
