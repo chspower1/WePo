@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, connection } from "mongoose";
 
 const UserSchema = new Schema(
   {
@@ -23,31 +23,19 @@ const UserSchema = new Schema(
       required: false,
     },
     // 관심 및 희망분야
-<<<<<<< HEAD
-		field: {
-=======
     field: {
->>>>>>> feat/Login
       type: Array,
       required: false,
       default: []
     },
     // 즐겨찾기/좋아요한 user의 ID들
-<<<<<<< HEAD
-		likes: {
-=======
     likes: {
->>>>>>> feat/Login
       type: Array,
       required: false,
       default: []
     },
     // 포트폴리오 조회수
-<<<<<<< HEAD
-		views: {
-=======
     views: {
->>>>>>> feat/Login
       type: Number,
       required: false,
       default: 0
@@ -58,11 +46,36 @@ const UserSchema = new Schema(
       required: false,
       default: "설명이 아직 없습니다. 추가해 주세요.",
     },
+    userSeq: {
+      type: Number,
+      required: false
+    }
   },
   {
     timestamps: true,
   }
 );
+
+
+UserSchema.pre('save', async function () {
+  const sequenceCollection = connection.collection('sequences');
+
+  const sequence = (
+    await sequenceCollection.findOneAndUpdate(
+      {
+        collectionName: 'users',
+      },
+      { $inc: { value: 1 } },
+      {
+        upsert: true,
+        returnDocument: 'after',
+      }
+    )
+  ).value;
+
+  this.set({ userSeq: sequence.value });
+});
+
 
 const UserModel = model("User", UserSchema);
 

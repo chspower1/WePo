@@ -1,4 +1,6 @@
 import { UserModel } from "../schemas/user";
+import { Types } from "mongoose";
+const ObjectId = Types.ObjectId;
 
 class User {
 
@@ -10,14 +12,98 @@ class User {
 
   // email로 유저 조회
   static async findByEmail({ email }) {
-    const user = await UserModel.findOne({ email });
-    return user;
+    const user = await UserModel.aggregate([
+      {
+        $match: {
+          email
+        },
+      },
+      {
+        $lookup: {
+          from: 'awards', // 참고 할 테이블
+          localField: 'userSeq', // User.id
+          foreignField: 'userId', // Award.userId
+          as: 'awards', // 추가 할 프로퍼티
+        },
+      },
+      {
+        $lookup: {
+          from: 'projects',
+          localField: 'userSeq',
+          foreignField: 'userId',
+          as: 'projects',
+        },
+      },
+      {
+        $lookup: {
+          from: 'educations',
+          localField: 'userSeq',
+          foreignField: 'userId',
+          as: 'educations',
+        },
+      },
+      {
+        $lookup: {
+          from: 'certificates',
+          localField: 'userSeq',
+          foreignField: 'userId',
+          as: 'certificates',
+        },
+      },
+    ]);
+
+    return user[0];
   }
 
   // userId에 해당하는 유저 조회
-  static async findById({ userId }) {
-    const user = await UserModel.findById(userId);
-    return user;
+  // static async findById({ userId }) {
+  //   const user = await UserModel.findById(userId);
+  //   return user;
+  // }
+
+  // userSeq로 해당하는 유저의 모든 정보 조회
+  static async findBySeq({ userSeq }) {
+    const user = await UserModel.aggregate([
+      {
+        $match: {
+          userSeq: userSeq
+        },
+      },
+      {
+        $lookup: {
+          from: 'awards', // 참고 할 테이블
+          localField: 'userSeq', // User.id
+          foreignField: 'userId', // Award.userId
+          as: 'awards', // 추가 할 프로퍼티
+        },
+      },
+      {
+        $lookup: {
+          from: 'projects',
+          localField: 'userSeq',
+          foreignField: 'userId',
+          as: 'projects',
+        },
+      },
+      {
+        $lookup: {
+          from: 'educations',
+          localField: 'userSeq',
+          foreignField: 'userId',
+          as: 'educations',
+        },
+      },
+      {
+        $lookup: {
+          from: 'certificates',
+          localField: 'userSeq',
+          foreignField: 'userId',
+          as: 'certificates',
+        },
+      },
+    ]);
+
+    return user[0];
   }
 
   // 모든 유저 조회
@@ -27,14 +113,13 @@ class User {
   }
 
   // 유저 정보 수정
-  static async update({ userId, fieldToUpdate, newValue }) {
-    const filter = { _id: userId };
-    const update = { [fieldToUpdate]: newValue };
+  static async update({ userSeq, newValues }) {
+    const filter = { userSeq: userSeq };
     const option = { returnOriginal: false };
 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
-      update,
+      newValues,
       option
     );
     return updatedUser;
