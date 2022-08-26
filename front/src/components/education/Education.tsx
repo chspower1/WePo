@@ -77,7 +77,11 @@ export default function Education({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{deleteEducation(list._id!)}}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    deleteEducation(list._id!);
+                                                }}
+                                            >
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
