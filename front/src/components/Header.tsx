@@ -1,8 +1,18 @@
 import { Link, useLocation, NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { curUserState, isLoginState } from "../atoms";
+
+const LinkHover = keyframes`
+    0%{color:#343434}
+    15%{color:#ff6698}
+    30%{color:#ffb366}
+    45%{color:#eeee00}
+    60%{color:#98ff66}
+    80%{color:#6698ff}
+    100%{color:#4b0082}
+`
 
 const HeaderWrap = styled.header`
     z-index:2;
@@ -48,7 +58,6 @@ export const LinkButton = styled(NavLink)`
     &.active {
         position: relative;
         font-weight: bold;
-        cursor: default;
         color: ${(props) => props.theme.btnColor};
         &:after {
             content: "";
@@ -60,6 +69,9 @@ export const LinkButton = styled(NavLink)`
             height: 3px;
             background-color: ${(props) => props.theme.btnColor};
         }
+    }
+    &:hover{
+        animation:${LinkHover} .8s forwards;
     }
 `;
 
@@ -78,9 +90,18 @@ const LoginOrRegiBtn = styled.button`
     background: #343434;
     border-radius: 20px;
     color: ${(props) => props.theme.bgColor};
+    border: 2px solid #343434;
     margin-left: 20px;
     letter-spacing: -0.4px;
+    transition : all .4s;
+    &:hover{
+        background: ${(props) => props.theme.bgColor};
+        color: #343434;
+    }
 `;
+const HeaderEmptyBox = styled.div`
+    height:100px;
+`
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -93,40 +114,43 @@ function Header() {
         setCurUser(null);
     };
     return (
-        <HeaderWrap>
-            <HeaderContainer>
-                <Link to="/">
-                    <LogoBox>
-                        <LogoImg src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"} alt="WepoLogo" />
-                    </LogoBox>
-                </Link>
-                <Nav>
-                    {isLogin ? (
-                        <>
-                            <LinkButton to="/">나의페이지</LinkButton>
-                            <LinkButton to="/network" end >네트워크</LinkButton>
-                            <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
-                        </>
-                    ) : pathName === "/login" ? (
-                        <>
-                            <LinkButton to="/network" end >네트워크</LinkButton>
-                            <LinkButton to="/login" end >로그인</LinkButton>
-                            <Link to={`/register`}>
-                                <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <LinkButton to="/network" end >네트워크</LinkButton>
-                            <LinkButton to="/register" end >회원가입</LinkButton>
-                            <Link to={`/login`}>
-                                <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
-                            </Link>
-                        </>
-                    )}
-                </Nav>
-            </HeaderContainer>
-        </HeaderWrap>
+        <>
+            <HeaderEmptyBox/>
+            <HeaderWrap>
+                <HeaderContainer>
+                    <Link to="/">
+                        <LogoBox>
+                            <LogoImg src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"} alt="WepoLogo" />
+                        </LogoBox>
+                    </Link>
+                    <Nav>
+                        {isLogin ? (
+                            <>
+                                <LinkButton to="/">나의페이지</LinkButton>
+                                <LinkButton to="/network" end >네트워크</LinkButton>
+                                <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
+                            </>
+                        ) : pathName === "/login" ? (
+                            <>
+                                <LinkButton to="/network" end >네트워크</LinkButton>
+                                <LinkButton to="/login" end >로그인</LinkButton>
+                                <Link to={`/register`}>
+                                    <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <LinkButton to="/network" end >네트워크</LinkButton>
+                                <LinkButton to="/register" end >회원가입</LinkButton>
+                                <Link to={`/login`}>
+                                    <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
+                                </Link>
+                            </>
+                        )}
+                    </Nav>
+                </HeaderContainer>
+            </HeaderWrap>
+        </>
     );
 }
 

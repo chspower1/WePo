@@ -20,8 +20,11 @@ export const MvpContainer = styled.div`
     justify-content: center;
     border-radius: 10px;
     box-shadow: 0px 4px 25px #cdcdcd;
-    padding: 30px 50px 80px;
+    padding: 50px 50px 80px;
     & + & {
+        margin-top: 40px;
+    }
+    @media screen and (max-width: 960px) {
         margin-top: 40px;
     }
 `;
@@ -126,6 +129,7 @@ export const MajorGraduate = styled.input.attrs((props) => ({
 
 export const MajorGraduateLabel = styled.label`
     color: black;
+    margin-right:10px;
 `;
 
 export const MyPortWrap = styled.div`
@@ -137,14 +141,24 @@ export const MyPortWrap = styled.div`
     margin: 0 auto;
     margin-top: 70px;
     padding: 80px 30px;
+    @media screen and (max-width: 960px) {
+        flex-direction: column;
+    }
 `;
 export const MvpWrap = styled.div`
     width: 100%;
     max-width: 800px;
     margin-left: 100px;
+    @media screen and (max-width: 960px) {
+        margin-left: 0;
+        max-width: 100%;
+    }
 `;
 export const UserCardBox = styled.div`
     max-width: 350px;
+    @media screen and (max-width: 960px) {
+        max-width: 100%;
+    }
 `;
 
 function MyPortfolio() {
