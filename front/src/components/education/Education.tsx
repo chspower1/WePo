@@ -24,7 +24,7 @@ import { Trash2 } from "styled-icons/feather";
 import { deleteEducation } from "../../api/api";
 export default function Education({ info }: any) {
     // user ID
-    const { id } = useParams();
+    const { userSeq } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     // 학력 상태
@@ -52,20 +52,19 @@ export default function Education({ info }: any) {
                         educations={educations}
                         setAddFormActive={setAddFormActive}
                         setEducations={setEducations}
-                        id={id}
                     />
                 )}
                 {!addFormActive &&
-                    educations?.map((list, index) => (
+                    educations?.map((education, index) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentAccent>{list.school}</MvpContentAccent>
+                                    <MvpContentAccent>{education.school}</MvpContentAccent>
                                     <div style={{ display: "flex" }}>
                                         <MvpContentDetail style={{ marginRight: "10px" }}>
-                                            {list.major}
+                                            {education.major}
                                         </MvpContentDetail>
-                                        <MvpContentDetail>({list.status})</MvpContentDetail>
+                                        <MvpContentDetail>({education.status})</MvpContentDetail>
                                     </div>
                                     {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
@@ -79,8 +78,8 @@ export default function Education({ info }: any) {
                                             </MvpEditButton>
                                             <MvpDeleteButton
                                                 onClick={() => {
-                                                    const userSeq = parseInt(list.userId!);
-                                                    const educationId = list._id!;
+                                                    const userSeq = parseInt(education.userId!);
+                                                    const educationId = education._id!;
                                                     return deleteEducation(educationId, userSeq);
                                                 }}
                                             >
@@ -96,8 +95,8 @@ export default function Education({ info }: any) {
                                     educations={educations}
                                     setEducations={setEducations}
                                     setIsEditing={setIsEditing}
-                                    id={id}
-                                    _id={list._id}
+                                    userSeq={education.userId}
+                                    _id={education._id}
                                     setTargetIndex={setTargetIndex}
                                 />
                             )}

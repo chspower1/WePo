@@ -90,7 +90,7 @@ const { persistAtom } = recoilPersist();
 export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,
-    // effects_UNSTABLE: [persistAtom],
+    effects_UNSTABLE: [persistAtom],
 });
 export const usersState = atom<IUser[]>({
     key: "user",

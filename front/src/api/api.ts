@@ -128,7 +128,7 @@ export async function updateAward(data: any, userId: number, awardId: string) {
         console.log(err);
     }
 }
-export async function deleteAward(awardId: string , userSeq:number) {
+export async function deleteAward(awardId: string, userSeq: number) {
     try {
         await axios.delete(`http://localhost:5001/award/${awardId}`, {
             data: {
@@ -179,16 +179,18 @@ export async function updateCertificate(data: ICertificate, userId: number, cert
 }
 export async function deleteCertificate(certificateId: string, userSeq: number) {
     try {
-        console.log("certificateId",certificateId)
-        await axios.delete(`http://localhost:5001/certificate/${certificateId}`, {
-            data: {
-                userId: userSeq,
-            },
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-            },
-        }).then(res=>console.log("res",res));
+        console.log("certificateId", certificateId);
+        await axios
+            .delete(`http://localhost:5001/certificate/${certificateId}`, {
+                data: {
+                    userId: userSeq,
+                },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            })
+            .then((res) => console.log("res", res));
     } catch (err) {
         console.log(err);
     }
@@ -227,7 +229,7 @@ export async function updateEducation(data: IEducation, userId: string, educatio
         console.log(err);
     }
 }
-export async function deleteEducation(educationId: string , userSeq:number) {
+export async function deleteEducation(educationId: string, userSeq: number) {
     try {
         await axios.delete(`http://localhost:5001/education/${educationId}`, {
             data: {
@@ -275,7 +277,7 @@ export async function updateProject(data: IProject, userId: number, projectId: s
         console.log(err);
     }
 }
-export async function deleteProject(projectId: string , userSeq: number) {
+export async function deleteProject(projectId: string, userSeq: number) {
     try {
         await axios.delete(`http://localhost:5001/project/${projectId}`, {
             data: {

@@ -18,8 +18,8 @@ export default function EducationEditForm({
     setEducations,
     setIsEditing,
     setTargetIndex,
-    id,
-    _id
+    userSeq,
+    _id,
 }: any) {
     const {
         register,
@@ -31,7 +31,7 @@ export default function EducationEditForm({
         const editData = [...educations];
         editData[index] = data;
         setEducations(editData);
-        updateEducation(data, id, _id)
+        updateEducation(data, userSeq, _id);
         setIsEditing(false);
         setTargetIndex(null);
     };
@@ -89,24 +89,62 @@ export default function EducationEditForm({
                 )}
             </MvpAddInputBox>
             <MvpAddInputBox>
-                <div style={{marginBottom:"30px"}}>
-                    <MvpContentName>졸업여부 <RequiredLabel>*</RequiredLabel> </MvpContentName>
-                    <MajorGraduate value={EduStatus.attending} id="attending" defaultChecked={current.status === "재학중"} {...register("status",{required:"필수 입력입니다."})}/>
-                    <MajorGraduateLabel htmlFor="attending">{EduStatus.attending}</MajorGraduateLabel>
-                    <MajorGraduate value={EduStatus.bachelor} id="bachelor" defaultChecked={current.status === "학사졸업"} {...register("status",{required:"필수 입력입니다."})}/>
+                <div style={{ marginBottom: "30px" }}>
+                    <MvpContentName>
+                        졸업여부 <RequiredLabel>*</RequiredLabel>{" "}
+                    </MvpContentName>
+                    <MajorGraduate
+                        value={EduStatus.attending}
+                        id="attending"
+                        defaultChecked={current.status === "재학중"}
+                        {...register("status", { required: "필수 입력입니다." })}
+                    />
+                    <MajorGraduateLabel htmlFor="attending">
+                        {EduStatus.attending}
+                    </MajorGraduateLabel>
+                    <MajorGraduate
+                        value={EduStatus.bachelor}
+                        id="bachelor"
+                        defaultChecked={current.status === "학사졸업"}
+                        {...register("status", { required: "필수 입력입니다." })}
+                    />
                     <MajorGraduateLabel htmlFor="bachelor">{EduStatus.bachelor}</MajorGraduateLabel>
-                    <MajorGraduate value={EduStatus.master} id="master" defaultChecked={current.status === "석사졸업"} {...register("status",{required:"필수 입력입니다."})}/>
+                    <MajorGraduate
+                        value={EduStatus.master}
+                        id="master"
+                        defaultChecked={current.status === "석사졸업"}
+                        {...register("status", { required: "필수 입력입니다." })}
+                    />
                     <MajorGraduateLabel htmlFor="master">{EduStatus.master}</MajorGraduateLabel>
-                    <MajorGraduate value={EduStatus.doctor} id="doctor" defaultChecked={current.status === "박사졸업"} {...register("status",{required:"필수 입력입니다."})}/>
+                    <MajorGraduate
+                        value={EduStatus.doctor}
+                        id="doctor"
+                        defaultChecked={current.status === "박사졸업"}
+                        {...register("status", { required: "필수 입력입니다." })}
+                    />
                     <MajorGraduateLabel htmlFor="doctor">{EduStatus.doctor}</MajorGraduateLabel>
-                    <div style={{marginTop:"10px"}}>
-                        {errors.status && <ErrMsg><DangerIcon/>{errors.status.message}</ErrMsg>}
+                    <div style={{ marginTop: "10px" }}>
+                        {errors.status && (
+                            <ErrMsg>
+                                <DangerIcon />
+                                {errors.status.message}
+                            </ErrMsg>
+                        )}
                     </div>
                 </div>
             </MvpAddInputBox>
-            <div style={{float:"right",marginBottom:"10px"}}>
-                    <Button type="submit" color="#3687FF">수정</Button>
-                    <Button onClick={()=> {setIsEditing(false); setTargetIndex(null)}}>취소</Button>
+            <div style={{ float: "right", marginBottom: "10px" }}>
+                <Button type="submit" color="#3687FF">
+                    수정
+                </Button>
+                <Button
+                    onClick={() => {
+                        setIsEditing(false);
+                        setTargetIndex(null);
+                    }}
+                >
+                    취소
+                </Button>
             </div>
         </form>
         // <div>
