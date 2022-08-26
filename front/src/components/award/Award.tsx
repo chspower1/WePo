@@ -88,7 +88,12 @@ export default function Award({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{deleteAward(list._id!)}}>
+                                            <MvpDeleteButton onClick={()=>{
+                                                const userSeq = parseInt(list.userId!);
+                                                const awardId = list._id!;
+                                                console.log(userSeq);
+                                                return deleteAward(awardId, userSeq);
+                                                }}>
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>

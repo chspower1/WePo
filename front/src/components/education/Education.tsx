@@ -79,7 +79,9 @@ export default function Education({ info }: any) {
                                             </MvpEditButton>
                                             <MvpDeleteButton
                                                 onClick={() => {
-                                                    deleteEducation(list._id!);
+                                                    const userSeq = parseInt(list.userId!);
+                                                    const educationId = list._id!;
+                                                    return deleteEducation(educationId, userSeq);
                                                 }}
                                             >
                                                 <Trash2 color="#3867FF" />

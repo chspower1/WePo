@@ -31,7 +31,8 @@ export default function Certificate({ info }: any) {
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     const userToken = sessionStorage.getItem("userToken");
-
+    /* console.log(info); */
+    
     // form 관리
     const [addFormActive, setAddFormActive] = useState(false);
     const [editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
@@ -82,7 +83,9 @@ export default function Certificate({ info }: any) {
                                             </MvpEditButton>
                                             <MvpDeleteButton
                                                 onClick={() => {
-                                                    deleteCertificate(val._id!);
+                                                    const userSeq = parseInt(val.userId!);
+                                                    const certificateId = val._id!;
+                                                    return deleteCertificate(certificateId, userSeq);
                                                 }}
                                             >
                                                 <Trash2 color="#3687FF" />

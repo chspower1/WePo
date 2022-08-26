@@ -72,7 +72,11 @@ export default function Project({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{deleteProject(project._id!)}}>
+                                            <MvpDeleteButton onClick={()=>{
+                                                const userSeq = parseInt(project.userId!);
+                                                const projectId = project._id!;
+                                                return deleteProject(projectId, userSeq);
+                                                }}>
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
