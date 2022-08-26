@@ -99,7 +99,6 @@ function Network() {
         }
     }, [isLogin]);
 
-
     function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
             const currentChecked = [...current];
@@ -167,9 +166,6 @@ function Network() {
                         </LoadingBox>
                     ) : (
                         <NetworkContainer>
-                            {/* {users?.map((user) => (
-                                <UserCard key={user._id} {...user} />
-                            ))} */}
                             {filterUsersState.map((user) => (
                                 <UserCard key={user._id} {...user} />
                             ))}

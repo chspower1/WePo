@@ -24,7 +24,7 @@ import { Trash2 } from "styled-icons/feather";
 import { deleteEducation } from "../../api/api";
 export default function Education({ info }: any) {
     // user ID
-    const { id } = useParams();
+    const { userSeq } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     // 학력 상태
@@ -52,7 +52,6 @@ export default function Education({ info }: any) {
                         educations={educations}
                         setAddFormActive={setAddFormActive}
                         setEducations={setEducations}
-                        id={id}
                     />
                 )}
                 {!addFormActive &&
@@ -96,7 +95,7 @@ export default function Education({ info }: any) {
                                     educations={educations}
                                     setEducations={setEducations}
                                     setIsEditing={setIsEditing}
-                                    id={id}
+                                    userSeq={education.userId}
                                     _id={education._id}
                                     setTargetIndex={setTargetIndex}
                                 />
