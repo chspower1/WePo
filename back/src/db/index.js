@@ -1,5 +1,10 @@
+// @ts-ignore
 import mongoose from "mongoose";
 import { User } from "./models/User";
+import { Project } from "./models/Project";
+import { Education } from "./models/Education";
+import { Certificate } from "./models/Certificate";
+import { Image } from "./models/Image";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -15,4 +20,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
-export { User };
+export { User, Project, Education, Certificate, Image };

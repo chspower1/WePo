@@ -1,27 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
-import reset from "styled-reset";
-import { lightTheme } from "./theme";
-
-const GlobalStyle = createGlobalStyle`
-  ${reset}
-`;
-export const Btn = styled.button`
-    padding: 15px 10px;
-`;
-export const Container = styled.section`
-    display: flex;
-    flex-direction: column;
-`;
+import { RecoilRoot } from "recoil";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const queryClient = new QueryClient();
 root.render(
     <React.StrictMode>
-        <ThemeProvider theme={lightTheme}>
-            <GlobalStyle />
-            <App />
-        </ThemeProvider>
+        <RecoilRoot>
+            <QueryClientProvider client={queryClient}>
+                <App />
+            </QueryClientProvider>
+        </RecoilRoot>
     </React.StrictMode>
 );

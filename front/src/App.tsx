@@ -1,27 +1,43 @@
-import React, { useState, useEffect, useReducer, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import reset from "styled-reset";
+import { lightTheme } from "./theme";
+import Router from "./Router";
+import "./font/font.css";
+import { useRecoilValue } from "recoil";
+import { isLoginState } from "./atoms";
+import { useNavigate, Navigator } from "react-router-dom";
+import { useEffect } from "react";
+const GlobalStyle = createGlobalStyle`
+    ${reset}
+    html,body,#root{
+        font-family: "Elice";
+        width:100%;
+        height:100%;
+    }
+    *{
+        font-family: "Elice";
+        text-decoration: none;
+        box-sizing: border-box;
+    }
 
-import * as Api from "./api";
-
-import Header from "./components/Header";
-import LoginForm from "./components/user/LoginForm";
-import Network from "./components/user/Network";
-import RegisterForm from "./components/user/RegisterForm";
-import Portfolio from "./components/Portfolio";
-
+    button{
+        cursor: pointer;
+        border: 0;
+        background: transparent;
+    }
+    img{
+        width:100%;
+    }
+`;
 function App() {
+    
     return (
-        <Router>
-            <Header />
-            <Routes>
-                <Route path="/" element={<Portfolio />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/register" element={<RegisterForm />} />
-                <Route path="/users/:userId" element={<Portfolio />} />
-                <Route path="/network" element={<Network />} />
-                <Route path="*" element={<Portfolio />} />
-            </Routes>
-        </Router>
+        <>
+            <ThemeProvider theme={lightTheme}>
+                <GlobalStyle />
+                <Router />
+            </ThemeProvider>
+        </>
     );
 }
 
