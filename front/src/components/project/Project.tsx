@@ -94,7 +94,7 @@ export default function Project({ info }: any) {
                     ))}
             </MvpContentContainer>
 
-            {curUser && pathName === "/" && (
+            {curUser && pathName === "/" && !addFormActive && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

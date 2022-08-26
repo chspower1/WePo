@@ -118,11 +118,11 @@ export async function updateAward(data: IAward, id: string) {
 }
 
 // Certificate 추가,수정
-export async function addCertificate(data: ICertificate, id: string) {
+export async function addCertificate(data: ICertificate) {
     try {
         await axios.post(
             `http://localhost:5001/certificate`,
-            { ...data, id },
+            { ...data },
             {
                 headers: {
                     "Content-Type": "application/json",

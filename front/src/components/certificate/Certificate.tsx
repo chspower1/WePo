@@ -32,7 +32,7 @@ export default function Certificate({ info }: any) {
     const userToken = sessionStorage.getItem("userToken");
 
     // form 관리
-    const [Adding, setAdding] = useState(false);
+    const [addFormActive, setAddFormActive] = useState(false);
     const [Editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
     const [targetIndex, setTargetIndex] = useState<Number>();
@@ -40,8 +40,8 @@ export default function Certificate({ info }: any) {
     const location = useLocation();
     const pathName = location.pathname;
     // 추가사항 on/off
-    function handleAdding() {
-        setAdding((Adding) => !Adding);
+    function handleaddFormActive() {
+        setAddFormActive((addFormActive) => !addFormActive);
     }
 
     // 자격증 상태
@@ -53,14 +53,14 @@ export default function Certificate({ info }: any) {
                 <MvpTitle>자격증</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-                {Adding && (
+                {addFormActive && (
                     <CertificateAddForm
-                        setAdding={setAdding}
+                        setAddFormActive={setAddFormActive}
                         setCertificates={setCertificates}
                         id={id}
                     />
                 )}
-                {!Adding &&
+                {!addFormActive &&
                     certificates?.map((val: ICertificate, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
@@ -101,8 +101,8 @@ export default function Certificate({ info }: any) {
                     ))}
             </MvpContentContainer>
 
-            {curUser && pathName === "/" && !Adding && (
-                <MvpAddButton onClick={handleAdding}>
+            {curUser && pathName === "/" && !addFormActive && (
+                <MvpAddButton onClick={handleaddFormActive}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
             )}

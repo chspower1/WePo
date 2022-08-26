@@ -22,7 +22,6 @@ import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 
 export default function Award({ info }: any) {
-  
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
@@ -109,7 +108,7 @@ export default function Award({ info }: any) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser && pathName === "/" && (
+            {curUser && pathName === "/" && !addFormActive && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
