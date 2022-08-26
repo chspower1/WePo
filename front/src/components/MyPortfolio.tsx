@@ -135,6 +135,7 @@ export const MyPortWrap = styled.div`
     display: flex;
     justify-content: flex-end;
     margin: 0 auto;
+    margin-top: 70px;
     padding: 80px 30px;
 `;
 export const MvpWrap = styled.div`

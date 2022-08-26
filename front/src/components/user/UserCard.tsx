@@ -21,7 +21,7 @@ const InfoBox = styled.div`
     margin-bottom: 40px;
 `;
 const ProfileImageBox = styled.div`
-    transform:translateY(-40px);
+    transform: translateY(-40px);
     width: 90px;
     height: 90px;
     border-radius: 50%;
@@ -66,7 +66,6 @@ const ArrowIcon = styled(ArrowRightShort)`
 const DetailBtn = styled.button`
     color: #5573df;
 `;
-
 
 function UserCard({ _id, name, email, description, field }: IUser) {
     const location = useLocation();
