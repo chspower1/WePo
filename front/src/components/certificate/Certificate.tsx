@@ -33,7 +33,7 @@ export default function Certificate({ info }: any) {
 
     // form 관리
     const [addFormActive, setAddFormActive] = useState(false);
-    const [Editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
+    const [editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
     const [targetIndex, setTargetIndex] = useState<Number>();
 

@@ -20,7 +20,7 @@ import {
     Button,
 } from "../MyPortfolio";
 
-export function CertificateAddForm({ setAddFormActive, setCertificates, id }: any) {
+export function CertificateAddForm({ setAddFormActive, setCertificates,id }: any) {
     const {
         register,
         handleSubmit,
@@ -31,7 +31,7 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
     const onvalid = (data: ICertificate) => {
         setCertificates((project: any) => [...project, data]);
         setAddFormActive(false);
-        addCertificate(data, id);
+        addCertificate(data,id);
     };
 
     useEffect(() => {
@@ -47,6 +47,7 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
             type: "custom",
             message: "발급기관을 입력해주세요",
         });
+        console.log(id)
     }, []);
 
     return (
