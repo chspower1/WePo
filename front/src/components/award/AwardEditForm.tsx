@@ -100,6 +100,10 @@ export default function AwardEditForm({
                 />
                 {errors.description && <ErrMsg><DangerIcon/>{errors.description.message}</ErrMsg>}
             </MvpAddInputBox>
+            <div style={{float:"right",marginBottom:"10px"}}>
+                <Button type="submit" color="#3687FF">수정</Button>
+                <Button onClick={()=> {setIsEditing(false); setTargetIndex(null)}}>취소</Button>
+            </div>
         </form>
         // <div>
         //     <form onSubmit={handleSubmit(onvalid)}>
