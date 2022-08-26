@@ -62,14 +62,14 @@ export default function Certificate({ info }: any) {
                     />
                 )}
                 {!addFormActive &&
-                    certificates?.map((val: ICertificate, index: number) => (
+                    certificates?.map((certificate: ICertificate, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentAccent>{val.title}</MvpContentAccent>
-                                    <MvpContentDate>{String(val.date)}</MvpContentDate>
-                                    <MvpContentDetail>{val.org}</MvpContentDetail>
-                                    <MvpContentDetail>{val.description}</MvpContentDetail>
+                                    <MvpContentAccent>{certificate.title}</MvpContentAccent>
+                                    <MvpContentDate>{String(certificate.date)}</MvpContentDate>
+                                    <MvpContentDetail>{certificate.org}</MvpContentDetail>
+                                    <MvpContentDetail>{certificate.description}</MvpContentDetail>
                                     {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
@@ -82,7 +82,7 @@ export default function Certificate({ info }: any) {
                                             </MvpEditButton>
                                             <MvpDeleteButton
                                                 onClick={() => {
-                                                    deleteCertificate(val._id!);
+                                                    deleteCertificate(certificate._id!);
                                                 }}
                                             >
                                                 <Trash2 color="#3687FF" />
@@ -99,8 +99,8 @@ export default function Certificate({ info }: any) {
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    id={id}
-                                    _id={val._id}
+                                    userSeq={certificate.userId}
+                                    _id={certificate._id}
                                 />
                             )}
                         </MvpContentBox>

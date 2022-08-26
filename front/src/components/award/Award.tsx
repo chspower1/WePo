@@ -24,7 +24,7 @@ import { deleteAward } from "../../api/api";
 
 export default function Award({ info }: any) {
     // user ID
-    const { id } = useParams();
+    const { userSeq } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     const userToken = sessionStorage.getItem("userToken");
@@ -59,25 +59,25 @@ export default function Award({ info }: any) {
                         setAwards={setAwards}
                         maxDate={maxDate}
                         setAddFormActive={setAddFormActive}
-                        id={id}
+                        userSeq={userSeq}
                     />
                 )}
                 {!addFormActive &&
-                    awards?.map((list, index) => (
+                    awards?.map((award, index) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
                                     <div style={{ display: "flex", alignItems: "center" }}>
-                                        <MvpContentAccent>{list.title}</MvpContentAccent>
+                                        <MvpContentAccent>{award.title}</MvpContentAccent>
                                         <MvpContentDetail
                                             style={{ marginTop: "20px", marginLeft: "20px" }}
                                         >
-                                            {list.grade}
+                                            {award.grade}
                                         </MvpContentDetail>
                                     </div>
-                                    <MvpContentDetail>{list.org}</MvpContentDetail>
-                                    <MvpContentDate>{String(list.date)}</MvpContentDate>
-                                    <MvpContentDetail>{list.description}</MvpContentDetail>
+                                    <MvpContentDetail>{award.org}</MvpContentDetail>
+                                    <MvpContentDate>{String(award.date)}</MvpContentDate>
+                                    <MvpContentDetail>{award.description}</MvpContentDetail>
                                     {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
@@ -88,22 +88,26 @@ export default function Award({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{deleteAward(list._id!)}}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    deleteAward(award._id!);
+                                                }}
+                                            >
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
                                     )}
                                 </>
                             )}
-                            {isEditing && targetIndex == index && (
+                            {isEditing && targetIndex === index && (
                                 <AwardEditForm
                                     index={index}
                                     awards={awards}
                                     setAwards={setAwards}
                                     setIsEditing={setIsEditing}
                                     maxDate={maxDate}
-                                    id={id}
-                                    _id={list._id}
+                                    _id={award?._id!}
+                                    userSeq={award?.userId!}
                                     setTargetIndex={setTargetIndex}
                                 />
                             )}

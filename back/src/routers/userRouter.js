@@ -90,9 +90,9 @@ userAuthRouter.put("/users/:seq", login_required, async function (req, res, next
         // User authentication
         const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userSeq값
         // URI로부터 사용자 id를 추출함.
-        const userSeq = req.params.seq;
+        const userSeq = parseInt(req.params.seq);
 
-        if (parseInt(userSeq) !== currentUserId) {
+        if (userSeq !== currentUserId) {
             console.log(userSeq, currentUserId);
             throw new Error(
                 "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."

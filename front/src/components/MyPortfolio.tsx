@@ -170,7 +170,6 @@ function MyPortfolio() {
             setCurUser((prev) => ({ ...prev, ...data! }));
         },
     });
-    console.log(curUser);
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });

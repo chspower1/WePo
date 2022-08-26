@@ -52,7 +52,7 @@ export default function Project({ info }: any) {
             </MvpTitleBox>
             <MvpContentContainer>
                 {addFormActive && (
-                    <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} /> // props로 id값을 안넘겨 주어도 정상 작동 
+                    <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!addFormActive &&
                     projects?.map((project: IProject, index: number) => (
@@ -72,7 +72,11 @@ export default function Project({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{deleteProject(project._id!)}}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    deleteProject(project._id!);
+                                                }}
+                                            >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -87,7 +91,7 @@ export default function Project({ info }: any) {
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    id={id}
+                                    userSeq={project.userId}
                                     _id={project._id}
                                 />
                             )}
