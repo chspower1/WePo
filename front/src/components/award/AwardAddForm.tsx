@@ -6,7 +6,7 @@ import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } fr
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, id }: any) {
+export default function AwardAddForm({ setAwards, maxDate, setAddFormActive}: any) {
     const {
         register,
         handleSubmit,

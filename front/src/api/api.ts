@@ -68,6 +68,7 @@ export async function getUser(id: string) {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+        console.log("API", data);
         const { 0: user } = data;
         return user as IUser;
     } catch (err) {

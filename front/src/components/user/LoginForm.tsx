@@ -128,6 +128,7 @@ export default function LoginForm() {
     const onvalid = async (formData: ILogin) => {
         try {
             const newUser = await UserLogin({ ...formData });
+            console.log(newUser);
             await setCurUser(newUser!);
         } catch (err) {
             alert("일치하지 않습니다!");

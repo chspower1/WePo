@@ -23,6 +23,7 @@ import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 import { deleteEducation } from "../../api/api";
 export default function Education({ info }: any) {
+    console.log("학력", info);
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
@@ -64,7 +65,7 @@ export default function Education({ info }: any) {
                                         </MvpContentDetail>
                                         <MvpContentDetail>({list.status})</MvpContentDetail>
                                     </div>
-                                    {id === curUser?.userId! && targetIndex !== index && (
+                                    {id === curUser?._id! && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {

@@ -20,7 +20,7 @@ import {
     Button,
 } from "../MyPortfolio";
 
-export function CertificateAddForm({ setAddFormActive, setCertificates, id }: any) {
+export function CertificateAddForm({ setAddFormActive, setCertificates}: any) {
     const {
         register,
         handleSubmit,
@@ -128,9 +128,7 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, id }: an
             </MvpAddInputBox>
 
             <div style={{ float: "right" }}>
-                <Button color="#3687FF" type="submit">
-                    추가
-                </Button>
+                <Button color="#3687FF" type="submit">추가</Button>
                 <Button onClick={() => setAddFormActive(false)}>취소</Button>
             </div>
         </form>

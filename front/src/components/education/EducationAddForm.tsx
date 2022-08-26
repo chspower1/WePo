@@ -6,7 +6,7 @@ import { Status } from "styled-icons/fluentui-system-filled";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function EducationAddForm({ setEducations, setAddFormActive, id }: any) {
+export default function EducationAddForm({ setEducations, setAddFormActive}: any) {
     const {
         register,
         handleSubmit,

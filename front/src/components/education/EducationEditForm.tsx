@@ -26,6 +26,7 @@ export default function EducationEditForm({
         handleSubmit,
         formState: { errors },
     } = useForm<IEducation>({ mode: "onChange" });
+
     const onvalid = (data: IEducation) => {
         const editData = [...educations];
         editData[index] = data;

@@ -5,7 +5,7 @@ import { IProject } from "../../atoms";
 import { MvpContentName,MvpAddInput, MvpAddInputBox, RequiredLabel,Button } from "../MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
-export const ProjectAddForm = ({ setAddFormActive, setProjects, id }: any) => {
+export const ProjectAddForm = ({ setAddFormActive, setProjects}: any) => {
     const {
         register,
         handleSubmit,
