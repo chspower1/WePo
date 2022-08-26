@@ -112,8 +112,9 @@ export async function addAward(data: IAward) {
         console.log(err);
     }
 }
-export async function updateAward(data: IAward, userId: string, awardId: string) {
+export async function updateAward(data: any, userId: number, awardId: string) {
     try {
+        console.log("데이터", data, "유저아이디", userId, "어워드아이디", awardId);
         await axios.put(
             `http://localhost:5001/award/${awardId}`,
             { ...data, userId },
@@ -161,7 +162,7 @@ export async function addCertificate(data: ICertificate) {
         console.log(err);
     }
 }
-export async function updateCertificate(data: ICertificate, userId: string, certificateId: string) {
+export async function updateCertificate(data: ICertificate, userId: number, certificateId: string) {
     try {
         await axios.put(
             `http://localhost:5001/certificate/${certificateId}`,
@@ -258,7 +259,7 @@ export async function addProject(data: IProject) {
         console.log(err);
     }
 }
-export async function updateProject(data: IProject, userId: string, projectId: string) {
+export async function updateProject(data: IProject, userId: number, projectId: string) {
     try {
         await axios.put(
             `http://localhost:5001/project/${projectId}`,
