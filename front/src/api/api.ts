@@ -56,14 +56,15 @@ export async function getUsers() {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+        console.log(users);
         return users as IUser[];
     } catch (err) {
         console.log(err);
     }
 }
-export async function getUser(id: string) {
+export async function getUser(userSeq: number) {
     try {
-        const { data } = await axios.get(`http://localhost:5001/users/${id}`, {
+        const { data } = await axios.get(`http://localhost:5001/users/${userSeq}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -74,10 +75,11 @@ export async function getUser(id: string) {
         console.log(err);
     }
 }
-export async function updateUser(data: any, id: string) {
+export async function updateUser(data: any, userSeq: number) {
     try {
+        console.log(userSeq);
         await axios.put(
-            `http://localhost:5001/users/${id}`,
+            `http://localhost:5001/users/${userSeq}`,
             { ...data },
             {
                 headers: {
@@ -109,8 +111,9 @@ export async function addAward(data: IAward) {
         console.log(err);
     }
 }
-export async function updateAward(data: IAward, userId: string, awardId: string) {
+export async function updateAward(data: any, userId: number, awardId: string) {
     try {
+        console.log("데이터", data, "유저아이디", userId, "어워드아이디", awardId);
         await axios.put(
             `http://localhost:5001/award/${awardId}`,
             { ...data, userId },
@@ -125,11 +128,11 @@ export async function updateAward(data: IAward, userId: string, awardId: string)
         console.log(err);
     }
 }
-export async function deleteAward(awardId: string) {
+export async function deleteAward(awardId: string , userSeq:number) {
     try {
         await axios.delete(`http://localhost:5001/award/${awardId}`, {
             data: {
-                userId: awardId,
+                userId: userSeq,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -158,7 +161,7 @@ export async function addCertificate(data: ICertificate) {
         console.log(err);
     }
 }
-export async function updateCertificate(data: ICertificate, userId: string, certificateId: string) {
+export async function updateCertificate(data: ICertificate, userId: number, certificateId: string) {
     try {
         await axios.put(
             `http://localhost:5001/certificate/${certificateId}`,
@@ -174,17 +177,18 @@ export async function updateCertificate(data: ICertificate, userId: string, cert
         console.log(err);
     }
 }
-export async function deleteCertificate(certificateId: string) {
+export async function deleteCertificate(certificateId: string, userSeq: number) {
     try {
+        console.log("certificateId",certificateId)
         await axios.delete(`http://localhost:5001/certificate/${certificateId}`, {
             data: {
-                userId: certificateId,
+                userId: userSeq,
             },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
-        });
+        }).then(res=>console.log("res",res));
     } catch (err) {
         console.log(err);
     }
@@ -223,11 +227,11 @@ export async function updateEducation(data: IEducation, userId: string, educatio
         console.log(err);
     }
 }
-export async function deleteEducation(educationId: string) {
+export async function deleteEducation(educationId: string , userSeq:number) {
     try {
         await axios.delete(`http://localhost:5001/education/${educationId}`, {
             data: {
-                userId: educationId,
+                userId: userSeq,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -255,7 +259,7 @@ export async function addProject(data: IProject) {
         console.log(err);
     }
 }
-export async function updateProject(data: IProject, userId: string, projectId: string) {
+export async function updateProject(data: IProject, userId: number, projectId: string) {
     try {
         await axios.put(
             `http://localhost:5001/project/${projectId}`,
@@ -271,7 +275,7 @@ export async function updateProject(data: IProject, userId: string, projectId: s
         console.log(err);
     }
 }
-export async function deleteProject(projectId: string) {
+export async function deleteProject(projectId: string , userSeq: number) {
     try {
         await axios.delete(`http://localhost:5001/project/${projectId}`, {
             data: {

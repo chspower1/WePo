@@ -9,17 +9,15 @@ import { isLoginState, IUser } from "./../../atoms";
 import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
 import styled from "styled-components";
-import { MyPortWrap, MvpWrap,  UserCardBox } from "../MyPortfolio";
+import { MyPortWrap, MvpWrap, UserCardBox } from "../MyPortfolio";
 import { useRecoilValue } from "recoil";
 
-
-
 function UserDetail() {
-    const { id } = useParams();
+    const { userSeq } = useParams();
     const [user, setUser] = useState<IUser | null>(null);
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
-    const { isLoading } = useQuery(["UserInfo"], () => getUser(id!), {
+    const { isLoading } = useQuery(["UserInfo"], () => getUser(parseInt(userSeq!)!), {
         onSuccess(user) {
             setUser(user!);
         },

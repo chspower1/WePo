@@ -11,8 +11,8 @@ export function CertificateEditForm({
     setEditing,
     setIsEditing,
     setTargetIndex,
-    id,
-    _id
+    userSeq,
+    _id,
 }: any) {
     const {
         register,
@@ -21,11 +21,11 @@ export function CertificateEditForm({
     } = useForm<ICertificate>();
 
     const onvalid = (data: ICertificate) => {
-        updateCertificate(data, id, _id);
-        setCertificates((project: any) => {
-            const editProject = [...project];
-            editProject[index] = data;
-            return editProject;
+        updateCertificate(data, userSeq, _id);
+        setCertificates((cerfiticate: any) => {
+            const editCerfiticate = [...cerfiticate];
+            editCerfiticate[index] = data;
+            return editCerfiticate;
         });
 
         setIsEditing(false);
@@ -68,10 +68,10 @@ export function CertificateEditForm({
                     defaultValue={certificates[index].date}
                     {...register("date", {
                         required: "발급날짜을 입력해주세요",
-                        pattern: {
-                            value: /^\d{4}\d{2}\d{2}$/,
-                            message: "20220101 형식으로 작성해주세요",
-                        },
+                        // pattern: {
+                        //     value: /^\d{4}\d{2}\d{2}$/,
+                        //     message: "20220101 형식으로 작성해주세요",
+                        // },
                         shouldUnregister: true,
                     })}
                 ></MvpAddInput>

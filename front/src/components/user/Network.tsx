@@ -1,10 +1,10 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
 import { getUsers } from "../../api/api";
-import { isLoginState, usersState,checkedBoxValue,hopeJob} from "../../atoms";
+import { isLoginState, usersState, checkedBoxValue, hopeJob } from "../../atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
 
@@ -82,12 +82,13 @@ function Network() {
     const pathName = location.pathname;
     const [users, setUsers] = useRecoilState(usersState);
     const isLogin = useRecoilValue(isLoginState);
-    const [selectCheckBoxValues,setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
-    const filterUserState = useRecoilValue(hopeJob)
+    const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
+    const filterUsersState = useRecoilValue(hopeJob);
 
     const { isLoading } = useQuery(["users"], getUsers, {
         onSuccess(data) {
             setUsers(data!);
+            console.log(users);
         },
     });
 
@@ -98,17 +99,14 @@ function Network() {
         }
     }, [isLogin]);
 
-    useEffect(()=>{
-        console.log(selectCheckBoxValues)
-    },[selectCheckBoxValues]);
 
-    function handleCheckedBox(name: string){
+    function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
-            const currentChecked = [...current]
-            const overlap = currentChecked.findIndex(el => el == name)
-            overlap == -1 ? currentChecked.push(name) : currentChecked.splice(overlap,1)
-            return currentChecked
-        })
+            const currentChecked = [...current];
+            const overlap = currentChecked.findIndex((el) => el === name);
+            overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
+            return currentChecked;
+        });
     }
 
     return (
@@ -121,19 +119,43 @@ function Network() {
                         <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
                         <SelectBox>
                             <CheckBoxWrap>
-                                <input type="checkbox" name="category" id="frontEnd" value="frontEnd" onClick={(e)=>handleCheckedBox(e.currentTarget.value)}/>
+                                <input
+                                    type="checkbox"
+                                    name="category"
+                                    id="frontEnd"
+                                    value="frontEnd"
+                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                />
                                 <Label htmlFor="frontEnd">프론트엔드</Label>
                             </CheckBoxWrap>
                             <CheckBoxWrap>
-                                <input type="checkbox" name="category" id="backEnd" value="backEnd" onClick={(e)=> handleCheckedBox(e.currentTarget.value)}/>
+                                <input
+                                    type="checkbox"
+                                    name="category"
+                                    id="backEnd"
+                                    value="backEnd"
+                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                />
                                 <Label htmlFor="backEnd">백엔드</Label>
                             </CheckBoxWrap>
                             <CheckBoxWrap>
-                                <input type="checkbox" name="category" id="dataAnalysis" value="dataAnalysis" onClick={(e)=>handleCheckedBox(e.currentTarget.value)}/>
+                                <input
+                                    type="checkbox"
+                                    name="category"
+                                    id="dataAnalysis"
+                                    value="dataAnalysis"
+                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                />
                                 <Label htmlFor="dataAnalysis">데이터분석</Label>
                             </CheckBoxWrap>
                             <CheckBoxWrap>
-                                <input type="checkbox" name="category" id="AI" value="AI" onClick={(e)=>handleCheckedBox(e.currentTarget.value)}/>
+                                <input
+                                    type="checkbox"
+                                    name="category"
+                                    id="AI"
+                                    value="AI"
+                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                />
                                 <Label htmlFor="AI">AI</Label>
                             </CheckBoxWrap>
                         </SelectBox>
@@ -148,8 +170,8 @@ function Network() {
                             {/* {users?.map((user) => (
                                 <UserCard key={user._id} {...user} />
                             ))} */}
-                            {filterUserState.map((user)=>(
-                                <UserCard key={user._id} {...user}/>
+                            {filterUsersState.map((user) => (
+                                <UserCard key={user._id} {...user} />
                             ))}
                         </NetworkContainer>
                     )}

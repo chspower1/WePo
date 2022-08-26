@@ -31,7 +31,8 @@ export default function Certificate({ info }: any) {
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     const userToken = sessionStorage.getItem("userToken");
-
+    /* console.log(info); */
+    
     // form 관리
     const [addFormActive, setAddFormActive] = useState(false);
     const [editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
@@ -62,14 +63,14 @@ export default function Certificate({ info }: any) {
                     />
                 )}
                 {!addFormActive &&
-                    certificates?.map((val: ICertificate, index: number) => (
+                    certificates?.map((certificate: ICertificate, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentAccent>{val.title}</MvpContentAccent>
-                                    <MvpContentDate>{String(val.date)}</MvpContentDate>
-                                    <MvpContentDetail>{val.org}</MvpContentDetail>
-                                    <MvpContentDetail>{val.description}</MvpContentDetail>
+                                    <MvpContentAccent>{certificate.title}</MvpContentAccent>
+                                    <MvpContentDate>{String(certificate.date)}</MvpContentDate>
+                                    <MvpContentDetail>{certificate.org}</MvpContentDetail>
+                                    <MvpContentDetail>{certificate.description}</MvpContentDetail>
                                     {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
@@ -82,7 +83,9 @@ export default function Certificate({ info }: any) {
                                             </MvpEditButton>
                                             <MvpDeleteButton
                                                 onClick={() => {
-                                                    deleteCertificate(val._id!);
+                                                    const userSeq = parseInt(certificate.userId!);
+                                                    const certificateId = certificate._id!;
+                                                    return deleteCertificate(certificateId, userSeq);
                                                 }}
                                             >
                                                 <Trash2 color="#3687FF" />
@@ -99,8 +102,8 @@ export default function Certificate({ info }: any) {
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    id={id}
-                                    _id={val._id}
+                                    userSeq={certificate.userId}
+                                    _id={certificate._id}
                                 />
                             )}
                         </MvpContentBox>
