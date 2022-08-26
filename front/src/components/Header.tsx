@@ -81,6 +81,9 @@ const LoginOrRegiBtn = styled.button`
     margin-left: 20px;
     letter-spacing: -0.4px;
 `;
+const HeaderEmptyBox = styled.div`
+    height:100px;
+`
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -93,40 +96,43 @@ function Header() {
         setCurUser(null);
     };
     return (
-        <HeaderWrap>
-            <HeaderContainer>
-                <Link to="/">
-                    <LogoBox>
-                        <LogoImg src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"} alt="WepoLogo" />
-                    </LogoBox>
-                </Link>
-                <Nav>
-                    {isLogin ? (
-                        <>
-                            <LinkButton to="/">나의페이지</LinkButton>
-                            <LinkButton to="/network" end >네트워크</LinkButton>
-                            <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
-                        </>
-                    ) : pathName === "/login" ? (
-                        <>
-                            <LinkButton to="/network" end >네트워크</LinkButton>
-                            <LinkButton to="/login" end >로그인</LinkButton>
-                            <Link to={`/register`}>
-                                <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <LinkButton to="/network" end >네트워크</LinkButton>
-                            <LinkButton to="/register" end >회원가입</LinkButton>
-                            <Link to={`/login`}>
-                                <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
-                            </Link>
-                        </>
-                    )}
-                </Nav>
-            </HeaderContainer>
-        </HeaderWrap>
+        <>
+            <HeaderEmptyBox/>
+            <HeaderWrap>
+                <HeaderContainer>
+                    <Link to="/">
+                        <LogoBox>
+                            <LogoImg src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"} alt="WepoLogo" />
+                        </LogoBox>
+                    </Link>
+                    <Nav>
+                        {isLogin ? (
+                            <>
+                                <LinkButton to="/">나의페이지</LinkButton>
+                                <LinkButton to="/network" end >네트워크</LinkButton>
+                                <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
+                            </>
+                        ) : pathName === "/login" ? (
+                            <>
+                                <LinkButton to="/network" end >네트워크</LinkButton>
+                                <LinkButton to="/login" end >로그인</LinkButton>
+                                <Link to={`/register`}>
+                                    <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <LinkButton to="/network" end >네트워크</LinkButton>
+                                <LinkButton to="/register" end >회원가입</LinkButton>
+                                <Link to={`/login`}>
+                                    <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
+                                </Link>
+                            </>
+                        )}
+                    </Nav>
+                </HeaderContainer>
+            </HeaderWrap>
+        </>
     );
 }
 
