@@ -3,7 +3,7 @@ import { curUserState, EduStatus, IEducation } from "../../atoms";
 import { useForm } from "react-hook-form";
 import EducationEditForm from "./EducationEditForm";
 import EducationAddForm from "./EducationAddForm";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
     MvpContainer,
@@ -36,6 +36,8 @@ export default function Education({ info }: any) {
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
     const [targetIndex, setTargetIndex] = useState<Number>(); // index 를 체크해서 맞는 것만 editform 활성화
 
+    const location = useLocation();
+    const pathName = location.pathname;
     function handleAdding() {
         setAddFormActive((current) => !current);
     }
@@ -64,7 +66,7 @@ export default function Education({ info }: any) {
                                         </MvpContentDetail>
                                         <MvpContentDetail>({list.status})</MvpContentDetail>
                                     </div>
-                                    {id === curUser?._id! && targetIndex !== index && (
+                                    {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -94,7 +96,7 @@ export default function Education({ info }: any) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {id === curUser?._id && !addFormActive && (
+            {curUser && pathName === "/" && !addFormActive && (
                 <button onClick={handleAdding}>
                     <MvpAddButton>
                         <PlusSquareFill color="#3687FF" />

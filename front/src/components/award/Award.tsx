@@ -2,7 +2,7 @@ import { curUserState, IAward } from "../../atoms";
 import { useState } from "react";
 import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
     MvpContainer,
@@ -42,6 +42,8 @@ export default function Award({ info }: any) {
         "0"
     )}-${String(newDate.getDate()).padStart(2, "0")}`;
 
+    const location = useLocation();
+    const pathName = location.pathname;
     // 추가사항 on/off
     function handleAdding() {
         setAddFormActive((current) => !current);
@@ -76,7 +78,7 @@ export default function Award({ info }: any) {
                                     <MvpContentDetail>{list.org}</MvpContentDetail>
                                     <MvpContentDate>{String(list.date)}</MvpContentDate>
                                     <MvpContentDetail>{list.description}</MvpContentDetail>
-                                    {id === curUser?._id! && targetIndex !== index && (
+                                    {curUser && pathName === "/" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -107,7 +109,7 @@ export default function Award({ info }: any) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {id === curUser?._id && (
+            {curUser && pathName === "/" && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
