@@ -5,7 +5,12 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { curUserState, isLoginState } from "../atoms";
 
 const HeaderWrap = styled.header`
+    z-index:2;
+    position:fixed;
+    top:0;
+    left:0;
     width: 100%;
+    background-color:white;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 `;
 

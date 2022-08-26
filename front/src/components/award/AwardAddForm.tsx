@@ -6,7 +6,7 @@ import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } fr
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, id }: any) {
+export default function AwardAddForm({ setAwards, maxDate, setAddFormActive}: any) {
     const {
         register,
         handleSubmit,
@@ -17,7 +17,7 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, id 
     const onvalid = (data: IAward) => {
         setAwards((prev: any) => [...prev, data]); // 기존 DB에 data추가
         setAddFormActive(false);
-        addAward(data, id!);
+        addAward(data);
     };
 
     useEffect(() => {

@@ -50,7 +50,7 @@ export default function Project({ info }: any) {
             </MvpTitleBox>
             <MvpContentContainer>
                 {addFormActive && (
-                    <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} />
+                    <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} /> // props로 id값을 안넘겨 주어도 정상 작동 
                 )}
                 {!addFormActive &&
                     projects?.map((project: IProject, index: number) => (

@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
 const PortfolioContainer = styled.section`
+    padding-top:150px;
     width: 100%;
     display: flex;
     flex-direction: column;

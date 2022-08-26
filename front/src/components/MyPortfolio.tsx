@@ -13,6 +13,7 @@ import UserDetail from "./user/UserDetail";
 import styled from "styled-components";
 
 export const MvpContainer = styled.div`
+    z-index:1;
     width: 50%;
     margin: 0px auto;
     height: auto;

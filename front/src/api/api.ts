@@ -77,11 +77,11 @@ export async function getUser(id: string) {
 }
 // -----------------------MVP 추가 수정 ----------------------
 // Award 추가,수정
-export async function addAward(data: IAward, id: string) {
+export async function addAward(data: IAward) {
     try {
         await axios.post(
             `http://localhost:5001/award`,
-            { ...data, id },
+            { ...data},
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -102,11 +102,11 @@ export async function updateAward(data: IAward, id: string) {
 }
 
 // Certificate 추가,수정
-export async function addCertificate(data: ICertificate, id: string) {
+export async function addCertificate(data: ICertificate) {
     try {
         await axios.post(
             `http://localhost:5001/certificate`,
-            { ...data, id },
+            { ...data},
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -127,11 +127,11 @@ export async function updateCertificate(data: ICertificate, id: string) {
 }
 
 // Education 추가,수정
-export async function addEducation(data: IEducation, id: string) {
+export async function addEducation(data: IEducation) {
     try {
         await axios.post(
             `http://localhost:5001/education`,
-            { ...data, id },
+            { ...data},
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -160,11 +160,11 @@ export async function updateEducation(data: IEducation, id: string) {
     }
 }
 // Project 추가,수정
-export async function addProject(data: IProject, id: string) {
+export async function addProject(data: IProject) {
     try {
         await axios.post(
             `http://localhost:5001/project`,
-            { ...data, id },
+            { ...data},
             {
                 headers: {
                     "Content-Type": "application/json",
