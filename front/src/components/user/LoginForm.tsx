@@ -135,7 +135,7 @@ export default function LoginForm() {
             console.log(err);
         }
     };
-
+    console.log(isLogin);
     useEffect(() => {
         if (isLogin) {
             navigator("/", { replace: true });

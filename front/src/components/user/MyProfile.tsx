@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
 function MyProfile() {
     const curUser = useRecoilValue(curUserState);
+
     return (
         <>
             {curUser && (

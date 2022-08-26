@@ -131,30 +131,28 @@ export const MajorGraduateLabel = styled.label`
 function MyPortfolio() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
-    const curUser = useRecoilValue(curUserState);
-    const { isLoading, data } = useQuery(
-        ["curEducations"],
-        async () => await getUser(curUser?._id!)
-    );
+    const [curUser, setCurUser] = useRecoilState(curUserState);
+    const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?._id!), {
+        onSuccess(data) {
+            setCurUser((prev) => ({ ...prev, ...data! }));
+        },
+    });
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
         }
-        console.log(curUser);
     }, [isLogin]);
+    if (!curUser) return <></>; //이거 없으면 마이페이지에서 로그아웃하면 흰화면이 뜸
+    if (isLoading) return <></>;
     return (
         <>
-            {isLoading ? (
-                <>로딩중</>
-            ) : (
-                <>
-                    <UserCard {...curUser} />
-                    <Education info={[...curUser?.educations!]} />
-                    <Award info={[...curUser?.awards!]} />
-                    <Certificate info={[...curUser?.certificates!]} />
-                    <Project info={[...curUser?.projects!]} />
-                </>
-            )}
+            <>
+                {curUser && <UserCard {...curUser} />}
+                <Education info={[...curUser?.educations!]} />
+                <Award info={[...curUser?.awards!]} />
+                <Certificate info={[...curUser?.certificates!]} />
+                <Project info={[...curUser?.projects!]} />
+            </>
         </>
     );
 }

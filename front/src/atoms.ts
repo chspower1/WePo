@@ -2,7 +2,6 @@ import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 export interface IUser {
     _id?: string;
-    userId?: string;
     token: string;
     email: string;
     name: string;
@@ -88,7 +87,7 @@ const { persistAtom } = recoilPersist();
 //     userId: string;
 //     userSeq: number;
 // }
-export const curUserState = atom({
+export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,
     effects_UNSTABLE: [persistAtom],

@@ -74,13 +74,14 @@ export async function getUser(id: string) {
         console.log(err);
     }
 }
-export async function updateUser(data: IUser, id: string) {
+export async function updateUser(data: any, id: string) {
     try {
         await axios.put(
             `http://localhost:5001/users/${id}`,
-            { ...data, id },
+            { ...data },
             {
                 headers: {
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 },
             }

@@ -77,15 +77,15 @@ function UserCard({ _id, name, email, description, field }: IUser) {
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit } = useForm();
     const [onEdit, setOnEdit] = useState(false);
-    const onvalid = (data: any) => {
+    const onvalid = ({ reName: name, reDescription: description }: any) => {
         setCurUser((prev: any) => {
             const updateCurUser = { ...prev };
-            updateCurUser.email = data.email;
-            updateCurUser.name = data.name;
-            updateCurUser.description = data.description;
+            updateCurUser.name = name;
+            updateCurUser.description = description;
             return updateCurUser;
         });
-        updateUser(data, curUser?._id!);
+        updateUser({ name, description }, curUser?._id!);
+        setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -94,7 +94,7 @@ function UserCard({ _id, name, email, description, field }: IUser) {
     return (
         <>
             <ItemWrap>
-                <form onSubmit={() => handleSubmit(onvalid)}>
+                <form onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
                             <img src="https://placeimg.com/32/32/animals" alt="" />
@@ -118,15 +118,6 @@ function UserCard({ _id, name, email, description, field }: IUser) {
                                     <a href={`mailto:${email}`} title="메일 보내기">
                                         {email}
                                     </a>
-                                )}
-                                {onEdit && (
-                                    <input
-                                        type="reEmail"
-                                        defaultValue={email}
-                                        {...register("rename", {
-                                            required: "이메일을 입력해주세요",
-                                        })}
-                                    />
                                 )}
                             </EmailTxt>
 
