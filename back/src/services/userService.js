@@ -57,19 +57,12 @@ class userAuthService {
     const token = jwt.sign({ userId: user._id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
-    const userId = user._id;
-    const name = user.name;
-    const description = user.description;
-    const userSeq = user.userSeq;
-
+    // 보안을 위해 password는 제거
+    delete user.password
     const loginUser = {
       token,
-      userId,
-      email,
-      name,
-      description,
       errorMessage: null,
-      userSeq
+      ...user
     };
 
     return loginUser;
@@ -142,6 +135,22 @@ class userAuthService {
     }
 
     return user;
+  }
+
+  // 사용자 포트폴리오의 조회수 증가
+  static async increaseView({ userId }) {
+    const user = await User.findById({ userId });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    const newValues = { views: user.views + 1};
+
+    return User.update({ userId, newValues });
   }
 }
 
