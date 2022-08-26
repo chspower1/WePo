@@ -22,6 +22,15 @@ class User {
   //   return user;
   // }
 
+  // userSeq로 해당유저의 userId 조회
+  static async findUserIdByUserSeq({ userSeq }) {
+    const user = await UserModel.findOne({ userSeq });
+    const userId = user._id;
+
+    return userId;
+  }
+
+  // userId로 해당하는 유저의 모든 정보 조회
   static async findById({ userId }) {
     const user = await UserModel.aggregate([
       {
