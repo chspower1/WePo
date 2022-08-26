@@ -20,7 +20,6 @@ export function CertificateEditForm({
     } = useForm<ICertificate>();
 
     const onvalid = (data: ICertificate) => {
-        addCertificate(data, id);
         setCertificates((project: any) => {
             const editProject = [...project];
             editProject[index] = data;

@@ -6,7 +6,7 @@ import { Status } from "styled-icons/fluentui-system-filled";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function EducationAddForm({ setEducations, setAddFormActive, id }: any) {
+export default function EducationAddForm({ setEducations, setAddFormActive}: any) {
     const {
         register,
         handleSubmit,
@@ -17,7 +17,7 @@ export default function EducationAddForm({ setEducations, setAddFormActive, id }
     const onvalid = (data: IEducation) => {
         setEducations((prev: any) => [...prev, data]);
         setAddFormActive(false);
-        addEducation(data, id);
+        addEducation(data);
     };
     useEffect(()=>{
         setError("status",{
