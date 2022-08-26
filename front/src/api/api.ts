@@ -279,7 +279,7 @@ export async function deleteProject(projectId: string , userSeq: number) {
     try {
         await axios.delete(`http://localhost:5001/project/${projectId}`, {
             data: {
-                userId: projectId,
+                userId: userSeq,
             },
             headers: {
                 "Content-Type": "application/json",
