@@ -48,17 +48,15 @@ export default function Certificate({ info }: any) {
     function handleAddFormActive() {
         setAddFormActive((addFormActive) => !addFormActive);
     }
-    const onClickDeleteBtn = (certificate: ICertificate) => {
+    const onClickDeleteBtn = (certificate: ICertificate, index:number) => {
         const userSeq = parseInt(certificate?.userId!);
         const certificateId = certificate?._id!;
-        console.log(certificate);
-        setCertificates((prev) => {
-            const newCertificates = [...prev];
-            const front = newCertificates.slice(0, targetIndex!);
-            const back = newCertificates.slice(targetIndex!);
-            return [...front, ...back];
-        });
         deleteCertificate(certificateId, userSeq);
+        setCertificates(prev=> {
+            const newCertificates = [...prev];
+            newCertificates.splice(index, 1);
+            return newCertificates;
+        })
     };
 
     return (
@@ -92,9 +90,7 @@ export default function Certificate({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton
-                                                onClick={() => onClickDeleteBtn(certificate)}
-                                            >
+                                            <MvpDeleteButton onClick={() => onClickDeleteBtn(certificate, index)}>
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>

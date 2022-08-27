@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { curUserState } from "./../../atoms";
 
-export default function EducationAddForm({ setEducations, setAddFormActive }: any) {
+export default function EducationAddForm({ setEducations, setIsAddFormActive }: any) {
     const {
         register,
         handleSubmit,
@@ -26,7 +26,7 @@ export default function EducationAddForm({ setEducations, setAddFormActive }: an
     const setCurUser = useSetRecoilState(curUserState);
     const onvalid = (data: IEducation) => {
         setEducations((prev: any) => [...prev, data]);
-        setAddFormActive(false);
+        setIsAddFormActive(false);
         addEducation(data);
     };
     useEffect(() => {
@@ -130,7 +130,7 @@ export default function EducationAddForm({ setEducations, setAddFormActive }: an
                 <Button color="#3687FF" type="submit">
                     추가
                 </Button>
-                <Button onClick={() => setAddFormActive(false)}>취소</Button>
+                <Button onClick={() => setIsAddFormActive(false)}>취소</Button>
             </div>
         </form>
     );

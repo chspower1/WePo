@@ -34,7 +34,16 @@ export default function Education({ info }: any) {
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
     const [targetIndex, setTargetIndex] = useState<Number>(); // index 를 체크해서 맞는 것만 editform 활성화
-
+    const onClickDeleteBtn = (education: IEducation, index:number) => {
+        const userSeq = parseInt(education.userId!);
+        const educationId = education._id!;
+        deleteEducation(educationId, userSeq);
+        setEducations(prev=> {
+            const newEducations = [...prev];
+            newEducations.splice(index, 1);
+            return newEducations;
+        })
+    };
     const location = useLocation();
     const pathName = location.pathname;
     function handleAdding() {
@@ -75,13 +84,7 @@ export default function Education({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton
-                                                onClick={() => {
-                                                    const userSeq = parseInt(education.userId!);
-                                                    const educationId = education._id!;
-                                                    return deleteEducation(educationId, userSeq);
-                                                }}
-                                            >
+                                            <MvpDeleteButton onClick={() => {onClickDeleteBtn(education, index)}} >
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
