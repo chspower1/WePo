@@ -18,7 +18,7 @@ import {
     MvpAddInputBox,
     RequiredLabel,
     Button,
-} from "../MyPortfolio";
+} from "../user/MyPortfolio";
 
 export function CertificateAddForm({ setAddFormActive, setCertificates }: any) {
     const {

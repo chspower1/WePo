@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { addCertificate, updateCertificate } from "../../api/api";
 import { ICertificate } from "../../atoms";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../MyPortfolio";
+import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
 export function CertificateEditForm({

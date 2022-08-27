@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { addProject } from "../../api/api";
 import { IProject } from "../../atoms";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../MyPortfolio";
+import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
 export const ProjectAddForm = ({ setAddFormActive, setProjects }: any) => {

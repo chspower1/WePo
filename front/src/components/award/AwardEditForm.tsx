@@ -2,7 +2,7 @@ import { IAward } from "../../atoms";
 import { useForm } from "react-hook-form";
 import { updateAward } from "../../api/api";
 import { useParams } from "react-router-dom";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../MyPortfolio";
+import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 export default function AwardEditForm({
     index,

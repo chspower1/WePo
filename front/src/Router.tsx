@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import MyPortfolio from "./components/MyPortfolio";
+import MyPortfolio from "./components/user/MyPortfolio";
 import RegisterForm from "./components/user/RegisterForm";
 import Network from "./components/user/Network";
 import Header from "./components/Header";

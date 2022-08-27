@@ -19,7 +19,7 @@ import {
     MvpAddButton,
     MvpDeleteButton,
     MvpContentAccent,
-} from "../MyPortfolio";
+} from "../user/MyPortfolio";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
@@ -32,23 +32,34 @@ export default function Certificate({ info }: any) {
     const curUser = useRecoilValue(curUserState);
     const userToken = sessionStorage.getItem("userToken");
     /* console.log(info); */
-    
+
     // form 관리
     const [addFormActive, setAddFormActive] = useState(false);
     const [editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
-    const [targetIndex, setTargetIndex] = useState<Number>();
+    const [targetIndex, setTargetIndex] = useState<number>();
 
     const location = useLocation();
     const pathName = location.pathname;
     // 추가사항 on/off
 
+    // 자격증 상태
+    const [certificates, setCertificates] = useState<ICertificate[]>(info);
     function handleAddFormActive() {
         setAddFormActive((addFormActive) => !addFormActive);
     }
-
-    // 자격증 상태
-    const [certificates, setCertificates] = useState<ICertificate[]>(info);
+    const onClickDeleteBtn = (certificate: ICertificate) => {
+        const userSeq = parseInt(certificate?.userId!);
+        const certificateId = certificate?._id!;
+        console.log(certificate);
+        setCertificates((prev) => {
+            const newCertificates = [...prev];
+            const front = newCertificates.slice(0, targetIndex!);
+            const back = newCertificates.slice(targetIndex!);
+            return [...front, ...back];
+        });
+        deleteCertificate(certificateId, userSeq);
+    };
 
     return (
         <MvpContainer>
@@ -82,11 +93,7 @@ export default function Certificate({ info }: any) {
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
                                             <MvpDeleteButton
-                                                onClick={() => {
-                                                    const userSeq = parseInt(certificate.userId!);
-                                                    const certificateId = certificate._id!;
-                                                    return deleteCertificate(certificateId, userSeq);
-                                                }}
+                                                onClick={() => onClickDeleteBtn(certificate)}
                                             >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>

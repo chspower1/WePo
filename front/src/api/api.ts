@@ -14,9 +14,10 @@ import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import Certificate from "./../components/certificate/Certificate";
 
+const BASE_URL = `http://${window.location.hostname}:5001`;
 export async function UserLogin({ email, password }: ILogin) {
     try {
-        const { data: newUser } = await axios.post("http://localhost:5001/user/login", {
+        const { data: newUser } = await axios.post(`${BASE_URL}/user/login`, {
             email,
             password,
         });
@@ -31,7 +32,7 @@ export async function UserLogin({ email, password }: ILogin) {
 // 회원가입 완료
 export async function createtUser({ email, password, name }: IUser) {
     try {
-        const { data } = await axios.post("http://localhost:5001/user/register", {
+        const { data } = await axios.post(`${BASE_URL}/user/register`, {
             email,
             password,
             name,
@@ -51,7 +52,7 @@ export async function createtUser({ email, password, name }: IUser) {
 
 export async function getUsers() {
     try {
-        const { data: users } = await axios.get(`http://localhost:5001/userlist`, {
+        const { data: users } = await axios.get(`${BASE_URL}/userlist`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -64,7 +65,7 @@ export async function getUsers() {
 }
 export async function getUser(userSeq: number) {
     try {
-        const { data } = await axios.get(`http://localhost:5001/users/${userSeq}`, {
+        const { data } = await axios.get(`${BASE_URL}/users/${userSeq}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -79,7 +80,7 @@ export async function updateUser(data: any, userSeq: number) {
     try {
         console.log(userSeq);
         await axios.put(
-            `http://localhost:5001/users/${userSeq}`,
+            `${BASE_URL}/users/${userSeq}`,
             { ...data },
             {
                 headers: {
@@ -98,7 +99,7 @@ export async function updateUser(data: any, userSeq: number) {
 export async function addAward(data: IAward) {
     try {
         await axios.post(
-            `http://localhost:5001/award`,
+            `${BASE_URL}/award`,
             { ...data },
             {
                 headers: {
@@ -115,7 +116,7 @@ export async function updateAward(data: any, userId: number, awardId: string) {
     try {
         console.log("데이터", data, "유저아이디", userId, "어워드아이디", awardId);
         await axios.put(
-            `http://localhost:5001/award/${awardId}`,
+            `${BASE_URL}/award/${awardId}`,
             { ...data, userId },
             {
                 headers: {
@@ -130,7 +131,7 @@ export async function updateAward(data: any, userId: number, awardId: string) {
 }
 export async function deleteAward(awardId: string, userSeq: number) {
     try {
-        await axios.delete(`http://localhost:5001/award/${awardId}`, {
+        await axios.delete(`${BASE_URL}/award/${awardId}`, {
             data: {
                 userId: userSeq,
             },
@@ -148,7 +149,7 @@ export async function deleteAward(awardId: string, userSeq: number) {
 export async function addCertificate(data: ICertificate) {
     try {
         await axios.post(
-            `http://localhost:5001/certificate`,
+            `${BASE_URL}/certificate`,
             { ...data },
             {
                 headers: {
@@ -164,7 +165,7 @@ export async function addCertificate(data: ICertificate) {
 export async function updateCertificate(data: ICertificate, userId: number, certificateId: string) {
     try {
         await axios.put(
-            `http://localhost:5001/certificate/${certificateId}`,
+            `${BASE_URL}/certificate/${certificateId}`,
             { ...data, userId },
             {
                 headers: {
@@ -181,7 +182,7 @@ export async function deleteCertificate(certificateId: string, userSeq: number) 
     try {
         console.log("certificateId", certificateId);
         await axios
-            .delete(`http://localhost:5001/certificate/${certificateId}`, {
+            .delete(`${BASE_URL}/certificate/${certificateId}`, {
                 data: {
                     userId: userSeq,
                 },
@@ -200,7 +201,7 @@ export async function deleteCertificate(certificateId: string, userSeq: number) 
 export async function addEducation(data: IEducation) {
     try {
         await axios.post(
-            `http://localhost:5001/education`,
+            `${BASE_URL}/education`,
             { ...data },
             {
                 headers: {
@@ -216,7 +217,7 @@ export async function addEducation(data: IEducation) {
 export async function updateEducation(data: IEducation, userId: string, educationId: string) {
     try {
         await axios.put(
-            `http://localhost:5001/education/${educationId}`,
+            `${BASE_URL}/education/${educationId}`,
             { ...data, userId },
             {
                 headers: {
@@ -231,7 +232,7 @@ export async function updateEducation(data: IEducation, userId: string, educatio
 }
 export async function deleteEducation(educationId: string, userSeq: number) {
     try {
-        await axios.delete(`http://localhost:5001/education/${educationId}`, {
+        await axios.delete(`${BASE_URL}/education/${educationId}`, {
             data: {
                 userId: userSeq,
             },
@@ -248,7 +249,7 @@ export async function deleteEducation(educationId: string, userSeq: number) {
 export async function addProject(data: IProject) {
     try {
         await axios.post(
-            `http://localhost:5001/project`,
+            `${BASE_URL}/project`,
             { ...data },
             {
                 headers: {
@@ -264,7 +265,7 @@ export async function addProject(data: IProject) {
 export async function updateProject(data: IProject, userId: number, projectId: string) {
     try {
         await axios.put(
-            `http://localhost:5001/project/${projectId}`,
+            `${BASE_URL}/project/${projectId}`,
             { ...data, userId },
             {
                 headers: {
@@ -279,7 +280,7 @@ export async function updateProject(data: IProject, userId: number, projectId: s
 }
 export async function deleteProject(projectId: string, userSeq: number) {
     try {
-        await axios.delete(`http://localhost:5001/project/${projectId}`, {
+        await axios.delete(`${BASE_URL}/project/${projectId}`, {
             data: {
                 userId: userSeq,
             },

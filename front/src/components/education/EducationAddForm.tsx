@@ -9,7 +9,7 @@ import {
     Button,
     MajorGraduate,
     MajorGraduateLabel,
-} from "../MyPortfolio";
+} from "../user/MyPortfolio";
 import { Status } from "styled-icons/fluentui-system-filled";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";

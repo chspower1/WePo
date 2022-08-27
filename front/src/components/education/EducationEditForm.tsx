@@ -8,7 +8,7 @@ import {
     Button,
     MajorGraduate,
     MajorGraduateLabel,
-} from "../MyPortfolio";
+} from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { updateEducation } from "../../api/api";
 

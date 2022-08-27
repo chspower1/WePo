@@ -17,7 +17,7 @@ import {
     MvpAddButton,
     MvpDeleteButton,
     MvpContentAccent,
-} from "../MyPortfolio";
+} from "../user/MyPortfolio";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";

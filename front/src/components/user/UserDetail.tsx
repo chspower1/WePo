@@ -9,7 +9,7 @@ import { isLoginState, IUser } from "./../../atoms";
 import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
 import styled from "styled-components";
-import { MyPortWrap, MvpWrap, UserCardBox } from "../MyPortfolio";
+import { MyPortWrap, MvpWrap, UserCardBox } from "./MyPortfolio";
 import { useRecoilValue } from "recoil";
 
 function UserDetail() {

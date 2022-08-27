@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
-import { lightTheme } from "./theme";
+import { lightTheme } from "./theme/theme";
 import Router from "./Router";
 import "./font/font.css";
 import { useRecoilValue } from "recoil";
@@ -30,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 function App() {
-    
     return (
         <>
             <ThemeProvider theme={lightTheme}>
