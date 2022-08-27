@@ -93,7 +93,7 @@ export default function AwardEditForm({
                     type="date"
                     width="130"
                     placeholder="날짜를 입력하세요"
-                    defaultValue={current.date}
+                    defaultValue={current.date.slice(0,10)}
                     {...register("date", {
                         required: "날짜를 입력하세요",
                         max: { value: maxDate, message: "수상을 한 날짜를 입력하세요!" },

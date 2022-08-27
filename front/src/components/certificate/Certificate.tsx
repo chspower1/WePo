@@ -78,7 +78,7 @@ export default function Certificate({ info }: any) {
                             {targetIndex !== index && (
                                 <>
                                     <MvpContentAccent>{certificate.title}</MvpContentAccent>
-                                    <MvpContentDate>{String(certificate.date)}</MvpContentDate>
+                                    <MvpContentDate>{String(certificate.date).slice(0,10)}</MvpContentDate>
                                     <MvpContentDetail>{certificate.org}</MvpContentDetail>
                                     <MvpContentDetail>{certificate.description}</MvpContentDetail>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
