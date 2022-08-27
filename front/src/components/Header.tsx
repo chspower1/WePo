@@ -22,11 +22,11 @@ const HeaderWrap = styled.header`
     left: 0;
     width: 100%;
     background-color: #eff3ff;
-    transition: box-shadow .6s, background .6s;
-    &.home{
+    transition: box-shadow 0.6s, background 0.6s;
+    &.home {
         background-color: transparent;
     }
-    &.active{
+    &.active {
         box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.2);
         background-color: #fff;
     }
@@ -108,7 +108,6 @@ const LoginOrRegiBtn = styled.button`
     }
 `;
 
-
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
     const setCurUser = useSetRecoilState(curUserState);
@@ -118,25 +117,25 @@ function Header() {
     const [navActive, setNavActive] = useState(false);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-  
+
     const scrollFixed = () => {
-      if (scrollY > 100) {
-        setScrollY(window.pageYOffset);
-        setScrollActive(true);
-      } else {
-        setScrollY(window.pageYOffset);
-        setScrollActive(false);
-      }
+        if (scrollY > 100) {
+            setScrollY(window.pageYOffset);
+            setScrollActive(true);
+        } else {
+            setScrollY(window.pageYOffset);
+            setScrollActive(false);
+        }
     };
-  
+
     useEffect(() => {
-      const scrollListener = () => {
-        window.addEventListener('scroll', scrollFixed);
-      };
-      scrollListener();
-      return () => {
-        window.removeEventListener('scroll', scrollFixed);
-      };
+        const scrollListener = () => {
+            window.addEventListener("scroll", scrollFixed);
+        };
+        scrollListener();
+        return () => {
+            window.removeEventListener("scroll", scrollFixed);
+        };
     });
 
     const UserLogout = () => {
@@ -147,7 +146,9 @@ function Header() {
     console.log(pathName);
     return (
         <>
-            <HeaderWrap className={`${pathName === '/' ? "home" : ""} ${scrollActive ? "active" : ""}`}>
+            <HeaderWrap
+                className={`${pathName === "/" ? "home" : ""} ${scrollActive ? "active" : ""}`}
+            >
                 <HeaderContainer>
                     <Link to="/">
                         <LogoBox>

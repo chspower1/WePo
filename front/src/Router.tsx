@@ -10,11 +10,13 @@ import { useEffect } from "react";
 import UserDetail from "./components/user/UserDetail";
 import NotFound from "./components/NotFound";
 import Home from "./components/Home";
+import SEO from "./components/SEO";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
     useEffect(() => {}, [isLogin]);
     return (
         <BrowserRouter>
+            <SEO />
             <Header />
             <Routes>
                 <Route path="*" element={<NotFound />} />
