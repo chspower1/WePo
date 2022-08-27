@@ -19,7 +19,9 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         box-sizing: border-box;
     }
-
+    html{
+        overflow-y:scroll;
+    }
     button{
         cursor: pointer;
         border: 0;
