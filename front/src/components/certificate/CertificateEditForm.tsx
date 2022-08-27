@@ -30,7 +30,7 @@ export function CertificateEditForm({
         updateCertificate(data, userId, certId);
         setCertificates((cerfiticate: any) => {
             const editCerfiticate = [...cerfiticate];
-            editCerfiticate[index] = data;
+            editCerfiticate[index] = {...data,userId,certId};
             return editCerfiticate;
         });
         setIsEditing(false);

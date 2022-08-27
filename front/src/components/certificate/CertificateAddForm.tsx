@@ -35,8 +35,8 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, userId }
             certId,
             userId: userId,
         };
+        console.log("생성완료",newCertificate)
         setCertificates((project: any) => [...project, newCertificate]);
-        console.log(newCertificate);
         setAddFormActive(false);
         addCertificate(newCertificate);
     };
