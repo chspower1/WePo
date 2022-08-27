@@ -1,5 +1,9 @@
 import { IProject } from "./../../atoms";
-export default function ProjectCard(project: IProject, index: number) {
+interface IProjectCardProps {
+    project: IProject;
+    index: number;
+}
+export default function ProjectCard({ project, index }: IProjectCardProps) {
     return (
         <MvpContentBox key={index}>
             {targetIndex !== index && (
