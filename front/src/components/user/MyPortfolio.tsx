@@ -19,8 +19,9 @@ export const MvpContainer = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    box-shadow: 0px 4px 25px #cdcdcd;
+    box-shadow: 10px 10px 15px  rgba(162,190,231,.25);
     padding: 50px 50px 80px;
+    background:#fff;
     & + & {
         margin-top: 40px;
     }
@@ -131,7 +132,9 @@ export const MajorGraduateLabel = styled.label`
     color: black;
     margin-right: 10px;
 `;
-
+const Root = styled.div`
+background: #eff3ff;
+`
 export const MyPortWrap = styled.div`
     position: relative;
     width: 100%;
@@ -139,7 +142,7 @@ export const MyPortWrap = styled.div`
     display: flex;
     justify-content: flex-end;
     margin: 0 auto;
-    margin-top: 70px;
+    margin-top: 100px;
     padding: 80px 30px;
     @media screen and (max-width: 960px) {
         flex-direction: column;
@@ -180,15 +183,17 @@ function MyPortfolio() {
     if (isLoading) return <></>;
     return (
         <>
-            <MyPortWrap>
-                <UserCardBox>{curUser && <UserCard {...curUser} />}</UserCardBox>
-                <MvpWrap>
-                    <Education info={[...curUser?.educations!]} />
-                    <Award info={[...curUser?.awards!]} />
-                    <Certificate info={[...curUser?.certificates!]} />
-                    <Project info={[...curUser?.projects!]} />
-                </MvpWrap>
-            </MyPortWrap>
+            <Root>
+                <MyPortWrap>
+                    <UserCardBox>{curUser && <UserCard {...curUser} />}</UserCardBox>
+                    <MvpWrap>
+                        <Education info={[...curUser?.educations!]} />
+                        <Award info={[...curUser?.awards!]} />
+                        <Certificate info={[...curUser?.certificates!]} />
+                        <Project info={[...curUser?.projects!]} />
+                    </MvpWrap>
+                </MyPortWrap>
+            </Root>
         </>
     );
 }

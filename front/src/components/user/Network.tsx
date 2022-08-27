@@ -17,6 +17,18 @@ const LoadingMotion = keyframes`
     }
 `;
 
+const BgWrap = styled.div`
+    width:100%;
+    min-height:calc(100vh - 100px);
+    background: #eff3ff;
+    padding:100px 0 0;
+`
+
+const Root = styled.div`
+width: 100%;
+padding: 70px 0 0;
+`
+
 const NetworkWrap = styled.div`
     width: 100%;
     max-width: 1300px;
@@ -24,6 +36,7 @@ const NetworkWrap = styled.div`
     height: 81%;
     margin: 0 auto;
     padding: 0 50px;
+
 `;
 const NetworkContainer = styled.div`
     width: 100%;
@@ -36,7 +49,6 @@ const NetworkContainer = styled.div`
 
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
-    margin: 70px 0 0;
 `;
 
 const NetworkTitle = styled.h1`
@@ -113,65 +125,69 @@ function Network() {
             {isLoading ? (
                 <>로딩중</>
             ) : (
-                <NetworkWrap>
-                    <NetworkHeadingSelectBox>
-                        <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
-                        <SelectBox>
-                            <CheckBoxWrap>
-                                <input
-                                    type="checkbox"
-                                    name="category"
-                                    id="frontEnd"
-                                    value="frontEnd"
-                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                />
-                                <Label htmlFor="frontEnd">프론트엔드</Label>
-                            </CheckBoxWrap>
-                            <CheckBoxWrap>
-                                <input
-                                    type="checkbox"
-                                    name="category"
-                                    id="backEnd"
-                                    value="backEnd"
-                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                />
-                                <Label htmlFor="backEnd">백엔드</Label>
-                            </CheckBoxWrap>
-                            <CheckBoxWrap>
-                                <input
-                                    type="checkbox"
-                                    name="category"
-                                    id="dataAnalysis"
-                                    value="dataAnalysis"
-                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                />
-                                <Label htmlFor="dataAnalysis">데이터분석</Label>
-                            </CheckBoxWrap>
-                            <CheckBoxWrap>
-                                <input
-                                    type="checkbox"
-                                    name="category"
-                                    id="AI"
-                                    value="AI"
-                                    onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                />
-                                <Label htmlFor="AI">AI</Label>
-                            </CheckBoxWrap>
-                        </SelectBox>
-                    </NetworkHeadingSelectBox>
-                    {isLoading ? (
-                        <LoadingBox>
-                            <LoadingIcon />
-                            Loading...
-                        </LoadingBox>
-                    ) : (
-                        <NetworkContainer>
-                            {filterUsersState.map((user) => (
-                                <UserCard key={user._id} {...user} />
-                            ))}
-                        </NetworkContainer>
-                    )}
-                </NetworkWrap>
+                <BgWrap>
+                    <Root>
+                        <NetworkWrap>
+                            <NetworkHeadingSelectBox>
+                                <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
+                                <SelectBox>
+                                    <CheckBoxWrap>
+                                        <input
+                                            type="checkbox"
+                                            name="category"
+                                            id="frontEnd"
+                                            value="frontEnd"
+                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                        />
+                                        <Label htmlFor="frontEnd">프론트엔드</Label>
+                                    </CheckBoxWrap>
+                                    <CheckBoxWrap>
+                                        <input
+                                            type="checkbox"
+                                            name="category"
+                                            id="backEnd"
+                                            value="backEnd"
+                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                        />
+                                        <Label htmlFor="backEnd">백엔드</Label>
+                                    </CheckBoxWrap>
+                                    <CheckBoxWrap>
+                                        <input
+                                            type="checkbox"
+                                            name="category"
+                                            id="dataAnalysis"
+                                            value="dataAnalysis"
+                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                        />
+                                        <Label htmlFor="dataAnalysis">데이터분석</Label>
+                                    </CheckBoxWrap>
+                                    <CheckBoxWrap>
+                                        <input
+                                            type="checkbox"
+                                            name="category"
+                                            id="AI"
+                                            value="AI"
+                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                                        />
+                                        <Label htmlFor="AI">AI</Label>
+                                    </CheckBoxWrap>
+                                </SelectBox>
+                            </NetworkHeadingSelectBox>
+                            {isLoading ? (
+                                <LoadingBox>
+                                    <LoadingIcon />
+                                    Loading...
+                                </LoadingBox>
+                            ) : (
+                                <NetworkContainer>
+                                    {filterUsersState.map((user) => (
+                                        <UserCard key={user._id} {...user} />
+                                    ))}
+                                </NetworkContainer>
+                            )}
+                        </NetworkWrap>
+                    </Root>
+                </BgWrap>
             )}
         </>
     );

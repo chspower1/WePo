@@ -1,9 +1,14 @@
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Root = styled.div`
 position:relative;
 width: 100%;
-height: 89vh;
+height: 100vh;
+padding-top:100px;
+background:#eff3ff;
+overflow:hidden;
 `
 
 const Wrap = styled.div`
@@ -46,7 +51,10 @@ text-align: center;
 margin: 80px 0 0;
     
 `
-const ViewMoreButton = styled.button`
+const ViewMoreButton = styled(Link)`
+display:inline-block;
+line-height:54px;
+text-align:center;
 width: 150px;
 height: 60px;
 border-radius: 10px;
@@ -101,6 +109,7 @@ box-shadow: 0 0 260px 100px ${props=> props.theme.btnColor};
 
 
 export default function Home() {
+    const navigate = useNavigate();
     return (
     <Root>
         <CircleBox>
@@ -123,8 +132,8 @@ export default function Home() {
                     </DescTxt>
                 </DescBox>
                 <ButtonBox>
-                    <ViewMoreButton>
-                        더 알아보기
+                    <ViewMoreButton to="/login">
+                        시작하기
                     </ViewMoreButton>
                 </ButtonBox>
             </TextBox>

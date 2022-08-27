@@ -12,8 +12,8 @@ const ItemWrap = styled.div`
     min-width: 350px;
     padding: 20px 30px;
     border-radius: 10px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 10px 15px  rgba(162,190,231,.25);
+    background:#fff;
 `;
 const InfoBox = styled.div`
     position: relative;
@@ -39,7 +39,13 @@ const NameTxt = styled.h2`
     margin-bottom: 10px;
 `;
 const EmailTxt = styled.h3`
+    font-size:14px;
     a {
+        display:block;
+        width:170px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
         color: ${(props) => props.theme.btnColor};
     }
 `;
@@ -111,7 +117,7 @@ function UserCard({ _id, name, email, description, field, userId }: IUser) {
 
                             <EmailTxt>
                                 {onEdit || (
-                                    <a href={`mailto:${email}`} title="메일 보내기">
+                                    <a href={`mailto:${email}`} title={`${email}에 메일 보내기`}>
                                         {email}
                                     </a>
                                 )}

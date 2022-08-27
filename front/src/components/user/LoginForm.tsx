@@ -15,13 +15,18 @@ export interface ILogin {
     password: string;
 }
 
-export const ButtonReset = styled.button`
-    cursor: pointer;
-    border: 0;
-    background: transparent;
-`;
+const Root = styled.div`
+    width: 100%;
+    height : 100vh;
+    padding: 70px 0 0;
+    background: #eff3ff;
+`
+
+
 export const Wrapper = styled.div`
     width: 100%;
+    height:100%;
+    display:flex;
     padding: 80px 0 50px;
 `;
 
@@ -33,9 +38,10 @@ export const FromContainer = styled.div`
     width: 100%;
     height: 560px;
     padding: 70px 80px;
-    margin: 0 auto;
+    margin: auto;
     border-radius: 15px;
     background: rgba(162, 190, 231, 0.1);
+    box-shadow: 10px 10px 15px  rgba(162,190,231,.25);
 `;
 
 export const TitleBox = styled.div`
@@ -64,6 +70,14 @@ export const Input = styled.input`
     box-shadow: 5px 4px 5px rgba(166, 184, 210, 0.3);
     &::placeholder {
         font-size: 12px;
+    }
+    &[type="password"]{
+        font-family: sans-serif;
+        letter-spacing: 1px;
+        color: #3687FF;
+        &::placeholder{
+            font-family: "Elice";
+        }
     }
 `;
 
@@ -151,61 +165,63 @@ export default function LoginForm() {
     }, [isLogin]);
 
     return (
-        <Wrapper>
-            <FromContainer>
-                <TitleBox>
-                    <Title>로그인</Title>
-                </TitleBox>
-                <form onSubmit={handleSubmit(onvalid)}>
-                    <InputBox>
-                        <Input
-                            type="text"
-                            placeholder="이메일을 입력하세요"
-                            {...register("email", {
-                                required: "이메일을 입력해 주세요",
-                                pattern: {
-                                    value: /^\S+@\S+$/i,
-                                    message: "이메일 형식에 맞지 않습니다!",
-                                },
-                            })}
-                        />
-                        {errors.email && (
-                            <ErrMsg>
-                                <DangerIcon />
-                                {errors.email.message}
-                            </ErrMsg>
-                        )}
-                    </InputBox>
-                    <InputBox>
-                        <Input
-                            type="password"
-                            placeholder="비밀번호를 입력하세요"
-                            {...register("password", {
-                                required: "비밀번호를 입력해 주세요",
-                                minLength: {
-                                    value: 4,
-                                    message: "비밀번호는 4글자 이상입니다!",
-                                },
-                            })}
-                        />
-                        {errors.password && (
-                            <ErrMsg>
-                                <DangerIcon />
-                                {errors.password.message}
-                            </ErrMsg>
-                        )}
-                    </InputBox>
-                    <SubmitButtonBox>
-                        <SubmitButton>로그인</SubmitButton>
-                    </SubmitButtonBox>
-                    <RegisterCommentBox>
-                        아직 회원이 아니신가요?
-                        <Link to="/register">
-                            <RegisterButton>회원가입</RegisterButton>
-                        </Link>
-                    </RegisterCommentBox>
-                </form>
-            </FromContainer>
-        </Wrapper>
+        <Root>
+            <Wrapper>
+                <FromContainer>
+                    <TitleBox>
+                        <Title>로그인</Title>
+                    </TitleBox>
+                    <form onSubmit={handleSubmit(onvalid)}>
+                        <InputBox>
+                            <Input
+                                type="text"
+                                placeholder="이메일을 입력하세요"
+                                {...register("email", {
+                                    required: "이메일을 입력해 주세요",
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message: "이메일 형식에 맞지 않습니다!",
+                                    },
+                                })}
+                            />
+                            {errors.email && (
+                                <ErrMsg>
+                                    <DangerIcon />
+                                    {errors.email.message}
+                                </ErrMsg>
+                            )}
+                        </InputBox>
+                        <InputBox>
+                            <Input
+                                type="password"
+                                placeholder="비밀번호를 입력하세요"
+                                {...register("password", {
+                                    required: "비밀번호를 입력해 주세요",
+                                    minLength: {
+                                        value: 4,
+                                        message: "비밀번호는 4글자 이상입니다!",
+                                    },
+                                })}
+                            />
+                            {errors.password && (
+                                <ErrMsg>
+                                    <DangerIcon />
+                                    {errors.password.message}
+                                </ErrMsg>
+                            )}
+                        </InputBox>
+                        <SubmitButtonBox>
+                            <SubmitButton>로그인</SubmitButton>
+                        </SubmitButtonBox>
+                        <RegisterCommentBox>
+                            아직 회원이 아니신가요?
+                            <Link to="/register">
+                                <RegisterButton>회원가입</RegisterButton>
+                            </Link>
+                        </RegisterCommentBox>
+                    </form>
+                </FromContainer>
+            </Wrapper>
+        </Root>
     );
 }

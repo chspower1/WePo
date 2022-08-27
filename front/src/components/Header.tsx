@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { curUserState, isLoginState } from "../atoms";
+import { useEffect, useState } from "react";
 
 const LinkHover = keyframes`
     0%{color:#343434}
@@ -15,16 +16,19 @@ const LinkHover = keyframes`
 `;
 
 const HeaderWrap = styled.header`
-    z-index: 2;
+    z-index: 1000;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: white;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    background-color: #eff3ff;
+    transition: box-shadow .6s, background .6s;
     &.home{
-        box-shadow: none;
-    background-color: transparent;
+        background-color: transparent;
+    }
+    &.active{
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.2);
+        background-color: #fff;
     }
 `;
 
@@ -103,15 +107,37 @@ const LoginOrRegiBtn = styled.button`
         color: #343434;
     }
 `;
-const HeaderEmptyBox = styled.div`
-    height: 100px;
-`;
+
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
     const setCurUser = useSetRecoilState(curUserState);
     const location = useLocation();
     const pathName = location.pathname;
+
+    const [navActive, setNavActive] = useState(false);
+    const [scrollY, setScrollY] = useState(0);
+    const [scrollActive, setScrollActive] = useState(false);
+  
+    const scrollFixed = () => {
+      if (scrollY > 100) {
+        setScrollY(window.pageYOffset);
+        setScrollActive(true);
+      } else {
+        setScrollY(window.pageYOffset);
+        setScrollActive(false);
+      }
+    };
+  
+    useEffect(() => {
+      const scrollListener = () => {
+        window.addEventListener('scroll', scrollFixed);
+      };
+      scrollListener();
+      return () => {
+        window.removeEventListener('scroll', scrollFixed);
+      };
+    });
 
     const UserLogout = () => {
         localStorage.removeItem("recoil-persist");
@@ -121,8 +147,7 @@ function Header() {
     console.log(pathName);
     return (
         <>
-            <HeaderEmptyBox />
-            <HeaderWrap className={pathName === '/' ? "home" : ""}>
+            <HeaderWrap className={`${pathName === '/' ? "home" : ""} ${scrollActive ? "active" : ""}`}>
                 <HeaderContainer>
                     <Link to="/">
                         <LogoBox>
