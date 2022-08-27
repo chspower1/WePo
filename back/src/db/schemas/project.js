@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const ProjectSchema = new Schema(
   {
-    // User 식별 id - userSeq
+    // User 식별 id
     userId: {
       type: Number,
       required: true,
@@ -27,6 +27,11 @@ const ProjectSchema = new Schema(
       type: String,
       required: false,
     },
+    // projectId : 학력 추가 시 프론트에서 넘겨주는 해당 project의 고유id
+    projectId: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,
