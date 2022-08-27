@@ -2,11 +2,17 @@ import { useForm } from "react-hook-form";
 import { addAward } from "../../api/api";
 import { IAward } from "../../atoms";
 import { useParams } from "react-router-dom";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
+import {
+    MvpContentName,
+    MvpAddInput,
+    MvpAddInputBox,
+    RequiredLabel,
+    Button,
+} from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function AwardAddForm({ setAwards, maxDate, setAddFormActive}: any) {
+export default function AwardAddForm({ setAwards, maxDate, setAddFormActive }: any) {
     const {
         register,
         handleSubmit,

@@ -45,15 +45,15 @@ export default function Project({ info }: any) {
 
     const [projects, setProjects] = useState<IProject[]>(info);
 
-    const onClickDeleteBtn = (project: IProject, index:number) => {
+    const onClickDeleteBtn = (project: IProject, index: number) => {
         const userSeq = parseInt(project.userId!);
         const projectId = project._id!;
         deleteProject(projectId, userSeq);
-        setProjects(prev=> {
+        setProjects((prev) => {
             const newProjects = [...prev];
             newProjects.splice(index, 1);
             return newProjects;
-        })
+        });
     };
     return (
         <MvpContainer>
@@ -82,7 +82,11 @@ export default function Project({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{onClickDeleteBtn(project, index)}}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    onClickDeleteBtn(project, index);
+                                                }}
+                                            >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
