@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { addProject, getUser } from "../../api/api";
+import { addData, Category, getUser } from "../../api/api";
 import { IProject } from "../../atoms";
 import {
     MvpContentName,
@@ -28,7 +28,7 @@ export const ProjectAddForm = ({ setAddFormActive, setProjects, userId, projectI
         };
         setProjects((project: any) => [...project, newProject]);
         setAddFormActive(false);
-        addProject(newProject);
+        addData(newProject, Category.project);
     };
 
     useEffect(() => {

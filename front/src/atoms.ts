@@ -109,7 +109,8 @@ export const isLoginState = selector({
     key: "isLogin",
     get: ({ get }) => {
         const curUser = get(curUserState);
-        const checkLogin = sessionStorage.getItem("userToken") && curUser?.token ? true : false;
+        console.log(curUser);
+        const checkLogin = curUser?.token ? true : false;
         return checkLogin;
     },
 });

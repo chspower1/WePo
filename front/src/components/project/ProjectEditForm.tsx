@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IProject } from "../../atoms";
-import { updateProject } from "../../api/api";
+import { Category, updateData } from "../../api/api";
 import {
     MvpContentName,
     MvpAddInput,
@@ -28,7 +28,7 @@ export function ProjectEditForm({
     } = useForm<IProject>();
 
     const onvalid = (data: IProject) => {
-        updateProject(data, userId, projectId);
+        updateData(data, Category.project, userId, projectId);
         setProjects((project: any) => {
             const newProjects = [...project];
             newProjects[index] = { ...data, userId, projectId };
@@ -70,7 +70,7 @@ export function ProjectEditForm({
                     width="100"
                     maxLength={2}
                     id="project-startDate"
-                    defaultValue={projects[index].startDate.slice(0,10)}
+                    defaultValue={projects[index].startDate.slice(0, 10)}
                     placeholder="프로젝트 시작기간"
                     {...register("startDate", {
                         required: "기간을 입력해주세요",
@@ -84,7 +84,7 @@ export function ProjectEditForm({
                 <MvpAddInput
                     type="date"
                     id="project-endDate"
-                    defaultValue={projects[index].endDate.slice(0,10)}
+                    defaultValue={projects[index].endDate.slice(0, 10)}
                     placeholder="프로젝트 종료기간"
                     {...register("endDate", {
                         required: "기간을 입력해주세요",

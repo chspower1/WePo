@@ -21,7 +21,7 @@ import {
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
-import { deleteEducation } from "../../api/api";
+import { Category, deleteData } from "../../api/api";
 export default function Education({ info }: any) {
     // user ID
     const { userId } = useParams();
@@ -37,7 +37,7 @@ export default function Education({ info }: any) {
     const onClickDeleteBtn = (education: IEducation, index: number) => {
         const userId = parseInt(education.userId!);
         const educationId = education.eduId!;
-        deleteEducation(educationId, userId);
+        deleteData(Category.education, educationId, userId);
         setEducations((prev) => {
             const newEducations = [...prev];
             newEducations.splice(index, 1);

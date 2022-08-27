@@ -1,6 +1,6 @@
 import { EduStatus, IEducation, IUser } from "../../atoms";
 import { useForm } from "react-hook-form";
-import { addEducation } from "../../api/api";
+import { addData,  Category } from "../../api/api";
 import {
     MvpContentName,
     MvpAddInput,
@@ -37,7 +37,7 @@ export default function EducationAddForm({
         };
         setEducations((prev: any) => [...prev, newEducation]);
         setIsAddFormActive(false);
-        addEducation(newEducation);
+        addData(newEducation, Category.education);
     };
     useEffect(() => {
         setError("status", {

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { addCertificate, updateCertificate } from "../../api/api";
+import {  Category,  updateData } from "../../api/api";
 import { ICertificate } from "../../atoms";
 import {
     MvpContentName,
@@ -27,7 +27,7 @@ export function CertificateEditForm({
     } = useForm<ICertificate>();
 
     const onvalid = (data: ICertificate) => {
-        updateCertificate(data, userId, certId);
+        updateData(data, Category.certificate, userId, certId);
         setCertificates((cerfiticate: any) => {
             const newCerfiticate = [...cerfiticate];
             newCerfiticate[index] = { ...data, userId, certId };
@@ -71,7 +71,7 @@ export function CertificateEditForm({
                     type="date"
                     width="100"
                     id="project-startDate"
-                    defaultValue={certificates[index].date.slice(0,10)}
+                    defaultValue={certificates[index].date.slice(0, 10)}
                     {...register("date", {
                         required: "발급날짜을 입력해주세요",
                         // pattern: {

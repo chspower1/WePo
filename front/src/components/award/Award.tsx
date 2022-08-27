@@ -20,7 +20,7 @@ import {
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
-import { deleteAward } from "../../api/api";
+import { Category, deleteData } from "../../api/api";
 
 export default function Award({ info }: any) {
     // user ID
@@ -44,7 +44,7 @@ export default function Award({ info }: any) {
     const onClickDeleteBtn = (award: IAward, index: number) => {
         const userId = parseInt(award.userId!);
         const awardId = award.awardId!;
-        deleteAward(awardId, userId);
+        deleteData(Category.award, awardId, userId);
         setAwards((prev) => {
             const newAwards = [...prev];
             newAwards.splice(index, 1);
@@ -85,7 +85,9 @@ export default function Award({ info }: any) {
                                         </MvpContentDetail>
                                     </div>
                                     <MvpContentDetail>{award.org}</MvpContentDetail>
-                                    <MvpContentDate>{String(award.date).slice(0,10)}</MvpContentDate>
+                                    <MvpContentDate>
+                                        {String(award.date).slice(0, 10)}
+                                    </MvpContentDate>
                                     <MvpContentDetail>{award.description}</MvpContentDetail>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>

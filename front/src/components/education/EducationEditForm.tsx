@@ -10,7 +10,7 @@ import {
     MajorGraduateLabel,
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
-import { updateEducation } from "../../api/api";
+import { Category, updateData} from "../../api/api";
 
 export default function EducationEditForm({
     index,
@@ -28,7 +28,7 @@ export default function EducationEditForm({
     } = useForm<IEducation>({ mode: "onChange" });
 
     const onvalid = (data: IEducation) => {
-        updateEducation(data, userId, eduId);
+        updateData(data, Category.education, userId, eduId);
         setEducations((education: any) => {
             const newEducations = [...education];
             newEducations[index] = { ...data, userId, eduId };

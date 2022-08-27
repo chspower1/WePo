@@ -23,9 +23,9 @@ import {
 import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
-import { deleteProject } from "../../api/api";
 import { Droppable } from "@hello-pangea/dnd";
 import SEO from "./../SEO";
+import { Category, deleteData } from "../../api/api";
 export default function Project({ info }: any) {
     // user ID
     const { id } = useParams();
@@ -50,7 +50,7 @@ export default function Project({ info }: any) {
     const onClickDeleteBtn = (project: IProject, index: number) => {
         const userId = parseInt(project.userId!);
         const projectId = project.projectId!;
-        deleteProject(projectId, userId);
+        deleteData(Category.project, projectId, userId);
         setProjects((prev) => {
             const newProjects = [...prev];
             newProjects.splice(index, 1);
@@ -77,7 +77,10 @@ export default function Project({ info }: any) {
                                 <>
                                     <MvpContentAccent>{project.title}</MvpContentAccent>
                                     <MvpContentDetail>{project.description}</MvpContentDetail>
-                                    <MvpContentDate>{`${String(project.startDate).slice(0,10)} ~ ${String(project.endDate).slice(0,10)}`}</MvpContentDate>
+                                    <MvpContentDate>{`${String(project.startDate).slice(
+                                        0,
+                                        10
+                                    )} ~ ${String(project.endDate).slice(0, 10)}`}</MvpContentDate>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton

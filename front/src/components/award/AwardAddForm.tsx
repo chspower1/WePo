@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { addAward } from "../../api/api";
+import { addData, Category } from "../../api/api";
 import { IAward } from "../../atoms";
 import { useParams } from "react-router-dom";
 import {
@@ -30,7 +30,7 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
         console.log("생성완료", newAward);
         setAwards((project: any) => [...project, newAward]);
         setAddFormActive(false);
-        addAward(newAward);
+        addData(newAward, Category.award);
     };
 
     useEffect(() => {

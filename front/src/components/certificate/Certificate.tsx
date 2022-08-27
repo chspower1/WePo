@@ -23,7 +23,7 @@ import {
 import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
-import { deleteCertificate } from "../../api/api";
+import { Category,  deleteData } from "../../api/api";
 
 export default function Certificate({ info }: any) {
     // user ID
@@ -51,7 +51,7 @@ export default function Certificate({ info }: any) {
     const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
         const userSeq = parseInt(certificate?.userId!);
         const certificateId = certificate?.certId!;
-        deleteCertificate(certificateId, userSeq);
+        deleteData(Category.certificate, certificateId, userSeq);
         setCertificates((prev) => {
             const newCertificates = [...prev];
             newCertificates.splice(index, 1);
@@ -78,7 +78,9 @@ export default function Certificate({ info }: any) {
                             {targetIndex !== index && (
                                 <>
                                     <MvpContentAccent>{certificate.title}</MvpContentAccent>
-                                    <MvpContentDate>{String(certificate.date).slice(0,10)}</MvpContentDate>
+                                    <MvpContentDate>
+                                        {String(certificate.date).slice(0, 10)}
+                                    </MvpContentDate>
                                     <MvpContentDetail>{certificate.org}</MvpContentDetail>
                                     <MvpContentDetail>{certificate.description}</MvpContentDetail>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
@@ -87,7 +89,6 @@ export default function Certificate({ info }: any) {
                                                 onClick={() => {
                                                     setIsEditing(true);
                                                     setTargetIndex(index);
-                                                    
                                                 }}
                                             >
                                                 <Pencil color="#3687FF" />

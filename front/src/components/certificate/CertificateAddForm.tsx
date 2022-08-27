@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { addCertificate } from "../../api/api";
+import {  addData, Category } from "../../api/api";
 import { ICertificate } from "../../atoms";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import {
@@ -35,10 +35,10 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, userId }
             certId,
             userId: userId,
         };
-        console.log("생성완료",newCertificate)
+        console.log("생성완료", newCertificate);
         setCertificates((project: any) => [...project, newCertificate]);
         setAddFormActive(false);
-        addCertificate(newCertificate);
+        addData(newCertificate, Category.certificate);
     };
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { IAward } from "../../atoms";
 import { useForm } from "react-hook-form";
-import { updateAward } from "../../api/api";
+import { Category, updateData } from "../../api/api";
 import { useParams } from "react-router-dom";
 import {
     MvpContentName,
@@ -26,7 +26,7 @@ export default function AwardEditForm({
         formState: { errors },
     } = useForm<IAward>({ mode: "onChange" });
     const onvalid = (data: IAward) => {
-        updateAward(data, userId, certId);
+        updateData(data, Category.award, userId, certId);
         setAwards((award: any) => {
             const newAward = [...award];
             newAward[index] = { ...data, userId, certId };
@@ -93,7 +93,7 @@ export default function AwardEditForm({
                     type="date"
                     width="130"
                     placeholder="날짜를 입력하세요"
-                    defaultValue={current.date.slice(0,10)}
+                    defaultValue={current.date.slice(0, 10)}
                     {...register("date", {
                         required: "날짜를 입력하세요",
                         max: { value: maxDate, message: "수상을 한 날짜를 입력하세요!" },
