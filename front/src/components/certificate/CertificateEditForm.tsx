@@ -36,6 +36,7 @@ export function CertificateEditForm({
         setIsEditing(false);
         setTargetIndex(null);
     };
+    console.log(userId, certId);
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <MvpAddInputBox>

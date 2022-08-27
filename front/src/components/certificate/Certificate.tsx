@@ -87,6 +87,7 @@ export default function Certificate({ info }: any) {
                                                 onClick={() => {
                                                     setIsEditing(true);
                                                     setTargetIndex(index);
+                                                    
                                                 }}
                                             >
                                                 <Pencil color="#3687FF" />
