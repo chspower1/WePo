@@ -40,6 +40,7 @@ certificateRouter.post("/certificate", login_required, async function (req, res,
     const date = req.body.date;
     const org = req.body.org;
     const description = req.body.description;
+    const certId = req.body.certId;
 
     // 신규 자격증 추가
     const newCertificate = await certificateService.addCertificate({
@@ -47,7 +48,8 @@ certificateRouter.post("/certificate", login_required, async function (req, res,
       title,
       date,
       org,
-      description
+      description,
+      certId
     });
 
     if(newCertificate.errorMessage) {

@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { stringify } from "uuid";
 
 const CertificateSchema = new Schema(
   {
@@ -26,6 +27,11 @@ const CertificateSchema = new Schema(
     description: {
       type: String,
     },
+    // certId : 자격증 추가 시 프론트에서 넘겨주는 해당 certificate의 고유id
+    certId : {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,
