@@ -17,7 +17,7 @@ export function CertificateEditForm({
     setEditing,
     setIsEditing,
     setTargetIndex,
-    userSeq,
+    userId,
     certId,
 }: any) {
     const {
@@ -27,7 +27,7 @@ export function CertificateEditForm({
     } = useForm<ICertificate>();
 
     const onvalid = (data: ICertificate) => {
-        updateCertificate(data, userSeq, certId);
+        updateCertificate(data, userId, certId);
         setCertificates((cerfiticate: any) => {
             const editCerfiticate = [...cerfiticate];
             editCerfiticate[index] = data;

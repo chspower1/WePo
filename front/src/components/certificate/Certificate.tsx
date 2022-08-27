@@ -69,7 +69,7 @@ export default function Certificate({ info }: any) {
                     <CertificateAddForm
                         setAddFormActive={setAddFormActive}
                         setCertificates={setCertificates}
-                        userSeq={curUser?.userSeq!}
+                        userId={curUser?.userId!}
                     />
                 )}
                 {!addFormActive &&
@@ -108,7 +108,7 @@ export default function Certificate({ info }: any) {
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userSeq={certificate.userId}
+                                    userId={certificate.userId}
                                     certId={certificate.certId}
                                 />
                             )}

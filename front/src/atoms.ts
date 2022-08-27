@@ -11,7 +11,7 @@ export interface IUser {
     field: EHopeField[];
     likes: any[];
     views: number;
-    userSeq: number;
+    userId: number;
     educations?: IEducation[];
     awards?: IAward[];
     certificates?: ICertificate[];

@@ -20,7 +20,7 @@ import {
     Button,
 } from "../user/MyPortfolio";
 
-export function CertificateAddForm({ setAddFormActive, setCertificates, userSeq }: any) {
+export function CertificateAddForm({ setAddFormActive, setCertificates, userId }: any) {
     const {
         register,
         handleSubmit,
@@ -33,7 +33,7 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, userSeq 
         const newCertificate: ICertificate = {
             ...data,
             certId,
-            userId: userSeq,
+            userId: userId,
         };
         setCertificates((project: any) => [...project, newCertificate]);
         console.log(newCertificate);
