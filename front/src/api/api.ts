@@ -98,7 +98,7 @@ export async function updateUser(data: any, userSeq: number) {
 // Award 추가,수정
 export async function addAward(data: IAward) {
     try {
-        await axios.post(
+        return await axios.post(
             `${BASE_URL}/award`,
             { ...data },
             {
