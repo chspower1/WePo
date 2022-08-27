@@ -46,7 +46,7 @@ const UserSchema = new Schema(
       required: false,
       default: "설명이 아직 없습니다. 추가해 주세요.",
     },
-    userSeq: {
+    userId: {
       type: Number,
       required: false
     }
@@ -73,7 +73,7 @@ UserSchema.pre('save', async function () {
     )
   ).value;
 
-  this.set({ userSeq: sequence.value });
+  this.set({ userId: sequence.value });
 });
 
 

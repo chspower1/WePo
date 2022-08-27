@@ -3,7 +3,7 @@ import { stringify } from "uuid";
 
 const CertificateSchema = new Schema(
   {
-    // User 식별 id - userSeq
+    // User 식별 id
     userId: {
       type: Number,
       required: true,

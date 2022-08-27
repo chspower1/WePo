@@ -35,7 +35,7 @@ certificateRouter.post("/certificate", login_required, async function (req, res,
     }
 
     // req (request) 에서 데이터 가져오기
-    const currentUserId = req['currentUserSeq'];
+    const currentUserId = req['currentUserId'];
     const title = req.body.title;
     const date = req.body.date;
     const org = req.body.org;
@@ -72,7 +72,7 @@ certificateRouter.put("/certificate/:certId", login_required, async function (re
     }
 
     // User authentication
-    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Certificate 내에 저장된 userId
     if (currentUserId !== parseInt(userId)) {
       throw new Error(
@@ -115,7 +115,7 @@ certificateRouter.delete("/certificate/:certId", login_required, async function 
     }
     
     // User authentication
-    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Project 내에 저장된 userId
     if (currentUserId !== parseInt(userId)) {
       throw new Error(

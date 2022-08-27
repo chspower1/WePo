@@ -35,7 +35,7 @@ educationRouter.post("/education", login_required, async function (req, res, nex
     }
 
     // req (request) 에서 데이터 가져오기
-    const currentUserId = req['currentUserSeq'];
+    const currentUserId = req['currentUserId'];
     const school = req.body.school;
     const major = req.body.major;
     const status = req.body.status;
@@ -68,7 +68,7 @@ educationRouter.put("/education/:eduId", login_required, async function (req, re
     }
 
     // User authentication
-    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Education 내에 저장된 userId
     if (currentUserId !== parseInt(userId)) {
       throw new Error(
@@ -110,7 +110,7 @@ educationRouter.delete("/education/:eduId", login_required, async function (req,
     }
 
     // User authentication
-    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Project 내에 저장된 userId
     if (currentUserId !== parseInt(userId)) {
       throw new Error(

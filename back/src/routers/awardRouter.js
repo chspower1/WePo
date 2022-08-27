@@ -30,7 +30,7 @@ awardRouter.post("/award", login_required, async function (req, res, next) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
         }
         // req (request) 에서 데이터 가져오기
-        const currentUserId = req["currentUserSeq"];
+        const currentUserId = req["currentUserId"];
         const title = req.body.title;
         const grade = req.body.grade;
         const org = req.body.org;
@@ -60,7 +60,7 @@ awardRouter.put("/award/:awardId", login_required, async function (req, res, nex
         }
 
         // User authentication
-        const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+        const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
         const userId = req.body.userId; // award 내에 저장된 userId
         if (currentUserId !== parseInt(userId)) {
             console.log(typeof currentUserId, typeof userId);
@@ -97,7 +97,7 @@ awardRouter.delete("/award/:awardId", login_required, async function (req, res, 
         }
 
         // User authentication
-        const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+        const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
         const userId = req.body.userId; // award 내에 저장된 userId
         if (currentUserId !== parseInt(userId)) {
             throw new Error("currentUser가 본 award의 작성자가 아닙니다.");

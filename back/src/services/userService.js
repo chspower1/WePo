@@ -56,7 +56,7 @@ class userAuthService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-    const token = jwt.sign({ userSeq: user.userSeq }, secretKey);
+    const token = jwt.sign({ userId: user.userId }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
     // 보안을 위해 password는 제거
@@ -75,9 +75,9 @@ class userAuthService {
     return users;
   }
 
-  static async setUser({ userSeq, toUpdate }) {
+  static async setUser({ userId, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
-    let user = await User.findBySeq({ userSeq });
+    let user = await User.findByUserId({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -93,13 +93,13 @@ class userAuthService {
       ...(description && { description }),
     };
 
-    return User.update({ userSeq, newValues });
+    return User.update({ userId, newValues });
   }
 
 
-  static async getUserInfo({ userSeq }) {
+  static async getUserInfo({ userId }) {
 
-    const user = await User.findBySeq({ userSeq });
+    const user = await User.findByUserId({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -113,8 +113,8 @@ class userAuthService {
 
 
   // 사용자 포트폴리오의 조회수 증가
-  static async increaseView({ userSeq }) {
-    const user = await User.findBySeq({ userSeq });
+  static async increaseView({ userId }) {
+    const user = await User.findByUserId({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -125,7 +125,7 @@ class userAuthService {
 
     const newValues = { views: user.views + 1};
 
-    return User.update({ userSeq, newValues });
+    return User.update({ userId, newValues });
   }
 }
 

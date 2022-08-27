@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const ProjectSchema = new Schema(
   {
-    // User 식별 id - userSeq
+    // User 식별 id
     userId: {
       type: Number,
       required: true,
