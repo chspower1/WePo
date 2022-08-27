@@ -24,6 +24,7 @@ import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
 import { deleteProject } from "../../api/api";
+import { Droppable } from "@hello-pangea/dnd";
 export default function Project({ info }: any) {
     // user ID
     const { id } = useParams();

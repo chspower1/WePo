@@ -70,7 +70,6 @@ export async function getUser(userId: number) {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
-
         return data as IUser;
     } catch (err) {
         console.log(err);
