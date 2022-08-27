@@ -138,7 +138,7 @@ export default function LoginForm() {
     console.log(isLogin);
     useEffect(() => {
         if (isLogin) {
-            navigator("/", { replace: true });
+            navigator("/mypage", { replace: true });
         }
         setError("email", {
             type: "costom",

@@ -31,15 +31,14 @@ export default function Education({ info }: any) {
     const [educations, setEducations] = useState<IEducation[]>(info); // 더미educations 초기값
 
     // form 관리
-    const [addFormActive, setAddFormActive] = useState(false);
-    const [editing, setEditing] = useState(true); // userId와 대조해서 맞으면 edit버튼 보임
+    const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
     const [targetIndex, setTargetIndex] = useState<Number>(); // index 를 체크해서 맞는 것만 editform 활성화
 
     const location = useLocation();
     const pathName = location.pathname;
     function handleAdding() {
-        setAddFormActive((current) => !current);
+        setIsAddFormActive((current) => !current);
     }
     return (
         <MvpContainer>
@@ -47,14 +46,14 @@ export default function Education({ info }: any) {
                 <MvpTitle>학력</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-                {addFormActive && (
+                {isAddFormActive && (
                     <EducationAddForm
                         educations={educations}
-                        setAddFormActive={setAddFormActive}
+                        setIsAddFormActive={setIsAddFormActive}
                         setEducations={setEducations}
                     />
                 )}
-                {!addFormActive &&
+                {!isAddFormActive &&
                     educations?.map((education, index) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
@@ -66,7 +65,7 @@ export default function Education({ info }: any) {
                                         </MvpContentDetail>
                                         <MvpContentDetail>({education.status})</MvpContentDetail>
                                     </div>
-                                    {curUser && pathName === "/" && targetIndex !== index && (
+                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -103,7 +102,7 @@ export default function Education({ info }: any) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser && pathName === "/" && !addFormActive && (
+            {curUser && pathName === "/mypage" && !isAddFormActive && (
                 <button onClick={handleAdding}>
                     <MvpAddButton>
                         <PlusSquareFill color="#3687FF" />

@@ -82,7 +82,7 @@ export default function Certificate({ info }: any) {
                                     <MvpContentDate>{String(certificate.date)}</MvpContentDate>
                                     <MvpContentDetail>{certificate.org}</MvpContentDetail>
                                     <MvpContentDetail>{certificate.description}</MvpContentDetail>
-                                    {curUser && pathName === "/" && targetIndex !== index && (
+                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -116,7 +116,7 @@ export default function Certificate({ info }: any) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser && pathName === "/" && !addFormActive && (
+            {curUser && pathName === "/mypage" && !addFormActive && (
                 <MvpAddButton onClick={handleAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

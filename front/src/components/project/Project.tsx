@@ -62,7 +62,7 @@ export default function Project({ info }: any) {
                                     <MvpContentAccent>{project.title}</MvpContentAccent>
                                     <MvpContentDetail>{project.description}</MvpContentDetail>
                                     <MvpContentDate>{`${project.startDate} ~ ${project.endDate}`}</MvpContentDate>
-                                    {curUser && pathName === "/" && targetIndex !== index && (
+                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -72,11 +72,13 @@ export default function Project({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{
-                                                const userSeq = parseInt(project.userId!);
-                                                const projectId = project._id!;
-                                                return deleteProject(projectId, userSeq);
-                                                }}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    const userSeq = parseInt(project.userId!);
+                                                    const projectId = project._id!;
+                                                    return deleteProject(projectId, userSeq);
+                                                }}
+                                            >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -99,7 +101,7 @@ export default function Project({ info }: any) {
                     ))}
             </MvpContentContainer>
 
-            {curUser && pathName === "/" && !addFormActive && (
+            {curUser && pathName === "/mypage" && !addFormActive && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

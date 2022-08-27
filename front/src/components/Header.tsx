@@ -12,15 +12,15 @@ const LinkHover = keyframes`
     60%{color:#98ff66}
     80%{color:#6698ff}
     100%{color:#4b0082}
-`
+`;
 
 const HeaderWrap = styled.header`
-    z-index:2;
-    position:fixed;
-    top:0;
-    left:0;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    background-color:white;
+    background-color: white;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 `;
 
@@ -48,7 +48,7 @@ const Nav = styled.nav`
  * @end v6는 exact가 기본 설정되어 있지만 확실하게 end 써주세요!
  * */
 export const LinkButton = styled(NavLink)`
-    text-align:center;
+    text-align: center;
     position: relative;
     background-color: transparent;
     margin: 0 10px;
@@ -70,8 +70,8 @@ export const LinkButton = styled(NavLink)`
             background-color: ${(props) => props.theme.btnColor};
         }
     }
-    &:hover{
-        animation:${LinkHover} .8s forwards;
+    &:hover {
+        animation: ${LinkHover} 0.8s forwards;
     }
 `;
 
@@ -93,15 +93,15 @@ const LoginOrRegiBtn = styled.button`
     border: 2px solid #343434;
     margin-left: 20px;
     letter-spacing: -0.4px;
-    transition : all .4s;
-    &:hover{
+    transition: all 0.4s;
+    &:hover {
         background: ${(props) => props.theme.bgColor};
         color: #343434;
     }
 `;
 const HeaderEmptyBox = styled.div`
-    height:100px;
-`
+    height: 100px;
+`;
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -110,38 +110,49 @@ function Header() {
     const pathName = location.pathname;
 
     const UserLogout = () => {
+        localStorage.removeItem("recoil-persist");
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
     return (
         <>
-            <HeaderEmptyBox/>
+            <HeaderEmptyBox />
             <HeaderWrap>
                 <HeaderContainer>
                     <Link to="/">
                         <LogoBox>
-                            <LogoImg src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"} alt="WepoLogo" />
+                            <LogoImg
+                                src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"}
+                                alt="WepoLogo"
+                            />
                         </LogoBox>
                     </Link>
                     <Nav>
                         {isLogin ? (
                             <>
-                                <LinkButton to="/">나의페이지</LinkButton>
-                                <LinkButton to="/network" end >네트워크</LinkButton>
+                                <LinkButton to="/">홈</LinkButton>
+                                <LinkButton to="/mypage">나의페이지</LinkButton>
+                                <LinkButton to="/network" end>
+                                    네트워크
+                                </LinkButton>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (
                             <>
-                                <LinkButton to="/network" end >네트워크</LinkButton>
-                                <LinkButton to="/login" end >로그인</LinkButton>
+                                <LinkButton to="/">홈</LinkButton>
+                                <LinkButton to="/login" end>
+                                    로그인
+                                </LinkButton>
                                 <Link to={`/register`}>
                                     <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
                                 </Link>
                             </>
                         ) : (
                             <>
-                                <LinkButton to="/network" end >네트워크</LinkButton>
-                                <LinkButton to="/register" end >회원가입</LinkButton>
+                                <LinkButton to="/">홈</LinkButton>
+                                <LinkButton to="/register" end>
+                                    회원가입
+                                </LinkButton>
                                 <Link to={`/login`}>
                                     <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
                                 </Link>
