@@ -21,7 +21,7 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive }: a
     } = useForm<IAward>({ mode: "onChange" });
 
     const onvalid = (data: IAward) => {
-        let test = {};
+        
         addAward(data).then((res : any) => setAwards((prev: any) => [...prev ,{...data,userId:res.data.userId, _id:res.data._id}])); // 기존 DB에 data추가
         setAddFormActive(false);
     };

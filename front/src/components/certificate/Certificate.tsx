@@ -48,15 +48,15 @@ export default function Certificate({ info }: any) {
     function handleAddFormActive() {
         setAddFormActive((addFormActive) => !addFormActive);
     }
-    const onClickDeleteBtn = (certificate: ICertificate, index:number) => {
+    const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
         const userSeq = parseInt(certificate?.userId!);
-        const certificateId = certificate?._id!;
+        const certificateId = certificate?.certId!;
         deleteCertificate(certificateId, userSeq);
-        setCertificates(prev=> {
+        setCertificates((prev) => {
             const newCertificates = [...prev];
             newCertificates.splice(index, 1);
             return newCertificates;
-        })
+        });
     };
 
     return (
@@ -69,6 +69,7 @@ export default function Certificate({ info }: any) {
                     <CertificateAddForm
                         setAddFormActive={setAddFormActive}
                         setCertificates={setCertificates}
+                        userSeq={curUser?.userSeq!}
                     />
                 )}
                 {!addFormActive &&
@@ -90,7 +91,9 @@ export default function Certificate({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={() => onClickDeleteBtn(certificate, index)}>
+                                            <MvpDeleteButton
+                                                onClick={() => onClickDeleteBtn(certificate, index)}
+                                            >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -106,7 +109,7 @@ export default function Certificate({ info }: any) {
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
                                     userSeq={certificate.userId}
-                                    _id={certificate._id}
+                                    certId={certificate.certId}
                                 />
                             )}
                         </MvpContentBox>

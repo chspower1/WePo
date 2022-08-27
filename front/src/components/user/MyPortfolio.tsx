@@ -167,7 +167,6 @@ function MyPortfolio() {
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?.userSeq!), {
         onSuccess(data) {
-            console.log(data);
             setCurUser((prev) => ({ ...prev, ...data! }));
         },
     });
