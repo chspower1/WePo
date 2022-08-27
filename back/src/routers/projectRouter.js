@@ -35,11 +35,12 @@ projectRouter.post("/project", login_required, async function (req, res, next) {
     }
     
     // req (request) 에서 데이터 가져오기
-    const currentUserId = req["currentUserSeq"];
+    const currentUserId = req["currentUserId"];
     const title = req.body.title;
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
     const description = req.body.description;
+    const projectId = req.body.projectId;
 
     // 신규 프로젝트 추가
     const newProject = await projectService.addProject({ 
@@ -47,7 +48,8 @@ projectRouter.post("/project", login_required, async function (req, res, next) {
       title, 
       startDate, 
       endDate, 
-      description 
+      description,
+      projectId
     })
 
     res.status(201).json(newProject);
@@ -66,7 +68,7 @@ projectRouter.put("/project/:projectId", login_required, async function (req, re
     }
 
     // User authentication
-    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Project 내에 저장된 userId
     if (currentUserId !== parseInt(userId)) {
       throw new Error(
@@ -104,7 +106,7 @@ projectRouter.delete("/project/:projectId", login_required, async function (req,
     }
 
     // User authentication
-    const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userId
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
     const userId = req.body.userId; // Project 내에 저장된 userId
     if (currentUserId !== parseInt(userId)) {
       throw new Error(

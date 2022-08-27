@@ -20,7 +20,7 @@ import {
     Button,
 } from "../user/MyPortfolio";
 
-export function CertificateAddForm({ setAddFormActive, setCertificates }: any) {
+export function CertificateAddForm({ setAddFormActive, setCertificates, userId }: any) {
     const {
         register,
         handleSubmit,
@@ -29,9 +29,16 @@ export function CertificateAddForm({ setAddFormActive, setCertificates }: any) {
     } = useForm<ICertificate>({ mode: "onChange" });
 
     const onvalid = (data: ICertificate) => {
-        setCertificates((project: any) => [...project, data]);
+        const certId: string = String(Date.now());
+        const newCertificate: ICertificate = {
+            ...data,
+            certId,
+            userId: userId,
+        };
+        console.log("생성완료",newCertificate)
+        setCertificates((project: any) => [...project, newCertificate]);
         setAddFormActive(false);
-        addCertificate(data);
+        addCertificate(newCertificate);
     };
 
     useEffect(() => {

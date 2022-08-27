@@ -66,9 +66,9 @@ userAuthRouter.get("/userlist", login_required, async function (req, res, next) 
 userAuthRouter.get("/user/current", login_required, async function (req, res, next) {
     try {
         // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-        const userSeq = req["currentUserSeq"];
+        const userId = req["currentUserId"];
         const currentUserInfo = await userAuthService.getUserInfo({
-            userSeq,
+            userId,
         });
 
         if (currentUserInfo.errorMessage) {
@@ -81,19 +81,19 @@ userAuthRouter.get("/user/current", login_required, async function (req, res, ne
     }
 });
 
-userAuthRouter.put("/users/:seq", login_required, async function (req, res, next) {
+userAuthRouter.put("/users/:id", login_required, async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
         }
 
         // User authentication
-        const currentUserId = req["currentUserSeq"]; // 현재 로그인 중인 userSeq값
+        const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
         // URI로부터 사용자 id를 추출함.
-        const userSeq = parseInt(req.params.seq);
+        const userId = parseInt(req.params.id);
 
-        if (userSeq !== currentUserId) {
-            console.log(userSeq, currentUserId);
+        if (userId !== currentUserId) {
+            console.log(userId, currentUserId);
             throw new Error(
                 "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
             );
@@ -107,7 +107,7 @@ userAuthRouter.put("/users/:seq", login_required, async function (req, res, next
 
         // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
         const updatedUser = await userAuthService.setUser({
-            userSeq,
+            userId,
             toUpdate,
         });
 
@@ -121,18 +121,18 @@ userAuthRouter.put("/users/:seq", login_required, async function (req, res, next
     }
 });
 
-userAuthRouter.get("/users/:seq", login_required, async function (req, res, next) {
+userAuthRouter.get("/users/:id", login_required, async function (req, res, next) {
     try {
-        const userSeq = parseInt(req.params.seq);
-        const currentUserInfo = await userAuthService.getUserInfo({ userSeq });
+        const userId = parseInt(req.params.id);
+        const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
         if (currentUserInfo.errorMessage) {
             throw new Error(currentUserInfo.errorMessage);
         }
 
         // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
-        if (userSeq !== req["currentUserSeq"]) {
-            await userAuthService.increaseView({ userSeq });
+        if (userId !== req["currentUserId"]) {
+            await userAuthService.increaseView({ userId });
         }
 
         res.status(200).send(currentUserInfo);

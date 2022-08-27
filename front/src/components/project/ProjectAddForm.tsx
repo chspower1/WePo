@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { addProject } from "../../api/api";
+import { addProject, getUser } from "../../api/api";
 import { IProject } from "../../atoms";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
+import {
+    MvpContentName,
+    MvpAddInput,
+    MvpAddInputBox,
+    RequiredLabel,
+    Button,
+} from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
-export const ProjectAddForm = ({ setAddFormActive, setProjects }: any) => {
+export const ProjectAddForm = ({ setAddFormActive, setProjects, userId, projectId }: any) => {
     const {
         register,
         handleSubmit,
@@ -14,9 +20,15 @@ export const ProjectAddForm = ({ setAddFormActive, setProjects }: any) => {
     } = useForm<IProject>({ mode: "onChange" });
 
     const onvalid = (data: IProject) => {
-        addProject(data);
-        setProjects((project: any) => [...project, data]);
+        const projectId: string = String(Date.now());
+        const newProject: IProject = {
+            ...data,
+            projectId,
+            userId: userId,
+        };
+        setProjects((project: any) => [...project, newProject]);
         setAddFormActive(false);
+        addProject(newProject);
     };
 
     useEffect(() => {

@@ -14,12 +14,12 @@ class Project {
 
   // projectId에 해당하는 프로젝트 조회
   static async findByProjectId({ projectId }) {
-    return ProjectModel.findById(projectId);;
+    return ProjectModel.findOne(projectId);;
   }
 
   // projectId에 해당하는 프로젝트 속성 수정
   static async update({ projectId, newValues }) {
-    const filter = { _id: projectId };
+    const filter = { projectId: projectId };
     const option = { returnOriginal: false };
     
     const updatedProject = await ProjectModel.findOneAndUpdate(
@@ -32,7 +32,7 @@ class Project {
 
   // projectId에 해당하는 프로젝트 삭제
   static async delete({ projectId }) {
-    return ProjectModel.findByIdAndDelete(projectId);
+    return ProjectModel.findOneAndDelete({projectId});
   }
 }
   

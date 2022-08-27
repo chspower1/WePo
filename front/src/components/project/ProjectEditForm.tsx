@@ -2,7 +2,13 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IProject } from "../../atoms";
 import { updateProject } from "../../api/api";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
+import {
+    MvpContentName,
+    MvpAddInput,
+    MvpAddInputBox,
+    RequiredLabel,
+    Button,
+} from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
 export function ProjectEditForm({
@@ -12,8 +18,8 @@ export function ProjectEditForm({
     setEditing,
     setIsEditing,
     setTargetIndex,
-    userSeq,
-    _id,
+    userId,
+    projectId,
 }: any) {
     const {
         register,
@@ -22,11 +28,11 @@ export function ProjectEditForm({
     } = useForm<IProject>();
 
     const onvalid = (data: IProject) => {
-        updateProject(data, userSeq, _id);
+        updateProject(data, userId, projectId);
         setProjects((project: any) => {
-            const editProject = [...project];
-            editProject[index] = data;
-            return editProject;
+            const newProjects = [...project];
+            newProjects[index] = { ...data, userId, projectId };
+            return newProjects;
         });
         setIsEditing(false);
         setTargetIndex(null);

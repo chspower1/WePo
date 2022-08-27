@@ -2,11 +2,17 @@ import { useForm } from "react-hook-form";
 import { addAward } from "../../api/api";
 import { IAward } from "../../atoms";
 import { useParams } from "react-router-dom";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
+import {
+    MvpContentName,
+    MvpAddInput,
+    MvpAddInputBox,
+    RequiredLabel,
+    Button,
+} from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function AwardAddForm({ setAwards, maxDate, setAddFormActive}: any) {
+export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, userId }: any) {
     const {
         register,
         handleSubmit,
@@ -15,9 +21,16 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive}: an
     } = useForm<IAward>({ mode: "onChange" });
 
     const onvalid = (data: IAward) => {
-        let test = {};
-        addAward(data).then((res : any) => setAwards((prev: any) => [...prev ,{...data,userId:res.data.userId, _id:res.data._id}])); // 기존 DB에 data추가
+        const awardId: string = String(Date.now());
+        const newAward: IAward = {
+            ...data,
+            awardId,
+            userId: userId,
+        };
+        console.log("생성완료", newAward);
+        setAwards((project: any) => [...project, newAward]);
         setAddFormActive(false);
+        addAward(newAward);
     };
 
     useEffect(() => {

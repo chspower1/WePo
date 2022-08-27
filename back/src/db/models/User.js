@@ -21,7 +21,7 @@ class User {
       {
         $lookup: {
           from: 'awards', // 참고 할 테이블
-          localField: 'userSeq', // User.id
+          localField: 'userId', // User.id
           foreignField: 'userId', // Award.userId
           as: 'awards', // 추가 할 프로퍼티
         },
@@ -29,7 +29,7 @@ class User {
       {
         $lookup: {
           from: 'projects',
-          localField: 'userSeq',
+          localField: 'userId',
           foreignField: 'userId',
           as: 'projects',
         },
@@ -37,7 +37,7 @@ class User {
       {
         $lookup: {
           from: 'educations',
-          localField: 'userSeq',
+          localField: 'userId',
           foreignField: 'userId',
           as: 'educations',
         },
@@ -45,7 +45,7 @@ class User {
       {
         $lookup: {
           from: 'certificates',
-          localField: 'userSeq',
+          localField: 'userId',
           foreignField: 'userId',
           as: 'certificates',
         },
@@ -61,18 +61,18 @@ class User {
   //   return user;
   // }
 
-  // userSeq로 해당하는 유저의 모든 정보 조회
-  static async findBySeq({ userSeq }) {
+  // userId로 해당하는 유저의 모든 정보 조회
+  static async findByUserId({ userId }) {
     const user = await UserModel.aggregate([
       {
         $match: {
-          userSeq: userSeq
+          userId: userId
         },
       },
       {
         $lookup: {
           from: 'awards', // 참고 할 테이블
-          localField: 'userSeq', // User.id
+          localField: 'userId', // User.id
           foreignField: 'userId', // Award.userId
           as: 'awards', // 추가 할 프로퍼티
         },
@@ -80,7 +80,7 @@ class User {
       {
         $lookup: {
           from: 'projects',
-          localField: 'userSeq',
+          localField: 'userId',
           foreignField: 'userId',
           as: 'projects',
         },
@@ -88,7 +88,7 @@ class User {
       {
         $lookup: {
           from: 'educations',
-          localField: 'userSeq',
+          localField: 'userId',
           foreignField: 'userId',
           as: 'educations',
         },
@@ -96,7 +96,7 @@ class User {
       {
         $lookup: {
           from: 'certificates',
-          localField: 'userSeq',
+          localField: 'userId',
           foreignField: 'userId',
           as: 'certificates',
         },
@@ -113,8 +113,8 @@ class User {
   }
 
   // 유저 정보 수정
-  static async update({ userSeq, newValues }) {
-    const filter = { userSeq: userSeq };
+  static async update({ userId, newValues }) {
+    const filter = { userId: userId };
     const option = { returnOriginal: false };
 
     const updatedUser = await UserModel.findOneAndUpdate(

@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const AwardSchema = new Schema(
   {
-    // User 식별 id - userSeq
+    // User 식별 id
     userId: {
       type: Number,
       required: true,
@@ -32,6 +32,11 @@ const AwardSchema = new Schema(
       type: String,
       required: false,
     },
+    // awardId : 학력 추가 시 프론트에서 넘겨주는 해당 award의 고유id
+    awardId: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,

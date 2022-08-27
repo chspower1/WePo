@@ -24,6 +24,7 @@ import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
 import { deleteProject } from "../../api/api";
+import { Droppable } from "@hello-pangea/dnd";
 export default function Project({ info }: any) {
     // user ID
     const { id } = useParams();
@@ -45,15 +46,15 @@ export default function Project({ info }: any) {
 
     const [projects, setProjects] = useState<IProject[]>(info);
 
-    const onClickDeleteBtn = (project: IProject, index:number) => {
-        const userSeq = parseInt(project.userId!);
-        const projectId = project._id!;
-        deleteProject(projectId, userSeq);
-        setProjects(prev=> {
+    const onClickDeleteBtn = (project: IProject, index: number) => {
+        const userId = parseInt(project.userId!);
+        const projectId = project.projectId!;
+        deleteProject(projectId, userId);
+        setProjects((prev) => {
             const newProjects = [...prev];
             newProjects.splice(index, 1);
             return newProjects;
-        })
+        });
     };
     return (
         <MvpContainer>
@@ -62,7 +63,11 @@ export default function Project({ info }: any) {
             </MvpTitleBox>
             <MvpContentContainer>
                 {addFormActive && (
-                    <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} /> // props로 id값을 안넘겨 주어도 정상 작동
+                    <ProjectAddForm
+                        setAddFormActive={setAddFormActive}
+                        setProjects={setProjects}
+                        userId={curUser?.userId}
+                    /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!addFormActive &&
                     projects?.map((project: IProject, index: number) => (
@@ -82,7 +87,11 @@ export default function Project({ info }: any) {
                                             >
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{onClickDeleteBtn(project, index)}}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    onClickDeleteBtn(project, index);
+                                                }}
+                                            >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -97,8 +106,8 @@ export default function Project({ info }: any) {
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userSeq={project.userId}
-                                    _id={project._id}
+                                    userId={project.userId}
+                                    projectId={project.projectId}
                                 />
                             )}
                         </MvpContentBox>

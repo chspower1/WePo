@@ -3,9 +3,9 @@ import { Award } from "../db/models/Award";
 class awardService {
 
   // 수상내역 추가
-  static async addAward({ userId, title, grade, org, date, description }) {
+  static async addAward({ userId, title, grade, org, date, description, awardId }) {
     // 에러 처리 추가하기
-    const newAward = { userId, title, grade, org, date, description }
+    const newAward = { userId, title, grade, org, date, description, awardId }
     return Award.create({ newAward });
   }
 

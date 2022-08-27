@@ -16,18 +16,28 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { curUserState } from "./../../atoms";
 
-export default function EducationAddForm({ setEducations, setIsAddFormActive }: any) {
+export default function EducationAddForm({
+    setEducations,
+    setIsAddFormActive,
+    userId,
+    eduId,
+}: any) {
     const {
         register,
         handleSubmit,
         formState: { errors },
         setError,
     } = useForm<IEducation>({ mode: "onChange" });
-    const setCurUser = useSetRecoilState(curUserState);
     const onvalid = (data: IEducation) => {
-        setEducations((prev: any) => [...prev, data]);
+        const eduId: string = String(Date.now());
+        const newEducation: IEducation = {
+            ...data,
+            eduId,
+            userId: userId,
+        };
+        setEducations((prev: any) => [...prev, newEducation]);
         setIsAddFormActive(false);
-        addEducation(data);
+        addEducation(newEducation);
     };
     useEffect(() => {
         setError("status", {

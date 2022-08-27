@@ -3,9 +3,9 @@ import { Project } from "../db/models/Project";
 class projectService {
 
   // 프로젝트 추가
-  static async addProject({ userId, title, startDate, endDate, description }) {
+  static async addProject({ userId, title, startDate, endDate, description, projectId }) {
     // 에러 처리 추가하기
-    const newProject = { userId, title, startDate, endDate, description };
+    const newProject = { userId, title, startDate, endDate, description, projectId };
     return Project.create({ newProject });
   }
 
