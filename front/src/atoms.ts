@@ -55,7 +55,6 @@ export interface IAward {
     updatedAt?: Date;
     __v?: number;
 }
-
 export interface ICertificate {
     _id?: string;
     certId: string;
@@ -110,7 +109,7 @@ export const isLoginState = selector({
     key: "isLogin",
     get: ({ get }) => {
         const curUser = get(curUserState);
-        const checkLogin = curUser?.token ? true : false;
+        const checkLogin = sessionStorage.getItem("userToken") && curUser?.token ? true : false;
         return checkLogin;
     },
 });

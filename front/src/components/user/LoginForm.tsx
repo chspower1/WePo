@@ -17,16 +17,15 @@ export interface ILogin {
 
 const Root = styled.div`
     width: 100%;
-    height : 100vh;
+    height: 100vh;
     padding: 70px 0 0;
     background: #eff3ff;
-`
-
+`;
 
 export const Wrapper = styled.div`
     width: 100%;
-    height:100%;
-    display:flex;
+    height: 100%;
+    display: flex;
     padding: 80px 0 50px;
 `;
 
@@ -41,7 +40,7 @@ export const FromContainer = styled.div`
     margin: auto;
     border-radius: 15px;
     background: rgba(162, 190, 231, 0.1);
-    box-shadow: 10px 10px 15px  rgba(162,190,231,.25);
+    box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
 `;
 
 export const TitleBox = styled.div`
@@ -71,11 +70,11 @@ export const Input = styled.input`
     &::placeholder {
         font-size: 12px;
     }
-    &[type="password"]{
+    &[type="password"] {
         font-family: sans-serif;
         letter-spacing: 1px;
-        color: #3687FF;
-        &::placeholder{
+        color: #3687ff;
+        &::placeholder {
             font-family: "Elice";
         }
     }
@@ -142,11 +141,9 @@ export default function LoginForm() {
     const onvalid = async (formData: ILogin) => {
         try {
             const newUser = await UserLogin({ ...formData });
-            console.log(newUser);
             await setCurUser(newUser!);
         } catch (err) {
             alert("일치하지 않습니다!");
-            console.log(err);
         }
     };
     console.log(isLogin);

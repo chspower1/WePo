@@ -9,7 +9,7 @@ import {
     IUser,
     usersState,
 } from "./../atoms";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import Certificate from "./../components/certificate/Certificate";
@@ -17,15 +17,21 @@ import Certificate from "./../components/certificate/Certificate";
 const BASE_URL = `http://${window.location.hostname}:5001`;
 export async function UserLogin({ email, password }: ILogin) {
     try {
-        const { data: newUser } = await axios.post(`${BASE_URL}/user/login`, {
-            email,
-            password,
-        });
-        await sessionStorage.setItem("userToken", newUser.token);
-        return newUser as IUser;
-    } catch (err) {
-        alert("dd");
-        console.log(err);
+        await axios
+            .post(`${BASE_URL}/user/login`, {
+                email,
+                password,
+            })
+            .then((res) => {
+                const { data: newUser } = res;
+                sessionStorage.setItem("userToken", newUser.token);
+                return newUser as IUser;
+            })
+            .catch((err) => {
+                alert(err.response.data);
+            });
+    } catch (error) {
+        console.log(error);
     }
 }
 
