@@ -2,7 +2,13 @@ import { IAward } from "../../atoms";
 import { useForm } from "react-hook-form";
 import { updateAward } from "../../api/api";
 import { useParams } from "react-router-dom";
-import { MvpContentName, MvpAddInput, MvpAddInputBox, RequiredLabel, Button } from "../user/MyPortfolio";
+import {
+    MvpContentName,
+    MvpAddInput,
+    MvpAddInputBox,
+    RequiredLabel,
+    Button,
+} from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 export default function AwardEditForm({
     index,
@@ -11,8 +17,8 @@ export default function AwardEditForm({
     setIsEditing,
     maxDate,
     setTargetIndex,
-    _id,
-    userSeq,
+    userId,
+    certId,
 }: any) {
     const {
         register,
@@ -20,11 +26,11 @@ export default function AwardEditForm({
         formState: { errors },
     } = useForm<IAward>({ mode: "onChange" });
     const onvalid = (data: IAward) => {
-        updateAward(data, userSeq, _id);
+        updateAward(data, userId, certId);
         setAwards((award: any) => {
-            const editAward = [...award];
-            editAward[index] = data;
-            return editAward;
+            const newAward = [...award];
+            newAward[index] = { ...data, userId, certId };
+            return newAward;
         });
         console.log(awards);
         setIsEditing(false);

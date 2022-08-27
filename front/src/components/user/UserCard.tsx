@@ -154,7 +154,7 @@ function UserCard({ _id, name, email, description, field, userId }: IUser) {
                             </Link>
                         )}
                         {onEdit ||
-                            (_id === curUser?._id && pathName === "/" && (
+                            (_id === curUser?._id && pathName === "/mypage" && (
                                 <DetailBtn title="편집" onClick={onClickEdit}>
                                     편집
                                 </DetailBtn>

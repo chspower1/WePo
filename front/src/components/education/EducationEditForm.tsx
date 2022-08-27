@@ -18,8 +18,8 @@ export default function EducationEditForm({
     setEducations,
     setIsEditing,
     setTargetIndex,
-    userSeq,
-    _id,
+    userId,
+    eduId,
 }: any) {
     const {
         register,
@@ -28,10 +28,12 @@ export default function EducationEditForm({
     } = useForm<IEducation>({ mode: "onChange" });
 
     const onvalid = (data: IEducation) => {
-        const editData = [...educations];
-        editData[index] = data;
-        setEducations(editData);
-        updateEducation(data, userSeq, _id);
+        updateEducation(data, userId, eduId);
+        setEducations((education: any) => {
+            const newEducations = [...education];
+            newEducations[index] = { ...data, userId, eduId };
+            return newEducations;
+        });
         setIsEditing(false);
         setTargetIndex(null);
     };

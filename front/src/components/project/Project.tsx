@@ -47,9 +47,9 @@ export default function Project({ info }: any) {
     const [projects, setProjects] = useState<IProject[]>(info);
 
     const onClickDeleteBtn = (project: IProject, index: number) => {
-        const userSeq = parseInt(project.userId!);
-        const projectId = project._id!;
-        deleteProject(projectId, userSeq);
+        const userId = parseInt(project.userId!);
+        const projectId = project.projectId!;
+        deleteProject(projectId, userId);
         setProjects((prev) => {
             const newProjects = [...prev];
             newProjects.splice(index, 1);
@@ -63,7 +63,11 @@ export default function Project({ info }: any) {
             </MvpTitleBox>
             <MvpContentContainer>
                 {addFormActive && (
-                    <ProjectAddForm setAddFormActive={setAddFormActive} setProjects={setProjects} /> // props로 id값을 안넘겨 주어도 정상 작동
+                    <ProjectAddForm
+                        setAddFormActive={setAddFormActive}
+                        setProjects={setProjects}
+                        userId={curUser?.userId}
+                    /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!addFormActive &&
                     projects?.map((project: IProject, index: number) => (
@@ -102,8 +106,8 @@ export default function Project({ info }: any) {
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userSeq={project.userId}
-                                    _id={project._id}
+                                    userId={project.userId}
+                                    projectId={project.projectId}
                                 />
                             )}
                         </MvpContentBox>

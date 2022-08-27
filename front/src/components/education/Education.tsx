@@ -24,7 +24,7 @@ import { Trash2 } from "styled-icons/feather";
 import { deleteEducation } from "../../api/api";
 export default function Education({ info }: any) {
     // user ID
-    const { userSeq } = useParams();
+    const { userId } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     // 학력 상태
@@ -34,15 +34,15 @@ export default function Education({ info }: any) {
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
     const [targetIndex, setTargetIndex] = useState<Number>(); // index 를 체크해서 맞는 것만 editform 활성화
-    const onClickDeleteBtn = (education: IEducation, index:number) => {
-        const userSeq = parseInt(education.userId!);
-        const educationId = education._id!;
-        deleteEducation(educationId, userSeq);
-        setEducations(prev=> {
+    const onClickDeleteBtn = (education: IEducation, index: number) => {
+        const userId = parseInt(education.userId!);
+        const educationId = education.eduId!;
+        deleteEducation(educationId, userId);
+        setEducations((prev) => {
             const newEducations = [...prev];
             newEducations.splice(index, 1);
             return newEducations;
-        })
+        });
     };
     const location = useLocation();
     const pathName = location.pathname;
@@ -60,6 +60,7 @@ export default function Education({ info }: any) {
                         educations={educations}
                         setIsAddFormActive={setIsAddFormActive}
                         setEducations={setEducations}
+                        userId={curUser?.userId!}
                     />
                 )}
                 {!isAddFormActive &&
@@ -84,7 +85,11 @@ export default function Education({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={() => {onClickDeleteBtn(education, index)}} >
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    onClickDeleteBtn(education, index);
+                                                }}
+                                            >
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -97,8 +102,8 @@ export default function Education({ info }: any) {
                                     educations={educations}
                                     setEducations={setEducations}
                                     setIsEditing={setIsEditing}
-                                    userSeq={education.userId}
-                                    _id={education._id}
+                                    userId={education.userId}
+                                    eduId={education.eduId}
                                     setTargetIndex={setTargetIndex}
                                 />
                             )}
