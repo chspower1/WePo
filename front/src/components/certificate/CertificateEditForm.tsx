@@ -71,7 +71,7 @@ export function CertificateEditForm({
                     type="date"
                     width="100"
                     id="project-startDate"
-                    defaultValue={certificates[index].date}
+                    defaultValue={certificates[index].date.slice(0,10)}
                     {...register("date", {
                         required: "발급날짜을 입력해주세요",
                         // pattern: {

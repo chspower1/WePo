@@ -59,13 +59,12 @@ width: 150px;
 height: 60px;
 border-radius: 10px;
 border: 2px solid ${props=> props.theme.btnColor};
-background: linear-gradient(120deg, #fdfdfd 50%, ${props=> props.theme.btnColor} 50%);
-background-size: 280%;
-transition: background .8s, color .6s;
+background : ${props=> props.theme.btnColor};
+color:#fff;
+transition: background .6s ease-out, color .6s ease-out;
 &:hover{
-    background-position: 90% 100%;
-    color:#fff;
-    transition-delay:color .4s ;
+    background:#fff;
+    color:${props=> props.theme.btnColor};
 }
     
 `

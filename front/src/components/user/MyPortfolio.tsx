@@ -132,7 +132,7 @@ export const MajorGraduateLabel = styled.label`
     color: black;
     margin-right: 10px;
 `;
-const Root = styled.div`
+export const Root = styled.div`
 background: #eff3ff;
 `
 export const MyPortWrap = styled.div`

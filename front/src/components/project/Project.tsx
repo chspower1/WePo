@@ -77,7 +77,7 @@ export default function Project({ info }: any) {
                                 <>
                                     <MvpContentAccent>{project.title}</MvpContentAccent>
                                     <MvpContentDetail>{project.description}</MvpContentDetail>
-                                    <MvpContentDate>{`${project.startDate} ~ ${project.endDate}`}</MvpContentDate>
+                                    <MvpContentDate>{`${String(project.startDate).slice(0,10)} ~ ${String(project.endDate).slice(0,10)}`}</MvpContentDate>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton

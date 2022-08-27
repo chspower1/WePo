@@ -9,7 +9,7 @@ import { isLoginState, IUser } from "./../../atoms";
 import { useQuery } from "react-query";
 import { getUser } from "../../api/api";
 import styled from "styled-components";
-import { MyPortWrap, MvpWrap, UserCardBox } from "./MyPortfolio";
+import { MyPortWrap, MvpWrap, UserCardBox, Root } from "./MyPortfolio";
 import { useRecoilValue } from "recoil";
 
 function UserDetail() {
@@ -32,7 +32,7 @@ function UserDetail() {
             {isLoading ? (
                 "로딩중"
             ) : (
-                <>
+                <Root>
                     <MyPortWrap>
                         {user && (
                             <>
@@ -48,7 +48,7 @@ function UserDetail() {
                             </>
                         )}
                     </MyPortWrap>
-                </>
+                </Root>
             )}
         </>
     );

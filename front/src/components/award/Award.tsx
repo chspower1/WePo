@@ -85,7 +85,7 @@ export default function Award({ info }: any) {
                                         </MvpContentDetail>
                                     </div>
                                     <MvpContentDetail>{award.org}</MvpContentDetail>
-                                    <MvpContentDate>{String(award.date)}</MvpContentDate>
+                                    <MvpContentDate>{String(award.date).slice(0,10)}</MvpContentDate>
                                     <MvpContentDetail>{award.description}</MvpContentDetail>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
