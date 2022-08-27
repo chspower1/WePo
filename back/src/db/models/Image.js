@@ -1,4 +1,4 @@
-import { ImageModel } from "../schemas/Image";
+import { ImageModel } from "../schemas/image";
 
 class Image {
   static async getRandomURL(){
