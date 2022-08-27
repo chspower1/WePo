@@ -32,6 +32,11 @@ const AwardSchema = new Schema(
       type: String,
       required: false,
     },
+    // awardId : 학력 추가 시 프론트에서 넘겨주는 해당 award의 고유id
+    awardId: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,

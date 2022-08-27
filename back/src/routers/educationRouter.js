@@ -39,6 +39,7 @@ educationRouter.post("/education", login_required, async function (req, res, nex
     const school = req.body.school;
     const major = req.body.major;
     const status = req.body.status;
+    const eduId = req.body.eduId;
 
     // 신규 학력 추가
     const newEducation = await educationService.addEducation({
@@ -46,6 +47,7 @@ educationRouter.post("/education", login_required, async function (req, res, nex
       school,
       major,
       status,
+      eduId
     });
 
     if(newEducation.errorMessage) {

@@ -14,12 +14,12 @@ class Education {
 
   // eduId에 해당하는 학력정보 조회
   static async findByEduId({ eduId }) {
-    return EducationModel.findById(eduId);
+    return EducationModel.findOne({ eduId });
   }
 
   // eduId에 해당하는 학력정보 수정
   static async update({ eduId, newValues }) {
-    const filter = { _id: eduId };
+    const filter = { eduId: eduId };
     const option = { returnOriginal: false };
 
     const updatedEducation = await EducationModel.findOneAndUpdate(
@@ -32,7 +32,7 @@ class Education {
 
   // eduId에 해당하는 학력정보 삭제
   static async delete({ eduId }) {
-    return EducationModel.findByIdAndDelete(eduId);
+    return EducationModel.findOneAndDelete({ eduId });
   }
 }
 

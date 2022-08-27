@@ -36,6 +36,7 @@ awardRouter.post("/award", login_required, async function (req, res, next) {
         const org = req.body.org;
         const date = req.body.date;
         const description = req.body.description;
+        const awardId = req.body.awardId;
 
         // 신규 수상내역 추가
         const newAward = await awardService.addAward({
@@ -45,6 +46,7 @@ awardRouter.post("/award", login_required, async function (req, res, next) {
             org,
             date,
             description,
+            awardId
         });
         res.status(201).json(newAward);
     } catch (error) {

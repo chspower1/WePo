@@ -40,6 +40,7 @@ projectRouter.post("/project", login_required, async function (req, res, next) {
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
     const description = req.body.description;
+    const projectId = req.body.projectId;
 
     // 신규 프로젝트 추가
     const newProject = await projectService.addProject({ 
@@ -47,7 +48,8 @@ projectRouter.post("/project", login_required, async function (req, res, next) {
       title, 
       startDate, 
       endDate, 
-      description 
+      description,
+      projectId
     })
 
     res.status(201).json(newProject);

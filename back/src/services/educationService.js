@@ -3,8 +3,8 @@ import { Education } from "../db";
 class educationService {
 
   // 학력 추가
-  static async addEducation({ userId, school, major, status }) {
-    const newEducation = { userId, school, major, status };
+  static async addEducation({ userId, school, major, status, eduId }) {
+    const newEducation = { userId, school, major, status, eduId };
 
     if(!school || !major || !status) {
       const errorMessage = 

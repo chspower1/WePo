@@ -23,6 +23,11 @@ const EducationSchema = new Schema(
       enum: ['학사졸업', '석사졸업', '박사졸업', '재학중'],
       required: true,
     },
+    // eduId : 학력 추가 시 프론트에서 넘겨주는 해당 educaiton의 고유id
+    eduId: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,
