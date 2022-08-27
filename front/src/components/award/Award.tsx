@@ -41,7 +41,16 @@ export default function Award({ info }: any) {
         2,
         "0"
     )}-${String(newDate.getDate()).padStart(2, "0")}`;
-
+    const onClickDeleteBtn = (award: IAward, index:number) => {
+        const userSeq = parseInt(award.userId!);
+        const awardId = award._id!;
+        deleteAward(awardId, userSeq);
+        setAwards(prev=> {
+            const newAwards = [...prev];
+            newAwards.splice(index, 1);
+            return newAwards;
+        })
+    };
     const location = useLocation();
     const pathName = location.pathname;
     // 추가사항 on/off
@@ -78,7 +87,7 @@ export default function Award({ info }: any) {
                                     <MvpContentDetail>{award.org}</MvpContentDetail>
                                     <MvpContentDate>{String(award.date)}</MvpContentDate>
                                     <MvpContentDetail>{award.description}</MvpContentDetail>
-                                    {curUser && pathName === "/" && targetIndex !== index && (
+                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -88,12 +97,7 @@ export default function Award({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{
-                                                const userSeq = parseInt(award.userId!);
-                                                const awardId = award._id!;
-                                                console.log(userSeq);
-                                                return deleteAward(awardId, userSeq);
-                                                }}>
+                                            <MvpDeleteButton onClick={()=>{onClickDeleteBtn(award, index)}}>
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -115,7 +119,7 @@ export default function Award({ info }: any) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser && pathName === "/" && !addFormActive && (
+            {curUser && pathName === "/mypage" && !addFormActive && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

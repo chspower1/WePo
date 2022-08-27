@@ -9,7 +9,7 @@ import { isLoginState } from "./atoms";
 import { useEffect } from "react";
 import UserDetail from "./components/user/UserDetail";
 import NotFound from "./components/NotFound";
-import UserEditForm from "./components/user/UserEditForm";
+import Home from "./components/Home";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
     useEffect(() => {}, [isLogin]);
@@ -18,7 +18,8 @@ function Router() {
             <Header />
             <Routes>
                 <Route path="*" element={<NotFound />} />
-                <Route path="/" element={<MyPortfolio />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/mypage" element={<MyPortfolio />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/network" element={<Network />} />

@@ -63,24 +63,23 @@ export async function getUsers() {
         console.log(err);
     }
 }
-export async function getUser(userSeq: number) {
+export async function getUser(userId: number) {
     try {
-        const { data } = await axios.get(`${BASE_URL}/users/${userSeq}`, {
+        const { data } = await axios.get(`${BASE_URL}/users/${userId}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
-
         return data as IUser;
     } catch (err) {
         console.log(err);
     }
 }
-export async function updateUser(data: any, userSeq: number) {
+export async function updateUser(data: any, userId: number) {
     try {
-        console.log(userSeq);
+        console.log(userId);
         await axios.put(
-            `${BASE_URL}/users/${userSeq}`,
+            `${BASE_URL}/users/${userId}`,
             { ...data },
             {
                 headers: {
@@ -98,7 +97,7 @@ export async function updateUser(data: any, userSeq: number) {
 // Award 추가,수정
 export async function addAward(data: IAward) {
     try {
-        await axios.post(
+        return await axios.post(
             `${BASE_URL}/award`,
             { ...data },
             {
@@ -129,11 +128,11 @@ export async function updateAward(data: any, userId: number, awardId: string) {
         console.log(err);
     }
 }
-export async function deleteAward(awardId: string, userSeq: number) {
+export async function deleteAward(awardId: string, userId: number) {
     try {
         await axios.delete(`${BASE_URL}/award/${awardId}`, {
             data: {
-                userId: userSeq,
+                userId: userId,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -164,27 +163,29 @@ export async function addCertificate(data: ICertificate) {
 }
 export async function updateCertificate(data: ICertificate, userId: number, certificateId: string) {
     try {
-        await axios.put(
-            `${BASE_URL}/certificate/${certificateId}`,
-            { ...data, userId },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                },
-            }
-        );
+        await axios
+            .put(
+                `${BASE_URL}/certificate/${certificateId}`,
+                { ...data, userId },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                    },
+                }
+            )
+            .then((res) => console.log(res));
     } catch (err) {
         console.log(err);
     }
 }
-export async function deleteCertificate(certificateId: string, userSeq: number) {
+export async function deleteCertificate(certificateId: string, userId: number) {
     try {
         console.log("certificateId", certificateId);
         await axios
             .delete(`${BASE_URL}/certificate/${certificateId}`, {
                 data: {
-                    userId: userSeq,
+                    userId: userId,
                 },
                 headers: {
                     "Content-Type": "application/json",
@@ -230,11 +231,11 @@ export async function updateEducation(data: IEducation, userId: string, educatio
         console.log(err);
     }
 }
-export async function deleteEducation(educationId: string, userSeq: number) {
+export async function deleteEducation(educationId: string, userId: number) {
     try {
         await axios.delete(`${BASE_URL}/education/${educationId}`, {
             data: {
-                userId: userSeq,
+                userId: userId,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -278,11 +279,11 @@ export async function updateProject(data: IProject, userId: number, projectId: s
         console.log(err);
     }
 }
-export async function deleteProject(projectId: string, userSeq: number) {
+export async function deleteProject(projectId: string, userId: number) {
     try {
         await axios.delete(`${BASE_URL}/project/${projectId}`, {
             data: {
-                userId: userSeq,
+                userId: userId,
             },
             headers: {
                 "Content-Type": "application/json",

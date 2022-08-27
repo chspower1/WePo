@@ -48,17 +48,15 @@ export default function Certificate({ info }: any) {
     function handleAddFormActive() {
         setAddFormActive((addFormActive) => !addFormActive);
     }
-    const onClickDeleteBtn = (certificate: ICertificate) => {
+    const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
         const userSeq = parseInt(certificate?.userId!);
-        const certificateId = certificate?._id!;
-        console.log(certificate);
+        const certificateId = certificate?.certId!;
+        deleteCertificate(certificateId, userSeq);
         setCertificates((prev) => {
             const newCertificates = [...prev];
-            const front = newCertificates.slice(0, targetIndex!);
-            const back = newCertificates.slice(targetIndex!);
-            return [...front, ...back];
+            newCertificates.splice(index, 1);
+            return newCertificates;
         });
-        deleteCertificate(certificateId, userSeq);
     };
 
     return (
@@ -71,6 +69,7 @@ export default function Certificate({ info }: any) {
                     <CertificateAddForm
                         setAddFormActive={setAddFormActive}
                         setCertificates={setCertificates}
+                        userId={curUser?.userId!}
                     />
                 )}
                 {!addFormActive &&
@@ -82,7 +81,7 @@ export default function Certificate({ info }: any) {
                                     <MvpContentDate>{String(certificate.date)}</MvpContentDate>
                                     <MvpContentDetail>{certificate.org}</MvpContentDetail>
                                     <MvpContentDetail>{certificate.description}</MvpContentDetail>
-                                    {curUser && pathName === "/" && targetIndex !== index && (
+                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
                                                 onClick={() => {
@@ -93,7 +92,7 @@ export default function Certificate({ info }: any) {
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
                                             <MvpDeleteButton
-                                                onClick={() => onClickDeleteBtn(certificate)}
+                                                onClick={() => onClickDeleteBtn(certificate, index)}
                                             >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
@@ -109,14 +108,14 @@ export default function Certificate({ info }: any) {
                                     setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userSeq={certificate.userId}
-                                    _id={certificate._id}
+                                    userId={certificate.userId}
+                                    certId={certificate.certId}
                                 />
                             )}
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser && pathName === "/" && !addFormActive && (
+            {curUser && pathName === "/mypage" && !addFormActive && (
                 <MvpAddButton onClick={handleAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>

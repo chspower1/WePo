@@ -11,7 +11,7 @@ export interface IUser {
     field: EHopeField[];
     likes: any[];
     views: number;
-    userSeq: number;
+    userId: number;
     educations?: IEducation[];
     awards?: IAward[];
     certificates?: ICertificate[];
@@ -27,6 +27,7 @@ export enum EHopeField {
 }
 export interface IEducation {
     _id?: string;
+    eduId: string;
     userId?: string;
     school: string;
     major: string;
@@ -43,6 +44,7 @@ export enum EduStatus {
 }
 export interface IAward {
     _id?: string;
+    awardId: string;
     userId?: string;
     title: string;
     grade: string;
@@ -56,6 +58,7 @@ export interface IAward {
 
 export interface ICertificate {
     _id?: string;
+    certId: string;
     userId?: string;
     title: string;
     date: Date;
@@ -67,6 +70,7 @@ export interface ICertificate {
 }
 export interface IProject {
     _id?: string;
+    projectId: string;
     userId?: string;
     title: string;
     startDate: Date;

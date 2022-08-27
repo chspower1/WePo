@@ -165,10 +165,10 @@ function MyPortfolio() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?.userSeq!), {
+    const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?.userId!), {
         onSuccess(data) {
-            console.log(data);
             setCurUser((prev) => ({ ...prev, ...data! }));
+            console.log(curUser);
         },
     });
     useEffect(() => {

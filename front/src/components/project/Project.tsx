@@ -24,6 +24,8 @@ import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
 import { deleteProject } from "../../api/api";
+import { Droppable } from "@hello-pangea/dnd";
+import ProjectCard from "./ProjectCard";
 export default function Project({ info }: any) {
     // user ID
     const { id } = useParams();
@@ -45,6 +47,16 @@ export default function Project({ info }: any) {
 
     const [projects, setProjects] = useState<IProject[]>(info);
 
+    const onClickDeleteBtn = (project: IProject, index: number) => {
+        const userSeq = parseInt(project.userId!);
+        const projectId = project._id!;
+        deleteProject(projectId, userSeq);
+        setProjects((prev) => {
+            const newProjects = [...prev];
+            newProjects.splice(index, 1);
+            return newProjects;
+        });
+    };
     return (
         <MvpContainer>
             <MvpTitleBox>
@@ -56,50 +68,11 @@ export default function Project({ info }: any) {
                 )}
                 {!addFormActive &&
                     projects?.map((project: IProject, index: number) => (
-                        <MvpContentBox key={index}>
-                            {targetIndex !== index && (
-                                <>
-                                    <MvpContentAccent>{project.title}</MvpContentAccent>
-                                    <MvpContentDetail>{project.description}</MvpContentDetail>
-                                    <MvpContentDate>{`${project.startDate} ~ ${project.endDate}`}</MvpContentDate>
-                                    {curUser && pathName === "/" && targetIndex !== index && (
-                                        <>
-                                            <MvpEditButton
-                                                onClick={() => {
-                                                    setIsEditing(true);
-                                                    setTargetIndex(index);
-                                                }}
-                                            >
-                                                <Pencil color="#3687FF" />
-                                            </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{
-                                                const userSeq = parseInt(project.userId!);
-                                                const projectId = project._id!;
-                                                return deleteProject(projectId, userSeq);
-                                                }}>
-                                                <Trash2 color="#3687FF" />
-                                            </MvpDeleteButton>
-                                        </>
-                                    )}
-                                </>
-                            )}
-                            {isEditing && targetIndex == index && (
-                                <ProjectEditForm
-                                    index={index}
-                                    projects={projects}
-                                    setProjects={setProjects}
-                                    setEditing={setEditing}
-                                    setIsEditing={setIsEditing}
-                                    setTargetIndex={setTargetIndex}
-                                    userSeq={project.userId}
-                                    _id={project._id}
-                                />
-                            )}
-                        </MvpContentBox>
+                        <ProjectCard key={index} project={project} index={index} />
                     ))}
             </MvpContentContainer>
 
-            {curUser && pathName === "/" && !addFormActive && (
+            {curUser && pathName === "/mypage" && !addFormActive && (
                 <MvpAddButton onClick={handleAdding}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
