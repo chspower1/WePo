@@ -14,12 +14,12 @@ class Certificate {
 
   // certId에 해당하는 자격증정보 조회
   static async findByCertId({ certId }) {
-    return CertificateModel.findById(certId);
+    return CertificateModel.findOne({ certId });
   }
 
   // certId에 해당하는 자격증정보 수정
   static async update({ certId, newValues }) {
-    const filter = { _id: certId };
+    const filter = { certId: certId };
     const option = { returnOriginal: false };
 
     const updatedCertificate = await CertificateModel.findOneAndUpdate(
@@ -32,7 +32,7 @@ class Certificate {
 
   // certId에 해당하는 자격증정보 삭제
   static async delete({ certId }) {
-    return CertificateModel.findByIdAndDelete(certId);
+    return CertificateModel.findOneAndDelete({ certId });
   }
 }
 

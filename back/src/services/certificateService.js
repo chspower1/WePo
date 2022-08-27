@@ -3,8 +3,8 @@ import { Certificate } from "../db";
 class certificateService {
 
   // 자격증 추가
-  static async addCertificate({ userId, title, date, org, description }) {
-    const newCertificate = { userId, title, date, org, description };
+  static async addCertificate({ userId, title, date, org, description, certId }) {
+    const newCertificate = { userId, title, date, org, description, certId };
 
     if(!title || !date || !org) {
       const errorMessage = 
