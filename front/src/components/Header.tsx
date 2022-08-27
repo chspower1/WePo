@@ -22,6 +22,10 @@ const HeaderWrap = styled.header`
     width: 100%;
     background-color: white;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    &.home{
+        box-shadow: none;
+    background-color: transparent;
+    }
 `;
 
 export const HeaderContainer = styled.div`
@@ -114,10 +118,11 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
+    console.log(pathName);
     return (
         <>
             <HeaderEmptyBox />
-            <HeaderWrap>
+            <HeaderWrap className={pathName === '/' ? "home" : ""}>
                 <HeaderContainer>
                     <Link to="/">
                         <LogoBox>
