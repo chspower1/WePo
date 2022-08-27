@@ -29,9 +29,9 @@ export function CertificateEditForm({
     const onvalid = (data: ICertificate) => {
         updateCertificate(data, userId, certId);
         setCertificates((cerfiticate: any) => {
-            const editCerfiticate = [...cerfiticate];
-            editCerfiticate[index] = {...data,userId,certId};
-            return editCerfiticate;
+            const newCerfiticate = [...cerfiticate];
+            newCerfiticate[index] = { ...data, userId, certId };
+            return newCerfiticate;
         });
         setIsEditing(false);
         setTargetIndex(null);

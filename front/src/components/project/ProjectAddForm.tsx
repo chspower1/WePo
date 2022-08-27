@@ -11,7 +11,7 @@ import {
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
-export const ProjectAddForm = ({ setAddFormActive, setProjects, userSeq }: any) => {
+export const ProjectAddForm = ({ setAddFormActive, setProjects, userId, projectId }: any) => {
     const {
         register,
         handleSubmit,
@@ -20,9 +20,15 @@ export const ProjectAddForm = ({ setAddFormActive, setProjects, userSeq }: any) 
     } = useForm<IProject>({ mode: "onChange" });
 
     const onvalid = (data: IProject) => {
-        addProject(data);
-        setProjects((project: any) => [...project, data]);
+        const projectId: string = String(Date.now());
+        const newProject: IProject = {
+            ...data,
+            projectId,
+            userId: userId,
+        };
+        setProjects((project: any) => [...project, newProject]);
         setAddFormActive(false);
+        addProject(newProject);
     };
 
     useEffect(() => {

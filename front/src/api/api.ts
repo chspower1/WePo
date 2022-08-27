@@ -201,6 +201,7 @@ export async function deleteCertificate(certificateId: string, userId: number) {
 // Education 추가,수정
 export async function addEducation(data: IEducation) {
     try {
+        console.log(data);
         await axios.post(
             `${BASE_URL}/education`,
             { ...data },

@@ -41,15 +41,15 @@ export default function Award({ info }: any) {
         2,
         "0"
     )}-${String(newDate.getDate()).padStart(2, "0")}`;
-    const onClickDeleteBtn = (award: IAward, index:number) => {
-        const userSeq = parseInt(award.userId!);
-        const awardId = award._id!;
-        deleteAward(awardId, userSeq);
-        setAwards(prev=> {
+    const onClickDeleteBtn = (award: IAward, index: number) => {
+        const userId = parseInt(award.userId!);
+        const awardId = award.awardId!;
+        deleteAward(awardId, userId);
+        setAwards((prev) => {
             const newAwards = [...prev];
             newAwards.splice(index, 1);
             return newAwards;
-        })
+        });
     };
     const location = useLocation();
     const pathName = location.pathname;
@@ -68,7 +68,7 @@ export default function Award({ info }: any) {
                         setAwards={setAwards}
                         maxDate={maxDate}
                         setAddFormActive={setAddFormActive}
-                        userSeq={userSeq}
+                        userId={curUser?.userId}
                     />
                 )}
                 {!addFormActive &&
@@ -97,7 +97,11 @@ export default function Award({ info }: any) {
                                             >
                                                 <Pencil color="#3867FF" />
                                             </MvpEditButton>
-                                            <MvpDeleteButton onClick={()=>{onClickDeleteBtn(award, index)}}>
+                                            <MvpDeleteButton
+                                                onClick={() => {
+                                                    onClickDeleteBtn(award, index);
+                                                }}
+                                            >
                                                 <Trash2 color="#3867FF" />
                                             </MvpDeleteButton>
                                         </>
@@ -111,8 +115,8 @@ export default function Award({ info }: any) {
                                     setAwards={setAwards}
                                     setIsEditing={setIsEditing}
                                     maxDate={maxDate}
-                                    _id={award?._id!}
-                                    userSeq={award?.userId!}
+                                    awardId={award?.awardId!}
+                                    userId={award?.userId!}
                                     setTargetIndex={setTargetIndex}
                                 />
                             )}
