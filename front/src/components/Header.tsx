@@ -27,7 +27,7 @@ const HeaderWrap = styled.header`
         background-color: transparent;
     }
     &.active {
-        border:1px solid #f0f0f9;
+        border: 1px solid #f0f0f9;
         background-color: #fff;
     }
 `;
@@ -62,8 +62,8 @@ export const LinkButton = styled(NavLink)`
     font-weight: bold;
     color: #343434;
     font-size: 16px;
-    & + &{
-        margin: 0 20px 0 30px
+    & + & {
+        margin: 0 20px 0 30px;
     }
     &.active {
         position: relative;
@@ -94,7 +94,17 @@ export const LogoBox = styled.div`
 export const LogoImg = styled.img`
     width: 100%;
 `;
-
+const MiniProfileImg = styled.img`
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid gray;
+`;
+const MiniProfileName = styled.span`
+    margin: 0px 20px 0px 10px;
+    font-size: 16px;
+    color: ${(props) => props.theme.textColor};
+`;
 const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
     background: #343434;
@@ -104,7 +114,7 @@ const LoginOrRegiBtn = styled.button`
     margin-left: 20px;
     letter-spacing: -0.4px;
     transition: all 0.4s;
-    font-size:15px;
+    font-size: 15px;
     &:hover {
         background: ${(props) => props.theme.bgColor};
         color: #343434;
@@ -116,7 +126,7 @@ function Header() {
     const setCurUser = useSetRecoilState(curUserState);
     const location = useLocation();
     const pathName = location.pathname;
-
+    const curUser = useRecoilValue(curUserState);
     const [navActive, setNavActive] = useState(false);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
@@ -167,6 +177,8 @@ function Header() {
                                     네트워크
                                 </LinkButton>
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
+                                <MiniProfileImg src={curUser?.picture} />
+                                <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (
