@@ -76,9 +76,12 @@ export async function getUser(userId: number) {
         console.log(err);
     }
 }
-interface IUpdateUserProps {}
+interface IUpdateUserProps {
+    name: string;
+    description: string;
+}
 // 유저 정보 수정
-export async function updateUser(data: any, userId: number) {
+export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
         await axios.put(
             `${BASE_URL}/users/${userId}`,
