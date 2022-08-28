@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
 import { getUsers } from "@api/api";
-import { isLoginState, usersState, checkedBoxValue, hopeJob } from "@scr/atoms";
+import { isLoginState, usersState, checkedBoxValue, hopeJob } from "@/atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
 

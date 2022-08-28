@@ -4,8 +4,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { useEffect } from "react";
 import { createtUser } from "@api/api";
-import { usersState } from "@scr/atoms";
-import { IUser } from "@scr/atoms";
+import { usersState } from "@/atoms";
+import { IUser } from "@/atoms";
 import { useQuery } from "react-query";
 import {
     Wrapper,
