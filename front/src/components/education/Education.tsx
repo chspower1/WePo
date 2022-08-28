@@ -32,7 +32,7 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
-    const [targetIndex, setTargetIndex] = useState<Number>(); // index 를 체크해서 맞는 것만 editform 활성화
+    const [targetIndex, setTargetIndex] = useState<Number | null>(); // index 를 체크해서 맞는 것만 editform 활성화
 
     //현재경로
     const location = useLocation();
@@ -61,7 +61,6 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
             <MvpContentContainer>
                 {isAddFormActive && (
                     <EducationAddForm
-                        educations={educations}
                         setIsAddFormActive={setIsAddFormActive}
                         setEducations={setEducations}
                         userId={curUser?.userId!}
@@ -106,7 +105,7 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
                                     educations={educations}
                                     setEducations={setEducations}
                                     setIsEditing={setIsEditing}
-                                    userId={education.userId}
+                                    userId={education.userId!}
                                     eduId={education.eduId}
                                     setTargetIndex={setTargetIndex}
                                 />

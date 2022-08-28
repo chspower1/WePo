@@ -39,7 +39,7 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
 
     // 삭제 버튼 클릭 시
     const onClickDeleteBtn = (project: IProject, index: number) => {
-        const userId = parseInt(project.userId!);
+        const userId = project.userId!;
         const projectId = project.projectId!;
         deleteData(Category.project, projectId, userId);
         setProjects((prev) => {
@@ -67,7 +67,7 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                     /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!isAddFormActive &&
-                    projects?.map((project: IProject, index: number) => (
+                    projects?.map((project, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>

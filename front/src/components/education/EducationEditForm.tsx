@@ -10,8 +10,16 @@ import {
     MajorGraduateLabel,
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
-import { Category, updateData} from "../../api/api";
-
+import { Category, updateData } from "../../api/api";
+interface IEducationEditFormProps {
+    index: number;
+    educations: IEducation[];
+    setEducations: React.Dispatch<React.SetStateAction<IEducation[]>>;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+    setTargetIndex: React.Dispatch<React.SetStateAction<Number | null | undefined>>;
+    userId: number;
+    eduId: string;
+}
 export default function EducationEditForm({
     index,
     educations,
@@ -20,7 +28,7 @@ export default function EducationEditForm({
     setTargetIndex,
     userId,
     eduId,
-}: any) {
+}: IEducationEditFormProps) {
     const {
         register,
         handleSubmit,
@@ -29,8 +37,8 @@ export default function EducationEditForm({
 
     const onvalid = (data: IEducation) => {
         updateData(data, Category.education, userId, eduId);
-        setEducations((education: any) => {
-            const newEducations = [...education];
+        setEducations((prev) => {
+            const newEducations = [...prev];
             newEducations[index] = { ...data, userId, eduId };
             return newEducations;
         });

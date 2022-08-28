@@ -9,7 +9,15 @@ import {
     Button,
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
-
+interface ICertificateEditFormProps {
+    index: number;
+    certificates: ICertificate[];
+    setCertificates: React.Dispatch<React.SetStateAction<ICertificate[]>>;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+    setTargetIndex: React.Dispatch<React.SetStateAction<number | null | undefined>>;
+    userId: number;
+    certId: string;
+}
 export function CertificateEditForm({
     index,
     certificates,
@@ -18,7 +26,7 @@ export function CertificateEditForm({
     setTargetIndex,
     userId,
     certId,
-}: any) {
+}: ICertificateEditFormProps) {
     const {
         register,
         handleSubmit,
@@ -27,7 +35,7 @@ export function CertificateEditForm({
 
     const onvalid = (data: ICertificate) => {
         updateData(data, Category.certificate, userId, certId);
-        setCertificates((cerfiticate: any) => {
+        setCertificates((cerfiticate) => {
             const newCerfiticate = [...cerfiticate];
             newCerfiticate[index] = { ...data, userId, certId };
             return newCerfiticate;
@@ -69,7 +77,7 @@ export function CertificateEditForm({
                     type="date"
                     width="100"
                     id="project-startDate"
-                    defaultValue={certificates[index].date.slice(0, 10)}
+                    defaultValue={String(certificates[index]?.date).slice(0, 10)}
                     {...register("date", {
                         required: "발급날짜을 입력해주세요",
                         // pattern: {

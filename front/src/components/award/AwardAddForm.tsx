@@ -10,8 +10,18 @@ import {
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
-
-export default function AwardAddForm({ setAwards, maxDate, setIsAddFormActive, userId }: any) {
+interface IAwardAddFormProps {
+    setAwards: React.Dispatch<React.SetStateAction<IAward[]>>;
+    maxDate: string;
+    setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: number;
+}
+export default function AwardAddForm({
+    setAwards,
+    maxDate,
+    setIsAddFormActive,
+    userId,
+}: IAwardAddFormProps) {
     const {
         register,
         handleSubmit,

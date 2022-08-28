@@ -34,7 +34,7 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
-    const [targetIndex, setTargetIndex] = useState<number>();
+    const [targetIndex, setTargetIndex] = useState<number | null>();
 
     // 현재 경로
     const location = useLocation();
@@ -42,7 +42,7 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
 
     // 삭제버튼 클릭시
     const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
-        const userSeq = parseInt(certificate?.userId!);
+        const userSeq = certificate?.userId!;
         const certificateId = certificate?.certId!;
         deleteData(Category.certificate, certificateId, userSeq);
         setCertificates((prev) => {
@@ -106,8 +106,8 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                                     setCertificates={setCertificates}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userId={certificate.userId}
-                                    certId={certificate.certId}
+                                    userId={certificate?.userId!}
+                                    certId={certificate?.certId!}
                                 />
                             )}
                         </MvpContentBox>

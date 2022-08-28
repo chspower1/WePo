@@ -20,7 +20,17 @@ import {
     Button,
 } from "../user/MyPortfolio";
 
-export function CertificateAddForm({ setIsAddFormActive, setCertificates, userId }: any) {
+interface ICertificateAddFormProps {
+    setCertificates: React.Dispatch<React.SetStateAction<ICertificate[]>>;
+    setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: number;
+}
+
+export function CertificateAddForm({
+    setIsAddFormActive,
+    setCertificates,
+    userId,
+}: ICertificateAddFormProps) {
     const {
         register,
         handleSubmit,
@@ -36,7 +46,7 @@ export function CertificateAddForm({ setIsAddFormActive, setCertificates, userId
             userId,
         };
         console.log("생성완료", newCertificate);
-        setCertificates((project: any) => [...project, newCertificate]);
+        setCertificates((project) => [...project, newCertificate]);
         setIsAddFormActive(false);
         addData(newCertificate, Category.certificate);
     };
