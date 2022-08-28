@@ -2,15 +2,8 @@ import { IAward } from "@/atoms";
 import { useForm } from "react-hook-form";
 import { Category, updateData } from "@api/api";
 import { useParams } from "react-router-dom";
-import {
-    MvpContentName,
-    MvpAddInput,
-    MvpAddInputBox,
-    RequiredLabel,
-    Button,
-} from "@user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "@user/LoginForm";
-
+import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
+import * as AwardStyled from "@styledComponents/CategoryStyled";
 interface IAwardEditFromProps {
     index: number;
     awards: IAward[];
@@ -51,14 +44,14 @@ export default function AwardEditForm({
 
     return (
         <form onSubmit={handleSubmit(onvalid)}>
-            <MvpAddInputBox>
+            <AwardStyled.AddInputBox>
                 <p style={{ position: "absolute", right: "20px", top: "20px" }}>
-                    <RequiredLabel>*</RequiredLabel> 필수사항
+                    <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel> 필수사항
                 </p>
-                <MvpContentName>
-                    제목 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MvpAddInput
+                <AwardStyled.ContentName>
+                    제목 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>{" "}
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     width="300"
                     placeholder="제목"
@@ -74,12 +67,12 @@ export default function AwardEditForm({
                         {errors.title.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    수상순위 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    수상순위 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>{" "}
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     width="300"
                     placeholder="상세제목"
@@ -95,12 +88,12 @@ export default function AwardEditForm({
                         {errors.grade.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    날짜 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    날짜 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>{" "}
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="date"
                     width="130"
                     placeholder="날짜를 입력하세요"
@@ -116,12 +109,12 @@ export default function AwardEditForm({
                         {errors.date.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    기관 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    기관 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>{" "}
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     width="300"
                     placeholder="기관"
@@ -137,12 +130,12 @@ export default function AwardEditForm({
                         {errors.org.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    기관 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    기관 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>{" "}
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     width="300"
                     placeholder="상세설명"
@@ -158,19 +151,19 @@ export default function AwardEditForm({
                         {errors.description.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
+            </AwardStyled.AddInputBox>
             <div style={{ float: "right", marginBottom: "10px" }}>
-                <Button type="submit" color="#3687FF">
+                <AwardStyled.Button type="submit" color="#3687FF">
                     수정
-                </Button>
-                <Button
+                </AwardStyled.Button>
+                <AwardStyled.Button
                     onClick={() => {
                         setIsEditing(false);
                         setTargetIndex(null);
                     }}
                 >
                     취소
-                </Button>
+                </AwardStyled.Button>
             </div>
         </form>
         // <div>
