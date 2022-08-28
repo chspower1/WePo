@@ -2,7 +2,7 @@ import { curUserState, IAward } from "../../atoms";
 import { useState } from "react";
 import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
     MvpContainer,
@@ -23,18 +23,14 @@ import { Trash2 } from "styled-icons/feather";
 import { Category, deleteData } from "../../api/api";
 
 export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
-    console.log(awardsProps);
-    // user ID
-    const { userSeq } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
-    const userToken = sessionStorage.getItem("userToken");
+
     // 자격증 상태
     const [awards, setAwards] = useState<IAward[]>(awardsProps);
 
     // form관리
-    const [addFormActive, setAddFormActive] = useState(false);
-    const [editing, setEditing] = useState(true);
+    const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [targetIndex, setTargetIndex] = useState<Number>();
     const newDate = new Date();
@@ -42,6 +38,12 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
         2,
         "0"
     )}-${String(newDate.getDate()).padStart(2, "0")}`;
+
+    // 현재 경로
+    const location = useLocation();
+    const pathName = location.pathname;
+
+    // 삭제버튼 클릭시
     const onClickDeleteBtn = (award: IAward, index: number) => {
         const userId = award.userId!;
         const awardId = award.awardId!;
@@ -52,11 +54,10 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
             return newAwards;
         });
     };
-    const location = useLocation();
-    const pathName = location.pathname;
-    // 추가사항 on/off
-    function handleAdding() {
-        setAddFormActive((current) => !current);
+
+    //추가버튼 클릭시 버튼 활성화 on/off
+    function handleIsAddFormActive() {
+        setIsAddFormActive((current) => !current);
     }
     return (
         <MvpContainer>
@@ -64,15 +65,15 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                 <MvpTitle>수상경력</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-                {addFormActive && (
+                {isAddFormActive && (
                     <AwardAddForm
                         setAwards={setAwards}
                         maxDate={maxDate}
-                        setAddFormActive={setAddFormActive}
+                        setIsAddFormActive={setIsAddFormActive}
                         userId={curUser?.userId}
                     />
                 )}
-                {!addFormActive &&
+                {!isAddFormActive &&
                     awards?.map((award, index) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
@@ -126,8 +127,8 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser && pathName === "/mypage" && !addFormActive && (
-                <MvpAddButton onClick={handleAdding}>
+            {curUser && pathName === "/mypage" && !isAddFormActive && (
+                <MvpAddButton onClick={handleIsAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
             )}

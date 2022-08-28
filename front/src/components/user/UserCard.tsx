@@ -12,8 +12,8 @@ const ItemWrap = styled.div`
     min-width: 350px;
     padding: 20px 30px;
     border-radius: 10px;
-    box-shadow: 10px 10px 15px  rgba(162,190,231,.25);
-    background:#fff;
+    box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
+    background: #fff;
 `;
 const InfoBox = styled.div`
     position: relative;
@@ -39,10 +39,10 @@ const NameTxt = styled.h2`
     margin-bottom: 10px;
 `;
 const EmailTxt = styled.h3`
-    font-size:14px;
+    font-size: 14px;
     a {
-        display:block;
-        width:170px;
+        display: block;
+        width: 170px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -70,6 +70,7 @@ const ArrowIcon = styled(ArrowRightShort)`
     margin-top: -3px;
 `;
 const DetailBtn = styled.button`
+    text-align: center;
     color: #5573df;
 `;
 

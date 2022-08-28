@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {  addData, Category } from "../../api/api";
+import { addData, Category } from "../../api/api";
 import { ICertificate } from "../../atoms";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import {
@@ -20,7 +20,7 @@ import {
     Button,
 } from "../user/MyPortfolio";
 
-export function CertificateAddForm({ setAddFormActive, setCertificates, userId }: any) {
+export function CertificateAddForm({ setIsAddFormActive, setCertificates, userId }: any) {
     const {
         register,
         handleSubmit,
@@ -33,11 +33,11 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, userId }
         const newCertificate: ICertificate = {
             ...data,
             certId,
-            userId: userId,
+            userId,
         };
         console.log("생성완료", newCertificate);
         setCertificates((project: any) => [...project, newCertificate]);
-        setAddFormActive(false);
+        setIsAddFormActive(false);
         addData(newCertificate, Category.certificate);
     };
 
@@ -138,7 +138,7 @@ export function CertificateAddForm({ setAddFormActive, setCertificates, userId }
                 <Button color="#3687FF" type="submit">
                     추가
                 </Button>
-                <Button onClick={() => setAddFormActive(false)}>취소</Button>
+                <Button onClick={() => setIsAddFormActive(false)}>취소</Button>
             </div>
         </form>
     );

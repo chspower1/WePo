@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import {  Category,  updateData } from "../../api/api";
+import { Category, updateData } from "../../api/api";
 import { ICertificate } from "../../atoms";
 import {
     MvpContentName,
@@ -14,7 +14,6 @@ export function CertificateEditForm({
     index,
     certificates,
     setCertificates,
-    setEditing,
     setIsEditing,
     setTargetIndex,
     userId,
@@ -23,8 +22,8 @@ export function CertificateEditForm({
     const {
         register,
         handleSubmit,
-        formState: { isSubmitting, errors },
-    } = useForm<ICertificate>();
+        formState: { errors },
+    } = useForm<ICertificate>({ mode: "onChange" });
 
     const onvalid = (data: ICertificate) => {
         updateData(data, Category.certificate, userId, certId);
@@ -36,7 +35,6 @@ export function CertificateEditForm({
         setIsEditing(false);
         setTargetIndex(null);
     };
-    console.log(userId, certId);
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <MvpAddInputBox>

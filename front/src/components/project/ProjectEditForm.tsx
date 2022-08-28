@@ -15,7 +15,6 @@ export function ProjectEditForm({
     index,
     projects,
     setProjects,
-    setEditing,
     setIsEditing,
     setTargetIndex,
     userId,
@@ -24,8 +23,8 @@ export function ProjectEditForm({
     const {
         register,
         handleSubmit,
-        formState: { isSubmitting, errors },
-    } = useForm<IProject>();
+        formState: { errors },
+    } = useForm<IProject>({ mode: "onChange" });
 
     const onvalid = (data: IProject) => {
         updateData(data, Category.project, userId, projectId);

@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { errorSelector, useRecoilState, useRecoilValue } from "recoil";
-import { curUserState, IProject, usersState } from "../../atoms";
-import { type } from "os";
+import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { curUserState, IProject } from "../../atoms";
 import { ProjectAddForm } from "./ProjectAddForm";
 import { ProjectEditForm } from "./ProjectEditForm";
-import styled from "styled-components";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
     MvpContainer,
     MvpTitle,
@@ -23,30 +20,24 @@ import {
 import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
-import { Droppable } from "@hello-pangea/dnd";
-import SEO from "./../SEO";
 import { Category, deleteData } from "../../api/api";
 export default function Project({ projectsProps }: { projectsProps: IProject[] }) {
-    // user ID
-    const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
-    const userToken = sessionStorage.getItem("userToken");
 
-    // form 관리
-    const [addFormActive, setAddFormActive] = useState(false);
-    const [editing, setEditing] = useState(true);
-    const [isEditing, setIsEditing] = useState(false);
-    const [targetIndex, setTargetIndex] = useState<Number>();
-    const location = useLocation();
-    const pathName = location.pathname;
-    // 추가사항 on/off
-    function handleAdding() {
-        setAddFormActive((addFormActive) => !addFormActive);
-    }
-
+    // 프로젝트 상태 관리
     const [projects, setProjects] = useState<IProject[]>(projectsProps);
 
+    // form 관리
+    const [isAddFormActive, setIsAddFormActive] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [targetIndex, setTargetIndex] = useState<Number>();
+
+    // 현재 경로
+    const location = useLocation();
+    const pathName = location.pathname;
+
+    // 삭제 버튼 클릭 시
     const onClickDeleteBtn = (project: IProject, index: number) => {
         const userId = parseInt(project.userId!);
         const projectId = project.projectId!;
@@ -57,20 +48,25 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
             return newProjects;
         });
     };
+
+    //추가버튼 클릭시 버튼 활성화 on/off
+    function handleIsAddFormActive() {
+        setIsAddFormActive((isAddFormActive) => !isAddFormActive);
+    }
     return (
         <MvpContainer>
             <MvpTitleBox>
                 <MvpTitle>프로젝트</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-                {addFormActive && (
+                {isAddFormActive && (
                     <ProjectAddForm
-                        setAddFormActive={setAddFormActive}
+                        setIsAddFormActive={setIsAddFormActive}
                         setProjects={setProjects}
                         userId={curUser?.userId}
                     /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
-                {!addFormActive &&
+                {!isAddFormActive &&
                     projects?.map((project: IProject, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
@@ -107,7 +103,6 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                                     index={index}
                                     projects={projects}
                                     setProjects={setProjects}
-                                    setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
                                     userId={project.userId}
@@ -118,8 +113,8 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                     ))}
             </MvpContentContainer>
 
-            {curUser && pathName === "/mypage" && !addFormActive && (
-                <MvpAddButton onClick={handleAdding}>
+            {curUser && pathName === "/mypage" && !isAddFormActive && (
+                <MvpAddButton onClick={handleIsAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
             )}

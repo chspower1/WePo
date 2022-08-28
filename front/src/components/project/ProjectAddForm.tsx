@@ -11,12 +11,12 @@ import {
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
-export const ProjectAddForm = ({ setAddFormActive, setProjects, userId, projectId }: any) => {
+export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: any) => {
     const {
         register,
         handleSubmit,
         setError,
-        formState: { isSubmitting, errors },
+        formState: { errors },
     } = useForm<IProject>({ mode: "onChange" });
 
     const onvalid = (data: IProject) => {
@@ -24,10 +24,10 @@ export const ProjectAddForm = ({ setAddFormActive, setProjects, userId, projectI
         const newProject: IProject = {
             ...data,
             projectId,
-            userId: userId,
+            userId,
         };
         setProjects((project: any) => [...project, newProject]);
-        setAddFormActive(false);
+        setIsAddFormActive(false);
         addData(newProject, Category.project);
     };
 
@@ -127,7 +127,7 @@ export const ProjectAddForm = ({ setAddFormActive, setProjects, userId, projectI
                 <Button color="#3687FF" type="submit">
                     추가
                 </Button>
-                <Button onClick={() => setAddFormActive(false)}>취소</Button>
+                <Button onClick={() => setIsAddFormActive(false)}>취소</Button>
             </div>
         </form>
     );

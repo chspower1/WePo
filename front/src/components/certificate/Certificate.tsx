@@ -1,11 +1,10 @@
 import { curUserState, ICertificate } from "./../../atoms";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { errorSelector, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { CertificateAddForm } from "./CertificateAddForm";
 import { CertificateEditForm } from "./CertificateEditForm";
 import styled from "styled-components";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
     MvpContainer,
     MvpTitleBox,
@@ -26,28 +25,22 @@ import { Trash2 } from "@styled-icons/feather/Trash2";
 import { Category, deleteData } from "../../api/api";
 
 export default function Certificate({ certificatesProps }: { certificatesProps: ICertificate[] }) {
-    // user ID
-    const { id } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
-    const userToken = sessionStorage.getItem("userToken");
-    /* console.log(info); */
-
-    // form 관리
-    const [addFormActive, setAddFormActive] = useState(false);
-    const [editing, setEditing] = useState(true); // 유저에따라 수정버튼 여부 지금은 우선 보이기위해 true 나중에는 defalut undefined 로그인 유저에따라 true or
-    const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
-    const [targetIndex, setTargetIndex] = useState<number>();
-
-    const location = useLocation();
-    const pathName = location.pathname;
-    // 추가사항 on/off
 
     // 자격증 상태
     const [certificates, setCertificates] = useState<ICertificate[]>(certificatesProps);
-    function handleAddFormActive() {
-        setAddFormActive((addFormActive) => !addFormActive);
-    }
+
+    // form 관리
+    const [isAddFormActive, setIsAddFormActive] = useState(false);
+    const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
+    const [targetIndex, setTargetIndex] = useState<number>();
+
+    // 현재 경로
+    const location = useLocation();
+    const pathName = location.pathname;
+
+    // 삭제버튼 클릭시
     const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
         const userSeq = parseInt(certificate?.userId!);
         const certificateId = certificate?.certId!;
@@ -59,20 +52,24 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
         });
     };
 
+    //추가버튼 클릭시 버튼 활성화 on/off
+    function handleIsAddFormActive() {
+        setIsAddFormActive((isAddFormActive) => !isAddFormActive);
+    }
     return (
         <MvpContainer>
             <MvpTitleBox>
                 <MvpTitle>자격증</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
-                {addFormActive && (
+                {isAddFormActive && (
                     <CertificateAddForm
-                        setAddFormActive={setAddFormActive}
+                        setIsAddFormActive={setIsAddFormActive}
                         setCertificates={setCertificates}
                         userId={curUser?.userId!}
                     />
                 )}
-                {!addFormActive &&
+                {!isAddFormActive &&
                     certificates?.map((certificate: ICertificate, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
@@ -107,7 +104,6 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                                     index={index}
                                     certificates={certificates}
                                     setCertificates={setCertificates}
-                                    setEditing={setEditing}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
                                     userId={certificate.userId}
@@ -117,8 +113,8 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
-            {curUser && pathName === "/mypage" && !addFormActive && (
-                <MvpAddButton onClick={handleAddFormActive}>
+            {curUser && pathName === "/mypage" && !isAddFormActive && (
+                <MvpAddButton onClick={handleIsAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
                 </MvpAddButton>
             )}

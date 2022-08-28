@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { addData, Category } from "../../api/api";
 import { IAward } from "../../atoms";
-import { useParams } from "react-router-dom";
 import {
     MvpContentName,
     MvpAddInput,
@@ -12,7 +11,7 @@ import {
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, userId }: any) {
+export default function AwardAddForm({ setAwards, maxDate, setIsAddFormActive, userId }: any) {
     const {
         register,
         handleSubmit,
@@ -25,11 +24,11 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
         const newAward: IAward = {
             ...data,
             awardId,
-            userId: userId,
+            userId,
         };
         console.log("생성완료", newAward);
         setAwards((project: any) => [...project, newAward]);
-        setAddFormActive(false);
+        setIsAddFormActive(false);
         addData(newAward, Category.award);
     };
 
@@ -161,7 +160,7 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
                 <Button color="#3687FF" type="submit">
                     추가
                 </Button>
-                <Button onClick={() => setAddFormActive(false)}>취소</Button>
+                <Button onClick={() => setIsAddFormActive(false)}>취소</Button>
             </div>
         </form>
     );
