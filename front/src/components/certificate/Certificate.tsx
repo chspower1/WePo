@@ -42,7 +42,7 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
 
     // 삭제버튼 클릭시
     const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
-        const userSeq = parseInt(certificate?.userId!);
+        const userSeq = certificate?.userId!;
         const certificateId = certificate?.certId!;
         deleteData(Category.certificate, certificateId, userSeq);
         setCertificates((prev) => {

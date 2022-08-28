@@ -32,7 +32,7 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
     // form관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [targetIndex, setTargetIndex] = useState<Number>();
+    const [targetIndex, setTargetIndex] = useState<Number | null>();
     const newDate = new Date();
     const maxDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(
         2,
@@ -70,7 +70,7 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                         setAwards={setAwards}
                         maxDate={maxDate}
                         setIsAddFormActive={setIsAddFormActive}
-                        userId={curUser?.userId}
+                        userId={curUser?.userId!}
                     />
                 )}
                 {!isAddFormActive &&

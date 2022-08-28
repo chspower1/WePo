@@ -11,7 +11,13 @@ import {
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 import { useEffect } from "react";
 
-export default function AwardAddForm({ setAwards, maxDate, setIsAddFormActive, userId }: any) {
+interface IAwardAddFormProps {
+    setAwards: React.Dispatch<React.SetStateAction<IAward[]>>;
+    maxDate : string;
+    setIsAddFormActive :React.Dispatch<React.SetStateAction<boolean>>;
+    userId : number;
+}
+export default function AwardAddForm({ setAwards, maxDate, setIsAddFormActive, userId }: IAwardAddFormProps) {
     const {
         register,
         handleSubmit,
@@ -27,7 +33,7 @@ export default function AwardAddForm({ setAwards, maxDate, setIsAddFormActive, u
             userId,
         };
         console.log("생성완료", newAward);
-        setAwards((project: any) => [...project, newAward]);
+        setAwards((project) => [...project, newAward]);
         setIsAddFormActive(false);
         addData(newAward, Category.award);
     };

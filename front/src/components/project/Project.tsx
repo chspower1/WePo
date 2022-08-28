@@ -31,7 +31,7 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [targetIndex, setTargetIndex] = useState<Number>();
+    const [targetIndex, setTargetIndex] = useState<Number | null>();
 
     // 현재 경로
     const location = useLocation();
@@ -39,7 +39,7 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
 
     // 삭제 버튼 클릭 시
     const onClickDeleteBtn = (project: IProject, index: number) => {
-        const userId = parseInt(project.userId!);
+        const userId = project.userId!;
         const projectId = project.projectId!;
         deleteData(Category.project, projectId, userId);
         setProjects((prev) => {
@@ -63,7 +63,7 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                     <ProjectAddForm
                         setIsAddFormActive={setIsAddFormActive}
                         setProjects={setProjects}
-                        userId={curUser?.userId}
+                        userId={curUser?.userId!}
                     /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!isAddFormActive &&
@@ -98,15 +98,15 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                                     )}
                                 </>
                             )}
-                            {isEditing && targetIndex == index && (
+                            {isEditing && targetIndex === index && (
                                 <ProjectEditForm
                                     index={index}
                                     projects={projects}
                                     setProjects={setProjects}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userId={project.userId}
-                                    projectId={project.projectId}
+                                    userId={project.userId!}
+                                    projectId={project.projectId!}
                                 />
                             )}
                         </MvpContentBox>

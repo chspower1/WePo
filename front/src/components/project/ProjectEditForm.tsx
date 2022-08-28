@@ -11,6 +11,15 @@ import {
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
 
+interface IProjectEditFormProps{
+    index: number;
+    projects: IProject[];
+    setProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+    setTargetIndex: React.Dispatch<React.SetStateAction<Number | null | undefined>>;
+    userId: number;
+    projectId: string;
+}
 export function ProjectEditForm({
     index,
     projects,
@@ -19,7 +28,7 @@ export function ProjectEditForm({
     setTargetIndex,
     userId,
     projectId,
-}: any) {
+}: IProjectEditFormProps) {
     const {
         register,
         handleSubmit,
@@ -28,7 +37,7 @@ export function ProjectEditForm({
 
     const onvalid = (data: IProject) => {
         updateData(data, Category.project, userId, projectId);
-        setProjects((project: any) => {
+        setProjects((project) => {
             const newProjects = [...project];
             newProjects[index] = { ...data, userId, projectId };
             return newProjects;
@@ -69,7 +78,7 @@ export function ProjectEditForm({
                     width="100"
                     maxLength={2}
                     id="project-startDate"
-                    defaultValue={projects[index].startDate.slice(0, 10)}
+                    defaultValue={String(projects[index].startDate).slice(0, 10)}
                     placeholder="프로젝트 시작기간"
                     {...register("startDate", {
                         required: "기간을 입력해주세요",
@@ -83,7 +92,7 @@ export function ProjectEditForm({
                 <MvpAddInput
                     type="date"
                     id="project-endDate"
-                    defaultValue={projects[index].endDate.slice(0, 10)}
+                    defaultValue={String(projects[index].endDate).slice(0, 10)}
                     placeholder="프로젝트 종료기간"
                     {...register("endDate", {
                         required: "기간을 입력해주세요",

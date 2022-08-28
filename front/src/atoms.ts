@@ -58,7 +58,7 @@ export interface IAward {
 export interface ICertificate {
     _id?: string;
     certId: string;
-    userId?: string;
+    userId?: number;
     title: string;
     date: Date;
     org: string;
@@ -70,7 +70,7 @@ export interface ICertificate {
 export interface IProject {
     _id?: string;
     projectId: string;
-    userId?: string;
+    userId?: number;
     title: string;
     startDate: Date;
     endDate: Date;

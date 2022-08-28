@@ -10,6 +10,17 @@ import {
     Button,
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
+
+interface IAwardEditFromProps{
+    index: number;
+    awards: IAward[];
+    setAwards: React.Dispatch<React.SetStateAction<IAward[]>>;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+    maxDate: string;
+    setTargetIndex: React.Dispatch<React.SetStateAction<Number | null | undefined>>;
+    userId: number;
+    awardId: string;
+}
 export default function AwardEditForm({
     index,
     awards,
@@ -18,18 +29,18 @@ export default function AwardEditForm({
     maxDate,
     setTargetIndex,
     userId,
-    certId,
-}: any) {
+    awardId,
+}: IAwardEditFromProps) {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<IAward>({ mode: "onChange" });
     const onvalid = (data: IAward) => {
-        updateData(data, Category.award, userId, certId);
-        setAwards((award: any) => {
+        updateData(data, Category.award, userId, awardId);
+        setAwards((award) => {
             const newAward = [...award];
-            newAward[index] = { ...data, userId, certId };
+            newAward[index] = { ...data, userId, awardId };
             return newAward;
         });
         console.log(awards);
@@ -93,7 +104,7 @@ export default function AwardEditForm({
                     type="date"
                     width="130"
                     placeholder="날짜를 입력하세요"
-                    defaultValue={current.date.slice(0, 10)}
+                    defaultValue={String(current.date).slice(0, 10)}
                     {...register("date", {
                         required: "날짜를 입력하세요",
                         max: { value: maxDate, message: "수상을 한 날짜를 입력하세요!" },

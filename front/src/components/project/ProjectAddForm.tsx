@@ -10,8 +10,12 @@ import {
     Button,
 } from "../user/MyPortfolio";
 import { DangerIcon, ErrMsg } from "../user/LoginForm";
-
-export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: any) => {
+interface IProjectAddFormProps {
+    setProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
+    setIsAddFormActive :React.Dispatch<React.SetStateAction<boolean>>;
+    userId : number;
+}
+export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: IProjectAddFormProps) => {
     const {
         register,
         handleSubmit,
@@ -26,7 +30,7 @@ export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: any)
             projectId,
             userId,
         };
-        setProjects((project: any) => [...project, newProject]);
+        setProjects((project) => [...project, newProject]);
         setIsAddFormActive(false);
         addData(newProject, Category.project);
     };
@@ -81,11 +85,7 @@ export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: any)
                     id="project-startDate"
                     placeholder="프로젝트 시작기간"
                     {...register("startDate", {
-                        required: "기간을 입력해주세요",
-                        // pattern: {
-                        //     value: /^\d{4}\d{2}\d{2}$/,
-                        //     message: "20220101 형식으로 작성해주세요",
-                        // },
+                        required: "기간을 입력해주세요"
                     })}
                 ></MvpAddInput>
                 <span style={{ margin: "0  5px 0 5px" }}>-</span>
@@ -94,11 +94,7 @@ export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: any)
                     id="project-endDate"
                     placeholder="프로젝트 종료기간"
                     {...register("endDate", {
-                        required: "기간을 입력해주세요",
-                        // pattern: {
-                        //     value: /^\d{4}\d{2}\d{2}$/,
-                        //     message: "20220101 형식으로 작성해주세요",
-                        // },
+                        required: "기간을 입력해주세요"
                     })}
                 ></MvpAddInput>
                 {(errors.startDate && (
