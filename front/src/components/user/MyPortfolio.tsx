@@ -141,8 +141,7 @@ export const MyPortWrap = styled.div`
     max-width: 1300px;
     display: flex;
     justify-content: flex-end;
-    margin: 0 auto;
-    margin-top: 100px;
+    margin: 80px auto;
     padding: 80px 30px;
     @media screen and (max-width: 960px) {
         flex-direction: column;
