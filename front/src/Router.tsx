@@ -1,11 +1,11 @@
-import { BrowserRouter, Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyPortfolio from "@user/MyPortfolio";
 import RegisterForm from "@user/RegisterForm";
 import Network from "@user/Network";
 import Header from "@components/Header";
 import LoginForm from "@user/LoginForm";
 import { useRecoilValue } from "recoil";
-import { isLoginState } from "@scr/atoms";
+import { isLoginState } from "@/atoms";
 import { useEffect } from "react";
 import UserDetail from "@user/UserDetail";
 import NotFound from "@components/NotFound";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { curUserState, IEducation } from "@scr/atoms";
+import { curUserState, IEducation } from "@/atoms";
 
 import EducationEditForm from "./EducationEditForm";
 import EducationAddForm from "./EducationAddForm";

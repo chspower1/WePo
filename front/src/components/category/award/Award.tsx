@@ -1,4 +1,4 @@
-import { curUserState, IAward } from "@scr/atoms";
+import { curUserState, IAward } from "@/atoms";
 import { useState } from "react";
 import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";

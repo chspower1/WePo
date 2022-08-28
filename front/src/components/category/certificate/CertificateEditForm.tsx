@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Category, updateData } from "@api/api";
-import { ICertificate } from "@scr/atoms";
+import { ICertificate } from "@/atoms";
 import {
     MvpContentName,
     MvpAddInput,

@@ -6,7 +6,7 @@ import Award from "@award/Award";
 import Certificate from "@certificate/Certificate";
 import Project from "@project/Project";
 import { getUser } from "@api/api";
-import { curUserState, isLoginState, IUser } from "@scr/atoms";
+import { curUserState, isLoginState, IUser } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import UserCard from "./UserCard";
 import UserDetail from "./UserDetail";

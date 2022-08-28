@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { curUserState, IProject } from "@scr/atoms";
+import { curUserState, IProject } from "@/atoms";
 import { ProjectAddForm } from "./ProjectAddForm";
 import { ProjectEditForm } from "./ProjectEditForm";
 import { useLocation } from "react-router-dom";
