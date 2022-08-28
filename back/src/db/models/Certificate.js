@@ -3,17 +3,24 @@ import { CertificateModel } from "../schemas/certificate";
 class Certificate {
 
   // 새로운 자격증 생성
-  static async create({ newCertificate }) {
-    return CertificateModel.create(newCertificate);
+  static async create({ userId, title, date, org, description, certId }) {
+    return CertificateModel.create({ 
+      userId, 
+      title, 
+      date, 
+      org, 
+      description, 
+      certId 
+    });
   }
 
   // userId에 해당하는 유저의 자격증정보 전체조회
-  static async findByUserId({ userId }) {
-    return CertificateModel.find({userId});
+  static async findByUserId(userId) {
+    return CertificateModel.find({ userId });
   }
 
   // certId에 해당하는 자격증정보 조회
-  static async findByCertId({ certId }) {
+  static async findByCertId(certId) {
     return CertificateModel.findOne({ certId });
   }
 
@@ -31,7 +38,7 @@ class Certificate {
   }
 
   // certId에 해당하는 자격증정보 삭제
-  static async delete({ certId }) {
+  static async delete(certId) {
     return CertificateModel.findOneAndDelete({ certId });
   }
 }

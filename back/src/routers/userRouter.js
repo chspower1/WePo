@@ -6,16 +6,14 @@ import { userAuthService } from "../services/userService";
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/user/register", async function (req, res, next) {
+userAuthRouter.post("/register", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
         }
 
         // req (request) 에서 데이터 가져오기
-        const name = req.body.name;
-        const email = req.body.email;
-        const password = req.body.password;
+        const { name, email, password } = req.body;
 
         // 위 데이터를 유저 db에 추가하기
         const newUser = await userAuthService.addUser({
@@ -34,11 +32,10 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
     }
 });
 
-userAuthRouter.post("/user/login", async function (req, res, next) {
+userAuthRouter.post("/login", async function (req, res, next) {
     try {
         // req (request) 에서 데이터 가져오기
-        const email = req.body.email;
-        const password = req.body.password;
+        const { email, password } = req.body;
 
         // 위 데이터를 이용하여 유저 db에서 유저 찾기
         const user = await userAuthService.getUser({ email, password });
@@ -53,7 +50,7 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
     }
 });
 
-userAuthRouter.get("/userlist", login_required, async function (req, res, next) {
+userAuthRouter.get("/list", login_required, async function (req, res, next) {
     try {
         // 전체 사용자 목록을 얻음
         const users = await userAuthService.getUsers();
@@ -63,13 +60,11 @@ userAuthRouter.get("/userlist", login_required, async function (req, res, next) 
     }
 });
 
-userAuthRouter.get("/user/current", login_required, async function (req, res, next) {
+userAuthRouter.get("/current", login_required, async function (req, res, next) {
     try {
         // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
         const userId = req["currentUserId"];
-        const currentUserInfo = await userAuthService.getUserInfo({
-            userId,
-        });
+        const currentUserInfo = await userAuthService.getUserInfo(userId);
 
         if (currentUserInfo.errorMessage) {
             throw new Error(currentUserInfo.errorMessage);
@@ -81,7 +76,7 @@ userAuthRouter.get("/user/current", login_required, async function (req, res, ne
     }
 });
 
-userAuthRouter.put("/users/:id", login_required, async function (req, res, next) {
+userAuthRouter.put("/:id", login_required, async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
@@ -100,8 +95,7 @@ userAuthRouter.put("/users/:id", login_required, async function (req, res, next)
         }
 
         // body data 로부터 업데이트할 사용자 정보를 추출함.
-        const name = req.body.name ?? null;
-        const description = req.body.description ?? null;
+        const { name, description } = req.body;
 
         const toUpdate = { name, description };
 
@@ -121,10 +115,10 @@ userAuthRouter.put("/users/:id", login_required, async function (req, res, next)
     }
 });
 
-userAuthRouter.get("/users/:id", login_required, async function (req, res, next) {
+userAuthRouter.get("/:id", login_required, async function (req, res, next) {
     try {
         const userId = parseInt(req.params.id);
-        const currentUserInfo = await userAuthService.getUserInfo({ userId });
+        const currentUserInfo = await userAuthService.getUserInfo(userId);
 
         if (currentUserInfo.errorMessage) {
             throw new Error(currentUserInfo.errorMessage);
@@ -132,7 +126,7 @@ userAuthRouter.get("/users/:id", login_required, async function (req, res, next)
 
         // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
         if (userId !== req["currentUserId"]) {
-            await userAuthService.increaseView({ userId });
+            await userAuthService.increaseView(userId);
         }
 
         res.status(200).send(currentUserInfo);

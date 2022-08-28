@@ -3,18 +3,25 @@ import { ProjectModel } from "../schemas/project";
 class Project {
 
   // 새로운 프로젝트 생성
-  static async create({ newProject }) {
-    return ProjectModel.create(newProject);
+  static async create({ userId, title, startDate, endDate, description, projectId }) {
+    return ProjectModel.create({
+      userId, 
+      title, 
+      startDate, 
+      endDate, 
+      description, 
+      projectId
+    });
   }
 
   // userId에 해당하는 유저의 프로젝트 전체 조회
-  static async findByUserId({ userId }) {
-    return ProjectModel.find({userId});
+  static async findByUserId(userId) {
+    return ProjectModel.find({ userId });
   }
 
   // projectId에 해당하는 프로젝트 조회
-  static async findByProjectId({ projectId }) {
-    return ProjectModel.findOne(projectId);;
+  static async findByProjectId(projectId) {
+    return ProjectModel.findOne({ projectId });;
   }
 
   // projectId에 해당하는 프로젝트 속성 수정
@@ -31,8 +38,8 @@ class Project {
     }
 
   // projectId에 해당하는 프로젝트 삭제
-  static async delete({ projectId }) {
-    return ProjectModel.findOneAndDelete({projectId});
+  static async delete(projectId) {
+    return ProjectModel.findOneAndDelete({ projectId });
   }
 }
   

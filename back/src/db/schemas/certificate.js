@@ -26,6 +26,7 @@ const CertificateSchema = new Schema(
     // 설명
     description: {
       type: String,
+      required: false,
     },
     // certId : 자격증 추가 시 프론트에서 넘겨주는 해당 certificate의 고유id
     certId : {
