@@ -26,7 +26,6 @@ const ProfileImageBox = styled.div`
     height: 90px;
     border-radius: 50%;
     overflow: hidden;
-    object-position: center center;
     border: 2px solid #5573df;
 `;
 
@@ -79,7 +78,7 @@ interface IUserFormValue {
     reDescription: string;
 }
 
-function UserCard({ _id, name, email, description, field, userId }: IUser) {
+function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
@@ -105,7 +104,7 @@ function UserCard({ _id, name, email, description, field, userId }: IUser) {
                 <form onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <img src="https://placeimg.com/32/32/animals" alt="" />
+                            <img src={picture} alt="profileImage" />
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>

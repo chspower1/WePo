@@ -25,17 +25,17 @@ const BgWrap = styled.div`
 `;
 
 const Root = styled.div`
-    width: 100%;
-    padding: 70px 0 0;
-`;
+width: 100%;
+padding: 80px 0 0;
+`
 
 const NetworkWrap = styled.div`
     width: 100%;
     max-width: 1300px;
     min-width: 480px;
-    height: 81%;
     margin: 0 auto;
-    padding: 0 50px;
+    padding: 0 30px;
+
 `;
 const NetworkContainer = styled.div`
     width: 100%;

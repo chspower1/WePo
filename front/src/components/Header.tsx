@@ -27,16 +27,16 @@ const HeaderWrap = styled.header`
         background-color: transparent;
     }
     &.active {
-        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.2);
+        border:1px solid #f0f0f9;
         background-color: #fff;
     }
 `;
 
 export const HeaderContainer = styled.div`
-    max-width: 1300px;
+    max-width: 1800px;
     min-width: 480px;
     width: 100%;
-    height: 100px;
+    height: 80px;
     margin: 0 auto;
     padding: 0 30px;
     display: flex;
@@ -59,10 +59,12 @@ export const LinkButton = styled(NavLink)`
     text-align: center;
     position: relative;
     background-color: transparent;
-    margin: 0 10px;
     font-weight: bold;
     color: #343434;
-    font-size: 14px;
+    font-size: 16px;
+    & + &{
+        margin: 0 20px 0 30px
+    }
     &.active {
         position: relative;
         font-weight: bold;
@@ -70,7 +72,7 @@ export const LinkButton = styled(NavLink)`
         &:after {
             content: "";
             position: absolute;
-            bottom: -8px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 70%;
@@ -102,6 +104,7 @@ const LoginOrRegiBtn = styled.button`
     margin-left: 20px;
     letter-spacing: -0.4px;
     transition: all 0.4s;
+    font-size:15px;
     &:hover {
         background: ${(props) => props.theme.bgColor};
         color: #343434;
@@ -160,11 +163,10 @@ function Header() {
                     <Nav>
                         {isLogin ? (
                             <>
-                                <LinkButton to="/">홈</LinkButton>
-                                <LinkButton to="/mypage">나의페이지</LinkButton>
                                 <LinkButton to="/network" end>
                                     네트워크
                                 </LinkButton>
+                                <LinkButton to="/mypage">나의페이지</LinkButton>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (
