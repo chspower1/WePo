@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "target": "ES6",
     "lib": [
@@ -19,39 +20,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@api/*": [
-        "src/api/*"
-      ],
-      "@styledComponents/*": [
-        "src/components/styledComponents/*"
-      ],
-      "@certificate/*": [
-        "src/components/category/certificate/*"
-      ],
-      "@project/*": [
-        "src/components/category/project/*"
-      ],
-      "@award/*": [
-        "src/components/category/award/*"
-      ],
-      "@education/*": [
-        "src/components/category/education/*"
-      ],
-      "@user/*": [
-        "src/components/user/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@scr/*": [
-        "src/*"
-      ],
-    },
   },
   "include": [
     "src/**/*",
-    "."
+    "craco.config.js"
   ],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*"
+  ]
 }
