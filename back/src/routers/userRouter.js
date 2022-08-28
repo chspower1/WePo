@@ -3,6 +3,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import { mailService } from "../services/mailService";
 
 const userAuthRouter = Router();
 
@@ -28,6 +29,17 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
             throw new Error(newUser.errorMessage);
         }
 
+        const mailContent = {
+            from: '"Limit" <wnsdml0120@gmail.com>', // sender address
+            to: email, // list of receivers: "*@*.*, *@*.*"
+            subject: "환영합니다!", // Subject line
+            text: `${name}님, WePo에 가입하신 걸 축하드립니다!`, // plain text body
+            html: `<h2><b>${name}<b/>님,</h2><br/>
+                    WePo에 가입하신 걸 축하드립니다!`, // html body
+          }
+        
+        await mailService.sendEmail(mailContent)
+        
         res.status(201).json(newUser);
     } catch (error) {
         next(error);
