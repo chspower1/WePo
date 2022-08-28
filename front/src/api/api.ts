@@ -106,7 +106,7 @@ export enum Category {
 // MVP 추가,수정기능 API
 export async function addData(
     data: IProject | IAward | ICertificate | IEducation,
-    category: string
+    category: Category
 ) {
     try {
         await axios.post(
@@ -125,7 +125,7 @@ export async function addData(
 }
 export async function updateData(
     data: IProject | IAward | ICertificate | IEducation,
-    category: string,
+    category: Category,
     userId: number,
     projectId: string
 ) {
@@ -144,7 +144,7 @@ export async function updateData(
         console.log(err);
     }
 }
-export async function deleteData(category: string, projectId: string, userId: number) {
+export async function deleteData(category: Category, projectId: string, userId: number) {
     try {
         await axios.delete(`${BASE_URL}/${category}/${projectId}`, {
             data: {

@@ -67,7 +67,7 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                     /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!isAddFormActive &&
-                    projects?.map((project: IProject, index: number) => (
+                    projects?.map((project, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>

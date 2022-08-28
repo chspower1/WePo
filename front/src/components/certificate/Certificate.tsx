@@ -34,7 +34,7 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
-    const [targetIndex, setTargetIndex] = useState<number>();
+    const [targetIndex, setTargetIndex] = useState<number | null>();
 
     // 현재 경로
     const location = useLocation();
@@ -106,8 +106,8 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                                     setCertificates={setCertificates}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userId={certificate.userId}
-                                    certId={certificate.certId}
+                                    userId={certificate?.userId!}
+                                    certId={certificate?.certId!}
                                 />
                             )}
                         </MvpContentBox>

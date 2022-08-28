@@ -16,12 +16,17 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { curUserState } from "./../../atoms";
 
+interface IEducationAddFormProps {
+    setEducations: React.Dispatch<React.SetStateAction<IEducation[]>>;
+    setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: number;
+}
+
 export default function EducationAddForm({
     setEducations,
     setIsAddFormActive,
     userId,
-    eduId,
-}: any) {
+}: IEducationAddFormProps) {
     const {
         register,
         handleSubmit,
@@ -35,7 +40,7 @@ export default function EducationAddForm({
             eduId,
             userId,
         };
-        setEducations((prev: any) => [...prev, newEducation]);
+        setEducations((prev) => [...prev, newEducation]);
         setIsAddFormActive(false);
         addData(newEducation, Category.education);
     };

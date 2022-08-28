@@ -87,7 +87,7 @@ const { persistAtom } = recoilPersist();
 //     errorMessage: string | null;
 //     name: string;
 //     token: string;
-//     userId: string;
+//     userId: snumber
 //     userSeq: number;
 // }
 export const curUserState = atom<IUser | null>({

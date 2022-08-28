@@ -74,18 +74,23 @@ const DetailBtn = styled.button`
     color: #5573df;
 `;
 
+interface IUserFormValue {
+    reName: string;
+    reDescription: string;
+}
+
 function UserCard({ _id, name, email, description, field, userId }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
-    const onvalid = ({ reName: name, reDescription: description }: any) => {
-        setCurUser((prev: any) => {
+    const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
+        setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
-            return updateCurUser;
+            return updateCurUser as IUser;
         });
         updateUser({ name, description }, curUser?.userId!);
         setOnEdit((cur) => !cur);
