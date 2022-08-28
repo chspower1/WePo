@@ -21,9 +21,6 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
       "@api/*": [
         "src/api/*"
       ],
@@ -44,10 +41,17 @@
       ],
       "@user/*": [
         "src/components/user/*"
-      ]
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@scr/*": [
+        "src/*"
+      ],
     },
   },
   "include": [
-    "src"
-  ]
+    "src/**/*",
+    "."
+  ],
 }

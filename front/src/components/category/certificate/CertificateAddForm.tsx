@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { addData, Category } from "@api/api";
-import { ICertificate } from "@/atoms";
+import { ICertificate } from "@scr/atoms";
 import { DangerIcon, ErrMsg } from "../../user/LoginForm";
 import {
     MvpContainer,

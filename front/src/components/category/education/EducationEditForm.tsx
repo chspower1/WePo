@@ -1,4 +1,4 @@
-import { EduStatus, IEducation } from "@/atoms";
+import { EduStatus, IEducation } from "@scr/atoms";
 import { useForm } from "react-hook-form";
 import {
     MvpContentName,

@@ -1,16 +1,16 @@
 import { BrowserRouter, Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import MyPortfolio from "@/components/user/MyPortfolio";
-import RegisterForm from "@/components/user/RegisterForm";
-import Network from "@/components/user/Network";
-import Header from "@/components/Header";
-import LoginForm from "@/components/user/LoginForm";
+import MyPortfolio from "@user/MyPortfolio";
+import RegisterForm from "@user/RegisterForm";
+import Network from "@user/Network";
+import Header from "@components/Header";
+import LoginForm from "@user/LoginForm";
 import { useRecoilValue } from "recoil";
-import { isLoginState } from "./atoms";
+import { isLoginState } from "@scr/atoms";
 import { useEffect } from "react";
-import UserDetail from "./components/user/UserDetail";
-import NotFound from "./components/NotFound";
-import Home from "./components/Home";
-import SEO from "./components/SEO";
+import UserDetail from "@user/UserDetail";
+import NotFound from "@components/NotFound";
+import Home from "@components/Home";
+import SEO from "@components/SEO";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
     useEffect(() => {}, [isLogin]);

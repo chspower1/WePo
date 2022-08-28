@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { IProject } from "@/atoms";
+import { IProject } from "@scr/atoms";
 import { Category, updateData } from "@api/api";
 import {
     MvpContentName,

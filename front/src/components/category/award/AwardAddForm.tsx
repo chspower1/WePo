@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { addData, Category } from "@api/api";
-import { IAward } from "@/atoms";
+import { IAward } from "@scr/atoms";
 import {
     MvpContentName,
     MvpAddInput,

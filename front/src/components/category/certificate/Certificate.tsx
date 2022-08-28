@@ -1,4 +1,4 @@
-import { curUserState, ICertificate } from "@/atoms";
+import { curUserState, ICertificate } from "@scr/atoms";
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { CertificateAddForm } from "./CertificateAddForm";

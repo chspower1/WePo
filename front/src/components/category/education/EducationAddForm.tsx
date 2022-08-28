@@ -1,4 +1,4 @@
-import { EduStatus, IEducation, IUser } from "@/atoms";
+import { EduStatus, IEducation, IUser } from "@scr/atoms";
 import { useForm } from "react-hook-form";
 import { addData, Category } from "@api/api";
 import {
@@ -14,7 +14,7 @@ import { Status } from "styled-icons/fluentui-system-filled";
 import { DangerIcon, ErrMsg } from "@user/LoginForm";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { curUserState } from "@/atoms";
+import { curUserState } from "@scr/atoms";
 
 interface IEducationAddFormProps {
     setEducations: React.Dispatch<React.SetStateAction<IEducation[]>>;

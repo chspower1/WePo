@@ -5,7 +5,7 @@ import Certificate from "@certificate/Certificate";
 import Education from "@education/Education";
 import Project from "@project/Project";
 import UserCard from "./UserCard";
-import { isLoginState, IUser } from "@/atoms";
+import { isLoginState, IUser } from "@scr/atoms";
 import { useQuery } from "react-query";
 import { getUser } from "@api/api";
 import styled from "styled-components";

@@ -1,4 +1,4 @@
-import { IAward } from "@/atoms";
+import { IAward } from "@scr/atoms";
 import { useForm } from "react-hook-form";
 import { Category, updateData } from "@api/api";
 import { useParams } from "react-router-dom";

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserLogin } from "@api/api";
 import { isLoginState, IUser } from "../../atoms";
-import { curUserState } from "@/atoms";
+import { curUserState } from "@scr/atoms";
 
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
 

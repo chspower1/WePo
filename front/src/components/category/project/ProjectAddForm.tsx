@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { addData, Category, getUser } from "@api/api";
-import { IProject } from "@/atoms";
+import { IProject } from "@scr/atoms";
 import {
     MvpContentName,
     MvpAddInput,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { curUserState, IUser } from "@/atoms";
+import { curUserState, IUser } from "@scr/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 

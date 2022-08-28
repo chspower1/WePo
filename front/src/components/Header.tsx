@@ -2,7 +2,7 @@ import { Link, useLocation, NavLink } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { curUserState, isLoginState } from "@/atoms";
+import { curUserState, isLoginState } from "@scr/atoms";
 import { useEffect, useState } from "react";
 
 const LinkHover = keyframes`
