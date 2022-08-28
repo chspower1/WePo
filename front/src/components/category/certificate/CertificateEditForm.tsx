@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
-import { Category, updateData } from "../../api/api";
-import { ICertificate } from "../../atoms";
+import { Category, updateData } from "@api/api";
+import { ICertificate } from "@/atoms";
 import {
     MvpContentName,
     MvpAddInput,
     MvpAddInputBox,
     RequiredLabel,
     Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+} from "@user/MyPortfolio";
+import { DangerIcon, ErrMsg } from "@user/LoginForm";
 interface ICertificateEditFormProps {
     index: number;
     certificates: ICertificate[];

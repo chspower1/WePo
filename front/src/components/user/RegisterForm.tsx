@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect } from "react";
-import { createtUser } from "../../api/api";
-import { usersState } from "../../atoms";
-import { IUser } from "./../../atoms";
+import { createtUser } from "@api/api";
+import { usersState } from "@/atoms";
+import { IUser } from "@/atoms";
 import { useQuery } from "react-query";
 import {
     Wrapper,
@@ -29,15 +29,15 @@ export interface IRegister {
 
 const Root = styled.div`
     width: 100%;
-    height : 100vh;
+    height: 100vh;
     padding: 70px 0 0;
     background: #eff3ff;
-`
+`;
 
 const RegisterFromContainer = styled(FromContainer)`
     padding: 60px 80px;
     height: 700px;
-    margin:  auto;
+    margin: auto;
 `;
 
 const RegisterWrapper = styled(Wrapper)`
@@ -93,7 +93,7 @@ export default function RegisterForm() {
         });
     }, []);
     return (
-            <Root>
+        <Root>
             <RegisterWrapper>
                 <RegisterFromContainer>
                     <TitleBox>
@@ -173,7 +173,8 @@ export default function RegisterForm() {
                                         mathchesPreviousPassword: (value) => {
                                             const { password } = getValues();
                                             return (
-                                                password === value || "비밀번호가 일치하지 않습니다."
+                                                password === value ||
+                                                "비밀번호가 일치하지 않습니다."
                                             );
                                         },
                                     },

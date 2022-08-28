@@ -1,4 +1,4 @@
-import { ILogin } from "../components/user/LoginForm";
+import { ILogin } from "@user/LoginForm";
 import {
     curUserState,
     IAward,
@@ -12,7 +12,7 @@ import {
 import axios, { AxiosError } from "axios";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import Certificate from "./../components/certificate/Certificate";
+import Certificate from "@certificate/Certificate";
 
 const BASE_URL = `http://${window.location.hostname}:5001`;
 

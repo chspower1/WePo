@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { addData, Category } from "../../api/api";
-import { ICertificate } from "../../atoms";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+import { addData, Category } from "@api/api";
+import { ICertificate } from "@/atoms";
+import { DangerIcon, ErrMsg } from "../../user/LoginForm";
 import {
     MvpContainer,
     MvpTitle,
@@ -18,7 +18,7 @@ import {
     MvpAddInputBox,
     RequiredLabel,
     Button,
-} from "../user/MyPortfolio";
+} from "@user/MyPortfolio";
 
 interface ICertificateAddFormProps {
     setCertificates: React.Dispatch<React.SetStateAction<ICertificate[]>>;

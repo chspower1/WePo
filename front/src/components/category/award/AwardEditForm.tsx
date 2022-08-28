@@ -1,6 +1,6 @@
-import { IAward } from "../../atoms";
+import { IAward } from "@/atoms";
 import { useForm } from "react-hook-form";
-import { Category, updateData } from "../../api/api";
+import { Category, updateData } from "@api/api";
 import { useParams } from "react-router-dom";
 import {
     MvpContentName,
@@ -8,10 +8,10 @@ import {
     MvpAddInputBox,
     RequiredLabel,
     Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+} from "@user/MyPortfolio";
+import { DangerIcon, ErrMsg } from "@user/LoginForm";
 
-interface IAwardEditFromProps{
+interface IAwardEditFromProps {
     index: number;
     awards: IAward[];
     setAwards: React.Dispatch<React.SetStateAction<IAward[]>>;

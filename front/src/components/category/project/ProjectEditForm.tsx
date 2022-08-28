@@ -1,17 +1,17 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { IProject } from "../../atoms";
-import { Category, updateData } from "../../api/api";
+import { IProject } from "@/atoms";
+import { Category, updateData } from "@api/api";
 import {
     MvpContentName,
     MvpAddInput,
     MvpAddInputBox,
     RequiredLabel,
     Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+} from "@user/MyPortfolio";
+import { DangerIcon, ErrMsg } from "@user/LoginForm";
 
-interface IProjectEditFormProps{
+interface IProjectEditFormProps {
     index: number;
     projects: IProject[];
     setProjects: React.Dispatch<React.SetStateAction<IProject[]>>;

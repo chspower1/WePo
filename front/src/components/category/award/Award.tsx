@@ -1,4 +1,4 @@
-import { curUserState, IAward } from "../../atoms";
+import { curUserState, IAward } from "@/atoms";
 import { useState } from "react";
 import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";
@@ -16,11 +16,11 @@ import {
     MvpAddButton,
     MvpDeleteButton,
     MvpContentAccent,
-} from "../user/MyPortfolio";
+} from "@user/MyPortfolio";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
-import { Category, deleteData } from "../../api/api";
+import { Category, deleteData } from "@api/api";
 
 export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
     // 현재 로그인 유저

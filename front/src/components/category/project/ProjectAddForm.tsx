@@ -1,21 +1,25 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { addData, Category, getUser } from "../../api/api";
-import { IProject } from "../../atoms";
+import { addData, Category, getUser } from "@api/api";
+import { IProject } from "@/atoms";
 import {
     MvpContentName,
     MvpAddInput,
     MvpAddInputBox,
     RequiredLabel,
     Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+} from "@user/MyPortfolio";
+import { DangerIcon, ErrMsg } from "@user/LoginForm";
 interface IProjectAddFormProps {
     setProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
-    setIsAddFormActive :React.Dispatch<React.SetStateAction<boolean>>;
-    userId : number;
+    setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: number;
 }
-export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: IProjectAddFormProps) => {
+export const ProjectAddForm = ({
+    setIsAddFormActive,
+    setProjects,
+    userId,
+}: IProjectAddFormProps) => {
     const {
         register,
         handleSubmit,
@@ -85,7 +89,7 @@ export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: IPro
                     id="project-startDate"
                     placeholder="프로젝트 시작기간"
                     {...register("startDate", {
-                        required: "기간을 입력해주세요"
+                        required: "기간을 입력해주세요",
                     })}
                 ></MvpAddInput>
                 <span style={{ margin: "0  5px 0 5px" }}>-</span>
@@ -94,7 +98,7 @@ export const ProjectAddForm = ({ setIsAddFormActive, setProjects, userId }: IPro
                     id="project-endDate"
                     placeholder="프로젝트 종료기간"
                     {...register("endDate", {
-                        required: "기간을 입력해주세요"
+                        required: "기간을 입력해주세요",
                     })}
                 ></MvpAddInput>
                 {(errors.startDate && (

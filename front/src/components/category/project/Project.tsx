@@ -1,54 +1,51 @@
-import { curUserState, ICertificate } from "./../../atoms";
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { CertificateAddForm } from "./CertificateAddForm";
-import { CertificateEditForm } from "./CertificateEditForm";
-import styled from "styled-components";
+import { curUserState, IProject } from "@/atoms";
+import { ProjectAddForm } from "./ProjectAddForm";
+import { ProjectEditForm } from "./ProjectEditForm";
 import { useLocation } from "react-router-dom";
 import {
     MvpContainer,
-    MvpTitleBox,
     MvpTitle,
+    MvpTitleBox,
     MvpContentContainer,
     MvpContentBox,
-    MvpContentName,
-    MvpContentDate,
     MvpContentDetail,
+    MvpContentDate,
     MvpEditButton,
     MvpAddButton,
     MvpDeleteButton,
     MvpContentAccent,
-} from "../user/MyPortfolio";
-import { Pencil } from "styled-icons/boxicons-solid";
-import { PlusSquareFill } from "styled-icons/bootstrap";
+} from "@user/MyPortfolio";
+import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
-import { Category, deleteData } from "../../api/api";
-
-export default function Certificate({ certificatesProps }: { certificatesProps: ICertificate[] }) {
+import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
+import { Category, deleteData } from "@api/api";
+export default function Project({ projectsProps }: { projectsProps: IProject[] }) {
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
 
-    // 자격증 상태
-    const [certificates, setCertificates] = useState<ICertificate[]>(certificatesProps);
+    // 프로젝트 상태 관리
+    const [projects, setProjects] = useState<IProject[]>(projectsProps);
 
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
-    const [isEditing, setIsEditing] = useState(false); //수정버튼 클릭시에 폼 여부
-    const [targetIndex, setTargetIndex] = useState<number | null>();
+    const [isEditing, setIsEditing] = useState(false);
+    const [targetIndex, setTargetIndex] = useState<Number | null>();
 
     // 현재 경로
     const location = useLocation();
     const pathName = location.pathname;
 
-    // 삭제버튼 클릭시
-    const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
-        const userSeq = certificate?.userId!;
-        const certificateId = certificate?.certId!;
-        deleteData(Category.certificate, certificateId, userSeq);
-        setCertificates((prev) => {
-            const newCertificates = [...prev];
-            newCertificates.splice(index, 1);
-            return newCertificates;
+    // 삭제 버튼 클릭 시
+    const onClickDeleteBtn = (project: IProject, index: number) => {
+        const userId = project.userId!;
+        const projectId = project.projectId!;
+        deleteData(Category.project, projectId, userId);
+        setProjects((prev) => {
+            const newProjects = [...prev];
+            newProjects.splice(index, 1);
+            return newProjects;
         });
     };
 
@@ -59,27 +56,27 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
     return (
         <MvpContainer>
             <MvpTitleBox>
-                <MvpTitle>자격증</MvpTitle>
+                <MvpTitle>프로젝트</MvpTitle>
             </MvpTitleBox>
             <MvpContentContainer>
                 {isAddFormActive && (
-                    <CertificateAddForm
+                    <ProjectAddForm
                         setIsAddFormActive={setIsAddFormActive}
-                        setCertificates={setCertificates}
+                        setProjects={setProjects}
                         userId={curUser?.userId!}
-                    />
+                    /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!isAddFormActive &&
-                    certificates?.map((certificate: ICertificate, index: number) => (
+                    projects?.map((project, index: number) => (
                         <MvpContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentAccent>{certificate.title}</MvpContentAccent>
-                                    <MvpContentDate>
-                                        {String(certificate.date).slice(0, 10)}
-                                    </MvpContentDate>
-                                    <MvpContentDetail>{certificate.org}</MvpContentDetail>
-                                    <MvpContentDetail>{certificate.description}</MvpContentDetail>
+                                    <MvpContentAccent>{project.title}</MvpContentAccent>
+                                    <MvpContentDetail>{project.description}</MvpContentDetail>
+                                    <MvpContentDate>{`${String(project.startDate).slice(
+                                        0,
+                                        10
+                                    )} ~ ${String(project.endDate).slice(0, 10)}`}</MvpContentDate>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
                                             <MvpEditButton
@@ -91,7 +88,9 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                                                 <Pencil color="#3687FF" />
                                             </MvpEditButton>
                                             <MvpDeleteButton
-                                                onClick={() => onClickDeleteBtn(certificate, index)}
+                                                onClick={() => {
+                                                    onClickDeleteBtn(project, index);
+                                                }}
                                             >
                                                 <Trash2 color="#3687FF" />
                                             </MvpDeleteButton>
@@ -100,19 +99,20 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                                 </>
                             )}
                             {isEditing && targetIndex === index && (
-                                <CertificateEditForm
+                                <ProjectEditForm
                                     index={index}
-                                    certificates={certificates}
-                                    setCertificates={setCertificates}
+                                    projects={projects}
+                                    setProjects={setProjects}
                                     setIsEditing={setIsEditing}
                                     setTargetIndex={setTargetIndex}
-                                    userId={certificate?.userId!}
-                                    certId={certificate?.certId!}
+                                    userId={project.userId!}
+                                    projectId={project.projectId!}
                                 />
                             )}
                         </MvpContentBox>
                     ))}
             </MvpContentContainer>
+
             {curUser && pathName === "/mypage" && !isAddFormActive && (
                 <MvpAddButton onClick={handleIsAddFormActive}>
                     <PlusSquareFill color="#3687FF" />

@@ -1,23 +1,28 @@
 import { useForm } from "react-hook-form";
-import { addData, Category } from "../../api/api";
-import { IAward } from "../../atoms";
+import { addData, Category } from "@api/api";
+import { IAward } from "@/atoms";
 import {
     MvpContentName,
     MvpAddInput,
     MvpAddInputBox,
     RequiredLabel,
     Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+} from "@user/MyPortfolio";
+import { DangerIcon, ErrMsg } from "@user/LoginForm";
 import { useEffect } from "react";
 
 interface IAwardAddFormProps {
     setAwards: React.Dispatch<React.SetStateAction<IAward[]>>;
-    maxDate : string;
-    setIsAddFormActive :React.Dispatch<React.SetStateAction<boolean>>;
-    userId : number;
+    maxDate: string;
+    setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: number;
 }
-export default function AwardAddForm({ setAwards, maxDate, setIsAddFormActive, userId }: IAwardAddFormProps) {
+export default function AwardAddForm({
+    setAwards,
+    maxDate,
+    setIsAddFormActive,
+    userId,
+}: IAwardAddFormProps) {
     const {
         register,
         handleSubmit,

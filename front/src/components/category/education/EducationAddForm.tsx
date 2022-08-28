@@ -1,6 +1,6 @@
-import { EduStatus, IEducation, IUser } from "../../atoms";
+import { EduStatus, IEducation, IUser } from "@/atoms";
 import { useForm } from "react-hook-form";
-import { addData, Category } from "../../api/api";
+import { addData, Category } from "@api/api";
 import {
     MvpContentName,
     MvpAddInput,
@@ -9,12 +9,12 @@ import {
     Button,
     MajorGraduate,
     MajorGraduateLabel,
-} from "../user/MyPortfolio";
+} from "@user/MyPortfolio";
 import { Status } from "styled-icons/fluentui-system-filled";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+import { DangerIcon, ErrMsg } from "@user/LoginForm";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { curUserState } from "./../../atoms";
+import { curUserState } from "@/atoms";
 
 interface IEducationAddFormProps {
     setEducations: React.Dispatch<React.SetStateAction<IEducation[]>>;

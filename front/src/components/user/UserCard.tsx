@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { curUserState, IUser } from "./../../atoms";
+import { curUserState, IUser } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
-import { updateUser } from "../../api/api";
+import { updateUser } from "@api/api";
 
 const ItemWrap = styled.div`
     min-width: 350px;

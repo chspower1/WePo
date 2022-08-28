@@ -18,7 +18,34 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@api/*": [
+        "src/api/*"
+      ],
+      "@styledComponents/*": [
+        "src/components/styledComponents/*"
+      ],
+      "@certificate/*": [
+        "src/components/category/certificate/*"
+      ],
+      "@project/*": [
+        "src/components/category/project/*"
+      ],
+      "@award/*": [
+        "src/components/category/award/*"
+      ],
+      "@education/*": [
+        "src/components/category/education/*"
+      ],
+      "@user/*": [
+        "src/components/user/*"
+      ]
+    },
   },
   "include": [
     "src"

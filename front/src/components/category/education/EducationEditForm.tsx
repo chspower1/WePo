@@ -1,4 +1,4 @@
-import { EduStatus, IEducation } from "../../atoms";
+import { EduStatus, IEducation } from "@/atoms";
 import { useForm } from "react-hook-form";
 import {
     MvpContentName,
@@ -8,9 +8,9 @@ import {
     Button,
     MajorGraduate,
     MajorGraduateLabel,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
-import { Category, updateData } from "../../api/api";
+} from "@user/MyPortfolio";
+import { DangerIcon, ErrMsg } from "@user/LoginForm";
+import { Category, updateData } from "@api/api";
 interface IEducationEditFormProps {
     index: number;
     educations: IEducation[];

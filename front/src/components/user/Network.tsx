@@ -3,8 +3,8 @@ import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
-import { getUsers } from "../../api/api";
-import { isLoginState, usersState, checkedBoxValue, hopeJob } from "../../atoms";
+import { getUsers } from "@api/api";
+import { isLoginState, usersState, checkedBoxValue, hopeJob } from "@/atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
 
@@ -18,16 +18,16 @@ const LoadingMotion = keyframes`
 `;
 
 const BgWrap = styled.div`
-    width:100%;
-    min-height:100vh;
+    width: 100%;
+    min-height: 100vh;
     background: #eff3ff;
-    padding:100px 0 0;
-`
+    padding: 100px 0 0;
+`;
 
 const Root = styled.div`
-width: 100%;
-padding: 70px 0 0;
-`
+    width: 100%;
+    padding: 70px 0 0;
+`;
 
 const NetworkWrap = styled.div`
     width: 100%;
@@ -36,7 +36,6 @@ const NetworkWrap = styled.div`
     height: 81%;
     margin: 0 auto;
     padding: 0 50px;
-
 `;
 const NetworkContainer = styled.div`
     width: 100%;
