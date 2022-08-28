@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { curUserState, EduStatus, IEducation } from "../../atoms";
+import { curUserState, EduStatus, IEducation, IProject } from "../../atoms";
 import { useForm } from "react-hook-form";
 import EducationEditForm from "./EducationEditForm";
 import EducationAddForm from "./EducationAddForm";
@@ -22,22 +22,22 @@ import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 import { Category, deleteData } from "../../api/api";
-export default function Education({ info }: any) {
+export default function Education({ educationsProps }: { educationsProps: IEducation[] }) {
+    console.log(educationsProps);
     // user ID
     const { userId } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     // 학력 상태
-    const [educations, setEducations] = useState<IEducation[]>(info); // 더미educations 초기값
+    const [educations, setEducations] = useState<IEducation[]>(educationsProps); // 더미educations 초기값
 
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
     const [targetIndex, setTargetIndex] = useState<Number>(); // index 를 체크해서 맞는 것만 editform 활성화
     const onClickDeleteBtn = (education: IEducation, index: number) => {
-        const userId = parseInt(education.userId!);
         const educationId = education.eduId!;
-        deleteData(Category.education, educationId, userId);
+        deleteData(Category.education, educationId, education.userId!);
         setEducations((prev) => {
             const newEducations = [...prev];
             newEducations.splice(index, 1);

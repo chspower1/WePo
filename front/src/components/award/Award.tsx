@@ -22,14 +22,15 @@ import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 import { Category, deleteData } from "../../api/api";
 
-export default function Award({ info }: any) {
+export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
+    console.log(awardsProps);
     // user ID
     const { userSeq } = useParams();
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
     const userToken = sessionStorage.getItem("userToken");
     // 자격증 상태
-    const [awards, setAwards] = useState<IAward[]>(info);
+    const [awards, setAwards] = useState<IAward[]>(awardsProps);
 
     // form관리
     const [addFormActive, setAddFormActive] = useState(false);
@@ -42,7 +43,7 @@ export default function Award({ info }: any) {
         "0"
     )}-${String(newDate.getDate()).padStart(2, "0")}`;
     const onClickDeleteBtn = (award: IAward, index: number) => {
-        const userId = parseInt(award.userId!);
+        const userId = award.userId!;
         const awardId = award.awardId!;
         deleteData(Category.award, awardId, userId);
         setAwards((prev) => {

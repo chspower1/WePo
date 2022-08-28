@@ -28,10 +28,10 @@ export enum EHopeField {
 export interface IEducation {
     _id?: string;
     eduId: string;
-    userId?: string;
+    userId?: number;
     school: string;
     major: string;
-    status: EduStatus;
+    status: EduStatus | string;
     createdAt?: Date;
     updatedAt?: Date;
     __v?: number;
@@ -45,14 +45,14 @@ export enum EduStatus {
 export interface IAward {
     _id?: string;
     awardId: string;
-    userId?: string;
+    userId?: number;
     title: string;
     grade: string;
     org: string;
-    date: Date;
+    date: Date | string;
     description: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     __v?: number;
 }
 export interface ICertificate {
@@ -110,7 +110,7 @@ export const isLoginState = selector({
     get: ({ get }) => {
         const curUser = get(curUserState);
         console.log(curUser);
-        const checkLogin = curUser?.token ? true : false;
+        const checkLogin = sessionStorage.getItem("userToken") && curUser?.token ? true : false;
         return checkLogin;
     },
 });

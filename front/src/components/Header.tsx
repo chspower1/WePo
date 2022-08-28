@@ -143,7 +143,6 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
-    console.log(pathName);
     return (
         <>
             <HeaderWrap

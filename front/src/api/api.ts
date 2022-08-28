@@ -15,14 +15,15 @@ import { useNavigate } from "react-router-dom";
 import Certificate from "./../components/certificate/Certificate";
 
 const BASE_URL = `http://${window.location.hostname}:5001`;
+
 export async function UserLogin({ email, password }: ILogin) {
     try {
-        const { data: newUser } = await axios.post(`${BASE_URL}/user/login`, {
+        const { data: loginUser } = await axios.post(`${BASE_URL}/user/login`, {
             email,
             password,
         });
-        await sessionStorage.setItem("userToken", newUser.token);
-        return newUser as IUser;
+        await sessionStorage.setItem("userToken", loginUser.token);
+        return loginUser as IUser;
     } catch (err) {
         alert("로그인 정보가 옳지 않습니다!"); // 수정예정
         console.log(err);
@@ -57,7 +58,6 @@ export async function getUsers() {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
-        console.log(users);
         return users as IUser[];
     } catch (err) {
         console.log(err);
@@ -76,10 +76,10 @@ export async function getUser(userId: number) {
         console.log(err);
     }
 }
+interface IUpdateUserProps {}
 // 유저 정보 수정
 export async function updateUser(data: any, userId: number) {
     try {
-        console.log(userId);
         await axios.put(
             `${BASE_URL}/users/${userId}`,
             { ...data },

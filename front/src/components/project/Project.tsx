@@ -26,7 +26,7 @@ import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
 import { Droppable } from "@hello-pangea/dnd";
 import SEO from "./../SEO";
 import { Category, deleteData } from "../../api/api";
-export default function Project({ info }: any) {
+export default function Project({ projectsProps }: { projectsProps: IProject[] }) {
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
@@ -45,7 +45,7 @@ export default function Project({ info }: any) {
         setAddFormActive((addFormActive) => !addFormActive);
     }
 
-    const [projects, setProjects] = useState<IProject[]>(info);
+    const [projects, setProjects] = useState<IProject[]>(projectsProps);
 
     const onClickDeleteBtn = (project: IProject, index: number) => {
         const userId = parseInt(project.userId!);

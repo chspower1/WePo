@@ -23,9 +23,9 @@ import {
 import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
-import { Category,  deleteData } from "../../api/api";
+import { Category, deleteData } from "../../api/api";
 
-export default function Certificate({ info }: any) {
+export default function Certificate({ certificatesProps }: { certificatesProps: ICertificate[] }) {
     // user ID
     const { id } = useParams();
     // 현재 로그인 유저
@@ -44,7 +44,7 @@ export default function Certificate({ info }: any) {
     // 추가사항 on/off
 
     // 자격증 상태
-    const [certificates, setCertificates] = useState<ICertificate[]>(info);
+    const [certificates, setCertificates] = useState<ICertificate[]>(certificatesProps);
     function handleAddFormActive() {
         setAddFormActive((addFormActive) => !addFormActive);
     }

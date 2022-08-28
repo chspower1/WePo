@@ -40,10 +40,10 @@ function UserDetail() {
                                     <UserCard {...user} />
                                 </UserCardBox>
                                 <MvpWrap>
-                                    <Education info={[...user?.educations!]} />
-                                    <Award info={[...user?.awards!]} />
-                                    <Certificate info={[...user?.certificates!]} />
-                                    <Project info={[...user?.projects!]} />
+                                    <Education educationsProps={user?.educations!} />
+                                    <Award awardsProps={user?.awards!} />
+                                    <Certificate certificatesProps={user?.certificates!} />
+                                    <Project projectsProps={user?.projects!} />
                                 </MvpWrap>
                             </>
                         )}
