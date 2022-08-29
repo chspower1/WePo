@@ -72,10 +72,11 @@ function MyPortfolio() {
                 const award = resultAwards[source.index];
                 resultAwards.splice(source.index, 1);
                 resultAwards.splice(destination?.index!, 0, award);
+                mutationCategory(curUser?.userId!, Category.award, resultAwards);
                 return resultAwards;
             });
             //API요청
-            mutationCategory(curUser?.userId!, Category.award, awards);
+            // mutationCategory(curUser?.userId!, Category.award, awards);
             console.log(awards);
         }
         if (destination?.droppableId === "certificates") {
@@ -84,10 +85,11 @@ function MyPortfolio() {
                 const certificate = resultCertificates[source.index];
                 resultCertificates.splice(source.index, 1);
                 resultCertificates.splice(destination?.index!, 0, certificate);
+                mutationCategory(curUser?.userId!, Category.certificate, resultCertificates);
                 return resultCertificates;
             });
             //API요청
-            mutationCategory(curUser?.userId!, Category.certificate, certificates);
+            // mutationCategory(curUser?.userId!, Category.certificate, certificates);
             console.log(certificates);
         }
         if (destination?.droppableId === "project") {
@@ -96,10 +98,11 @@ function MyPortfolio() {
                 const project = resultProjects[source.index];
                 resultProjects.splice(source.index, 1);
                 resultProjects.splice(destination?.index!, 0, project);
+                mutationCategory(curUser?.userId!, Category.project, resultProjects);
                 return resultProjects;
             });
             //API요청
-            mutationCategory(curUser?.userId!, Category.project, projects);
+            // mutationCategory(curUser?.userId!, Category.project, projects);
             console.log(projects);
         }
     };
