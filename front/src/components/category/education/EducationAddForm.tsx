@@ -12,12 +12,14 @@ interface IEducationAddFormProps {
     setEducations: React.Dispatch<React.SetStateAction<IEducation[]>>;
     setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
     userId: number;
+    educations: IEducation[];
 }
 
 export default function EducationAddForm({
     setEducations,
     setIsAddFormActive,
     userId,
+    educations,
 }: IEducationAddFormProps) {
     const {
         register,
@@ -31,10 +33,12 @@ export default function EducationAddForm({
             ...data,
             eduId,
             userId,
+            order: educations.length,
         };
         setEducations((prev) => [...prev, newEducation]);
         setIsAddFormActive(false);
         addData(newEducation, Category.education);
+        console.log(newEducation, Category.education);
     };
     useEffect(() => {
         setError("status", {

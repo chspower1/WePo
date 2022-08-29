@@ -54,6 +54,7 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                         setIsAddFormActive={setIsAddFormActive}
                         setCertificates={setCertificates}
                         userId={curUser?.userId!}
+                        certificates={certificates}
                     />
                 )}
                 {!isAddFormActive &&

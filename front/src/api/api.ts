@@ -180,3 +180,17 @@ export async function mutationCategory(
         console.log(err);
     }
 }
+
+export async function searchData(data: string) {
+    try {
+        await axios.get(`${BASE_URL}/search`, {
+            data: { data },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+            },
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}

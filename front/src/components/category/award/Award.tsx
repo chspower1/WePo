@@ -63,6 +63,7 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                             maxDate={maxDate}
                             setIsAddFormActive={setIsAddFormActive}
                             userId={curUser?.userId!}
+                            awards={awards}
                         />
                     )}
                     {!isAddFormActive &&

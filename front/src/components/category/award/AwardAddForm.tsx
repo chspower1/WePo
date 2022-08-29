@@ -9,12 +9,14 @@ interface IAwardAddFormProps {
     maxDate: string;
     setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
     userId: number;
+    awards: IAward[];
 }
 export default function AwardAddForm({
     setAwards,
     maxDate,
     setIsAddFormActive,
     userId,
+    awards,
 }: IAwardAddFormProps) {
     const {
         register,
@@ -29,6 +31,7 @@ export default function AwardAddForm({
             ...data,
             awardId,
             userId,
+            order: awards.length,
         };
         console.log("생성완료", newAward);
         setAwards((project) => [...project, newAward]);

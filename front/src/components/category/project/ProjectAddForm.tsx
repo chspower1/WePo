@@ -8,11 +8,13 @@ interface IProjectAddFormProps {
     setProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
     setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
     userId: number;
+    projects: IProject[];
 }
 export const ProjectAddForm = ({
     setIsAddFormActive,
     setProjects,
     userId,
+    projects,
 }: IProjectAddFormProps) => {
     const {
         register,
@@ -27,6 +29,7 @@ export const ProjectAddForm = ({
             ...data,
             projectId,
             userId,
+            order: projects.length,
         };
         setProjects((project) => [...project, newProject]);
         setIsAddFormActive(false);

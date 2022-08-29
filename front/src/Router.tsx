@@ -11,6 +11,7 @@ import UserDetail from "@user/UserDetail";
 import NotFound from "@components/NotFound";
 import Home from "@components/Home";
 import SEO from "@components/SEO";
+import ResultSearch from "./components/ResultSearch";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
     useEffect(() => {}, [isLogin]);
@@ -26,6 +27,7 @@ function Router() {
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/network" element={<Network />} />
                 <Route path="/network/:userSeq" element={<UserDetail />} />
+                <Route path="/search" element={<ResultSearch />} />
             </Routes>
         </BrowserRouter>
     );

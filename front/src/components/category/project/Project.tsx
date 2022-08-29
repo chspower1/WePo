@@ -52,6 +52,7 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                         setIsAddFormActive={setIsAddFormActive}
                         setProjects={setProjects}
                         userId={curUser?.userId!}
+                        projects={projects}
                     /> // props로 id값을 안넘겨 주어도 정상 작동
                 )}
                 {!isAddFormActive &&

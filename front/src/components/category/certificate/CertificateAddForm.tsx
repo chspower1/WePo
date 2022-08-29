@@ -9,12 +9,14 @@ interface ICertificateAddFormProps {
     setCertificates: React.Dispatch<React.SetStateAction<ICertificate[]>>;
     setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
     userId: number;
+    certificates: ICertificate[];
 }
 
 export function CertificateAddForm({
     setIsAddFormActive,
     setCertificates,
     userId,
+    certificates,
 }: ICertificateAddFormProps) {
     const {
         register,
@@ -29,6 +31,7 @@ export function CertificateAddForm({
             ...data,
             certId,
             userId,
+            order: certificates.length,
         };
         console.log("생성완료", newCertificate);
         setCertificates((project) => [...project, newCertificate]);

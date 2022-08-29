@@ -76,6 +76,7 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
                                         setIsAddFormActive={setIsAddFormActive}
                                         setEducations={setEducations}
                                         userId={curUser?.userId!}
+                                        educations={educations}
                                     />
                                 )}
                                 {!isAddFormActive &&
