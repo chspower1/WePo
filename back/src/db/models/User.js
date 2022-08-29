@@ -38,12 +38,13 @@ const userExtraInfoLookup = [{
 class User {
 
   // 새로운 유저 생성
-  static async create({ name, email, password: hashedPassword, picture }) {
+  static async create({ name, email, password: hashedPassword, picture, field }) {
     return UserModel.create({
       name, 
       email, 
       password: hashedPassword, 
-      picture
+      picture,
+      field
     });
   }
 

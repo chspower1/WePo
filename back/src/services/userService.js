@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 class userAuthService {
 
   // 유저 추가 (회원가입)
-  static async addUser({ name, email, password }) {
+  static async addUser({ name, email, password, field }) {
     // 이메일 중복 확인
     const user = await User.findByEmail(email);
     if (user) {
@@ -24,7 +24,8 @@ class userAuthService {
       name, 
       email, 
       password: hashedPassword, 
-      picture 
+      picture,
+      field
     });
 
     createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
