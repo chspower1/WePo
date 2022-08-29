@@ -128,7 +128,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                 )}
                             </EmailTxt>
 
-                            <DescTit>{field}</DescTit>
+                            {/* <DescTit>{field}</DescTit> */}
                         </UserInfoTxt>
                     </InfoBox>
                     <DescBox>

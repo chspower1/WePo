@@ -8,8 +8,8 @@ import Project from "@project/Project";
 import { getUser } from "@api/api";
 import { curUserState, isLoginState, IUser } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import UserCard from "./UserCard";
-import UserDetail from "./UserDetail";
+import UserCard from "../UserCard";
+import UserDetail from "../UserDetail";
 import styled from "styled-components";
 import * as Mypage from "@styledComponents/CategoryStyled";
 function MyPortfolio() {

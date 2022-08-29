@@ -9,13 +9,28 @@ import { IUser } from "@/atoms";
 import { useQuery } from "react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
+import CheckFieldBox from "./CheckFieldBox";
 export interface IRegister {
     email: string;
     name: string;
     password: string;
     checkPassword?: string;
 }
+const SelectBox = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 0 30px;
+`;
 
+const CheckBoxWrap = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const Label = styled.label`
+    user-select: none;
+`;
 export default function RegisterForm() {
     const [users, setUsers] = useRecoilState(usersState);
     const {
@@ -26,6 +41,7 @@ export default function RegisterForm() {
         setError,
     } = useForm<IRegister>({ mode: "onChange" });
     const navigator = useNavigate();
+
     const onvalid = (data: IRegister) => {
         (async () => {
             const newUser = await createtUser(data as IUser);
@@ -37,6 +53,7 @@ export default function RegisterForm() {
             navigator("/", { replace: true });
         })();
     };
+
     const valid = !errors.email && !errors.checkPassword && !errors.name && !errors.password;
     useEffect(() => {
         setError("email", {

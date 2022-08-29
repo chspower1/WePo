@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MyPortfolio from "@user/MyPortfolio";
+import MyPortfolio from "@user/mypage/MyPortfolio";
 import RegisterForm from "@user/RegisterForm";
 import Network from "@user/Network";
 import Header from "@components/Header";

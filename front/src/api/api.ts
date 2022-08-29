@@ -151,8 +151,26 @@ export async function deleteData(category: Category, projectId: string, userId: 
     try {
         await axios.delete(`${BASE_URL}/${category}/${projectId}`, {
             data: {
-                userId: userId,
+                userId,
             },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+            },
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function mutationCategory(
+    userId: number,
+    category: Category,
+    newCategorys: IProject[] | IAward[] | ICertificate[] | IEducation[]
+) {
+    try {
+        await axios.put(`${BASE_URL}/${category}`, {
+            data: { userId, newCategorys },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

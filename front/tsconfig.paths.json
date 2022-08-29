@@ -26,6 +26,9 @@
             "@components/*": [
                 "./src/components/*"
             ],
+            "@mypage/*": [
+                "./src/components/user/mypage/*"
+            ],
             "@/*": [
                 "./src/*"
             ]
