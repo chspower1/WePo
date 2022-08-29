@@ -42,7 +42,7 @@ userAuthRouter.post("/register/email-send", async function (req, res, next) {
             throw new Error("이메일 전송을 실패했습니다.")
         }
 
-        res.status(201).json(codeAdded.authCode);
+        res.status(201).send("인증번호 전송 성공");
     } catch (error) {
         next(error);
     }
@@ -67,7 +67,7 @@ userAuthRouter.post("/register/email-check", async function (req, res, next) {
         // 인증 성공 시 email-authCode pair DB에서 삭제
         await emailService.deleteAuthCode(email)
 
-        res.status(201).json("인증성공");
+        res.status(201).send("인증성공");
     } catch (error) {
         next(error);
     }
@@ -106,7 +106,7 @@ userAuthRouter.post("/register", async function (req, res, next) {
           }
         
         const emailSent = await emailService.sendEmail(mailContent)
-        if(emailSent.rejected!==[]){
+        if(!emailSent.accepted){
             throw new Error("이메일 전송을 실패했습니다.")
         }
 
