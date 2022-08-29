@@ -9,7 +9,7 @@ import { isLoginState, IUser } from "@/atoms";
 import { useQuery } from "react-query";
 import { getUser } from "@api/api";
 import styled from "styled-components";
-import { MyPortWrap, MvpWrap, UserCardBox, Root } from "./MyPortfolio";
+import { MyPortWrap, Wrap, UserCardBox, Root } from "@styledComponents/CategoryStyled";
 import { useRecoilValue } from "recoil";
 
 function UserDetail() {
@@ -39,12 +39,12 @@ function UserDetail() {
                                 <UserCardBox>
                                     <UserCard {...user} />
                                 </UserCardBox>
-                                <MvpWrap>
+                                <Wrap>
                                     <Education educationsProps={user?.educations!} />
                                     <Award awardsProps={user?.awards!} />
                                     <Certificate certificatesProps={user?.certificates!} />
                                     <Project projectsProps={user?.projects!} />
-                                </MvpWrap>
+                                </Wrap>
                             </>
                         )}
                     </MyPortWrap>

@@ -4,19 +4,7 @@ import AwardEditForm from "./AwardEditForm";
 import AwardAddForm from "./AwardAddForm";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import {
-    MvpContainer,
-    MvpTitle,
-    MvpTitleBox,
-    MvpContentContainer,
-    MvpContentBox,
-    MvpContentDetail,
-    MvpContentDate,
-    MvpEditButton,
-    MvpAddButton,
-    MvpDeleteButton,
-    MvpContentAccent,
-} from "@user/MyPortfolio";
+import * as AwardStyled from "@styledComponents/CategoryStyled";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
@@ -60,11 +48,11 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
         setIsAddFormActive((current) => !current);
     }
     return (
-        <MvpContainer>
-            <MvpTitleBox>
-                <MvpTitle>수상경력</MvpTitle>
-            </MvpTitleBox>
-            <MvpContentContainer>
+        <AwardStyled.Container>
+            <AwardStyled.TitleBox>
+                <AwardStyled.Title>수상경력</AwardStyled.Title>
+            </AwardStyled.TitleBox>
+            <AwardStyled.ContentContainer>
                 {isAddFormActive && (
                     <AwardAddForm
                         setAwards={setAwards}
@@ -75,39 +63,45 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                 )}
                 {!isAddFormActive &&
                     awards?.map((award, index) => (
-                        <MvpContentBox key={index}>
+                        <AwardStyled.ContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
                                     <div style={{ display: "flex", alignItems: "center" }}>
-                                        <MvpContentAccent>{award.title}</MvpContentAccent>
-                                        <MvpContentDetail
+                                        <AwardStyled.ContentAccent>
+                                            {award.title}
+                                        </AwardStyled.ContentAccent>
+                                        <AwardStyled.ContentDetail
                                             style={{ marginTop: "20px", marginLeft: "20px" }}
                                         >
                                             {award.grade}
-                                        </MvpContentDetail>
+                                        </AwardStyled.ContentDetail>
                                     </div>
-                                    <MvpContentDetail>{award.org}</MvpContentDetail>
-                                    <MvpContentDate>
+                                    <AwardStyled.ContentDetail>
+                                        {award.org}
+                                    </AwardStyled.ContentDetail>
+                                    <AwardStyled.ContentDate>
                                         {String(award.date).slice(0, 10)}
-                                    </MvpContentDate>
-                                    <MvpContentDetail>{award.description}</MvpContentDetail>
+                                    </AwardStyled.ContentDate>
+                                    <AwardStyled.ContentDetail>
+                                        {award.description}
+                                    </AwardStyled.ContentDetail>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
-                                            <MvpEditButton
+                                            <AwardStyled.EditButton
                                                 onClick={() => {
                                                     setIsEditing(true);
                                                     setTargetIndex(index);
                                                 }}
                                             >
                                                 <Pencil color="#3867FF" />
-                                            </MvpEditButton>
-                                            <MvpDeleteButton
+                                            </AwardStyled.EditButton>
+                                            <AwardStyled.DeleteButton
                                                 onClick={() => {
                                                     onClickDeleteBtn(award, index);
                                                 }}
                                             >
                                                 <Trash2 color="#3867FF" />
-                                            </MvpDeleteButton>
+                                            </AwardStyled.DeleteButton>
                                         </>
                                     )}
                                 </>
@@ -124,14 +118,14 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                                     setTargetIndex={setTargetIndex}
                                 />
                             )}
-                        </MvpContentBox>
+                        </AwardStyled.ContentBox>
                     ))}
-            </MvpContentContainer>
+            </AwardStyled.ContentContainer>
             {curUser && pathName === "/mypage" && !isAddFormActive && (
-                <MvpAddButton onClick={handleIsAddFormActive}>
+                <AwardStyled.AddButton onClick={handleIsAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
-                </MvpAddButton>
+                </AwardStyled.AddButton>
             )}
-        </MvpContainer>
+        </AwardStyled.Container>
     );
 }

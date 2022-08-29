@@ -4,19 +4,7 @@ import { curUserState, IProject } from "@/atoms";
 import { ProjectAddForm } from "./ProjectAddForm";
 import { ProjectEditForm } from "./ProjectEditForm";
 import { useLocation } from "react-router-dom";
-import {
-    MvpContainer,
-    MvpTitle,
-    MvpTitleBox,
-    MvpContentContainer,
-    MvpContentBox,
-    MvpContentDetail,
-    MvpContentDate,
-    MvpEditButton,
-    MvpAddButton,
-    MvpDeleteButton,
-    MvpContentAccent,
-} from "@user/MyPortfolio";
+import * as ProjectStyled from "@styledComponents/CategoryStyled";
 import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
@@ -54,11 +42,11 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
         setIsAddFormActive((isAddFormActive) => !isAddFormActive);
     }
     return (
-        <MvpContainer>
-            <MvpTitleBox>
-                <MvpTitle>프로젝트</MvpTitle>
-            </MvpTitleBox>
-            <MvpContentContainer>
+        <ProjectStyled.Container>
+            <ProjectStyled.TitleBox>
+                <ProjectStyled.Title>프로젝트</ProjectStyled.Title>
+            </ProjectStyled.TitleBox>
+            <ProjectStyled.ContentContainer>
                 {isAddFormActive && (
                     <ProjectAddForm
                         setIsAddFormActive={setIsAddFormActive}
@@ -68,32 +56,39 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                 )}
                 {!isAddFormActive &&
                     projects?.map((project, index: number) => (
-                        <MvpContentBox key={index}>
+                        <ProjectStyled.ContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentAccent>{project.title}</MvpContentAccent>
-                                    <MvpContentDetail>{project.description}</MvpContentDetail>
-                                    <MvpContentDate>{`${String(project.startDate).slice(
+                                    <ProjectStyled.ContentAccent>
+                                        {project.title}
+                                    </ProjectStyled.ContentAccent>
+                                    <ProjectStyled.ContentDetail>
+                                        {project.description}
+                                    </ProjectStyled.ContentDetail>
+                                    <ProjectStyled.ContentDate>{`${String(project.startDate).slice(
                                         0,
                                         10
-                                    )} ~ ${String(project.endDate).slice(0, 10)}`}</MvpContentDate>
+                                    )} ~ ${String(project.endDate).slice(
+                                        0,
+                                        10
+                                    )}`}</ProjectStyled.ContentDate>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
-                                            <MvpEditButton
+                                            <ProjectStyled.EditButton
                                                 onClick={() => {
                                                     setIsEditing(true);
                                                     setTargetIndex(index);
                                                 }}
                                             >
                                                 <Pencil color="#3687FF" />
-                                            </MvpEditButton>
-                                            <MvpDeleteButton
+                                            </ProjectStyled.EditButton>
+                                            <ProjectStyled.DeleteButton
                                                 onClick={() => {
                                                     onClickDeleteBtn(project, index);
                                                 }}
                                             >
                                                 <Trash2 color="#3687FF" />
-                                            </MvpDeleteButton>
+                                            </ProjectStyled.DeleteButton>
                                         </>
                                     )}
                                 </>
@@ -109,15 +104,15 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                                     projectId={project.projectId!}
                                 />
                             )}
-                        </MvpContentBox>
+                        </ProjectStyled.ContentBox>
                     ))}
-            </MvpContentContainer>
+            </ProjectStyled.ContentContainer>
 
             {curUser && pathName === "/mypage" && !isAddFormActive && (
-                <MvpAddButton onClick={handleIsAddFormActive}>
+                <ProjectStyled.AddButton onClick={handleIsAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
-                </MvpAddButton>
+                </ProjectStyled.AddButton>
             )}
-        </MvpContainer>
+        </ProjectStyled.Container>
     );
 }

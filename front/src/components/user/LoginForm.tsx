@@ -7,125 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserLogin } from "@api/api";
 import { isLoginState, IUser } from "../../atoms";
 import { curUserState } from "@/atoms";
-
+import * as LoginStyled from "@styledComponents/SignStyled";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
 
 export interface ILogin {
     email: string;
     password: string;
 }
-
-const Root = styled.div`
-    width: 100%;
-    height: 100vh;
-    padding: 70px 0 0;
-    background: #eff3ff;
-`;
-
-export const Wrapper = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    padding: 80px 0 50px;
-`;
-
-export const FromContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 570px;
-    width: 100%;
-    height: 560px;
-    padding: 70px 80px;
-    margin: auto;
-    border-radius: 15px;
-    background: rgba(162, 190, 231, 0.1);
-    box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
-`;
-
-export const TitleBox = styled.div`
-    width: 100%;
-`;
-
-export const Title = styled.h2`
-    font-size: 24px;
-    font-weight: bold;
-`;
-
-export const InputBox = styled.div`
-    width: 100%;
-    margin-bottom: 30px;
-`;
-
-export const Input = styled.input`
-    width: 100%;
-    height: 50px;
-    border-radius: 7px;
-    outline: 0;
-    border: 1px solid rgba(161, 161, 161, 0.1);
-    font-size: 15px;
-    padding: 0 20px;
-    margin-bottom: 10px;
-    box-shadow: 5px 4px 5px rgba(166, 184, 210, 0.3);
-    &::placeholder {
-        font-size: 12px;
-    }
-    &[type="password"] {
-        font-family: sans-serif;
-        letter-spacing: 1px;
-        color: #3687ff;
-        &::placeholder {
-            font-family: "Elice";
-        }
-    }
-`;
-
-export const ErrMsg = styled.p`
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    color: #eb7474;
-`;
-
-export const DangerIcon = styled(Spam2)`
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 3px 0 6px;
-`;
-
-export const SubmitButtonBox = styled.div`
-    width: 100%;
-    text-align: center;
-    padding-top: 40px;
-`;
-export const SubmitButton = styled.button`
-    width: 50%;
-    height: 50px;
-    background: ${(props) => props.theme.btnColor};
-    color: ${(props) => props.theme.bgColor};
-    border-radius: 10px;
-    box-shadow: 10px 10px 15px rgba(90, 156, 255, 0.4);
-    &:disabled {
-        background: #8a929e;
-        box-shadow: 10px 10px 15px rgba(138, 146, 158, 0.4);
-        cursor: not-allowed;
-    }
-`;
-
-export const RegisterButton = styled.button`
-    text-decoration: underline;
-    color: ${(props) => props.theme.btnColor};
-`;
-
-export const RegisterCommentBox = styled.div`
-    margin: 20px 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-`;
-
 export default function LoginForm() {
     const {
         register,
@@ -162,15 +50,15 @@ export default function LoginForm() {
     }, [isLogin]);
 
     return (
-        <Root>
-            <Wrapper>
-                <FromContainer>
-                    <TitleBox>
-                        <Title>로그인</Title>
-                    </TitleBox>
+        <LoginStyled.Root>
+            <LoginStyled.Wrapper>
+                <LoginStyled.FromContainer>
+                    <LoginStyled.TitleBox>
+                        <LoginStyled.Title>로그인</LoginStyled.Title>
+                    </LoginStyled.TitleBox>
                     <form onSubmit={handleSubmit(onvalid)}>
-                        <InputBox>
-                            <Input
+                        <LoginStyled.InputBox>
+                            <LoginStyled.Input
                                 type="text"
                                 placeholder="이메일을 입력하세요"
                                 {...register("email", {
@@ -182,14 +70,14 @@ export default function LoginForm() {
                                 })}
                             />
                             {errors.email && (
-                                <ErrMsg>
-                                    <DangerIcon />
+                                <LoginStyled.ErrMsg>
+                                    <LoginStyled.DangerIcon />
                                     {errors.email.message}
-                                </ErrMsg>
+                                </LoginStyled.ErrMsg>
                             )}
-                        </InputBox>
-                        <InputBox>
-                            <Input
+                        </LoginStyled.InputBox>
+                        <LoginStyled.InputBox>
+                            <LoginStyled.Input
                                 type="password"
                                 placeholder="비밀번호를 입력하세요"
                                 {...register("password", {
@@ -201,24 +89,24 @@ export default function LoginForm() {
                                 })}
                             />
                             {errors.password && (
-                                <ErrMsg>
-                                    <DangerIcon />
+                                <LoginStyled.ErrMsg>
+                                    <LoginStyled.DangerIcon />
                                     {errors.password.message}
-                                </ErrMsg>
+                                </LoginStyled.ErrMsg>
                             )}
-                        </InputBox>
-                        <SubmitButtonBox>
-                            <SubmitButton>로그인</SubmitButton>
-                        </SubmitButtonBox>
-                        <RegisterCommentBox>
+                        </LoginStyled.InputBox>
+                        <LoginStyled.SubmitButtonBox>
+                            <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
+                        </LoginStyled.SubmitButtonBox>
+                        <LoginStyled.RegisterCommentBox>
                             아직 회원이 아니신가요?
                             <Link to="/register">
-                                <RegisterButton>회원가입</RegisterButton>
+                                <LoginStyled.RegisterButton>회원가입</LoginStyled.RegisterButton>
                             </Link>
-                        </RegisterCommentBox>
+                        </LoginStyled.RegisterCommentBox>
                     </form>
-                </FromContainer>
-            </Wrapper>
-        </Root>
+                </LoginStyled.FromContainer>
+            </LoginStyled.Wrapper>
+        </LoginStyled.Root>
     );
 }

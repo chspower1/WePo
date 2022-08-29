@@ -4,20 +4,8 @@ import { curUserState, IEducation } from "@/atoms";
 import EducationEditForm from "./EducationEditForm";
 import EducationAddForm from "./EducationAddForm";
 import { useLocation } from "react-router-dom";
+import * as EducationStyled from "@styledComponents/CategoryStyled";
 import { useRecoilValue } from "recoil";
-import {
-    MvpContainer,
-    MvpTitle,
-    MvpTitleBox,
-    MvpContentContainer,
-    MvpContentBox,
-    MvpContentName,
-    MvpContentDetail,
-    MvpEditButton,
-    MvpAddButton,
-    MvpDeleteButton,
-    MvpContentAccent,
-} from "@user/MyPortfolio";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
@@ -57,11 +45,11 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
 
     const onDragEnd = () => {};
     return (
-        <MvpContainer>
-            <MvpTitleBox>
-                <MvpTitle>학력</MvpTitle>
-            </MvpTitleBox>
-            <MvpContentContainer>
+        <EducationStyled.Container>
+            <EducationStyled.TitleBox>
+                <EducationStyled.Title>학력</EducationStyled.Title>
+            </EducationStyled.TitleBox>
+            <EducationStyled.ContentContainer>
                 {isAddFormActive && (
                     <EducationAddForm
                         setIsAddFormActive={setIsAddFormActive}
@@ -71,66 +59,62 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
                 )}
                 {!isAddFormActive &&
                     educations?.map((education, index) => (
-                        <DragDropContext onDragEnd={onDragEnd}>
-                            <Droppable>
-                                <MvpContentBox key={index}>
-                                    {targetIndex !== index && (
+                        <EducationStyled.ContentBox key={index}>
+                            {targetIndex !== index && (
+                                <>
+                                    <EducationStyled.ContentAccent>
+                                        {education.school}
+                                    </EducationStyled.ContentAccent>
+                                    <div style={{ display: "flex" }}>
+                                        <EducationStyled.ContentDetail
+                                            style={{ marginRight: "10px" }}
+                                        >
+                                            {education.major}
+                                        </EducationStyled.ContentDetail>
+                                        <EducationStyled.ContentDetail>
+                                            ({education.status})
+                                        </EducationStyled.ContentDetail>
+                                    </div>
+                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
-                                            <MvpContentAccent>{education.school}</MvpContentAccent>
-                                            <div style={{ display: "flex" }}>
-                                                <MvpContentDetail style={{ marginRight: "10px" }}>
-                                                    {education.major}
-                                                </MvpContentDetail>
-                                                <MvpContentDetail>
-                                                    ({education.status})
-                                                </MvpContentDetail>
-                                            </div>
-                                            {curUser &&
-                                                pathName === "/mypage" &&
-                                                targetIndex !== index && (
-                                                    <>
-                                                        <MvpEditButton
-                                                            onClick={() => {
-                                                                setIsEditing(true);
-                                                                setTargetIndex(index);
-                                                            }}
-                                                        >
-                                                            <Pencil color="#3867FF" />
-                                                        </MvpEditButton>
-                                                        <MvpDeleteButton
-                                                            onClick={() => {
-                                                                onClickDeleteBtn(education, index);
-                                                            }}
-                                                        >
-                                                            <Trash2 color="#3867FF" />
-                                                        </MvpDeleteButton>
-                                                    </>
-                                                )}
+                                            <EducationStyled.EditButton
+                                                onClick={() => {
+                                                    setIsEditing(true);
+                                                    setTargetIndex(index);
+                                                }}
+                                            >
+                                                <Pencil color="#3867FF" />
+                                            </EducationStyled.EditButton>
+                                            <EducationStyled.DeleteButton
+                                                onClick={() => {
+                                                    onClickDeleteBtn(education, index);
+                                                }}
+                                            >
+                                                <Trash2 color="#3867FF" />
+                                            </EducationStyled.DeleteButton>
                                         </>
                                     )}
-                                    {isEditing && targetIndex == index && (
-                                        <EducationEditForm
-                                            index={index}
-                                            educations={educations}
-                                            setEducations={setEducations}
-                                            setIsEditing={setIsEditing}
-                                            userId={education.userId!}
-                                            eduId={education.eduId}
-                                            setTargetIndex={setTargetIndex}
-                                        />
-                                    )}
-                                </MvpContentBox>
-                            </Droppable>
-                        </DragDropContext>
+                                </>
+                            )}
+                            {isEditing && targetIndex == index && (
+                                <EducationEditForm
+                                    index={index}
+                                    educations={educations}
+                                    setEducations={setEducations}
+                                    setIsEditing={setIsEditing}
+                                    userId={education.userId!}
+                                    eduId={education.eduId}
+                                    setTargetIndex={setTargetIndex}
+                                />
+                            )}
+                        </EducationStyled.ContentBox>
                     ))}
-            </MvpContentContainer>
+            </EducationStyled.ContentContainer>
             {curUser && pathName === "/mypage" && !isAddFormActive && (
-                <button onClick={handleIsAddFormActive}>
-                    <MvpAddButton>
-                        <PlusSquareFill color="#3687FF" />
-                    </MvpAddButton>
-                </button>
+                <EducationStyled.AddButton onClick={handleIsAddFormActive}>
+                    <PlusSquareFill color="#3687FF" />
+                </EducationStyled.AddButton>
             )}
-        </MvpContainer>
+        </EducationStyled.Container>
     );
 }

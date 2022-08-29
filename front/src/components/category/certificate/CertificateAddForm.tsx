@@ -2,23 +2,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { addData, Category } from "@api/api";
 import { ICertificate } from "@/atoms";
-import { DangerIcon, ErrMsg } from "../../user/LoginForm";
-import {
-    MvpContainer,
-    MvpTitle,
-    MvpTitleBox,
-    MvpContentContainer,
-    MvpContentBox,
-    MvpContentName,
-    MvpContentDetail,
-    MvpContentDate,
-    MvpEditButton,
-    MvpAddButton,
-    MvpAddInput,
-    MvpAddInputBox,
-    RequiredLabel,
-    Button,
-} from "@user/MyPortfolio";
+import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
+import * as CertStyled from "@styledComponents/CategoryStyled";
 
 interface ICertificateAddFormProps {
     setCertificates: React.Dispatch<React.SetStateAction<ICertificate[]>>;
@@ -68,14 +53,14 @@ export function CertificateAddForm({
 
     return (
         <form onSubmit={handleSubmit(onvalid)}>
-            <MvpAddInputBox>
+            <CertStyled.AddInputBox>
                 <p style={{ position: "absolute", right: "20px", top: "20px" }}>
-                    <RequiredLabel>*</RequiredLabel> 필수사항
+                    <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel> 필수사항
                 </p>
-                <MvpContentName>
-                    자격증 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+                <CertStyled.ContentName>
+                    자격증 <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel>
+                </CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="text"
                     id="certificate"
                     width="300"
@@ -84,19 +69,19 @@ export function CertificateAddForm({
                         required: "자격증을 입력해주세요",
                         shouldUnregister: true,
                     })}
-                ></MvpAddInput>
+                ></CertStyled.AddInput>
                 {errors.title && (
                     <ErrMsg>
                         <DangerIcon />
                         {errors.title.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    발급일 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </CertStyled.AddInputBox>
+            <CertStyled.AddInputBox>
+                <CertStyled.ContentName>
+                    발급일 <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel>
+                </CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="Date"
                     width="130"
                     id="issue-date"
@@ -105,19 +90,19 @@ export function CertificateAddForm({
                         required: "발급일을 입력해주세요",
                         shouldUnregister: true,
                     })}
-                ></MvpAddInput>
+                ></CertStyled.AddInput>
                 {errors.date && (
                     <ErrMsg>
                         <DangerIcon />
                         {errors.date.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    발급기관 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </CertStyled.AddInputBox>
+            <CertStyled.AddInputBox>
+                <CertStyled.ContentName>
+                    발급기관 <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel>
+                </CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="string"
                     id="issuer"
                     width="300"
@@ -126,29 +111,31 @@ export function CertificateAddForm({
                         required: "발급기관을 입력해주세요",
                         shouldUnregister: true,
                     })}
-                ></MvpAddInput>
+                ></CertStyled.AddInput>
                 {errors.org && (
                     <ErrMsg>
                         <DangerIcon />
                         {errors.org.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>자격증 설명</MvpContentName>
-                <MvpAddInput
+            </CertStyled.AddInputBox>
+            <CertStyled.AddInputBox>
+                <CertStyled.ContentName>자격증 설명</CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="text"
                     id="certificate-description"
                     placeholder="예) 전산 직무에 관심이 많아 산업인력공단에서 시행하는 정보처리기사 자격증을 취득하였습니다."
                     {...register("description", { shouldUnregister: true })}
-                ></MvpAddInput>
-            </MvpAddInputBox>
+                ></CertStyled.AddInput>
+            </CertStyled.AddInputBox>
 
             <div style={{ float: "right" }}>
-                <Button color="#3687FF" type="submit">
+                <CertStyled.Button color="#3687FF" type="submit">
                     추가
-                </Button>
-                <Button onClick={() => setIsAddFormActive(false)}>취소</Button>
+                </CertStyled.Button>
+                <CertStyled.Button onClick={() => setIsAddFormActive(false)}>
+                    취소
+                </CertStyled.Button>
             </div>
         </form>
     );

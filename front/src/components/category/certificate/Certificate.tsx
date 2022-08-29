@@ -3,22 +3,9 @@ import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { CertificateAddForm } from "./CertificateAddForm";
 import { CertificateEditForm } from "./CertificateEditForm";
+import * as CertStyled from "@styledComponents/CategoryStyled";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import {
-    MvpContainer,
-    MvpTitleBox,
-    MvpTitle,
-    MvpContentContainer,
-    MvpContentBox,
-    MvpContentName,
-    MvpContentDate,
-    MvpContentDetail,
-    MvpEditButton,
-    MvpAddButton,
-    MvpDeleteButton,
-    MvpContentAccent,
-} from "@user/MyPortfolio";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
@@ -57,11 +44,11 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
         setIsAddFormActive((isAddFormActive) => !isAddFormActive);
     }
     return (
-        <MvpContainer>
-            <MvpTitleBox>
-                <MvpTitle>자격증</MvpTitle>
-            </MvpTitleBox>
-            <MvpContentContainer>
+        <CertStyled.Container>
+            <CertStyled.TitleBox>
+                <CertStyled.Title>자격증</CertStyled.Title>
+            </CertStyled.TitleBox>
+            <CertStyled.ContentContainer>
                 {isAddFormActive && (
                     <CertificateAddForm
                         setIsAddFormActive={setIsAddFormActive}
@@ -71,30 +58,36 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                 )}
                 {!isAddFormActive &&
                     certificates?.map((certificate: ICertificate, index: number) => (
-                        <MvpContentBox key={index}>
+                        <CertStyled.ContentBox key={index}>
                             {targetIndex !== index && (
                                 <>
-                                    <MvpContentAccent>{certificate.title}</MvpContentAccent>
-                                    <MvpContentDate>
+                                    <CertStyled.ContentAccent>
+                                        {certificate.title}
+                                    </CertStyled.ContentAccent>
+                                    <CertStyled.ContentDate>
                                         {String(certificate.date).slice(0, 10)}
-                                    </MvpContentDate>
-                                    <MvpContentDetail>{certificate.org}</MvpContentDetail>
-                                    <MvpContentDetail>{certificate.description}</MvpContentDetail>
+                                    </CertStyled.ContentDate>
+                                    <CertStyled.ContentDetail>
+                                        {certificate.org}
+                                    </CertStyled.ContentDetail>
+                                    <CertStyled.ContentDetail>
+                                        {certificate.description}
+                                    </CertStyled.ContentDetail>
                                     {curUser && pathName === "/mypage" && targetIndex !== index && (
                                         <>
-                                            <MvpEditButton
+                                            <CertStyled.EditButton
                                                 onClick={() => {
                                                     setIsEditing(true);
                                                     setTargetIndex(index);
                                                 }}
                                             >
                                                 <Pencil color="#3687FF" />
-                                            </MvpEditButton>
-                                            <MvpDeleteButton
+                                            </CertStyled.EditButton>
+                                            <CertStyled.DeleteButton
                                                 onClick={() => onClickDeleteBtn(certificate, index)}
                                             >
                                                 <Trash2 color="#3687FF" />
-                                            </MvpDeleteButton>
+                                            </CertStyled.DeleteButton>
                                         </>
                                     )}
                                 </>
@@ -110,14 +103,14 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                                     certId={certificate?.certId!}
                                 />
                             )}
-                        </MvpContentBox>
+                        </CertStyled.ContentBox>
                     ))}
-            </MvpContentContainer>
+            </CertStyled.ContentContainer>
             {curUser && pathName === "/mypage" && !isAddFormActive && (
-                <MvpAddButton onClick={handleIsAddFormActive}>
+                <CertStyled.AddButton onClick={handleIsAddFormActive}>
                     <PlusSquareFill color="#3687FF" />
-                </MvpAddButton>
+                </CertStyled.AddButton>
             )}
-        </MvpContainer>
+        </CertStyled.Container>
     );
 }

@@ -7,18 +7,7 @@ import { createtUser } from "@api/api";
 import { usersState } from "@/atoms";
 import { IUser } from "@/atoms";
 import { useQuery } from "react-query";
-import {
-    Wrapper,
-    DangerIcon,
-    ErrMsg,
-    FromContainer,
-    Input,
-    InputBox,
-    SubmitButton,
-    SubmitButtonBox,
-    Title,
-    TitleBox,
-} from "./LoginForm";
+import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
 export interface IRegister {
     email: string;
@@ -26,31 +15,6 @@ export interface IRegister {
     password: string;
     checkPassword?: string;
 }
-
-const Root = styled.div`
-    width: 100%;
-    height: 100vh;
-    padding: 70px 0 0;
-    background: #eff3ff;
-`;
-
-const RegisterFromContainer = styled(FromContainer)`
-    padding: 60px 80px;
-    height: 700px;
-    margin: auto;
-`;
-
-const RegisterWrapper = styled(Wrapper)`
-    padding: 30px 0 50px;
-`;
-
-const SuccessMsg = styled.p`
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    color: #198754;
-    margin: 0 0 0 5px;
-`;
 
 export default function RegisterForm() {
     const [users, setUsers] = useRecoilState(usersState);
@@ -93,15 +57,15 @@ export default function RegisterForm() {
         });
     }, []);
     return (
-        <Root>
-            <RegisterWrapper>
-                <RegisterFromContainer>
-                    <TitleBox>
-                        <Title>회원가입</Title>
-                    </TitleBox>
+        <RegisterStyled.Root>
+            <RegisterStyled.RegisterWrapper>
+                <RegisterStyled.RegisterFromContainer>
+                    <RegisterStyled.TitleBox>
+                        <RegisterStyled.Title>회원가입</RegisterStyled.Title>
+                    </RegisterStyled.TitleBox>
                     <form onSubmit={handleSubmit(onvalid)}>
-                        <InputBox>
-                            <Input
+                        <RegisterStyled.InputBox>
+                            <RegisterStyled.Input
                                 type="text"
                                 placeholder="Email"
                                 {...register("email", {
@@ -113,16 +77,18 @@ export default function RegisterForm() {
                                 })}
                             />
                             {errors.email ? (
-                                <ErrMsg>
-                                    <DangerIcon></DangerIcon>
+                                <RegisterStyled.ErrMsg>
+                                    <RegisterStyled.DangerIcon></RegisterStyled.DangerIcon>
                                     {errors.email.message}
-                                </ErrMsg>
+                                </RegisterStyled.ErrMsg>
                             ) : (
-                                <SuccessMsg>✔️적합한 Email이에요</SuccessMsg>
+                                <RegisterStyled.SuccessMsg>
+                                    ✔️적합한 Email이에요
+                                </RegisterStyled.SuccessMsg>
                             )}
-                        </InputBox>
-                        <InputBox>
-                            <Input
+                        </RegisterStyled.InputBox>
+                        <RegisterStyled.InputBox>
+                            <RegisterStyled.Input
                                 type="text"
                                 placeholder="Name"
                                 {...register("name", {
@@ -134,16 +100,18 @@ export default function RegisterForm() {
                                 })}
                             />
                             {errors.name ? (
-                                <ErrMsg>
-                                    <DangerIcon></DangerIcon>
+                                <RegisterStyled.ErrMsg>
+                                    <RegisterStyled.DangerIcon></RegisterStyled.DangerIcon>
                                     {errors.name.message}
-                                </ErrMsg>
+                                </RegisterStyled.ErrMsg>
                             ) : (
-                                <SuccessMsg>✔️멋진 이름이에요</SuccessMsg>
+                                <RegisterStyled.SuccessMsg>
+                                    ✔️멋진 이름이에요
+                                </RegisterStyled.SuccessMsg>
                             )}
-                        </InputBox>
-                        <InputBox>
-                            <Input
+                        </RegisterStyled.InputBox>
+                        <RegisterStyled.InputBox>
+                            <RegisterStyled.Input
                                 type="password"
                                 placeholder="Password"
                                 {...register("password", {
@@ -155,16 +123,18 @@ export default function RegisterForm() {
                                 })}
                             />
                             {errors.password ? (
-                                <ErrMsg>
-                                    <DangerIcon></DangerIcon>
+                                <RegisterStyled.ErrMsg>
+                                    <RegisterStyled.DangerIcon></RegisterStyled.DangerIcon>
                                     {errors.password.message}
-                                </ErrMsg>
+                                </RegisterStyled.ErrMsg>
                             ) : (
-                                <SuccessMsg>✔️적합한 비밀번호에요</SuccessMsg>
+                                <RegisterStyled.SuccessMsg>
+                                    ✔️적합한 비밀번호에요
+                                </RegisterStyled.SuccessMsg>
                             )}
-                        </InputBox>
-                        <InputBox>
-                            <Input
+                        </RegisterStyled.InputBox>
+                        <RegisterStyled.InputBox>
+                            <RegisterStyled.Input
                                 type="password"
                                 placeholder="Check your Password"
                                 {...register("checkPassword", {
@@ -181,20 +151,24 @@ export default function RegisterForm() {
                                 })}
                             />
                             {errors.checkPassword ? (
-                                <ErrMsg>
-                                    <DangerIcon></DangerIcon>
+                                <RegisterStyled.ErrMsg>
+                                    <RegisterStyled.DangerIcon></RegisterStyled.DangerIcon>
                                     {errors.checkPassword.message}
-                                </ErrMsg>
+                                </RegisterStyled.ErrMsg>
                             ) : (
-                                <SuccessMsg>✔️비밀번호가 일치해요</SuccessMsg>
+                                <RegisterStyled.SuccessMsg>
+                                    ✔️비밀번호가 일치해요
+                                </RegisterStyled.SuccessMsg>
                             )}
-                        </InputBox>
-                        <SubmitButtonBox>
-                            <SubmitButton disabled={!valid}>작성완료</SubmitButton>
-                        </SubmitButtonBox>
+                        </RegisterStyled.InputBox>
+                        <RegisterStyled.SubmitButtonBox>
+                            <RegisterStyled.SubmitButton disabled={!valid}>
+                                작성완료
+                            </RegisterStyled.SubmitButton>
+                        </RegisterStyled.SubmitButtonBox>
                     </form>
-                </RegisterFromContainer>
-            </RegisterWrapper>
-        </Root>
+                </RegisterStyled.RegisterFromContainer>
+            </RegisterStyled.RegisterWrapper>
+        </RegisterStyled.Root>
     );
 }
