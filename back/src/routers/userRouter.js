@@ -163,6 +163,27 @@ userAuthRouter.get("/current", login_required, async function (req, res, next) {
     }
 });
 
+// id의 사용자 정보 불러오기
+userAuthRouter.get("/:id", login_required, async function (req, res, next) {
+    try {
+        const userId = parseInt(req.params.id);
+        const currentUserInfo = await userAuthService.getUserInfo(userId);
+
+        if (currentUserInfo.errorMessage) {
+            throw new Error(currentUserInfo.errorMessage);
+        }
+
+        // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
+        if (userId !== req["currentUserId"]) {
+            await userAuthService.increaseView(userId);
+        }
+
+        res.status(200).send(currentUserInfo);
+    } catch (error) {
+        next(error);
+    }
+});
+
 // id의 사용자 정보 update
 userAuthRouter.put("/:id", login_required, async function (req, res, next) {
     try {
@@ -219,26 +240,6 @@ userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, 
     }
 });
 
-// id의 사용자 정보 불러오기
-userAuthRouter.get("/:id", login_required, async function (req, res, next) {
-    try {
-        const userId = parseInt(req.params.id);
-        const currentUserInfo = await userAuthService.getUserInfo(userId);
-
-        if (currentUserInfo.errorMessage) {
-            throw new Error(currentUserInfo.errorMessage);
-        }
-
-        // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
-        if (userId !== req["currentUserId"]) {
-            await userAuthService.increaseView(userId);
-        }
-
-        res.status(200).send(currentUserInfo);
-    } catch (error) {
-        next(error);
-    }
-});
 
 // 검색하기-- 구현하기!!
 userAuthRouter.get("/search/:toSearch", login_required, async function (req, res, next) {
