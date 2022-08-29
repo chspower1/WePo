@@ -4,29 +4,47 @@ class educationService {
 
   // 학력 추가
   static async addEducation({ userId, school, major, status, eduId }) {
-    const newEducation = { userId, school, major, status, eduId };
 
+    // 사용자가 필수로 입력해야하는 값이 모두 있는지 확인
     if(!school || !major || !status) {
       const errorMessage = 
-        "학력정보 필수값을 모두 입력해주세요."
+        "필수값을 모두 입력해주세요."
         return  { errorMessage };
     }
 
-    const createdNewEducation = await Education.create({ newEducation });
-    createdNewEducation.errorMessage = null;
+    // front에서 생성하여 넘겨주는 id값 있는지 체크
+    if(!eduId) {  
+      const errorMessage = 
+        "eduId값이 정상적으로 생성되지 않았습니다."
+      return  { errorMessage };
+    }
 
-    return createdNewEducation;
+
+    return Education.create({ 
+      userId, 
+      school, 
+      major, 
+      status, 
+      eduId 
+    });
   }
 
   // userId에 해당하는 유저의 학력 전체 조회
-  static async getEducationListByUserId({ userId }) {
-    return Education.findByUserId({ userId });
+  static async getEducationsByUserId(userId) {
+    // 에러 처리 추가하기 
+    return Education.findByUserId(userId);
+  }
+
+  // eduId에 해당하는 학력 조회
+  static async getEducation(eduId) {
+    // 에러 처리 추가하기 
+    return Education.findByEduId(eduId);
   }
   
   // 학력 수정
   static async updateEducation({ eduId, toUpdate }) {
     // 해당 eduId의 학력정보가 db에 존재하는지 여부 확인
-    let education = await Education.findByEduId({ eduId });
+    let education = await Education.findByEduId(eduId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!education) {
@@ -47,18 +65,18 @@ class educationService {
   }
 
   // 학력 삭제
-  static async deleteEducation({ eduId }) {
+  static async deleteEducation(eduId) {
     // 해당 eduId의 학력정보가 db에 존재하는지 여부 확인
-    let education = await Education.findByEduId({ eduId });
+    const education = await Education.findByEduId(eduId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!education) {
       const errorMessage 
-      = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
+        = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
-    return Education.delete({ eduId });
+    return Education.delete(eduId);
   }
 }
 
