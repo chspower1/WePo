@@ -170,16 +170,25 @@ export async function deleteData(category: Category, projectId: string, userId: 
 export async function mutationCategory(
     userId: number,
     category: Category,
-    newCategorys: IProject[] | IAward[] | ICertificate[] | IEducation[]
+    newCategories: IProject[] | IAward[] | ICertificate[] | IEducation[]
 ) {
     try {
+        console.log(
+            "#####################################################",
+            sessionStorage.getItem("userToken")
+        );
+        console.log(userId, newCategories);
         await axios.put(`${BASE_URL}/${category}`, {
-            data: { userId, newCategorys },
+            data: { userId, newCategories },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+        console.log(
+            "#####################################################",
+            sessionStorage.getItem("userToken")
+        );
     } catch (err) {
         console.log(err);
     }

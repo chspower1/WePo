@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { curUserState, usersState, IUser } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
@@ -156,6 +156,9 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
             return updateCurUser as IUser;
         });
     };
+    useEffect(() => {
+        console.log("바뀜");
+    }, [curUser]);
     return (
         <>
             <ItemWrap>

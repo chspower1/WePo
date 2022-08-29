@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { curUserState, IEducation } from "@/atoms";
 import { HandLeft } from "@styled-icons/ionicons-solid/HandLeft";
-
 import EducationEditForm from "./EducationEditForm";
 import EducationAddForm from "./EducationAddForm";
 import { useLocation } from "react-router-dom";
@@ -48,6 +47,7 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
     const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
         console.log(draggableId, destination, source, "학력", educations);
 
+        //state
         setEducations((prev) => {
             const resultEducations = [...prev];
             const education = resultEducations[source.index];
@@ -55,6 +55,7 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
             resultEducations.splice(destination?.index!, 0, education);
             return resultEducations;
         });
+        //API요청
         mutationCategory(curUser?.userId!, Category.education, educations);
         console.log(educations);
     };
