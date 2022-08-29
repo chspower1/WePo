@@ -1,6 +1,6 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
-interface ILike {
+export interface ILike {
     userId: number;
 }
 export interface IUser {
@@ -11,7 +11,7 @@ export interface IUser {
     password?: string;
     picture?: string;
     description: string;
-    field: IField;
+    field: TField;
     likes: ILike[];
     views: number;
     userId: number;
@@ -21,12 +21,8 @@ export interface IUser {
     projects?: IProject[];
     _v?: number;
 }
-export interface IField {
-    backEnd: boolean;
-    frontEnd: boolean;
-    dataAnalysis: boolean;
-    AI: boolean;
-}
+export type TField = [backEnd: boolean, frontEnd: boolean, dataAnalysis: boolean, AI: boolean];
+
 export interface IEducation {
     _id?: string;
     eduId: string;
