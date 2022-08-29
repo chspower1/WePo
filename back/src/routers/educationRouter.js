@@ -143,7 +143,6 @@ educationRouter.put("/", login_required, async function (req, res, next) {
       userId, 
       newCategorys
     });
-
     // if(updateEducation.errorMessage) {
     //   throw new Error(updateEducation.errorMessage);
     // }
