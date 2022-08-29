@@ -25,9 +25,9 @@ const BgWrap = styled.div`
 `;
 
 const Root = styled.div`
-width: 100%;
-padding: 80px 0 0;
-`
+    width: 100%;
+    padding: 80px 0 0;
+`;
 
 const NetworkWrap = styled.div`
     width: 100%;
@@ -35,9 +35,8 @@ const NetworkWrap = styled.div`
     min-width: 480px;
     margin: 0 auto;
     padding: 0 30px;
-
 `;
-const NetworkContainer = styled.div`
+export const NetworkContainer = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -180,7 +179,7 @@ function Network() {
                             ) : (
                                 <NetworkContainer>
                                     {filterUsersState.map((user) => (
-                                        <UserCard key={user._id} {...user} />
+                                        <UserCard key={user.userId} {...user} />
                                     ))}
                                 </NetworkContainer>
                             )}

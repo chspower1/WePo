@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { curUserState, isLoginState } from "@/atoms";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import SearchBar from "./SearchBar";
 
 const LinkHover = keyframes`
     0%{color:#343434}
@@ -122,25 +123,6 @@ const LoginOrRegiBtn = styled.button`
     }
 `;
 
-const SearchBox = styled.form`
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-const Input = styled.input`
-    width: 300px;
-    height: 50px;
-    border-radius: 25px;
-    text-align: center;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &:focus {
-        outline: 2px solid ${(props) => props.theme.btnColor};
-    }
-`;
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
     const setCurUser = useSetRecoilState(curUserState);
@@ -150,12 +132,7 @@ function Header() {
     const [navActive, setNavActive] = useState(false);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-    const { register, handleSubmit } = useForm();
-    const navigator = useNavigate();
-    const onvalid = (data: any) => {
-        console.log(data);
-        navigator("/search");
-    };
+
     const scrollFixed = () => {
         if (scrollY > 100) {
             setScrollY(window.pageYOffset);
@@ -195,17 +172,7 @@ function Header() {
                             />
                         </LogoBox>
                     </Link>
-                    <SearchBox onSubmit={handleSubmit(onvalid)}>
-                        <Input
-                            type="text"
-                            placeholder="찾고싶은 정보를 검색해주세요!"
-                            {...register("search", {
-                                required: "검색어를 입력해주세요!",
-                            })}
-                        />
-
-                        <button>클릭</button>
-                    </SearchBox>
+                    <SearchBar />
                     <Nav>
                         {isLogin ? (
                             <>

@@ -1,5 +1,8 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
+interface ILike {
+    userId: number;
+}
 export interface IUser {
     _id?: string;
     token: string;
@@ -9,7 +12,7 @@ export interface IUser {
     picture?: string;
     description: string;
     field: IField;
-    likes: any[];
+    likes: ILike[];
     views: number;
     userId: number;
     educations?: IEducation[];

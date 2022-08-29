@@ -181,10 +181,11 @@ export async function mutationCategory(
     }
 }
 
-export async function searchData(data: string) {
+export async function searchData(searchData: string) {
     try {
-        await axios.get(`${BASE_URL}/search`, {
-            data: { data },
+        console.log(searchData);
+        await axios.get(`${BASE_URL}/user/search/${searchData}`, {
+            data: { searchData },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

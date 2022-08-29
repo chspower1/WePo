@@ -27,7 +27,7 @@ function Router() {
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/network" element={<Network />} />
                 <Route path="/network/:userSeq" element={<UserDetail />} />
-                <Route path="/search" element={<ResultSearch />} />
+                <Route path="/search/:params" element={<ResultSearch />} />
             </Routes>
         </BrowserRouter>
     );
