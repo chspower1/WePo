@@ -148,11 +148,18 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         e.preventDefault();
         curUserToggleLike(userId);
         setCurUser((prev:any) =>{
-            const newTest:IUser = {...prev};
-            newTest.field.push("papapa")
-            return newTest 
+            let filterLike = [...prev.likes]
+            if (filterLike.includes(userId)){
+                filterLike = filterLike.filter((elem) => elem != userId)
+            }
+            else{
+                filterLike.push(userId)
+            }
+            const addLikeUser:IUser = {...prev,likes:filterLike};
+            return addLikeUser 
         })
     };
+    
     return (
         <>
             <ItemWrap>
