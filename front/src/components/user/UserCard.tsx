@@ -148,16 +148,12 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     useEffect(()=>{
         let foundUserId = curUser?.likes.find(user => user === userId) ? true : false;
         setIsLike(foundUserId)
-        console.log(`curUser`, curUser?.likes)
-        console.log(`${name}2`, isLike)
     },[curUser])
 
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         curUserToggleLike(userId)
         setCheckedLike(!checkedLike);
-        console.log(`${name}`, checkedLike)
-        console.log(`${name}2`, isLike)
         setCurUser((prev:any)=>{
             if(curUser?.likes.includes(userId)){
                 const deleteItem = prev.likes.filter((user: number)=> user !== userId)
