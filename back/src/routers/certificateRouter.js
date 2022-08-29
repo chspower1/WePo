@@ -127,7 +127,7 @@ certificateRouter.delete("/:certId", login_required, async function (req, res, n
 });
 
 // 자격증 순서 변경
-certificateRouter.put("/", login_required, async function (req, res, next) {
+certificateRouter.put("/", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -139,17 +139,17 @@ certificateRouter.put("/", login_required, async function (req, res, next) {
     const { newCategories } = req.body.data;
 
     // User authentication
-    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+    // const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
 
-    const certId = newCategories[0].certId;
-    const certificate = await certificateService.getCertificate(certId);
-    const userId = certificate.userId; // education 내에 저장된 userId
+    // const certId = newCategories[0].certId;
+    // const certificate = await certificateService.getCertificate(certId);
+    // const userId = certificate.userId; // education 내에 저장된 userId
 
-    if (currentUserId !== userId) {
-        throw new Error(
-            "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
-        );
-    }
+    // if (currentUserId !== userId) {
+    //     throw new Error(
+    //         "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+    //     );
+    // }
 
     await certificateService.updateCertificateOrder(newCategories);
 

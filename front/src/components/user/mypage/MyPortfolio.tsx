@@ -67,7 +67,7 @@ function MyPortfolio() {
             // mutationCategory(curUser?.userId!, Category.education, educations);
         }
         if (destination?.droppableId === "awards") {
-            setEducations((prev) => {
+            setAwards((prev) => {
                 const resultAwards = [...prev];
                 const award = resultAwards[source.index];
                 resultAwards.splice(source.index, 1);
@@ -80,7 +80,7 @@ function MyPortfolio() {
             console.log(awards);
         }
         if (destination?.droppableId === "certificates") {
-            setEducations((prev) => {
+            setCertificates((prev) => {
                 const resultCertificates = [...prev];
                 const certificate = resultCertificates[source.index];
                 resultCertificates.splice(source.index, 1);
@@ -93,7 +93,7 @@ function MyPortfolio() {
             console.log(certificates);
         }
         if (destination?.droppableId === "project") {
-            setEducations((prev) => {
+            setProjects((prev) => {
                 const resultProjects = [...prev];
                 const project = resultProjects[source.index];
                 resultProjects.splice(source.index, 1);

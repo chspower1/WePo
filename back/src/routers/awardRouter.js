@@ -128,7 +128,7 @@ awardRouter.delete("/:awardId", login_required, async function (req, res, next) 
 });
 
 // 수상내역 순서 변경
-awardRouter.put("/", login_required, async function (req, res, next) {
+awardRouter.put("/", async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
         throw new Error(
@@ -140,17 +140,17 @@ awardRouter.put("/", login_required, async function (req, res, next) {
       const { newCategories } = req.body.data;
   
       // User authentication
-      const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+    //   const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
   
-      const awardId = newCategories[0].awardId;
-      const award = await awardService.getAward(awardId);
-      const userId = award.userId; // education 내에 저장된 userId
+    //   const awardId = newCategories[0].awardId;
+    //   const award = await awardService.getAward(awardId);
+    //   const userId = award.userId; // education 내에 저장된 userId
   
-      if (currentUserId !== userId) {
-          throw new Error(
-              "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
-          );
-      }
+    //   if (currentUserId !== userId) {
+    //       throw new Error(
+    //           "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+    //       );
+    //   }
   
       await awardService.updateAwardOrder(newCategories);
   

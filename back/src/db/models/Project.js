@@ -3,14 +3,15 @@ import { ProjectModel } from "../schemas/project";
 class Project {
 
   // 새로운 프로젝트 생성
-  static async create({ userId, title, startDate, endDate, description, projectId }) {
+  static async create({ userId, title, startDate, endDate, description, projectId, order }) {
     return ProjectModel.create({
       userId, 
       title, 
       startDate, 
       endDate, 
       description, 
-      projectId
+      projectId,
+      order
     });
   }
 
@@ -40,6 +41,22 @@ class Project {
   // projectId에 해당하는 프로젝트 삭제
   static async delete(projectId) {
     return ProjectModel.findOneAndDelete({ projectId });
+  }
+
+  // 자격증 순서 변경
+  static async updateOrder(newOrder) {
+
+    const { projectId, order } = newOrder;
+
+    const option = { returnOriginal: false };
+
+    const updatedProject = await ProjectModel.findOneAndUpdate(
+      { projectId: projectId },
+      { order: order },
+      option
+    );
+
+    return updatedProject;
   }
 }
   
