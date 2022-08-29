@@ -6,6 +6,9 @@ const userExtraInfoLookup = [{
     from: 'awards', // 참고 할 테이블
     localField: 'userId', // User.userId
     foreignField: 'userId', // Award.userId
+    pipeline: [
+      { $sort: {'order': 1} }
+    ],
     as: 'awards', // 추가 할 프로퍼티
   },
 },
@@ -14,6 +17,9 @@ const userExtraInfoLookup = [{
     from: 'projects',
     localField: 'userId',
     foreignField: 'userId',
+    pipeline: [
+      { $sort: {'order': 1} }
+    ],
     as: 'projects',
   },
 },
@@ -22,6 +28,9 @@ const userExtraInfoLookup = [{
     from: 'educations',
     localField: 'userId',
     foreignField: 'userId',
+    pipeline: [
+      { $sort: {'order': 1} }
+    ],
     as: 'educations',
   },
 },
@@ -30,6 +39,9 @@ const userExtraInfoLookup = [{
     from: 'certificates',
     localField: 'userId',
     foreignField: 'userId',
+    pipeline: [
+      { $sort: {'order': 1} }
+    ],
     as: 'certificates',
   },
 }];

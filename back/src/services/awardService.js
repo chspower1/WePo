@@ -3,7 +3,7 @@ import { Award } from "../db";
 class awardService {
 
   // 수상내역 추가
-  static async addAward({ userId, title, grade, org, date, description, awardId }) {
+  static async addAward({ userId, title, grade, org, date, description, awardId, order }) {
 
     // 사용자가 필수로 입력해야하는 값이 모두 있는지 확인
     if(!title || !grade || !org || !date) {
@@ -26,7 +26,8 @@ class awardService {
       org, 
       date, 
       description, 
-      awardId 
+      awardId,
+      order
     });
   }
 
@@ -79,6 +80,19 @@ class awardService {
     }
 
     return Award.delete(awardId);
+  }
+
+  // 수상내역 순서 수정
+  static async updateAwardOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ awardId: newCategory.awardId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Award.updateOrder(newOrder);
+    });
+    
+    return;
   }
 }
 

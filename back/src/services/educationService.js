@@ -64,6 +64,7 @@ class educationService {
         // 해당 eduId의 학력정보가 db에 존재하는지 여부 확인
         const education = await Education.findByEduId(eduId);
 
+<<<<<<< HEAD
         // db에서 찾지 못한 경우, 에러 메시지 반환
         if (!education) {
             const errorMessage = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
@@ -87,6 +88,20 @@ class educationService {
 
         return;
     }
+=======
+  // 학력 순서 수정
+  static async updateEducationOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ eduId: newCategory.eduId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Education.updateOrder(newOrder);
+    });
+    
+    return;
+  }
+>>>>>>> origin/feat/backend/dnd
 }
 
 export { educationService };
