@@ -10,13 +10,16 @@ import { Pencil } from "styled-icons/boxicons-solid";
 import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { Category, deleteData } from "@api/api";
+import { Draggable } from "@hello-pangea/dnd";
 
-export default function Certificate({ certificatesProps }: { certificatesProps: ICertificate[] }) {
+interface ICertificateProps {
+    certificates: ICertificate[];
+    setCertificates: React.Dispatch<React.SetStateAction<ICertificate[]>>;
+}
+
+export default function Certificate({ certificates, setCertificates }: ICertificateProps) {
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
-
-    // 자격증 상태
-    const [certificates, setCertificates] = useState<ICertificate[]>(certificatesProps);
 
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
@@ -59,52 +62,73 @@ export default function Certificate({ certificatesProps }: { certificatesProps: 
                 )}
                 {!isAddFormActive &&
                     certificates?.map((certificate: ICertificate, index: number) => (
-                        <CertStyled.ContentBox key={index}>
-                            {targetIndex !== index && (
-                                <>
-                                    <CertStyled.ContentAccent>
-                                        {certificate.title}
-                                    </CertStyled.ContentAccent>
-                                    <CertStyled.ContentDate>
-                                        {String(certificate.date).slice(0, 10)}
-                                    </CertStyled.ContentDate>
-                                    <CertStyled.ContentDetail>
-                                        {certificate.org}
-                                    </CertStyled.ContentDetail>
-                                    <CertStyled.ContentDetail>
-                                        {certificate.description}
-                                    </CertStyled.ContentDetail>
-                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
-                                        <>
-                                            <CertStyled.EditButton
-                                                onClick={() => {
-                                                    setIsEditing(true);
-                                                    setTargetIndex(index);
-                                                }}
-                                            >
-                                                <Pencil color="#3687FF" />
-                                            </CertStyled.EditButton>
-                                            <CertStyled.DeleteButton
-                                                onClick={() => onClickDeleteBtn(certificate, index)}
-                                            >
-                                                <Trash2 color="#3687FF" />
-                                            </CertStyled.DeleteButton>
-                                        </>
+                        <Draggable
+                            key={String(certificate?.certId!)}
+                            draggableId={String(certificate?.certId!)}
+                            index={index}
+                        >
+                            {(magic) => (
+                                <CertStyled.ContentBox key={index}>
+                                    {targetIndex !== index && (
+                                        <div
+                                            ref={magic.innerRef}
+                                            {...magic.draggableProps}
+                                            {...magic.dragHandleProps}
+                                        >
+                                            <>
+                                                <CertStyled.ContentAccent>
+                                                    {certificate.title}
+                                                </CertStyled.ContentAccent>
+                                                <CertStyled.ContentDate>
+                                                    {String(certificate.date).slice(0, 10)}
+                                                </CertStyled.ContentDate>
+                                                <CertStyled.ContentDetail>
+                                                    {certificate.org}
+                                                </CertStyled.ContentDetail>
+                                                <CertStyled.ContentDetail>
+                                                    {certificate.description}
+                                                </CertStyled.ContentDetail>
+                                                {curUser &&
+                                                    pathName === "/mypage" &&
+                                                    targetIndex !== index && (
+                                                        <>
+                                                            <CertStyled.EditButton
+                                                                onClick={() => {
+                                                                    setIsEditing(true);
+                                                                    setTargetIndex(index);
+                                                                }}
+                                                            >
+                                                                <Pencil color="#3687FF" />
+                                                            </CertStyled.EditButton>
+                                                            <CertStyled.DeleteButton
+                                                                onClick={() =>
+                                                                    onClickDeleteBtn(
+                                                                        certificate,
+                                                                        index
+                                                                    )
+                                                                }
+                                                            >
+                                                                <Trash2 color="#3687FF" />
+                                                            </CertStyled.DeleteButton>
+                                                        </>
+                                                    )}
+                                            </>
+                                        </div>
                                     )}
-                                </>
+                                    {isEditing && targetIndex === index && (
+                                        <CertificateEditForm
+                                            index={index}
+                                            certificates={certificates}
+                                            setCertificates={setCertificates}
+                                            setIsEditing={setIsEditing}
+                                            setTargetIndex={setTargetIndex}
+                                            userId={certificate?.userId!}
+                                            certId={certificate?.certId!}
+                                        />
+                                    )}
+                                </CertStyled.ContentBox>
                             )}
-                            {isEditing && targetIndex === index && (
-                                <CertificateEditForm
-                                    index={index}
-                                    certificates={certificates}
-                                    setCertificates={setCertificates}
-                                    setIsEditing={setIsEditing}
-                                    setTargetIndex={setTargetIndex}
-                                    userId={certificate?.userId!}
-                                    certId={certificate?.certId!}
-                                />
-                            )}
-                        </CertStyled.ContentBox>
+                        </Draggable>
                     ))}
             </CertStyled.ContentContainer>
             {curUser && pathName === "/mypage" && !isAddFormActive && (

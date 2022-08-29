@@ -31,14 +31,14 @@ export async function UserLogin({ email, password }: ILogin) {
     }
 }
 
-interface IRegister{
-    email:string,
-    password:string,
-    name:string,
-    field:string[],
+interface IRegister {
+    email: string;
+    password: string;
+    name: string;
+    field: string[];
 }
 // 회원가입 완료
-export async function createtUser({ email, password, name,field}:IRegister) {
+export async function createtUser({ email, password, name, field }: IRegister) {
     try {
         const { data } = await axios.post(`${BASE_URL}/user/register`, {
             email,
@@ -74,7 +74,7 @@ export async function getUsers() {
 //유저 리스트 정보 불러오기
 export async function getUser(userId: number) {
     try {
-        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, { 
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -202,13 +202,15 @@ export async function mutationCategory(
 export async function searchData(searchData: string) {
     try {
         console.log(searchData);
-        await axios.get(`${BASE_URL}/user/search/${searchData}`, {
+        const { data: result } = await axios.get(`${BASE_URL}/user/search/${searchData}`, {
             data: { searchData },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+        console.log("반환값", result);
+        return result as IUser[];
     } catch (err) {
         console.log(err);
     }

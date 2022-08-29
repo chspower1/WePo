@@ -126,7 +126,7 @@ educationRouter.put("/", async function (req, res, next) {
         }
 
         // req (request) 에서 데이터 가져오기
-        const { userId, newCategories } = req.body;
+        const { userId, newCategories } = req.body.data;
 
         const updateEducation = await educationService.updateEducationOrder({
             userId,
