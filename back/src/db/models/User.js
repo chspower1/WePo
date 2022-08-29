@@ -110,7 +110,10 @@ class User {
     return updatedView;
   }
 
-
+  // 검색
+  static async search(searchString) {
+    return UserModel.find({$text: {$search: searchString}})
+  }
 
 }
 

@@ -246,8 +246,8 @@ userAuthRouter.get("/search/:toSearch", login_required, async function (req, res
     try {
         // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
         const toSearch = req.params.toSearch
-        console.log(toSearch)
-        res.status(200).send(toSearch);
+        const results = await User.search(toSearch)
+        res.status(200).send(results);
     } catch (error) {
         next(error);
     }
