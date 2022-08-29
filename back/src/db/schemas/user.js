@@ -76,6 +76,7 @@ UserSchema.pre('save', async function () {
   this.set({ userId: sequence.value });
 });
 
+UserSchema.index({'$**': 'text'});
 
 const UserModel = model("User", UserSchema);
 
