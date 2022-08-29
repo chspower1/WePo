@@ -54,7 +54,7 @@ export async function createtUser({ email, password, name }: IUser) {
 //유저 정보 불러오기
 export async function getUsers() {
     try {
-        const { data: users } = await axios.get(`${BASE_URL}/userlist`, {
+        const { data: users } = await axios.get(`${BASE_URL}/user/list`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -67,7 +67,7 @@ export async function getUsers() {
 //유저 리스트 정보 불러오기
 export async function getUser(userId: number) {
     try {
-        const { data } = await axios.get(`${BASE_URL}/users/${userId}`, {
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -87,7 +87,7 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
         await axios
             .put(
-                `${BASE_URL}/users/${userId}`,
+                `${BASE_URL}/user/${userId}`,
                 { ...data },
                 {
                     headers: {

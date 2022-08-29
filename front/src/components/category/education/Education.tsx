@@ -44,6 +44,7 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
         setIsAddFormActive((current) => !current);
     }
 
+    //드래그 시
     const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
         console.log(draggableId, destination, source, "학력", educations);
 
