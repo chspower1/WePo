@@ -178,11 +178,7 @@ export async function mutationCategory(
     newCategories: IProject[] | IAward[] | ICertificate[] | IEducation[]
 ) {
     try {
-        console.log(
-            "#####################################################",
-            sessionStorage.getItem("userToken")
-        );
-        console.log(userId, newCategories);
+        console.log("보내는값", userId, newCategories);
         await axios.put(`${BASE_URL}/${category}`, {
             data: { userId, newCategories },
             headers: {
@@ -190,10 +186,6 @@ export async function mutationCategory(
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
-        console.log(
-            "#####################################################",
-            sessionStorage.getItem("userToken")
-        );
     } catch (err) {
         console.log(err);
     }

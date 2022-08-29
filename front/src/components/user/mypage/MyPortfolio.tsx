@@ -26,17 +26,18 @@ function MyPortfolio() {
     const isLogin = useRecoilValue(isLoginState);
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { isLoading } = useQuery(["newCurUser"], () => getUser(curUser?.userId!), {
-        onSuccess(data) {
-            setCurUser((prev) => ({ ...prev, ...data! }));
-            console.log(curUser);
-            console.log(curUser?.awards);
+        onSuccess(user) {
+            setEducations(user?.educations!);
+            setAwards(user?.awards!);
+            setCertificates(user?.certificates!);
+            setProjects(user?.projects!);
         },
     });
 
-    const [educations, setEducations] = useState<IEducation[]>(curUser?.educations!);
-    const [awards, setAwards] = useState<IAward[]>(curUser?.awards!);
-    const [certificates, setCertificates] = useState<ICertificate[]>(curUser?.certificates!);
-    const [projects, setProjects] = useState<IProject[]>(curUser?.projects!);
+    const [educations, setEducations] = useState<IEducation[]>([]);
+    const [awards, setAwards] = useState<IAward[]>([]);
+    const [certificates, setCertificates] = useState<ICertificate[]>([]);
+    const [projects, setProjects] = useState<IProject[]>([]);
 
     useEffect(() => {
         if (!isLogin) {
@@ -44,8 +45,9 @@ function MyPortfolio() {
         }
     }, [isLogin]);
 
+    useEffect(() => {}, [educations, projects, certificates, awards]);
     //드래그 시
-    const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    const onDragEnd = async ({ draggableId, destination, source }: DropResult) => {
         console.log(draggableId, destination, source);
 
         //state
@@ -55,11 +57,14 @@ function MyPortfolio() {
                 const education = resultEducations[source.index];
                 resultEducations.splice(source.index, 1);
                 resultEducations.splice(destination?.index!, 0, education);
+                console.log("바꾸고 값 저장 전", resultEducations);
+                mutationCategory(curUser?.userId!, Category.education, resultEducations);
                 return resultEducations;
             });
+
+            console.log("set하고 나온 educations", educations);
             //API요청
-            mutationCategory(curUser?.userId!, Category.education, educations);
-            console.log(educations);
+            // mutationCategory(curUser?.userId!, Category.education, educations);
         }
         if (destination?.droppableId === "awards") {
             setEducations((prev) => {
