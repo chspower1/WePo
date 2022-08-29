@@ -1,35 +1,37 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { IProject } from "../../atoms";
-import { updateProject } from "../../api/api";
-import {
-    MvpContentName,
-    MvpAddInput,
-    MvpAddInputBox,
-    RequiredLabel,
-    Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+import { IProject } from "@/atoms";
+import { Category, updateData } from "@api/api";
+import * as ProjectStyled from "@styledComponents/CategoryStyled";
+import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
 
+interface IProjectEditFormProps {
+    index: number;
+    projects: IProject[];
+    setProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+    setTargetIndex: React.Dispatch<React.SetStateAction<Number | null | undefined>>;
+    userId: number;
+    projectId: string;
+}
 export function ProjectEditForm({
     index,
     projects,
     setProjects,
-    setEditing,
     setIsEditing,
     setTargetIndex,
     userId,
     projectId,
-}: any) {
+}: IProjectEditFormProps) {
     const {
         register,
         handleSubmit,
-        formState: { isSubmitting, errors },
-    } = useForm<IProject>();
+        formState: { errors },
+    } = useForm<IProject>({ mode: "onChange" });
 
     const onvalid = (data: IProject) => {
-        updateProject(data, userId, projectId);
-        setProjects((project: any) => {
+        updateData(data, Category.project, userId, projectId);
+        setProjects((project) => {
             const newProjects = [...project];
             newProjects[index] = { ...data, userId, projectId };
             return newProjects;
@@ -39,38 +41,38 @@ export function ProjectEditForm({
     };
     return (
         <form onSubmit={handleSubmit(onvalid)}>
-            <MvpAddInputBox>
+            <ProjectStyled.AddInputBox>
                 <p style={{ position: "absolute", right: "20px", top: "20px" }}>
-                    <RequiredLabel>*</RequiredLabel> 필수사항
+                    <ProjectStyled.RequiredLabel>*</ProjectStyled.RequiredLabel> 필수사항
                 </p>
-                <MvpContentName>
-                    프로젝트 명 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+                <ProjectStyled.ContentName>
+                    프로젝트 명 <ProjectStyled.RequiredLabel>*</ProjectStyled.RequiredLabel>
+                </ProjectStyled.ContentName>
+                <ProjectStyled.AddInput
                     type="text"
                     id="project-title"
                     defaultValue={projects[index].title}
                     {...register("title", {
                         required: "프로젝트명을 입력해주세요",
                     })}
-                ></MvpAddInput>
+                ></ProjectStyled.AddInput>
                 {errors.title && (
                     <ErrMsg>
                         <DangerIcon />
                         {errors.title.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox style={{ display: "block" }}>
-                <MvpContentName>
-                    프로젝트 기간 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </ProjectStyled.AddInputBox>
+            <ProjectStyled.AddInputBox style={{ display: "block" }}>
+                <ProjectStyled.ContentName>
+                    프로젝트 기간 <ProjectStyled.RequiredLabel>*</ProjectStyled.RequiredLabel>
+                </ProjectStyled.ContentName>
+                <ProjectStyled.AddInput
                     type="date"
                     width="100"
                     maxLength={2}
                     id="project-startDate"
-                    defaultValue={projects[index].startDate.slice(0,10)}
+                    defaultValue={String(projects[index].startDate).slice(0, 10)}
                     placeholder="프로젝트 시작기간"
                     {...register("startDate", {
                         required: "기간을 입력해주세요",
@@ -79,12 +81,12 @@ export function ProjectEditForm({
                         //     message: "20220101 형식으로 작성해주세요",
                         // },
                     })}
-                ></MvpAddInput>
+                ></ProjectStyled.AddInput>
                 <span style={{ margin: "0  5px 0 5px" }}>-</span>
-                <MvpAddInput
+                <ProjectStyled.AddInput
                     type="date"
                     id="project-endDate"
-                    defaultValue={projects[index].endDate.slice(0,10)}
+                    defaultValue={String(projects[index].endDate).slice(0, 10)}
                     placeholder="프로젝트 종료기간"
                     {...register("endDate", {
                         required: "기간을 입력해주세요",
@@ -93,7 +95,7 @@ export function ProjectEditForm({
                         //     message: "20220101 형식으로 작성해주세요",
                         // },
                     })}
-                ></MvpAddInput>
+                ></ProjectStyled.AddInput>
                 {(errors.startDate && (
                     <ErrMsg>
                         <DangerIcon />
@@ -106,29 +108,29 @@ export function ProjectEditForm({
                             {errors.endDate.message}
                         </ErrMsg>
                     ))}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>간단한 설명</MvpContentName>
-                <MvpAddInput
+            </ProjectStyled.AddInputBox>
+            <ProjectStyled.AddInputBox>
+                <ProjectStyled.ContentName>간단한 설명</ProjectStyled.ContentName>
+                <ProjectStyled.AddInput
                     type="text"
                     id="project-description"
                     defaultValue={projects[index].description}
                     placeholder="추가설명"
                     {...register("description")}
-                ></MvpAddInput>
-            </MvpAddInputBox>
+                ></ProjectStyled.AddInput>
+            </ProjectStyled.AddInputBox>
             <div style={{ float: "right", marginBottom: "10px" }}>
-                <Button type="submit" color="#3687FF">
+                <ProjectStyled.Button type="submit" color="#3687FF">
                     수정
-                </Button>
-                <Button
+                </ProjectStyled.Button>
+                <ProjectStyled.Button
                     onClick={() => {
                         setIsEditing(false);
                         setTargetIndex(null);
                     }}
                 >
                     취소
-                </Button>
+                </ProjectStyled.Button>
             </div>
         </form>
     );

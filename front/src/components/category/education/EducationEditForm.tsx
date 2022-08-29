@@ -1,17 +1,17 @@
-import { EduStatus, IEducation } from "../../atoms";
+import { EduStatus, IEducation } from "@/atoms";
 import { useForm } from "react-hook-form";
-import {
-    MvpContentName,
-    MvpAddInput,
-    MvpAddInputBox,
-    RequiredLabel,
-    Button,
-    MajorGraduate,
-    MajorGraduateLabel,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
-import { updateEducation } from "../../api/api";
-
+import * as EducationStyled from "@styledComponents/CategoryStyled";
+import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
+import { Category, updateData } from "@api/api";
+interface IEducationEditFormProps {
+    index: number;
+    educations: IEducation[];
+    setEducations: React.Dispatch<React.SetStateAction<IEducation[]>>;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+    setTargetIndex: React.Dispatch<React.SetStateAction<Number | null | undefined>>;
+    userId: number;
+    eduId: string;
+}
 export default function EducationEditForm({
     index,
     educations,
@@ -20,7 +20,7 @@ export default function EducationEditForm({
     setTargetIndex,
     userId,
     eduId,
-}: any) {
+}: IEducationEditFormProps) {
     const {
         register,
         handleSubmit,
@@ -28,9 +28,9 @@ export default function EducationEditForm({
     } = useForm<IEducation>({ mode: "onChange" });
 
     const onvalid = (data: IEducation) => {
-        updateEducation(data, userId, eduId);
-        setEducations((education: any) => {
-            const newEducations = [...education];
+        updateData(data, Category.education, userId, eduId);
+        setEducations((prev) => {
+            const newEducations = [...prev];
             newEducations[index] = { ...data, userId, eduId };
             return newEducations;
         });
@@ -41,14 +41,14 @@ export default function EducationEditForm({
 
     return (
         <form onSubmit={handleSubmit(onvalid)}>
-            <MvpAddInputBox>
+            <EducationStyled.AddInputBox>
                 <p style={{ position: "absolute", right: "20px", top: "20px" }}>
-                    <RequiredLabel>*</RequiredLabel> 필수사항
+                    <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel> 필수사항
                 </p>
-                <MvpContentName>
-                    학교 이름 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+                <EducationStyled.ContentName>
+                    학교 이름 <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel>
+                </EducationStyled.ContentName>
+                <EducationStyled.AddInput
                     type="text"
                     placeholder="학교 이름"
                     defaultValue={`${current.school}`}
@@ -66,12 +66,12 @@ export default function EducationEditForm({
                         {errors.school.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    전공 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </EducationStyled.AddInputBox>
+            <EducationStyled.AddInputBox>
+                <EducationStyled.ContentName>
+                    전공 <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel>
+                </EducationStyled.ContentName>
+                <EducationStyled.AddInput
                     type="text"
                     placeholder="전공"
                     defaultValue={`${current.major}`}
@@ -82,49 +82,55 @@ export default function EducationEditForm({
                             message: "자신의 전공을 입력하세요!",
                         },
                     })}
-                ></MvpAddInput>
+                ></EducationStyled.AddInput>
                 {errors.major && (
                     <ErrMsg>
                         <DangerIcon />
                         {errors.major.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
+            </EducationStyled.AddInputBox>
+            <EducationStyled.AddInputBox>
                 <div style={{ marginBottom: "30px" }}>
-                    <MvpContentName>
-                        졸업여부 <RequiredLabel>*</RequiredLabel>{" "}
-                    </MvpContentName>
-                    <MajorGraduate
+                    <EducationStyled.ContentName>
+                        졸업여부 <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel>{" "}
+                    </EducationStyled.ContentName>
+                    <EducationStyled.MajorGraduate
                         value={EduStatus.attending}
                         id="attending"
                         defaultChecked={current.status === "재학중"}
                         {...register("status", { required: "필수 입력입니다." })}
                     />
-                    <MajorGraduateLabel htmlFor="attending">
+                    <EducationStyled.MajorGraduateLabel htmlFor="attending">
                         {EduStatus.attending}
-                    </MajorGraduateLabel>
-                    <MajorGraduate
+                    </EducationStyled.MajorGraduateLabel>
+                    <EducationStyled.MajorGraduate
                         value={EduStatus.bachelor}
                         id="bachelor"
                         defaultChecked={current.status === "학사졸업"}
                         {...register("status", { required: "필수 입력입니다." })}
                     />
-                    <MajorGraduateLabel htmlFor="bachelor">{EduStatus.bachelor}</MajorGraduateLabel>
-                    <MajorGraduate
+                    <EducationStyled.MajorGraduateLabel htmlFor="bachelor">
+                        {EduStatus.bachelor}
+                    </EducationStyled.MajorGraduateLabel>
+                    <EducationStyled.MajorGraduate
                         value={EduStatus.master}
                         id="master"
                         defaultChecked={current.status === "석사졸업"}
                         {...register("status", { required: "필수 입력입니다." })}
                     />
-                    <MajorGraduateLabel htmlFor="master">{EduStatus.master}</MajorGraduateLabel>
-                    <MajorGraduate
+                    <EducationStyled.MajorGraduateLabel htmlFor="master">
+                        {EduStatus.master}
+                    </EducationStyled.MajorGraduateLabel>
+                    <EducationStyled.MajorGraduate
                         value={EduStatus.doctor}
                         id="doctor"
                         defaultChecked={current.status === "박사졸업"}
                         {...register("status", { required: "필수 입력입니다." })}
                     />
-                    <MajorGraduateLabel htmlFor="doctor">{EduStatus.doctor}</MajorGraduateLabel>
+                    <EducationStyled.MajorGraduateLabel htmlFor="doctor">
+                        {EduStatus.doctor}
+                    </EducationStyled.MajorGraduateLabel>
                     <div style={{ marginTop: "10px" }}>
                         {errors.status && (
                             <ErrMsg>
@@ -134,19 +140,19 @@ export default function EducationEditForm({
                         )}
                     </div>
                 </div>
-            </MvpAddInputBox>
+            </EducationStyled.AddInputBox>
             <div style={{ float: "right", marginBottom: "10px" }}>
-                <Button type="submit" color="#3687FF">
+                <EducationStyled.Button type="submit" color="#3687FF">
                     수정
-                </Button>
-                <Button
+                </EducationStyled.Button>
+                <EducationStyled.Button
                     onClick={() => {
                         setIsEditing(false);
                         setTargetIndex(null);
                     }}
                 >
                     취소
-                </Button>
+                </EducationStyled.Button>
             </div>
         </form>
         // <div>

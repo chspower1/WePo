@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@api/*": [
+                "./src/api/*"
+            ],
+            "@styledComponents/*": [
+                "./src/components/styledComponents/*"
+            ],
+            "@certificate/*": [
+                "./src/components/category/certificate/*"
+            ],
+            "@project/*": [
+                "./src/components/category/project/*"
+            ],
+            "@award/*": [
+                "./src/components/category/award/*"
+            ],
+            "@education/*": [
+                "./src/components/category/education/*"
+            ],
+            "@user/*": [
+                "./src/components/user/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@mypage/*": [
+                "./src/components/user/mypage/*"
+            ],
+            "@/*": [
+                "./src/*"
+            ]
+        }
+    }
+}
