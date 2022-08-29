@@ -62,11 +62,14 @@ export default function RegisterForm() {
             message: "비밀번호를 한번 더 입력해 주세요",
         });
     }, []);
-    function handleViewButton(e:React.FormEvent<HTMLFormElement>){
+    function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
         e.preventDefault();
         setViewPassword(prev => !prev);
     }
-
+    function handleViewCheckButton(e:React.FormEvent<HTMLButtonElement>){
+        e.preventDefault();
+        setViewCheckPassword(prev => !prev);
+    }
     return (
         <RegisterStyled.Root>
             <RegisterStyled.RegisterWrapper>
@@ -134,7 +137,7 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton onClick={(e)=> {e.preventDefault();setViewPassword(prev => !prev);}}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton onClick={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.password ? (
                                 <RegisterStyled.ErrMsg>
@@ -165,7 +168,7 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton onClick={(e)=> {e.preventDefault();setViewCheckPassword(prev => !prev);}}>{viewCheckPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton onClick={handleViewCheckButton}>{viewCheckPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.checkPassword ? (
                                 <RegisterStyled.ErrMsg>

@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserLogin } from "@api/api";
 import { isLoginState, IUser } from "../../atoms";
@@ -50,7 +50,10 @@ export default function LoginForm() {
             message: "비밀번호를 입력해 주세요",
         });
     }, [isLogin]);
-
+    function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
+        e.preventDefault();
+        setViewPassword(prev => !prev);
+    }
     return (
         <LoginStyled.Root>
             <LoginStyled.Wrapper>
@@ -91,7 +94,7 @@ export default function LoginForm() {
                                         },
                                     })}
                                 />
-                                <LoginStyled.ViewButton onClick={(e)=> {e.preventDefault();setViewPassword(prev => !prev);}}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</LoginStyled.ViewButton>
+                                <LoginStyled.ViewButton onClick={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</LoginStyled.ViewButton>
                             </LoginStyled.InputInnerBox>
                             {errors.password && (
                                     <LoginStyled.ErrMsg>
