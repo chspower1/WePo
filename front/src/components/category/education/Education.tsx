@@ -22,6 +22,7 @@ import { PlusSquareFill } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 import { Category, deleteData } from "@api/api";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 export default function Education({ educationsProps }: { educationsProps: IEducation[] }) {
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
@@ -53,6 +54,8 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
     function handleIsAddFormActive() {
         setIsAddFormActive((current) => !current);
     }
+
+    const onDragEnd = () => {};
     return (
         <MvpContainer>
             <MvpTitleBox>
@@ -68,49 +71,57 @@ export default function Education({ educationsProps }: { educationsProps: IEduca
                 )}
                 {!isAddFormActive &&
                     educations?.map((education, index) => (
-                        <MvpContentBox key={index}>
-                            {targetIndex !== index && (
-                                <>
-                                    <MvpContentAccent>{education.school}</MvpContentAccent>
-                                    <div style={{ display: "flex" }}>
-                                        <MvpContentDetail style={{ marginRight: "10px" }}>
-                                            {education.major}
-                                        </MvpContentDetail>
-                                        <MvpContentDetail>({education.status})</MvpContentDetail>
-                                    </div>
-                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
+                        <DragDropContext onDragEnd={onDragEnd}>
+                            <Droppable>
+                                <MvpContentBox key={index}>
+                                    {targetIndex !== index && (
                                         <>
-                                            <MvpEditButton
-                                                onClick={() => {
-                                                    setIsEditing(true);
-                                                    setTargetIndex(index);
-                                                }}
-                                            >
-                                                <Pencil color="#3867FF" />
-                                            </MvpEditButton>
-                                            <MvpDeleteButton
-                                                onClick={() => {
-                                                    onClickDeleteBtn(education, index);
-                                                }}
-                                            >
-                                                <Trash2 color="#3867FF" />
-                                            </MvpDeleteButton>
+                                            <MvpContentAccent>{education.school}</MvpContentAccent>
+                                            <div style={{ display: "flex" }}>
+                                                <MvpContentDetail style={{ marginRight: "10px" }}>
+                                                    {education.major}
+                                                </MvpContentDetail>
+                                                <MvpContentDetail>
+                                                    ({education.status})
+                                                </MvpContentDetail>
+                                            </div>
+                                            {curUser &&
+                                                pathName === "/mypage" &&
+                                                targetIndex !== index && (
+                                                    <>
+                                                        <MvpEditButton
+                                                            onClick={() => {
+                                                                setIsEditing(true);
+                                                                setTargetIndex(index);
+                                                            }}
+                                                        >
+                                                            <Pencil color="#3867FF" />
+                                                        </MvpEditButton>
+                                                        <MvpDeleteButton
+                                                            onClick={() => {
+                                                                onClickDeleteBtn(education, index);
+                                                            }}
+                                                        >
+                                                            <Trash2 color="#3867FF" />
+                                                        </MvpDeleteButton>
+                                                    </>
+                                                )}
                                         </>
                                     )}
-                                </>
-                            )}
-                            {isEditing && targetIndex == index && (
-                                <EducationEditForm
-                                    index={index}
-                                    educations={educations}
-                                    setEducations={setEducations}
-                                    setIsEditing={setIsEditing}
-                                    userId={education.userId!}
-                                    eduId={education.eduId}
-                                    setTargetIndex={setTargetIndex}
-                                />
-                            )}
-                        </MvpContentBox>
+                                    {isEditing && targetIndex == index && (
+                                        <EducationEditForm
+                                            index={index}
+                                            educations={educations}
+                                            setEducations={setEducations}
+                                            setIsEditing={setIsEditing}
+                                            userId={education.userId!}
+                                            eduId={education.eduId}
+                                            setTargetIndex={setTargetIndex}
+                                        />
+                                    )}
+                                </MvpContentBox>
+                            </Droppable>
+                        </DragDropContext>
                     ))}
             </MvpContentContainer>
             {curUser && pathName === "/mypage" && !isAddFormActive && (
