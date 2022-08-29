@@ -144,9 +144,6 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         setOnEdit((cur) => !cur);
     };
 
-
-
-    
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setCurLikes((prev) => {
@@ -159,7 +156,6 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
             return updateCurUser as IUser;
         });
     };
-
     return (
         <>
             <ItemWrap>
