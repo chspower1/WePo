@@ -4,7 +4,6 @@ import {
     IAward,
     ICertificate,
     IEducation,
-    ILike,
     IProject,
     isLoginState,
     IUser,
@@ -87,7 +86,6 @@ export async function getUser(userId: number) {
 interface IUpdateUserProps {
     name?: string;
     description?: string;
-    likes?: ILike[];
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
@@ -107,6 +105,23 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
     }
 }
 
+export async function curUserToggleLike( userId:number) {
+    try{
+        await axios
+                .put(
+                    `${BASE_URL}/user/togglelike/${userId}`,
+                    {  },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                        }
+                    }
+                )
+    }catch(err){
+        console.log(err);
+    }
+}
 //카테고리
 export enum Category {
     project = "project",
@@ -178,7 +193,6 @@ export async function mutationCategory(
     newCategories: IProject[] | IAward[] | ICertificate[] | IEducation[]
 ) {
     try {
-        console.log("보내는값", userId, newCategories);
         await axios.put(`${BASE_URL}/${category}`, {
             data: { userId, newCategories },
             headers: {

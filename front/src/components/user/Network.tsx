@@ -3,8 +3,8 @@ import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
-import { getUsers } from "@api/api";
-import { isLoginState, usersState, checkedBoxValue, hopeJob } from "@/atoms";
+import { getUser, getUsers } from "@api/api";
+import { isLoginState, usersState, checkedBoxValue, hopeJob, IUser } from "@/atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
 
@@ -91,6 +91,7 @@ function Network() {
     const location = useLocation();
     const pathName = location.pathname;
     const [users, setUsers] = useRecoilState(usersState);
+    const [user, setUser] = useState<IUser | null>(null);
     const isLogin = useRecoilValue(isLoginState);
     const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
     const filterUsersState = useRecoilValue(hopeJob);
