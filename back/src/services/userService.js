@@ -129,6 +129,33 @@ class userAuthService {
 
     return User.updateView(userId);
   }
+
+
+  // 사용자 즐겨찾기 추가/삭제
+  static async toggleLike({userId, otherId}) {
+    const user = await User.findByUserId(userId);
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+      "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+    
+    // 아이디가 존재하면 즐겨찾기에서 삭제
+    if(user.likes.includes(otherId)){
+      const newValues = {
+        likes: user.likes.filter( id => id!==otherId )
+      }
+      return User.update({ userId, newValues })
+    }
+    
+    // 아이디가 없으면 즐겨찾기에 새로 추가
+    const newValues = {
+      likes: [ ...user.likes, otherId ]
+    }
+    console.log(newValues)
+    return User.update({ userId, newValues })
+  }
 }
 
 export { userAuthService };

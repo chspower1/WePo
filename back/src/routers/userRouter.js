@@ -163,6 +163,27 @@ userAuthRouter.get("/current", login_required, async function (req, res, next) {
     }
 });
 
+// id의 사용자 정보 불러오기
+userAuthRouter.get("/:id", login_required, async function (req, res, next) {
+    try {
+        const userId = parseInt(req.params.id);
+        const currentUserInfo = await userAuthService.getUserInfo(userId);
+
+        if (currentUserInfo.errorMessage) {
+            throw new Error(currentUserInfo.errorMessage);
+        }
+
+        // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
+        if (userId !== req["currentUserId"]) {
+            await userAuthService.increaseView(userId);
+        }
+
+        res.status(200).send(currentUserInfo);
+    } catch (error) {
+        next(error);
+    }
+});
+
 // id의 사용자 정보 update
 userAuthRouter.put("/:id", login_required, async function (req, res, next) {
     try {
@@ -203,22 +224,30 @@ userAuthRouter.put("/:id", login_required, async function (req, res, next) {
     }
 });
 
-// id의 사용자 정보 불러오기
-userAuthRouter.get("/:id", login_required, async function (req, res, next) {
+// id를 즐겨찾기에 추가/삭제
+userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, next) {
     try {
-        const userId = parseInt(req.params.id);
-        const currentUserInfo = await userAuthService.getUserInfo(userId);
+        // User authentication
+        const userId = req["currentUserId"]; // 현재 로그인 중인 UserId
+        const otherId = parseInt(req.params.id); // 추가/삭제할 id
 
-        if (currentUserInfo.errorMessage) {
-            throw new Error(currentUserInfo.errorMessage);
-        }
+        // 즐겨찾기 추가/삭제
+        const toggleDone = await userAuthService.toggleLike({userId, otherId})
 
+        res.status(200).json(toggleDone);
+    } catch (error) {
+        next(error);
+    }
+});
+
+
+// 검색하기-- 구현하기!!
+userAuthRouter.get("/search/:toSearch", login_required, async function (req, res, next) {
+    try {
         // currentUser와 조회되는 user가 다를 경우 조회된 user의 조회수 증가
-        if (userId !== req["currentUserId"]) {
-            await userAuthService.increaseView(userId);
-        }
-
-        res.status(200).send(currentUserInfo);
+        const toSearch = req.params.toSearch
+        console.log(toSearch)
+        res.status(200).send(toSearch);
     } catch (error) {
         next(error);
     }
