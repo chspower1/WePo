@@ -21,12 +21,13 @@ export interface IUser {
     projects?: IProject[];
     _v?: number;
 }
-export interface IField {
-    backEnd: boolean;
-    frontEnd: boolean;
-    dataAnalysis: boolean;
-    AI: boolean;
-}
+export type TField = [
+    backEnd: boolean,
+    frontEnd: boolean,
+    dataAnalysis: boolean,
+    AI: boolean,
+]
+
 export interface IEducation {
     _id?: string;
     eduId: string;
