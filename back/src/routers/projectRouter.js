@@ -39,15 +39,13 @@ projectRouter.post("/", login_required, async function (req, res, next) {
 });
 
 // 프로젝트 조회
-projectRouter.get("/list", async function (req, res, next) {
+projectRouter.get("/list", login_required, async function (req, res, next) {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
 
-    const userId = req.body.userId;
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+        
+    // userId가 들어오지 않았을 시 로그인한 유저의 정보 가져오기
+    const userId = req.query.userId ?? currentUserId; 
 
     // userId 매칭되는 것들 찾아오기
     const projectList = await projectService.getProjectsByUserId(userId);
