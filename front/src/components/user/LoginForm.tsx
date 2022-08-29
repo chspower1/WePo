@@ -9,12 +9,14 @@ import { isLoginState, IUser } from "../../atoms";
 import { curUserState } from "@/atoms";
 import * as LoginStyled from "@styledComponents/SignStyled";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
-
+import { EyeOffOutline,EyeOutline } from "styled-icons/evaicons-outline";
 export interface ILogin {
     email: string;
     password: string;
 }
+
 export default function LoginForm() {
+    const [viewPassword,setViewPassword] = useState(false);
     const {
         register,
         handleSubmit,
@@ -77,22 +79,25 @@ export default function LoginForm() {
                             )}
                         </LoginStyled.InputBox>
                         <LoginStyled.InputBox>
-                            <LoginStyled.Input
-                                type="password"
-                                placeholder="비밀번호를 입력하세요"
-                                {...register("password", {
-                                    required: "비밀번호를 입력해 주세요",
-                                    minLength: {
-                                        value: 4,
-                                        message: "비밀번호는 4글자 이상입니다!",
-                                    },
-                                })}
-                            />
+                            <LoginStyled.InputInnerBox>
+                                <LoginStyled.Input
+                                    type={viewPassword ? "text" : "password"}
+                                    placeholder="비밀번호를 입력하세요"
+                                    {...register("password", {
+                                        required: "비밀번호를 입력해 주세요",
+                                        minLength: {
+                                            value: 4,
+                                            message: "비밀번호는 4글자 이상입니다!",
+                                        },
+                                    })}
+                                />
+                                <LoginStyled.ViewButton onClick={(e)=> {e.preventDefault();setViewPassword(prev => !prev);}}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</LoginStyled.ViewButton>
+                            </LoginStyled.InputInnerBox>
                             {errors.password && (
-                                <LoginStyled.ErrMsg>
-                                    <LoginStyled.DangerIcon />
-                                    {errors.password.message}
-                                </LoginStyled.ErrMsg>
+                                    <LoginStyled.ErrMsg>
+                                        <LoginStyled.DangerIcon />
+                                        {errors.password.message}
+                                    </LoginStyled.ErrMsg>
                             )}
                         </LoginStyled.InputBox>
                         <LoginStyled.SubmitButtonBox>

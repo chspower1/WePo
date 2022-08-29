@@ -128,3 +128,16 @@ export const SuccessMsg = styled.p`
     color: #198754;
     margin: 0 0 0 5px;
 `;
+
+export const InputInnerBox = styled.div`
+    position:relative;
+`
+
+export const ViewButton = styled.button`
+    width:30px;
+    height:30px;
+    position:absolute;
+    right:5px;
+    top:50%;
+    transform:translateY(-70%);
+`

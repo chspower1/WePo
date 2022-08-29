@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
-import { useEffect } from "react";
+import { ReactEventHandler, useEffect,useState } from "react";
 import { createtUser } from "@api/api";
 import { usersState } from "@/atoms";
 import { IUser } from "@/atoms";
@@ -10,6 +10,7 @@ import { useQuery } from "react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
 import CheckFieldBox from "./CheckFieldBox";
+import { EyeOffOutline,EyeOutline } from "styled-icons/evaicons-outline";
 export interface IRegister {
     email: string;
     name: string;
@@ -20,6 +21,8 @@ export interface IRegister {
 
 export default function RegisterForm() {
     const [users, setUsers] = useRecoilState(usersState);
+    const [viewCheckPassword,setViewCheckPassword] = useState(false);
+    const [viewPassword,setViewPassword] = useState(false);
     const {
         register,
         handleSubmit,
@@ -59,6 +62,11 @@ export default function RegisterForm() {
             message: "비밀번호를 한번 더 입력해 주세요",
         });
     }, []);
+    function handleViewButton(e:React.FormEvent<HTMLFormElement>){
+        e.preventDefault();
+        setViewPassword(prev => !prev);
+    }
+
     return (
         <RegisterStyled.Root>
             <RegisterStyled.RegisterWrapper>
@@ -114,17 +122,20 @@ export default function RegisterForm() {
                             )}
                         </RegisterStyled.InputBox>
                         <RegisterStyled.InputBox>
-                            <RegisterStyled.Input
-                                type="password"
-                                placeholder="Password"
-                                {...register("password", {
-                                    required: "비밀번호를 입력해 주세요",
-                                    minLength: {
-                                        value: 4,
-                                        message: "비밀번호는 4글자 이상입니다!",
-                                    },
-                                })}
-                            />
+                            <RegisterStyled.InputInnerBox>
+                                <RegisterStyled.Input
+                                    type={viewPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    {...register("password", {
+                                        required: "비밀번호를 입력해 주세요",
+                                        minLength: {
+                                            value: 4,
+                                            message: "비밀번호는 4글자 이상입니다!",
+                                        },
+                                    })}
+                                />
+                                <RegisterStyled.ViewButton onClick={(e)=> {e.preventDefault();setViewPassword(prev => !prev);}}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                            </RegisterStyled.InputInnerBox>
                             {errors.password ? (
                                 <RegisterStyled.ErrMsg>
                                     <RegisterStyled.DangerIcon></RegisterStyled.DangerIcon>
@@ -137,22 +148,25 @@ export default function RegisterForm() {
                             )}
                         </RegisterStyled.InputBox>
                         <RegisterStyled.InputBox>
-                            <RegisterStyled.Input
-                                type="password"
-                                placeholder="Check your Password"
-                                {...register("checkPassword", {
-                                    required: "비밀번호를 한번 더 입력해 주세요",
-                                    validate: {
-                                        mathchesPreviousPassword: (value) => {
-                                            const { password } = getValues();
-                                            return (
-                                                password === value ||
-                                                "비밀번호가 일치하지 않습니다."
-                                            );
+                            <RegisterStyled.InputInnerBox>
+                                <RegisterStyled.Input
+                                    type={viewCheckPassword ? "text" : "password"}
+                                    placeholder="Check your Password"
+                                    {...register("checkPassword", {
+                                        required: "비밀번호를 한번 더 입력해 주세요",
+                                        validate: {
+                                            mathchesPreviousPassword: (value) => {
+                                                const { password } = getValues();
+                                                return (
+                                                    password === value ||
+                                                    "비밀번호가 일치하지 않습니다."
+                                                );
+                                            },
                                         },
-                                    },
-                                })}
-                            />
+                                    })}
+                                />
+                                <RegisterStyled.ViewButton onClick={(e)=> {e.preventDefault();setViewCheckPassword(prev => !prev);}}>{viewCheckPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                            </RegisterStyled.InputInnerBox>
                             {errors.checkPassword ? (
                                 <RegisterStyled.ErrMsg>
                                     <RegisterStyled.DangerIcon></RegisterStyled.DangerIcon>
