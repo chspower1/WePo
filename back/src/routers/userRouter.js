@@ -3,28 +3,110 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import { emailService } from "../services/emailService";
+import { User } from "../db/models/User"
+
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/register", async function (req, res, next) {
+// 회원가입 - 이메일 인증번호 전송
+userAuthRouter.post("/user/register/email-send", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
         }
 
         // req (request) 에서 데이터 가져오기
-        const { name, email, password, field } = req.body;
+        const { name, email } = req.body;
+
+        // email 중복확인
+        const user = await User.findByEmail({ email });
+        if (user) {
+            throw new Error("이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.");
+        }
+
+        // 인증 이메일 전송
+        const codeAdded = await emailService.createAuthCode(email)
+
+        const mailContent = {
+            from: '"Limit" <wnsdml0120@gmail.com>', // sender address
+            to: email, // list of receivers: "*@*.*, *@*.*"
+            subject: "WePo 회원가입 인증번호", // Subject line
+            text: `${name}님의 인증번호는 ${codeAdded.authCode}입니다.`, // plain text body
+            html: `<b>${name}<b/>님의 인증번호는<br/>
+                    <h3>${codeAdded.authCode}</h3>입니다.`, // html body
+          }
+        
+        const emailSent = await emailService.sendEmail(mailContent)
+        if(emailSent.rejected.length!==0){
+            throw new Error("이메일 전송을 실패했습니다.")
+        }
+
+        res.status(201).json(codeAdded.authCode);
+    } catch (error) {
+        next(error);
+    }
+});
+
+// 회원가입 - 이메일 인증번호 확인
+userAuthRouter.post("/user/register/email-check", async function (req, res, next) {
+    try {
+        if (is.emptyObject(req.body)) {
+            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        }
+
+        // req (request) 에서 데이터 가져오기
+        const { email, authCode } = req.body;
+        
+        // 입력된 authCode DB와 비교
+        const gotAuthCode = await emailService.getAuthCode(email)
+        if(gotAuthCode!==authCode){
+            throw new Error("인증번호가 틀렸습니다.")
+        }
+
+        // 인증 성공 시 email-authCode pair DB에서 삭제
+        await emailService.deleteAuthCode(email)
+
+        res.status(201).json("인증성공");
+    } catch (error) {
+        next(error);
+    }
+});      
+
+// 회원가입 - 최종 단계
+userAuthRouter.post("/user/register", async function (req, res, next) {
+    try {
+        if (is.emptyObject(req.body)) {
+            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        }
+
+        // req (request) 에서 데이터 가져오기
+        const { name, email, password } = req.body;
 
         // 위 데이터를 유저 db에 추가하기
         const newUser = await userAuthService.addUser({
             name,
             email,
             password,
-            field
         });
 
         if (newUser.errorMessage) {
             throw new Error(newUser.errorMessage);
+        }
+
+        // 회원 가입 완료 이메일 전송
+        const mailContent = {
+            from: '"Limit" <wnsdml0120@gmail.com>', // sender address
+            to: email, // list of receivers: "*@*.*, *@*.*"
+            subject: "환영합니다!", // Subject line
+            text: `${name}님, WePo에 가입하신 걸 축하드립니다!`, // plain text body
+            html: `<h2><b>${name}<b/>님,</h2><br/>
+                    WePo에 가입하신 걸 축하드립니다!`, // html body
+          }
+        
+        const emailSent = await emailService.sendEmail(mailContent)
+        if(emailSent.rejected!==[]){
+            throw new Error("이메일 전송을 실패했습니다.")
         }
 
         res.status(201).json(newUser);
