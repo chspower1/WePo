@@ -68,7 +68,6 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                     awards?.map((award, index) => (
                         <AwardStyled.ContentBox key={index}>
                             <DragDropContext onDragEnd={onDragEnd}>
-                                <Droppable droppableId="one">
                                     {targetIndex !== index && (
                                         <>
                                             <div style={{ display: "flex", alignItems: "center" }}>
@@ -128,7 +127,6 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                                             setTargetIndex={setTargetIndex}
                                         />
                                     )}
-                                </Droppable>
                             </DragDropContext>
                         </AwardStyled.ContentBox>
                     ))}

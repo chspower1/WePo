@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { curUserState, IUser } from "@/atoms";
+import { curUserState,usersState , IUser } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
 import { updateUser } from "@api/api";
+import { Star } from "@styled-icons/fluentui-system-regular/Star";
+import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 
 const ItemWrap = styled.div`
     min-width: 350px;
@@ -21,6 +23,7 @@ const InfoBox = styled.div`
     margin-bottom: 40px;
 `;
 const ProfileImageBox = styled.div`
+    position:relative;
     transform: translateY(-40px);
     width: 90px;
     height: 90px;
@@ -32,6 +35,22 @@ const ProfileImageBox = styled.div`
 const UserInfoTxt = styled.div`
     margin-left: 20px;
 `;
+const ProfileImg = styled.img`
+    position:relative;
+    z-index:1;
+`
+const ImageChangeInput = styled.input`
+position:absolute;
+z-index:2;
+left:0;
+top:0;
+text-indent: -99999px;
+display: inline-flex;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, .2);
+cursor: pointer;
+`
 const NameTxt = styled.h2`
     font-size: 18px;
     font-weight: bold;
@@ -60,7 +79,9 @@ const DescTxt = styled.p`
 `;
 
 const EditOrDetailBtnBox = styled.div`
-    text-align: right;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
@@ -72,18 +93,41 @@ const DetailBtn = styled.button`
     text-align: center;
     color: #5573df;
 `;
+const LikeBtnBox = styled.div`
+    width:25px;
+    height:25px;
+    border: 1px solid #000;
+border-radius: 5px;
+`
+const LikeBtn = styled.button`
+    display:flex;
+    padding:0;
+    width:100%;
+    height:100%;
+    justify-content: center;
+    align-items: center;
+`
+const EmptyLikeButton = styled(Star)`
+    color:black;
+    width:80%;
+`
+const FullLikeButton = styled(StarEmphasis)`
+    color:black;
+    width:80%;
+`
 
 interface IUserFormValue {
     reName: string;
     reDescription: string;
 }
 
-function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
+function UserCard({ _id, name, email, description, field, userId, picture}: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
+    const foundLikeUser = curUser?.likes.find(user => user.userId === userId)
     const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
@@ -98,13 +142,22 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
+    const onClickLike = (e: React.FormEvent<HTMLButtonElement>)=>{
+        e.preventDefault();
+        setCurUser((prev) => {
+            const updateCurUser = { ...prev };
+            updateCurUser?.likes?.push({userId})
+            return updateCurUser as IUser;
+        });
+    }
+    console.log("curUser",curUser)
     return (
         <>
             <ItemWrap>
                 <form onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <img src={picture} alt="profileImage" />
+                            <ProfileImg src={picture} alt="profileImage" />
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>
@@ -151,12 +204,19 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                     </DescBox>
                     <EditOrDetailBtnBox>
                         {pathName === `/network` && (
-                            <Link to={`${userId}`}>
-                                <DetailBtn title="더보기">
-                                    더보기
-                                    <ArrowIcon />
-                                </DetailBtn>
-                            </Link>
+                            <>
+                                <LikeBtnBox>
+                                    <LikeBtn onClick={onClickLike}>
+                                        {foundLikeUser ? <FullLikeButton/> : <EmptyLikeButton/>}
+                                    </LikeBtn>
+                                </LikeBtnBox>
+                                <Link to={`${userId}`}>
+                                    <DetailBtn title="더보기">
+                                        더보기
+                                        <ArrowIcon />
+                                    </DetailBtn>
+                                </Link>
+                            </>
                         )}
                         {onEdit ||
                             (_id === curUser?._id && pathName === "/mypage" && (

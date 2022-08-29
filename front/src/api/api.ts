@@ -4,6 +4,7 @@ import {
     IAward,
     ICertificate,
     IEducation,
+    ILike,
     IProject,
     isLoginState,
     IUser,
@@ -77,8 +78,9 @@ export async function getUser(userId: number) {
     }
 }
 interface IUpdateUserProps {
-    name: string;
-    description: string;
+    name?: string;
+    description?: string;
+    likes?:ILike[];
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
@@ -92,7 +94,7 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
                     Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 },
             }
-        );
+        ).then(res=>console.log("res",res));
     } catch (err) {
         console.log(err);
     }
