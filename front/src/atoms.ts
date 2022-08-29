@@ -8,7 +8,7 @@ export interface IUser {
     password?: string;
     picture?: string;
     description: string;
-    field: EHopeField[];
+    field: TField;
     likes: any[];
     views: number;
     userId: number;
@@ -18,13 +18,7 @@ export interface IUser {
     projects?: IProject[];
     _v?: number;
 }
-export enum EHopeField {
-    undefined = "미정",
-    backEnd = "백엔드",
-    frontEnd = "프론트엔드",
-    dataAnalysis = "데이터분석",
-    AI = "인공지능",
-}
+export type TField = [backEnd: boolean, frontEnd: boolean, dataAnalysis: boolean, AI: boolean];
 export interface IEducation {
     _id?: string;
     eduId: string;
@@ -131,7 +125,7 @@ export const hopeJob = selector({
         let userState = get(usersState);
         for (const duty of currentHope) {
             userState = userState.filter((elem) => {
-                return elem.field.findIndex((elem) => elem === duty) >= 0;
+                return elem.field.findIndex((elem) => elem === true) >= 0;
             });
         }
         return userState;

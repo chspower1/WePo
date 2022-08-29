@@ -68,62 +68,67 @@ export default function Award({ awardsProps }: { awardsProps: IAward[] }) {
                     awards?.map((award, index) => (
                         <AwardStyled.ContentBox key={index}>
                             <DragDropContext onDragEnd={onDragEnd}>
-                                {targetIndex !== index && (
-                                    <>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <AwardStyled.ContentAccent>
-                                                {award.title}
-                                            </AwardStyled.ContentAccent>
-                                            <AwardStyled.ContentDetail
-                                                style={{ marginTop: "20px", marginLeft: "20px" }}
-                                            >
-                                                {award.grade}
+                                <Droppable droppableId="one">
+                                    {targetIndex !== index && (
+                                        <>
+                                            <div style={{ display: "flex", alignItems: "center" }}>
+                                                <AwardStyled.ContentAccent>
+                                                    {award.title}
+                                                </AwardStyled.ContentAccent>
+                                                <AwardStyled.ContentDetail
+                                                    style={{
+                                                        marginTop: "20px",
+                                                        marginLeft: "20px",
+                                                    }}
+                                                >
+                                                    {award.grade}
+                                                </AwardStyled.ContentDetail>
+                                            </div>
+                                            <AwardStyled.ContentDetail>
+                                                {award.org}
                                             </AwardStyled.ContentDetail>
-                                        </div>
-                                        <AwardStyled.ContentDetail>
-                                            {award.org}
-                                        </AwardStyled.ContentDetail>
-                                        <AwardStyled.ContentDate>
-                                            {String(award.date).slice(0, 10)}
-                                        </AwardStyled.ContentDate>
-                                        <AwardStyled.ContentDetail>
-                                            {award.description}
-                                        </AwardStyled.ContentDetail>
-                                        {curUser &&
-                                            pathName === "/mypage" &&
-                                            targetIndex !== index && (
-                                                <>
-                                                    <AwardStyled.EditButton
-                                                        onClick={() => {
-                                                            setIsEditing(true);
-                                                            setTargetIndex(index);
-                                                        }}
-                                                    >
-                                                        <Pencil color="#3867FF" />
-                                                    </AwardStyled.EditButton>
-                                                    <AwardStyled.DeleteButton
-                                                        onClick={() => {
-                                                            onClickDeleteBtn(award, index);
-                                                        }}
-                                                    >
-                                                        <Trash2 color="#3867FF" />
-                                                    </AwardStyled.DeleteButton>
-                                                </>
-                                            )}
-                                    </>
-                                )}
-                                {isEditing && targetIndex === index && (
-                                    <AwardEditForm
-                                        index={index}
-                                        awards={awards}
-                                        setAwards={setAwards}
-                                        setIsEditing={setIsEditing}
-                                        maxDate={maxDate}
-                                        awardId={award?.awardId!}
-                                        userId={award?.userId!}
-                                        setTargetIndex={setTargetIndex}
-                                    />
-                                )}
+                                            <AwardStyled.ContentDate>
+                                                {String(award.date).slice(0, 10)}
+                                            </AwardStyled.ContentDate>
+                                            <AwardStyled.ContentDetail>
+                                                {award.description}
+                                            </AwardStyled.ContentDetail>
+                                            {curUser &&
+                                                pathName === "/mypage" &&
+                                                targetIndex !== index && (
+                                                    <>
+                                                        <AwardStyled.EditButton
+                                                            onClick={() => {
+                                                                setIsEditing(true);
+                                                                setTargetIndex(index);
+                                                            }}
+                                                        >
+                                                            <Pencil color="#3867FF" />
+                                                        </AwardStyled.EditButton>
+                                                        <AwardStyled.DeleteButton
+                                                            onClick={() => {
+                                                                onClickDeleteBtn(award, index);
+                                                            }}
+                                                        >
+                                                            <Trash2 color="#3867FF" />
+                                                        </AwardStyled.DeleteButton>
+                                                    </>
+                                                )}
+                                        </>
+                                    )}
+                                    {isEditing && targetIndex === index && (
+                                        <AwardEditForm
+                                            index={index}
+                                            awards={awards}
+                                            setAwards={setAwards}
+                                            setIsEditing={setIsEditing}
+                                            maxDate={maxDate}
+                                            awardId={award?.awardId!}
+                                            userId={award?.userId!}
+                                            setTargetIndex={setTargetIndex}
+                                        />
+                                    )}
+                                </Droppable>
                             </DragDropContext>
                         </AwardStyled.ContentBox>
                     ))}
