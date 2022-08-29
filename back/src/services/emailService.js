@@ -1,7 +1,10 @@
+import { Email } from "../db/models/Email";
+
 const nodemailer = require("nodemailer")
 
-class mailService {
+class emailService {
 
+  // 이메일 전송
   static async sendEmail({ from, to, subject, text, html }) {
     /* Input parameter example
       {
@@ -25,11 +28,27 @@ class mailService {
     });
 
     // send mail with defined transport object
-    let info = await transporter.sendMail({ from, to, subject, text, html });
-
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    return transporter.sendMail({ from, to, subject, text, html });
   }
 
+  // 이메일 인증 번호 생성
+  static async createAuthCode(email){
+    // 인증번호 생성
+    const authCode = Math.floor(10+Math.random()*(99-10))
+
+    const data = await Email.getEmailCodePair(email)
+    // 기존 이메일-인증번호 pair 존재 시 인증번호 update
+    if(data){
+      return Email.update({email, authCode})
+    }
+    // 이메일-인증번호 pair 추가
+    return Email.add({email, authCode})
+  }
+
+  // 이메일-인증번호 pair 삭제
+  static async deleteAuthCode(email){
+    await Email.delete(email)
+  }
 }
-export { mailService }
+
+export { emailService }
