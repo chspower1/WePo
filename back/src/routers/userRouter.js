@@ -10,7 +10,7 @@ import { User } from "../db/models/User"
 const userAuthRouter = Router();
 
 // 회원가입 - 이메일 인증번호 전송
-userAuthRouter.post("/user/register/email-send", async function (req, res, next) {
+userAuthRouter.post("/register/email-send", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
@@ -49,7 +49,7 @@ userAuthRouter.post("/user/register/email-send", async function (req, res, next)
 });
 
 // 회원가입 - 이메일 인증번호 확인
-userAuthRouter.post("/user/register/email-check", async function (req, res, next) {
+userAuthRouter.post("/register/email-check", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
@@ -74,7 +74,7 @@ userAuthRouter.post("/user/register/email-check", async function (req, res, next
 });      
 
 // 회원가입 - 최종 단계
-userAuthRouter.post("/user/register", async function (req, res, next) {
+userAuthRouter.post("/register", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
@@ -116,6 +116,7 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
     }
 });
 
+// 로그인
 userAuthRouter.post("/login", async function (req, res, next) {
     try {
         // req (request) 에서 데이터 가져오기
@@ -134,6 +135,7 @@ userAuthRouter.post("/login", async function (req, res, next) {
     }
 });
 
+// 전체 사용자 목록 불러오기
 userAuthRouter.get("/list", login_required, async function (req, res, next) {
     try {
         // 전체 사용자 목록을 얻음
@@ -144,6 +146,7 @@ userAuthRouter.get("/list", login_required, async function (req, res, next) {
     }
 });
 
+// 현재 사용자 목록 정보 불러오기
 userAuthRouter.get("/current", login_required, async function (req, res, next) {
     try {
         // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
@@ -160,6 +163,7 @@ userAuthRouter.get("/current", login_required, async function (req, res, next) {
     }
 });
 
+// id의 사용자 정보 update
 userAuthRouter.put("/:id", login_required, async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
@@ -199,6 +203,7 @@ userAuthRouter.put("/:id", login_required, async function (req, res, next) {
     }
 });
 
+// id의 사용자 정보 불러오기
 userAuthRouter.get("/:id", login_required, async function (req, res, next) {
     try {
         const userId = parseInt(req.params.id);
