@@ -31,13 +31,20 @@ export async function UserLogin({ email, password }: ILogin) {
     }
 }
 
+interface IRegister{
+    email:string,
+    password:string,
+    name:string,
+    field:string[],
+}
 // 회원가입 완료
-export async function createtUser({ email, password, name }: IUser) {
+export async function createtUser({ email, password, name,field}:IRegister) {
     try {
         const { data } = await axios.post(`${BASE_URL}/user/register`, {
             email,
             password,
             name,
+            field,
         });
         const newUser: IUser = await {
             ...data,
@@ -67,7 +74,7 @@ export async function getUsers() {
 //유저 리스트 정보 불러오기
 export async function getUser(userId: number) {
     try {
-        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, { 
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -85,18 +92,16 @@ interface IUpdateUserProps {
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
-        await axios
-            .put(
-                `${BASE_URL}/user/${userId}`,
-                { ...data },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                    },
-                }
-            )
-            .then((res) => console.log("res", res));
+        await axios.put(
+            `${BASE_URL}/user/${userId}`,
+            { ...data },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }
