@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
-import { updateUser } from "@api/api";
+import { updateUser,curUserToggleLike } from "@api/api";
 import { Star } from "@styled-icons/fluentui-system-regular/Star";
 import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 
@@ -128,7 +128,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const [curLikes, setCurLikes] = useState(likes);
-    const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
+    const foundLikeUser = curUser?.likes.find((user) => user == userId);
     const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
@@ -146,19 +146,13 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
 
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setCurLikes((prev) => {
-            const newLikes = [...prev, { userId }];
-            return newLikes;
-        });
-        setCurUser((prev) => {
-            const updateCurUser = { ...prev, likes: curLikes };
-            console.log("curUser", curUser);
-            return updateCurUser as IUser;
-        });
+        curUserToggleLike(userId);
+        setCurUser((prev:any) =>{
+            const newTest:IUser = {...prev};
+            newTest.field.push("papapa")
+            return newTest 
+        })
     };
-    useEffect(() => {
-        console.log("바뀜");
-    }, [curUser]);
     return (
         <>
             <ItemWrap>
@@ -189,7 +183,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                 )}
                             </EmailTxt>
 
-                            {/* <DescTit>{field}</DescTit> */}
+                            <DescTit>{field}</DescTit>
                         </UserInfoTxt>
                     </InfoBox>
                     <DescBox>

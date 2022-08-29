@@ -12,7 +12,7 @@ export interface IUser {
     picture?: string;
     description: string;
     field: string[];
-    likes: any[];
+    likes: number[];
     views: number;
     userId: number;
     educations?: IEducation[];

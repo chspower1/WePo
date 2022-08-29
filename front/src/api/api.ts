@@ -31,14 +31,14 @@ export async function UserLogin({ email, password }: ILogin) {
     }
 }
 
-interface IRegister{
-    email:string,
-    password:string,
-    name:string,
-    field:string[],
+interface IRegister {
+    email: string;
+    password: string;
+    name: string;
+    field: string[];
 }
 // 회원가입 완료
-export async function createtUser({ email, password, name,field}:IRegister) {
+export async function createtUser({ email, password, name, field }: IRegister) {
     try {
         const { data } = await axios.post(`${BASE_URL}/user/register`, {
             email,
@@ -74,7 +74,7 @@ export async function getUsers() {
 //유저 리스트 정보 불러오기
 export async function getUser(userId: number) {
     try {
-        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, { 
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -98,7 +98,9 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -127,7 +129,9 @@ export async function addData(
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -148,7 +152,9 @@ export async function updateData(
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -156,7 +162,11 @@ export async function updateData(
         console.log(err);
     }
 }
-export async function deleteData(category: Category, projectId: string, userId: number) {
+export async function deleteData(
+    category: Category,
+    projectId: string,
+    userId: number
+) {
     try {
         await axios.delete(`${BASE_URL}/${category}/${projectId}`, {
             data: {
@@ -209,6 +219,25 @@ export async function searchData(searchData: string) {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function curUserToggleLike(userId: number) {
+    try {
+        await axios.put(
+            `${BASE_URL}/user/togglelike/${userId}`,
+            {},
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
+                },
+            }
+        );
     } catch (err) {
         console.log(err);
     }
