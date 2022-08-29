@@ -119,18 +119,18 @@ educationRouter.delete("/:eduId", login_required, async function (req, res, next
 });
 
 // 학력 순서 변경
-educationRouter.put("/", login_required, async function (req, res, next) {
+educationRouter.put("/", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
         }
 
         // req (request) 에서 데이터 가져오기
-        const { userId, newCategorys } = req.body;
+        const { userId, newCategories } = req.body;
 
         const updateEducation = await educationService.updateEducationOrder({
             userId,
-            newCategorys,
+            newCategories,
         });
         // if(updateEducation.errorMessage) {
         //   throw new Error(updateEducation.errorMessage);
