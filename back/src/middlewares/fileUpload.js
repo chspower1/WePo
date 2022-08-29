@@ -1,10 +1,9 @@
 import util from "util";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage"
-import MongoClient from "mongodb"
 
 const storage = new GridFsStorage({
-  url: process.env.mongoURL,
+  url: "mongodb+srv://admin:limit@limit-0.xj7j5yj.mongodb.net/test",
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
     const match = ["image/png", "image/jpeg"];
@@ -22,8 +21,6 @@ const storage = new GridFsStorage({
 const uploadFilesPrep = multer({ storage: storage }).single("file");
 const upload = util.promisify(uploadFilesPrep);
 
-
-const mongoClient = new MongoClient.MongoClient(process.env.mongoURL);
 const uploadFiles = async (req, res) => {
   try {
     await upload(req, res);
