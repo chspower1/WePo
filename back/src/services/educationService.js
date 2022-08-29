@@ -81,20 +81,16 @@ class educationService {
   }
 
   // 학력 순서 수정
-  static async updateEducationOrder({ userId, newCategorys }) {
-
-    const newOrders = newCategorys.map((ele, idx) => {
-        return { eduId: ele.eduId, order: idx }
-    });
-
-    console.log(newOrders);
+  static async updateEducationOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ eduId: newCategory.eduId, order: idx })
+    );
 
     newOrders.forEach((newOrder) => {
       Education.updateOrder(newOrder);
     });
     
     return;
-
   }
 }
 

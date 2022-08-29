@@ -31,6 +31,10 @@ const ProjectSchema = new Schema(
     projectId: {
       type: String,
       required: true
+    },
+    order: {
+      type: Number,
+      required: true
     }
   },
   {

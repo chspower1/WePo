@@ -16,7 +16,7 @@ certificateRouter.post("/", login_required, async function (req, res, next) {
     }
 
     const currentUserId = req['currentUserId'];
-    const { title, date, org, description, certId } = req.body;
+    const { title, date, org, description, certId, order } = req.body;
 
     // 신규 자격증 추가
     const newCertificate = await certificateService.addCertificate({
@@ -25,7 +25,8 @@ certificateRouter.post("/", login_required, async function (req, res, next) {
       date,
       org,
       description,
-      certId
+      certId,
+      order
     });
 
     if(newCertificate.errorMessage) {
@@ -120,6 +121,39 @@ certificateRouter.delete("/:certId", login_required, async function (req, res, n
     }
 
     res.status(200).json(deleteSuccessful);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 자격증 순서 변경
+certificateRouter.put("/", login_required, async function (req, res, next) {
+  try {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    // req (request) 에서 데이터 가져오기
+    const { newCategories } = req.body.data;
+
+    // User authentication
+    const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
+
+    const certId = newCategories[0].certId;
+    const certificate = await certificateService.getCertificate(certId);
+    const userId = certificate.userId; // education 내에 저장된 userId
+
+    if (currentUserId !== userId) {
+        throw new Error(
+            "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+        );
+    }
+
+    await certificateService.updateCertificateOrder(newCategories);
+
+    res.status(200).send("순서변경 성공");
   } catch (error) {
     next(error);
   }
