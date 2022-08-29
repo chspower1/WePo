@@ -8,11 +8,9 @@ export const Container = styled.div`
     justify-content: center;
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
-    padding: 50px 50px 80px;
+    padding: 50px 50px 20px;
+    margin-bottom: 40px;
     background: #fff;
-    & + & {
-        margin-top: 40px;
-    }
     @media screen and (max-width: 960px) {
         margin-top: 40px;
     }
@@ -78,6 +76,7 @@ export const DeleteButton = styled.button`
 export const AddButton = styled.button`
     width: 45px;
     height: 45px;
+    margin : 50px 0;
 `;
 
 export const AddInput = styled.input.attrs((props) => ({

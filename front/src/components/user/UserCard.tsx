@@ -226,7 +226,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         </UserInfoTxt>
                     </InfoBox>
                     <FieldBox>
-                        {field && field.map(fieldElement => (<FieldTxt>{fieldElement}</FieldTxt>))}
+                        {(field.length > 1) && field.map(fieldElement => (<FieldTxt>{fieldElement}</FieldTxt>))}
                     </FieldBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
