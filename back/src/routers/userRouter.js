@@ -81,13 +81,14 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
         }
 
         // req (request) 에서 데이터 가져오기
-        const { name, email, password } = req.body;
+        const { name, email, password, field } = req.body;
 
         // 위 데이터를 유저 db에 추가하기
         const newUser = await userAuthService.addUser({
             name,
             email,
             password,
+            field
         });
 
         if (newUser.errorMessage) {
