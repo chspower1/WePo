@@ -4,14 +4,14 @@ export const Root = styled.div`
     width: 100%;
     height: 100vh;
     padding: 70px 0 0;
-    background: #eff3ff;
+    background: ${props=> props.theme.bgColor};
 `;
 
 export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    padding: 80px 0 50px;
+    padding: 50px 0;
 `;
 
 export const FromContainer = styled.div`
@@ -24,8 +24,8 @@ export const FromContainer = styled.div`
     padding: 70px 80px;
     margin: auto;
     border-radius: 15px;
-    background: rgba(162, 190, 231, 0.1);
-    box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
+    background: ${props=>props.theme.opacityBgColor};
+    box-shadow: 10px 10px 15px ${props=>props.theme.boxShadowGrayColor};
 `;
 
 export const TitleBox = styled.div`
@@ -35,6 +35,7 @@ export const TitleBox = styled.div`
 export const Title = styled.h2`
     font-size: 24px;
     font-weight: bold;
+    color:${props=>props.theme.textColor}
 `;
 
 export const InputBox = styled.div`
@@ -47,21 +48,27 @@ export const Input = styled.input`
     height: 50px;
     border-radius: 7px;
     outline: 0;
-    border: 1px solid rgba(161, 161, 161, 0.1);
+    border: 1px solid ${props=>props.theme.opacityBgColor};
     font-size: 15px;
     padding: 0 20px;
     margin-bottom: 10px;
-    box-shadow: 5px 4px 5px rgba(166, 184, 210, 0.3);
+    box-shadow: 5px 4px 5px ${props=>props.theme.boxShadowGrayColor};
+    color:${props=>props.theme.textColor};
+    background:${props=> props.theme.inputBgColor};
     &::placeholder {
         font-size: 12px;
+        color: ${props=>props.theme.textColor};
+        font-family: "Elice";
     }
-    &[type="password"] {
+    &.password{
         font-family: sans-serif;
         letter-spacing: 1px;
+    }
+    &.password[type="password"]{
         color: #3687ff;
-        &::placeholder {
-            font-family: "Elice";
-        }
+    }
+    &.password[type="text"]{
+        color: ${props=>props.theme.textColor};
     }
 `;
 
@@ -88,12 +95,13 @@ export const SubmitButton = styled.button`
     width: 50%;
     height: 50px;
     background: ${(props) => props.theme.btnColor};
-    color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
     border-radius: 10px;
-    box-shadow: 10px 10px 15px rgba(90, 156, 255, 0.4);
+    box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowBlueColor};
+    
     &:disabled {
         background: #8a929e;
-        box-shadow: 10px 10px 15px rgba(138, 146, 158, 0.4);
+        box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
         cursor: not-allowed;
     }
 `;
@@ -113,7 +121,7 @@ export const RegisterCommentBox = styled.div`
 
 export const RegisterFromContainer = styled(FromContainer)`
     padding: 60px 80px;
-    height: 700px;
+    height: 750px;
     margin: auto;
 `;
 

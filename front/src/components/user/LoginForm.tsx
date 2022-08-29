@@ -86,6 +86,7 @@ export default function LoginForm() {
                             <LoginStyled.InputInnerBox>
                                 <LoginStyled.Input
                                     type={viewPassword ? "text" : "password"}
+                                    className="password"
                                     placeholder="비밀번호를 입력하세요"
                                     {...register("password", {
                                         required: "비밀번호를 입력해 주세요",

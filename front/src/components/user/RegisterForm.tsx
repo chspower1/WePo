@@ -143,6 +143,7 @@ export default function RegisterForm() {
                             <RegisterStyled.InputInnerBox>
                                 <RegisterStyled.Input
                                     type={viewPassword ? "text" : "password"}
+                                    className="password"
                                     placeholder="Password"
                                     {...register("password", {
                                         required: "비밀번호를 입력해 주세요",
@@ -169,6 +170,7 @@ export default function RegisterForm() {
                             <RegisterStyled.InputInnerBox>
                                 <RegisterStyled.Input
                                     type={viewCheckPassword ? "text" : "password"}
+                                    className="password"
                                     placeholder="Check your Password"
                                     {...register("checkPassword", {
                                         required: "비밀번호를 한번 더 입력해 주세요",

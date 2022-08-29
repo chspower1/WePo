@@ -7,7 +7,7 @@ position:relative;
 width: 100%;
 height: 100vh;
 padding-top:100px;
-background:#eff3ff;
+background:${props=> props.theme.bgColor};
 overflow:hidden;
 `
 

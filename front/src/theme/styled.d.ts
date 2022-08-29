@@ -5,10 +5,13 @@ declare module "styled-components" {
         textColor: string;
         btnColor: string;
         accentColor: string;
-        btnTextColor: string;
         contentColor: string;
         filedBgColor: string;
         starBorderColor: string;
         starFullColor: string;
+        opacityBgColor: string;
+        boxShadowGrayColor: string;
+        boxShadowBlueColor: string;
+        inputBgColor: string;
     }
 }

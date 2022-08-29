@@ -7,10 +7,10 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
+    box-shadow: 10px 10px 15px ${props=>props.theme.boxShadowGrayColor};
     padding: 50px 50px 20px;
     margin-bottom: 40px;
-    background: #fff;
+    background: ${props=> props.theme.bgColor};
     @media screen and (max-width: 960px) {
         margin-top: 40px;
     }
@@ -33,7 +33,7 @@ export const ContentBox = styled.div`
     height: auto;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #a9a9a9;
+    border-bottom: 1px solid ${props=>props.theme.contentColor};
 `;
 export const ContentName = styled.h2`
     font-size: 15px;
@@ -46,7 +46,7 @@ export const ContentAccent = styled.h2`
     font-weight: bold;
     margin-bottom: 10px;
     margin-top: 20px;
-    color: #3867ff;
+    color: ${props=> props.theme.btnColor};;
 `;
 export const ContentDetail = styled.h3`
     font-size: 15px;
@@ -54,7 +54,7 @@ export const ContentDetail = styled.h3`
 `;
 export const ContentDate = styled.h3`
     font-size: 15px;
-    color: #a9a9a9;
+    color: ${props=>props.theme.contentColor};
     margin-bottom: 20px;
 `;
 export const EditButton = styled.button`
@@ -86,7 +86,7 @@ export const AddInput = styled.input.attrs((props) => ({
     height: 30px;
     border-radius: 3px;
     border: 0;
-    border: solid 1px #3687ff;
+    border: solid 1px ${props=>props.theme.btnColor};
     margin-bottom: 10px;
 `;
 
@@ -98,7 +98,7 @@ export const AddInputBox = styled.div`
     flex-direction: column;
 `;
 export const RequiredLabel = styled.span`
-    color: #3687ff;
+    color: ${props=>props.theme.btnColor};
 `;
 
 export const Button = styled.button`
@@ -121,7 +121,7 @@ export const MajorGraduateLabel = styled.label`
     margin-right: 10px;
 `;
 export const Root = styled.div`
-    background: #eff3ff;
+    background: ${props=>props.theme.bgColor};
 `;
 export const MyPortWrap = styled.div`
     position: relative;
