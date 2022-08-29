@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { curUserState,usersState , IUser } from "@/atoms";
+import { curUserState, usersState, IUser } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
@@ -23,7 +23,7 @@ const InfoBox = styled.div`
     margin-bottom: 40px;
 `;
 const ProfileImageBox = styled.div`
-    position:relative;
+    position: relative;
     transform: translateY(-40px);
     width: 90px;
     height: 90px;
@@ -36,21 +36,21 @@ const UserInfoTxt = styled.div`
     margin-left: 20px;
 `;
 const ProfileImg = styled.img`
-    position:relative;
-    z-index:1;
-`
+    position: relative;
+    z-index: 1;
+`;
 const ImageChangeInput = styled.input`
-position:absolute;
-z-index:2;
-left:0;
-top:0;
-text-indent: -99999px;
-display: inline-flex;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, .2);
-cursor: pointer;
-`
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    text-indent: -99999px;
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+`;
 const NameTxt = styled.h2`
     font-size: 18px;
     font-weight: bold;
@@ -79,9 +79,9 @@ const DescTxt = styled.p`
 `;
 
 const EditOrDetailBtnBox = styled.div`
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
@@ -94,40 +94,41 @@ const DetailBtn = styled.button`
     color: #5573df;
 `;
 const LikeBtnBox = styled.div`
-    width:25px;
-    height:25px;
+    width: 25px;
+    height: 25px;
     border: 1px solid #000;
-border-radius: 5px;
-`
+    border-radius: 5px;
+`;
 const LikeBtn = styled.button`
-    display:flex;
-    padding:0;
-    width:100%;
-    height:100%;
+    display: flex;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
-`
+`;
 const EmptyLikeButton = styled(Star)`
-    color:black;
-    width:80%;
-`
+    color: black;
+    width: 80%;
+`;
 const FullLikeButton = styled(StarEmphasis)`
-    color:black;
-    width:80%;
-`
+    color: black;
+    width: 80%;
+`;
 
 interface IUserFormValue {
     reName: string;
     reDescription: string;
 }
 
-function UserCard({ _id, name, email, description, field, userId, picture}: IUser) {
+function UserCard({ _id, name, email, description, field, userId, picture, likes }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
-    const foundLikeUser = curUser?.likes.find(user => user.userId === userId)
+    const [curLikes, setCurLikes] = useState(likes);
+    const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
     const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
@@ -142,15 +143,23 @@ function UserCard({ _id, name, email, description, field, userId, picture}: IUse
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
-    const onClickLike = (e: React.FormEvent<HTMLButtonElement>)=>{
+
+
+
+    
+    const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        setCurLikes((prev) => {
+            const newLikes = [...prev, { userId }];
+            return newLikes;
+        });
         setCurUser((prev) => {
-            const updateCurUser = { ...prev };
-            updateCurUser?.likes?.push({userId})
+            const updateCurUser = { ...prev, likes: curLikes };
+            console.log("curUser", curUser);
             return updateCurUser as IUser;
         });
-    }
-    console.log("curUser",curUser)
+    };
+
     return (
         <>
             <ItemWrap>
@@ -207,7 +216,7 @@ function UserCard({ _id, name, email, description, field, userId, picture}: IUse
                             <>
                                 <LikeBtnBox>
                                     <LikeBtn onClick={onClickLike}>
-                                        {foundLikeUser ? <FullLikeButton/> : <EmptyLikeButton/>}
+                                        {foundLikeUser ? <FullLikeButton /> : <EmptyLikeButton />}
                                     </LikeBtn>
                                 </LikeBtnBox>
                                 <Link to={`${userId}`}>
