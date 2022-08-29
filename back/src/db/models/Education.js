@@ -42,7 +42,7 @@ class Education {
     return EducationModel.findOneAndDelete({ eduId });
   }
 
-  // eduId에 해당하는 학력정보 수정
+  // 학력 순서 변경
   static async updateOrder(newOrder) {
 
     const { eduId, order } = newOrder;
@@ -56,7 +56,6 @@ class Education {
     );
 
     return updatedEducation;
-
   }
 
 

@@ -9,12 +9,14 @@ import { Pencil } from "@styled-icons/boxicons-solid/Pencil";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { PlusSquareFill } from "@styled-icons/bootstrap/PlusSquareFill";
 import { Category, deleteData } from "@api/api";
-export default function Project({ projectsProps }: { projectsProps: IProject[] }) {
+import { Draggable } from "@hello-pangea/dnd";
+interface IProjectProps {
+    projects: IProject[];
+    setProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
+}
+export default function Project({ projects, setProjects }: IProjectProps) {
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
-
-    // 프로젝트 상태 관리
-    const [projects, setProjects] = useState<IProject[]>(projectsProps);
 
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
@@ -57,55 +59,73 @@ export default function Project({ projectsProps }: { projectsProps: IProject[] }
                 )}
                 {!isAddFormActive &&
                     projects?.map((project, index: number) => (
-                        <ProjectStyled.ContentBox key={index}>
-                            {targetIndex !== index && (
-                                <>
-                                    <ProjectStyled.ContentAccent>
-                                        {project.title}
-                                    </ProjectStyled.ContentAccent>
-                                    <ProjectStyled.ContentDetail>
-                                        {project.description}
-                                    </ProjectStyled.ContentDetail>
-                                    <ProjectStyled.ContentDate>{`${String(project.startDate).slice(
-                                        0,
-                                        10
-                                    )} ~ ${String(project.endDate).slice(
-                                        0,
-                                        10
-                                    )}`}</ProjectStyled.ContentDate>
-                                    {curUser && pathName === "/mypage" && targetIndex !== index && (
-                                        <>
-                                            <ProjectStyled.EditButton
-                                                onClick={() => {
-                                                    setIsEditing(true);
-                                                    setTargetIndex(index);
-                                                }}
-                                            >
-                                                <Pencil color="#3687FF" />
-                                            </ProjectStyled.EditButton>
-                                            <ProjectStyled.DeleteButton
-                                                onClick={() => {
-                                                    onClickDeleteBtn(project, index);
-                                                }}
-                                            >
-                                                <Trash2 color="#3687FF" />
-                                            </ProjectStyled.DeleteButton>
-                                        </>
+                        <Draggable
+                            key={String(project?.projectId!)}
+                            draggableId={String(project?.projectId!)}
+                            index={index}
+                        >
+                            {(magic) => (
+                                <ProjectStyled.ContentBox key={index}>
+                                    {targetIndex !== index && (
+                                        <div
+                                            ref={magic.innerRef}
+                                            {...magic.draggableProps}
+                                            {...magic.dragHandleProps}
+                                        >
+                                            <>
+                                                <ProjectStyled.ContentAccent>
+                                                    {project.title}
+                                                </ProjectStyled.ContentAccent>
+                                                <ProjectStyled.ContentDetail>
+                                                    {project.description}
+                                                </ProjectStyled.ContentDetail>
+                                                <ProjectStyled.ContentDate>{`${String(
+                                                    project.startDate
+                                                ).slice(0, 10)} ~ ${String(project.endDate).slice(
+                                                    0,
+                                                    10
+                                                )}`}</ProjectStyled.ContentDate>
+                                                {curUser &&
+                                                    pathName === "/mypage" &&
+                                                    targetIndex !== index && (
+                                                        <>
+                                                            <ProjectStyled.EditButton
+                                                                onClick={() => {
+                                                                    setIsEditing(true);
+                                                                    setTargetIndex(index);
+                                                                }}
+                                                            >
+                                                                <Pencil color="#3687FF" />
+                                                            </ProjectStyled.EditButton>
+                                                            <ProjectStyled.DeleteButton
+                                                                onClick={() => {
+                                                                    onClickDeleteBtn(
+                                                                        project,
+                                                                        index
+                                                                    );
+                                                                }}
+                                                            >
+                                                                <Trash2 color="#3687FF" />
+                                                            </ProjectStyled.DeleteButton>
+                                                        </>
+                                                    )}
+                                            </>
+                                        </div>
                                     )}
-                                </>
+                                    {isEditing && targetIndex === index && (
+                                        <ProjectEditForm
+                                            index={index}
+                                            projects={projects}
+                                            setProjects={setProjects}
+                                            setIsEditing={setIsEditing}
+                                            setTargetIndex={setTargetIndex}
+                                            userId={project.userId!}
+                                            projectId={project.projectId!}
+                                        />
+                                    )}
+                                </ProjectStyled.ContentBox>
                             )}
-                            {isEditing && targetIndex === index && (
-                                <ProjectEditForm
-                                    index={index}
-                                    projects={projects}
-                                    setProjects={setProjects}
-                                    setIsEditing={setIsEditing}
-                                    setTargetIndex={setTargetIndex}
-                                    userId={project.userId!}
-                                    projectId={project.projectId!}
-                                />
-                            )}
-                        </ProjectStyled.ContentBox>
+                        </Draggable>
                     ))}
             </ProjectStyled.ContentContainer>
 

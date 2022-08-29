@@ -7,5 +7,8 @@ declare module "styled-components" {
         accentColor: string;
         btnTextColor: string;
         contentColor: string;
+        filedBgColor: string;
+        starBorderColor: string;
+        starFullColor: string;
     }
 }

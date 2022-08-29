@@ -5,28 +5,57 @@ import Certificate from "@certificate/Certificate";
 import Education from "@education/Education";
 import Project from "@project/Project";
 import UserCard from "./UserCard";
-import { isLoginState, IUser } from "@/atoms";
+import { IAward, ICertificate, IEducation, IProject, isLoginState, IUser } from "@/atoms";
 import { useQuery } from "react-query";
 import { getUser } from "@api/api";
 import styled from "styled-components";
 import { MyPortWrap, Wrap, UserCardBox, Root } from "@styledComponents/CategoryStyled";
 import { useRecoilValue } from "recoil";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
 function UserDetail() {
     const { userSeq } = useParams();
-    const [user, setUser] = useState<IUser | null>(null);
+
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
-    const { isLoading } = useQuery(["UserInfo"], () => getUser(parseInt(userSeq!)!), {
+    const [educations, setEducations] = useState<IEducation[]>([]);
+    const [awards, setAwards] = useState<IAward[]>([]);
+    const [certificates, setCertificates] = useState<ICertificate[]>([]);
+    const [projects, setProjects] = useState<IProject[]>([]);
+    const { isLoading, data } = useQuery(["UserInfo"], () => getUser(parseInt(userSeq!)!), {
         onSuccess(user) {
-            setUser(user!);
+            setEducations((prev) => user?.educations!);
+            setAwards((prev) => user?.awards!);
+            setCertificates((prev) => user?.certificates!);
+            setProjects((prev) => user?.projects!);
         },
     });
+
+    console.log(educations, awards, certificates, projects);
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
+
+    //드래그 시
+    const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+        console.log(draggableId, destination, source);
+
+        // //state
+        // setEducations((prev) => {
+        //     const resultEducations = [...prev];
+        //     const education = resultEducations[source.index];
+        //     resultEducations.splice(source.index, 1);
+        //     resultEducations.splice(destination?.index!, 0, education);
+        //     return resultEducations;
+        // });
+        // //API요청
+        // mutationCategory(curUser?.userId!, Category.education, educations);
+        // console.log(educations);
+    };
+    if (!(educations && awards && certificates && projects)) return <></>; //이거 없으면 마이페이지에서 로그아웃하면 흰화면이 뜸
+    if (isLoading) return <></>;
     return (
         <>
             {isLoading ? (
@@ -34,16 +63,22 @@ function UserDetail() {
             ) : (
                 <Root>
                     <MyPortWrap>
-                        {user && (
+                        {data && (
                             <>
                                 <UserCardBox>
-                                    <UserCard {...user} />
+                                    <UserCard {...data!} />
                                 </UserCardBox>
                                 <Wrap>
-                                    <Education educationsProps={user?.educations!} />
-                                    <Award awardsProps={user?.awards!} />
-                                    <Certificate certificatesProps={user?.certificates!} />
-                                    <Project projectsProps={user?.projects!} />
+                                    <Education
+                                        educations={educations}
+                                        setEducations={setEducations}
+                                    />
+                                    <Award awards={awards} setAwards={setAwards} />
+                                    <Certificate
+                                        certificates={certificates}
+                                        setCertificates={setCertificates}
+                                    />
+                                    <Project projects={projects} setProjects={setProjects} />
                                 </Wrap>
                             </>
                         )}

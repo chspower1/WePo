@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { curUserState, usersState, IUser } from "@/atoms";
+import { curUserState, usersState, IUser, ILike } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
@@ -12,15 +12,21 @@ import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis"
 
 const ItemWrap = styled.div`
     min-width: 350px;
-    padding: 20px 30px;
+    max-height:335px;
+    padding: 30px 30px;
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
     background: #fff;
 `;
+const From = styled.form`
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+`
 const InfoBox = styled.div`
     position: relative;
     display: flex;
-    margin-bottom: 40px;
 `;
 const ProfileImageBox = styled.div`
     position: relative;
@@ -61,6 +67,7 @@ const EmailTxt = styled.h3`
     a {
         display: block;
         width: 170px;
+        line-height:1.5;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -73,15 +80,17 @@ const DescTit = styled.p`
     margin-bottom: 16px;
 `;
 const DescTxt = styled.p`
-    height: 100px;
+    height: 80px;
     word-break: break-all;
     line-height: 1.2;
+    font-size:14px;
 `;
 
 const EditOrDetailBtnBox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width:100%;
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
@@ -92,12 +101,17 @@ const ArrowIcon = styled(ArrowRightShort)`
 const DetailBtn = styled.button`
     text-align: center;
     color: #5573df;
+    margin: 0 auto;
 `;
 const LikeBtnBox = styled.div`
     width: 25px;
     height: 25px;
     border: 1px solid #000;
     border-radius: 5px;
+    border: 1px solid ${props=> props.theme.starBorderColor};
+    &.active{
+        background: ${props=> props.theme.starBorderColor};
+    }
 `;
 const LikeBtn = styled.button`
     display: flex;
@@ -108,26 +122,45 @@ const LikeBtn = styled.button`
     align-items: center;
 `;
 const EmptyLikeButton = styled(Star)`
-    color: black;
+    color: ${props=> props.theme.starBorderColor};
     width: 80%;
 `;
 const FullLikeButton = styled(StarEmphasis)`
-    color: black;
-    width: 80%;
+    color: ${props=> props.theme.starFullColor};
+    width: 75%;
 `;
+const DescTextarea = styled.textarea`
+    width:100%;
+    height:90%;
+    resize:none;
+`
+const FieldBox = styled.div`
+    display:flex;
+    min-height:25px;
+    flex-wrap:wrap;
+    margin: 0 -4px 20px;
+`
+const FieldTxt = styled.div`
+    display:inline-block;
+    padding:6px 8px;
+    background:${props=> props.theme.filedBgColor};
+    color:${props=> props.theme.bgColor};
+    font-size: 13px;
+    border-radius : 5px;
+    margin:0 4px;
+`
 
 interface IUserFormValue {
     reName: string;
     reDescription: string;
 }
 
-function UserCard({ _id, name, email, description, field, userId, picture, likes }: IUser) {
+function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
-    const [curLikes, setCurLikes] = useState(likes);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
     const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
         setCurUser((prev) => {
@@ -159,11 +192,12 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
             return addLikeUser 
         })
     };
+
     
     return (
         <>
             <ItemWrap>
-                <form onSubmit={handleSubmit(onvalid)}>
+                <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg src={picture} alt="profileImage" />
@@ -189,34 +223,33 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                     </a>
                                 )}
                             </EmailTxt>
-
-                            <DescTit>{field}</DescTit>
                         </UserInfoTxt>
                     </InfoBox>
+                    <FieldBox>
+                        {field && field.map(fieldElement => (<FieldTxt>{fieldElement}</FieldTxt>))}
+                    </FieldBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
                         <DescTxt>
                             {onEdit ||
-                                (description?.length > 70
-                                    ? description.slice(0, 70) + "..."
+                                (description?.length > 73
+                                    ?  `${description.slice(0, 73)}...`
                                     : description)}
                             {onEdit && (
-                                <input
-                                    type="text"
-                                    defaultValue={description}
+                                <DescTextarea
                                     {...register("reDescription", {
                                         required: "나에 대한 설명을 입력해주세요",
                                     })}
-                                />
+                                >{description}</DescTextarea>
                             )}
                         </DescTxt>
                     </DescBox>
                     <EditOrDetailBtnBox>
                         {pathName === `/network` && (
                             <>
-                                <LikeBtnBox>
+                                <LikeBtnBox  className={foundLikeUser?"active":""} >
                                     <LikeBtn onClick={onClickLike}>
-                                        {foundLikeUser ? <FullLikeButton /> : <EmptyLikeButton />}
+                                        {foundLikeUser  ? <FullLikeButton /> : <EmptyLikeButton />}
                                     </LikeBtn>
                                 </LikeBtnBox>
                                 <Link to={`${userId}`}>
@@ -242,7 +275,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                             </>
                         )}
                     </EditOrDetailBtnBox>
-                </form>
+                </From>
             </ItemWrap>
         </>
     );

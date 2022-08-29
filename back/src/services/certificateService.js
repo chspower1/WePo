@@ -3,7 +3,7 @@ import { Certificate } from "../db";
 class certificateService {
 
   // 자격증 추가
-  static async addCertificate({ userId, title, date, org, description, certId }) {
+  static async addCertificate({ userId, title, date, org, description, certId, order }) {
 
     // 사용자가 필수로 입력해야하는 값이 모두 있는지 확인
     if(!title || !date || !org) {
@@ -25,7 +25,8 @@ class certificateService {
       date, 
       org, 
       description, 
-      certId 
+      certId,
+      order
     });
   }
 
@@ -78,6 +79,19 @@ class certificateService {
     }
 
     return Certificate.delete(certId);
+  }
+
+  // 자격증 순서 수정
+  static async updateCertificateOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ certId: newCategory.certId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Certificate.updateOrder(newOrder);
+    });
+    
+    return;
   }
 }
 

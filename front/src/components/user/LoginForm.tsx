@@ -50,6 +50,7 @@ export default function LoginForm() {
             message: "비밀번호를 입력해 주세요",
         });
     }, [isLogin]);
+    
     function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
         e.preventDefault();
         setViewPassword(prev => !prev);

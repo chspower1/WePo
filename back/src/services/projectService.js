@@ -3,7 +3,7 @@ import { Project } from "../db";
 class projectService {
 
   // 프로젝트 추가
-  static async addProject({ userId, title, startDate, endDate, description, projectId }) {
+  static async addProject({ userId, title, startDate, endDate, description, projectId, order }) {
 
     // 사용자가 필수로 입력해야하는 값이 모두 있는지 확인
       if(!title || !startDate || !endDate) {
@@ -25,7 +25,8 @@ class projectService {
       startDate, 
       endDate, 
       description, 
-      projectId 
+      projectId,
+      order
     });
   }
 
@@ -77,6 +78,19 @@ class projectService {
     }
 
     return Project.delete(projectId);
+  }
+
+  // 자격증 순서 수정
+  static async updateProjectOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ projectId: newCategory.projectId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Project.updateOrder(newOrder);
+    });
+    
+    return;
   }
 }
 

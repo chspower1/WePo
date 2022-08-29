@@ -3,14 +3,15 @@ import { CertificateModel } from "../schemas/certificate";
 class Certificate {
 
   // 새로운 자격증 생성
-  static async create({ userId, title, date, org, description, certId }) {
+  static async create({ userId, title, date, org, description, certId, order }) {
     return CertificateModel.create({ 
       userId, 
       title, 
       date, 
       org, 
       description, 
-      certId 
+      certId,
+      order
     });
   }
 
@@ -40,6 +41,22 @@ class Certificate {
   // certId에 해당하는 자격증정보 삭제
   static async delete(certId) {
     return CertificateModel.findOneAndDelete({ certId });
+  }
+
+  // 자격증 순서 변경
+  static async updateOrder(newOrder) {
+
+    const { certId, order } = newOrder;
+
+    const option = { returnOriginal: false };
+
+    const updatedCertificate = await CertificateModel.findOneAndUpdate(
+      { certId: certId },
+      { order: order },
+      option
+    );
+
+    return updatedCertificate;
   }
 }
 
