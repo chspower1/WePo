@@ -45,10 +45,17 @@ class emailService {
     return Email.add({email, authCode})
   }
 
+  // 이메일 인증 번호 확인
+  static async getAuthCode(email){
+    const data = await Email.getEmailCodePair(email)
+    return data.authCode
+  }
+
   // 이메일-인증번호 pair 삭제
   static async deleteAuthCode(email){
     await Email.delete(email)
   }
+
 }
 
 export { emailService }

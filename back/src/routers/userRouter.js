@@ -8,8 +8,8 @@ import { User } from "../db/models/User"
 
 const userAuthRouter = Router();
 
-// 회원가입 - 이메일 확인
-userAuthRouter.post("/user/register/email", async function (req, res, next) {
+// 회원가입 - 이메일 인증번호 전송
+userAuthRouter.post("/user/register/email-send", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
@@ -37,7 +37,7 @@ userAuthRouter.post("/user/register/email", async function (req, res, next) {
           }
         
         const emailSent = await emailService.sendEmail(mailContent)
-        if(emailSent.rejected!==[]){
+        if(emailSent.rejected.length!==0){
             throw new Error("이메일 전송을 실패했습니다.")
         }
 
@@ -47,17 +47,40 @@ userAuthRouter.post("/user/register/email", async function (req, res, next) {
     }
 });
 
-// 회원가입 시 이메일 인증
-userAuthRouter.post("/user/register/email", async function (req, res, next) {
+// 회원가입 - 이메일 인증번호 확인
+userAuthRouter.post("/user/register/email-check", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
         }
 
         // req (request) 에서 데이터 가져오기
-        const name = req.body.name;
-        const email = req.body.email;
-        const password = req.body.password;
+        const { email, authCode } = req.body;
+        
+        // 입력된 authCode DB와 비교
+        const gotAuthCode = await emailService.getAuthCode(email)
+        if(gotAuthCode!==authCode){
+            throw new Error("인증번호가 틀렸습니다.")
+        }
+
+        // 인증 성공 시 email-authCode pair DB에서 삭제
+        await emailService.deleteAuthCode(email)
+
+        res.status(201).json("인증성공");
+    } catch (error) {
+        next(error);
+    }
+});      
+
+// 회원가입 - 최종 단계
+userAuthRouter.post("/user/register", async function (req, res, next) {
+    try {
+        if (is.emptyObject(req.body)) {
+            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        }
+
+        // req (request) 에서 데이터 가져오기
+        const { name, email, password } = req.body;
 
         // 위 데이터를 유저 db에 추가하기
         const newUser = await userAuthService.addUser({
