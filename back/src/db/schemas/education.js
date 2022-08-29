@@ -27,6 +27,10 @@ const EducationSchema = new Schema(
     eduId: {
       type: String,
       required: true
+    },
+    order: {
+      type: Number,
+      required: true
     }
   },
   {
