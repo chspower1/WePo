@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { curUserState, usersState, IUser } from "@/atoms";
+import { useEffect, useState } from "react";
+import { curUserState, usersState, IUser, ILike } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
-import { updateUser } from "@api/api";
+import { curUserToggleLike, updateUser } from "@api/api";
 import { Star } from "@styled-icons/fluentui-system-regular/Star";
 import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 
@@ -121,14 +121,14 @@ interface IUserFormValue {
     reDescription: string;
 }
 
-function UserCard({ _id, name, email, description, field, userId, picture, likes }: IUser) {
+function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
-    const [curLikes, setCurLikes] = useState(likes);
-    const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
+    const [checkedLike, setCheckedLike] = useState(false)
+    const [isLike , setIsLike] = useState(false);
     const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
@@ -145,19 +145,29 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     };
 
 
+    useEffect(()=>{
+        let foundUserId = curUser?.likes.find(user => user === userId) ? true : false;
+        setIsLike(foundUserId)
+        console.log(`curUser`, curUser?.likes)
+        console.log(`${name}2`, isLike)
+    },[curUser])
 
-    
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setCurLikes((prev) => {
-            const newLikes = [...prev, { userId }];
-            return newLikes;
-        });
-        setCurUser((prev) => {
-            const updateCurUser = { ...prev, likes: curLikes };
-            console.log("curUser", curUser);
-            return updateCurUser as IUser;
-        });
+        curUserToggleLike(userId)
+        setCheckedLike(!checkedLike);
+        console.log(`${name}`, checkedLike)
+        console.log(`${name}2`, isLike)
+        setCurUser((prev:any)=>{
+            if(curUser?.likes.includes(userId)){
+                const deleteItem = prev.likes.filter((user: number)=> user !== userId)
+                const newCurUser = {...prev, likes:deleteItem}
+                return newCurUser as IUser;
+            }else{
+                const newCurUser = {...prev, likes: [...prev.likes, userId]}
+                return newCurUser as IUser;
+            }
+        })
     };
 
     return (
@@ -216,7 +226,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                             <>
                                 <LikeBtnBox>
                                     <LikeBtn onClick={onClickLike}>
-                                        {foundLikeUser ? <FullLikeButton /> : <EmptyLikeButton />}
+                                        {isLike  ? <FullLikeButton /> : <EmptyLikeButton />}
                                     </LikeBtn>
                                 </LikeBtnBox>
                                 <Link to={`${userId}`}>

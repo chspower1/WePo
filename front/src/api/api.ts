@@ -4,7 +4,6 @@ import {
     IAward,
     ICertificate,
     IEducation,
-    ILike,
     IProject,
     isLoginState,
     IUser,
@@ -54,7 +53,7 @@ export async function createtUser({ email, password, name }: IUser) {
 //유저 정보 불러오기
 export async function getUsers() {
     try {
-        const { data: users } = await axios.get(`${BASE_URL}/userlist`, {
+        const { data: users } = await axios.get(`${BASE_URL}/user/list`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -67,7 +66,7 @@ export async function getUsers() {
 //유저 리스트 정보 불러오기
 export async function getUser(userId: number) {
     try {
-        const { data } = await axios.get(`${BASE_URL}/users/${userId}`, {
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -80,14 +79,13 @@ export async function getUser(userId: number) {
 interface IUpdateUserProps {
     name?: string;
     description?: string;
-    likes?: ILike[];
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
         await axios
             .put(
-                `${BASE_URL}/users/${userId}`,
+                `${BASE_URL}/user/${userId}`,
                 { ...data },
                 {
                     headers: {
@@ -102,6 +100,23 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
     }
 }
 
+export async function curUserToggleLike( userId:number) {
+    try{
+        await axios
+                .put(
+                    `${BASE_URL}/user/togglelike/${userId}`,
+                    {  },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                        }
+                    }
+                )
+    }catch(err){
+        console.log(err);
+    }
+}
 //카테고리
 export enum Category {
     project = "project",
