@@ -29,6 +29,7 @@ export interface IEducation {
     _id?: string;
     eduId: string;
     userId?: number;
+    order?: number;
     school: string;
     major: string;
     status: EduStatus | string;
@@ -46,6 +47,7 @@ export interface IAward {
     _id?: string;
     awardId: string;
     userId?: number;
+    order?: number;
     title: string;
     grade: string;
     org: string;
@@ -60,6 +62,7 @@ export interface ICertificate {
     certId: string;
     userId?: number;
     title: string;
+    order?: number;
     date: Date;
     org: string;
     description: string;
@@ -72,6 +75,7 @@ export interface IProject {
     projectId: string;
     userId?: number;
     title: string;
+    order?: number;
     startDate: Date;
     endDate: Date;
     description: string;
