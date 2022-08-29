@@ -8,7 +8,7 @@ export interface IUser {
     password?: string;
     picture?: string;
     description: string;
-    field: TField;
+    field: string[];
     likes: any[];
     views: number;
     userId: number;
@@ -18,7 +18,7 @@ export interface IUser {
     projects?: IProject[];
     _v?: number;
 }
-export type TField = [backEnd: boolean, frontEnd: boolean, dataAnalysis: boolean, AI: boolean];
+
 export interface IEducation {
     _id?: string;
     eduId: string;
@@ -125,9 +125,10 @@ export const hopeJob = selector({
         let userState = get(usersState);
         for (const duty of currentHope) {
             userState = userState.filter((elem) => {
-                return elem.field.findIndex((elem) => elem === true) >= 0;
+                return elem.field.findIndex((elem) => elem === duty) >= 0;
             });
         }
+
         return userState;
     },
 });

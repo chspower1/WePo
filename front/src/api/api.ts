@@ -30,13 +30,20 @@ export async function UserLogin({ email, password }: ILogin) {
     }
 }
 
+interface IRegister{
+    email:string,
+    password:string,
+    name:string,
+    field:string[],
+}
 // 회원가입 완료
-export async function createtUser({ email, password, name }: IUser) {
+export async function createtUser({ email, password, name,field}:IRegister) {
     try {
         const { data } = await axios.post(`${BASE_URL}/user/register`, {
             email,
             password,
             name,
+            field,
         });
         const newUser: IUser = await {
             ...data,

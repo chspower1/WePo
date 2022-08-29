@@ -9,11 +9,13 @@ import { IUser } from "@/atoms";
 import { useQuery } from "react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
+import CheckFieldBox from "./CheckFieldBox";
 export interface IRegister {
     email: string;
     name: string;
     password: string;
     checkPassword?: string;
+    field: string[];
 }
 
 export default function RegisterForm() {
@@ -26,9 +28,10 @@ export default function RegisterForm() {
         setError,
     } = useForm<IRegister>({ mode: "onChange" });
     const navigator = useNavigate();
+
     const onvalid = (data: IRegister) => {
         (async () => {
-            const newUser = await createtUser(data as IUser);
+            const newUser = await createtUser(data);
             await setUsers((prev) => {
                 const newUsers = [...prev];
                 newUsers.push(newUser!);
@@ -160,6 +163,25 @@ export default function RegisterForm() {
                                     ✔️비밀번호가 일치해요
                                 </RegisterStyled.SuccessMsg>
                             )}
+                        </RegisterStyled.InputBox>
+                        <RegisterStyled.InputBox style={{display:"flex",justifyContent:"space-between"}}>
+                            <h1>선호분야</h1>
+                            <div>
+                                <input type="checkbox" id="frontEnd" value="frontEnd"{...register("field")}></input>
+                                <label  htmlFor="frontEnd">프론트엔드</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="backEnd" value="backEnd"{...register("field")}></input>
+                                <label  htmlFor="backEnd">백엔드</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="dataAnalysis" value="dataAnalysis"{...register("field")}></input>
+                                <label  htmlFor="dataAnalysis">데이터분석</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="AI" value="AI"{...register("field")}></input>
+                                <label  htmlFor="AI">AI</label>
+                            </div>
                         </RegisterStyled.InputBox>
                         <RegisterStyled.SubmitButtonBox>
                             <RegisterStyled.SubmitButton disabled={!valid}>
