@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { curUserState, usersState, IUser, ILike } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
@@ -166,9 +166,9 @@ const FieldTxt = styled.div`
     background:${props=> props.theme.filedBgColor};
     color:${props=>props.theme.btnTextColor};
     font-size: 13px;
-    border-radius: 5px;
-    margin: 0 4px 10px;
-`;
+    border-radius : 5px;
+    margin:0 4px 10px;
+`
 
 interface IUserFormValue {
     reName: string;
@@ -182,7 +182,19 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
-    const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
+
+    //권한관리
+    const { userSeq } = useParams();
+    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
+    const inMyPage = pathName === "/mypage";
+    const admin = inMyPage || compareUser;
+
+    //수정완료 후 실행함수
+    const onvalid = ({
+        reName: name,
+        reDescription: description,
+    }: // changedImg: picture,
+    IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
@@ -256,10 +268,11 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                     : description)}
                             {onEdit && (
                                 <DescTextarea
+                                    defaultValue={description}
                                     {...register("reDescription", {
                                         required: "나에 대한 설명을 입력해주세요",
                                     })}
-                                >{description}</DescTextarea>
+                                ></DescTextarea>
                             )}
                         </DescTxt>
                     </DescBox>
@@ -280,7 +293,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                             </>
                         )}
                         {onEdit ||
-                            (_id === curUser?._id && pathName === "/mypage" && (
+                            (admin && (
                                 <DetailBtn title="편집" onClick={onClickEdit}>
                                     편집
                                 </DetailBtn>

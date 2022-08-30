@@ -39,7 +39,7 @@ function UserDetails() {
     const [projects, setProjects] = useState<IProject[]>([]);
 
     //API User정보 받아오기
-    const { isLoading } = useQuery(
+    const { isLoading} = useQuery(
         ["newCurUser"],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
@@ -64,6 +64,10 @@ function UserDetails() {
     //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
     useEffect(() => {
         setUser(curUser!);
+        setEducations(curUser?.educations!);
+        setAwards(curUser?.awards!);
+        setCertificates(curUser?.certificates!);
+        setProjects(curUser?.projects!);
     }, [pathName]);
 
     useEffect(() => {}, [educations, projects, certificates, awards]);
@@ -126,6 +130,14 @@ function UserDetails() {
             console.log(projects);
         }
     };
+    useEffect(()=>{
+        setUser((prev:any)=>{
+            const newUser = {...prev};
+            newUser.name = curUser?.name;
+            newUser.description = curUser?.description;
+            return newUser
+        })
+    },[curUser?.name,curUser?.description])
 
     if (!user) return <></>; // undefined 방지
     if (isLoading) return <></>; // undefined 방지

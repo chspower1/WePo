@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled,{keyframes} from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -14,7 +14,19 @@ const Wrapper = styled.div`
     align-items: center;
     background-color: rgba(0, 0, 0, 0.6);
 `;
+
+const modalShow = keyframes`
+    from{
+        opacity:0;
+        transform:translateY(-100%);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0%);
+    }
+`
 const Modal = styled.div`
+    animation: ${modalShow} 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 800px;
     height: 500px;
     display: flex;
