@@ -257,7 +257,20 @@ userAuthRouter.get("/search/:toSearch", login_required, async function (req, res
     }
 });
 
-
+// 비밀번호 변경
+userAuthRouter.post("/changePassword", login_required, async function (req, res, next) {
+    try {
+        const userId = req["currentUserId"];
+        const { oldPassword, newPassword } = req.body;
+        const updatedUser = await userAuthService.changePassword({userId, oldPassword, newPassword})
+        if(updatedUser.errorMessage){
+            throw new Error(updatedUser.errorMessage)
+        }
+        res.status(200).send("비밀번호 변경 성공")
+    } catch(error){
+        next(error)
+    } 
+})
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
