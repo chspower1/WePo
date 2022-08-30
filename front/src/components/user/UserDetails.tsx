@@ -19,7 +19,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import UserCard from "./UserCard";
 import styled from "styled-components";
 import * as Mypage from "@styledComponents/CategoryStyled";
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 function UserDetails() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
@@ -64,7 +64,7 @@ function UserDetails() {
     //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
     useEffect(() => {
         setUser(curUser!);
-    }, [pathName]);
+    }, [ pathName]);
 
     useEffect(() => {}, [educations, projects, certificates, awards]);
     //드래그 시
