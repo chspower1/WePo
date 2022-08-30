@@ -12,6 +12,7 @@ import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis"
 import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
 import FieldStyle from "@styledComponents/FieldStyle";
 import { E } from "styled-icons/simple-icons";
+import FiledStyle from "@styledComponents/FieldStyle";
 
 const ItemWrap = styled.div`
     min-width: 350px;
@@ -204,8 +205,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         reName: name,
         reDescription: description,
         reField: field,
-        // changedImg: picture,
-    }: 
+    }: // changedImg: picture,
     IUserFormValue) => {
         setCurUser((prev) => {
             console.log(name, description, field);
@@ -260,6 +260,12 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         margin: 0 4px 10px;
     `;
 
+    const [isFieldChecked, setIsFieldChecked] = useState();
+
+    const onClickField = () => {
+        setIsFieldChecked((cur) => !cur);
+    };
+
     useEffect(() => {}, [curUser]);
     console.log(field);
     return (
@@ -296,29 +302,30 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                     <FieldBox>
                         {onEdit || field.map((elem) => <FieldStyle chose>{elem}</FieldStyle>)}
                         {onEdit &&
-                            fieldList.map((elem, index) =>
-                                field.includes(elem) ? (
-                                    <>
+                            fieldList.map((elem, index) => (
+                                <>
+                                    <FiledStyle
+                                        htmlFor={elem}
+                                        chose={field.includes(elem) ? true : false}
+                                    >
+                                        {elem}
                                         <input
+                                            style={{
+                                                position: "absolute",
+                                                left: "-9999999999999px",
+                                            }}
+                                            id={elem}
                                             key={elem}
+                                            onClick={(e) => onClickField(e)}
+                                            checked={isFieldChecked}
                                             type="checkbox"
                                             value={elem}
-                                            defaultChecked={true}
+                                            defaultChecked={field.includes(elem) ? true : false}
                                             {...register("reField")}
                                         />
-                                    </>
-                                ) : (
-                                    <>
-                                        <input
-                                            key={elem}
-                                            type="checkbox"
-                                            value={elem}
-                                            defaultChecked={false}
-                                            {...register("reField")}
-                                        />
-                                    </>
-                                )
-                            )}
+                                    </FiledStyle>
+                                </>
+                            ))}
                     </FieldBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
