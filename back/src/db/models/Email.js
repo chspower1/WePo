@@ -2,20 +2,20 @@ import { EmailModel } from "../schemas/email";
 
 class Email {
 
-  static async getEmailCodePair(email){
-    return EmailModel.findOne({email})
+  static async getEmailCodePair(userId){
+    return EmailModel.findOne({userId})
   }
 
-  static async add({email, authCode}){
-    return EmailModel.create({email, authCode})
+  static async add({userId, authCode}){
+    return EmailModel.create({userId, authCode})
   }
 
-  static async update({email, authCode}){
-    return EmailModel.findOneAndUpdate({email}, {authCode})
+  static async update({userId, authCode}){
+    return EmailModel.findOneAndUpdate({userId}, {authCode})
   }
 
-  static async delete(email){
-    return EmailModel.findOneAndDelete({email})
+  static async delete(userId){
+    return EmailModel.findOneAndDelete({userId})
   }
 
 }
