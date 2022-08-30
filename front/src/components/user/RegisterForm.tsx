@@ -51,11 +51,15 @@ export default function RegisterForm() {
     const onvalid = (data: IRegister) => {
         (async () => {
             const newUser = await createtUser(data);
-            await setUsers((prev) => {
-                const newUsers = [...prev];
-                newUsers.push(newUser!);
-                return newUsers;
-            });
+            if(newUser === undefined){
+                setSendEmail(false)
+            }else{
+                await setUsers((prev) => {
+                    const newUsers = [...prev];
+                    newUsers.push(newUser!);
+                    return newUsers;
+                });
+            }
         })();
     };
 
@@ -236,7 +240,6 @@ export default function RegisterForm() {
                         <RegisterStyled.SubmitButtonBox>
                             <RegisterStyled.SubmitButton
                                 disabled={!valid}
-                                onClick={() => setSendEmail(true)}
                             >
                                 작성완료
                             </RegisterStyled.SubmitButton>
