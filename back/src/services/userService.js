@@ -92,11 +92,12 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const { name, description, picture } = toUpdate;
+    const { name, description, field, picture } = toUpdate;
 
     const newValues = {
       ...(name && { name }),
       ...(description && { description }),
+      ...(field && { field }),
       ...(picture && { picture }),
     };
 
