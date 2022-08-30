@@ -86,14 +86,16 @@ interface IUpdateUserProps {
     name?: string;
     description?: string;
     field: any;
-    picture: any;
+    picture: File[];
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
         const formData = new FormData();
-                data.field && formData.append('field', data.field)
-                data.picture && formData.append('image', data.picture)
+            for(let i in data.field){
+                data.field && formData.append('field', data.field[i])
+            }
+                data.picture && formData.append('image', data.picture[0])
                 data.description && formData.append('description', data.description)
                 data.name && formData.append('name', data.name)
         await axios.post(

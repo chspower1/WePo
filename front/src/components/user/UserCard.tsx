@@ -286,7 +286,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                 <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <ProfileImg src={picture!} alt="profileImage" />
+                            <ProfileImg src={`http://localhost:5001/uploads/${picture}`} alt="profileImage" />
                             {onEdit && 
                                 <ImageChangeInput
                                     type="file"
