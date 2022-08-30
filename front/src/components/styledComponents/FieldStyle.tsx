@@ -9,7 +9,7 @@ const FieldTest = styled.label`
     border-radius: 5px;
     margin: 0 4px 10px;
     cursor: pointer;
-
+    user-select:none;
     ${(props: any) =>
         props.chose &&
         css`

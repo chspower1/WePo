@@ -259,12 +259,19 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         border-radius: 5px;
         margin: 0 4px 10px;
     `;
+    const InputBtn = styled.input`
+        position:absolute;
+        left:-99999px;
+        &+label{
+            background-color: gray;
+            color: white; 
+        }
+        &:checked + label{
+            background-color: #3867ff;
+            color: white;
+        }
+    `
 
-    const [isFieldChecked, setIsFieldChecked] = useState();
-
-    const onClickField = () => {
-        setIsFieldChecked((cur) => !cur);
-    };
 
     useEffect(() => {}, [curUser]);
     console.log(field);
@@ -300,30 +307,26 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         </UserInfoTxt>
                     </InfoBox>
                     <FieldBox>
-                        {onEdit || field.map((elem) => <FieldStyle chose>{elem}</FieldStyle>)}
+                        {onEdit || field.map((elem) => <FieldStyle chose={field.includes(elem) ? true : false}>{elem}</FieldStyle>)}
                         {onEdit &&
                             fieldList.map((elem, index) => (
                                 <>
-                                    <FiledStyle
-                                        htmlFor={elem}
-                                        chose={field.includes(elem) ? true : false}
-                                    >
-                                        {elem}
-                                        <input
-                                            style={{
-                                                position: "absolute",
-                                                left: "-9999999999999px",
-                                            }}
+                                    <div style={{display:"inline-block"}}>
+                                        <InputBtn
                                             id={elem}
                                             key={elem}
-                                            onClick={(e) => onClickField(e)}
-                                            checked={isFieldChecked}
                                             type="checkbox"
                                             value={elem}
                                             defaultChecked={field.includes(elem) ? true : false}
                                             {...register("reField")}
                                         />
-                                    </FiledStyle>
+                                        <FiledStyle
+                                            htmlFor={elem}
+                                            chose={field.includes(elem) ? true : false}
+                                        >
+                                        {elem}
+                                        </FiledStyle>
+                                    </div>
                                 </>
                             ))}
                     </FieldBox>
