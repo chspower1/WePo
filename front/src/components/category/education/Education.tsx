@@ -21,19 +21,21 @@ export default function Education({ educations, setEducations }: IEducationProps
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
 
-    //parmas
-    const { params } = useParams();
-    const compareUser = params && parseInt(params) === curUser?.userId!;
-
+    
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
     const [targetIndex, setTargetIndex] = useState<Number | null>(); // index 를 체크해서 맞는 것만 editform 활성화
-
+    
     //현재경로
     const location = useLocation();
     const pathName = location.pathname;
+    
+    //권한관리
+    const { userSeq } = useParams();
+    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
     const inMyPage = pathName === "/mypage";
+    const admin = inMyPage || compareUser;
 
     // 삭제버튼 클릭시
     const onClickDeleteBtn = (education: IEducation, index: number) => {
@@ -52,7 +54,7 @@ export default function Education({ educations, setEducations }: IEducationProps
     }
 
     return (
-        <Droppable droppableId="educations" isDropDisabled={compareUser || inMyPage ? false : true}>
+        <Droppable droppableId="educations" isDropDisabled={admin ? false : true}>
             {(magic) => (
                 <div ref={magic.innerRef} {...magic.droppableProps}>
                     <EducationStyled.Container>
@@ -83,44 +85,46 @@ export default function Education({ educations, setEducations }: IEducationProps
                                                         {...magic.draggableProps}
                                                         {...magic.dragHandleProps}
                                                     >
-                                                        <EducationStyled.ContentAccent title={education.school}>
+                                                        <EducationStyled.ContentAccent
+                                                            title={education.school}
+                                                        >
                                                             {education.school}
                                                         </EducationStyled.ContentAccent>
                                                         <div style={{ display: "flex" }}>
                                                             <EducationStyled.ContentDetail
                                                                 style={{ marginRight: "10px" }}
                                                                 title={education.major}
-                                                                >
+                                                            >
                                                                 {education.major}
                                                             </EducationStyled.ContentDetail>
-                                                            <EducationStyled.ContentDetail title={education.status}>
+                                                            <EducationStyled.ContentDetail
+                                                                title={education.status}
+                                                            >
                                                                 ({education.status})
                                                             </EducationStyled.ContentDetail>
                                                         </div>
-                                                        {curUser &&
-                                                            pathName === "/mypage" &&
-                                                            targetIndex !== index && (
-                                                                <>
-                                                                    <EducationStyled.EditButton
-                                                                        onClick={() => {
-                                                                            setIsEditing(true);
-                                                                            setTargetIndex(index);
-                                                                        }}
-                                                                    >
-                                                                        <Pencil color="#3867FF" />
-                                                                    </EducationStyled.EditButton>
-                                                                    <EducationStyled.DeleteButton
-                                                                        onClick={() => {
-                                                                            onClickDeleteBtn(
-                                                                                education,
-                                                                                index
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        <Trash2 color="#3867FF" />
-                                                                    </EducationStyled.DeleteButton>
-                                                                </>
-                                                            )}
+                                                        {curUser && admin && targetIndex !== index && (
+                                                            <>
+                                                                <EducationStyled.EditButton
+                                                                    onClick={() => {
+                                                                        setIsEditing(true);
+                                                                        setTargetIndex(index);
+                                                                    }}
+                                                                >
+                                                                    <Pencil color="#3867FF" />
+                                                                </EducationStyled.EditButton>
+                                                                <EducationStyled.DeleteButton
+                                                                    onClick={() => {
+                                                                        onClickDeleteBtn(
+                                                                            education,
+                                                                            index
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    <Trash2 color="#3867FF" />
+                                                                </EducationStyled.DeleteButton>
+                                                            </>
+                                                        )}
                                                     </div>
                                                 )}
 
@@ -142,7 +146,7 @@ export default function Education({ educations, setEducations }: IEducationProps
                         </EducationStyled.ContentContainer>
                         {magic.placeholder}
 
-                        {curUser && pathName === "/mypage" && !isAddFormActive && (
+                        {curUser && admin && !isAddFormActive && (
                             <EducationStyled.AddButton onClick={handleIsAddFormActive}>
                                 <PlusSquareFill color="#3687FF" />
                             </EducationStyled.AddButton>
