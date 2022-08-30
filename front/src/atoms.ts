@@ -81,16 +81,7 @@ export interface IProject {
     __v?: number;
 }
 const { persistAtom } = recoilPersist();
-// export interface ICerUser {
-//     _id?: string;
-//     description: string;
-//     email: string;
-//     errorMessage: string | null;
-//     name: string;
-//     token: string;
-//     userId: snumber
-//     userSeq: number;
-// }
+
 export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,

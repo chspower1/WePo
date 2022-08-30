@@ -139,7 +139,8 @@ function Network() {
             return currentChecked;
         });
     }
-
+    if (!netUsers) return <></>; // undefined 방지
+    if (isLoading) return <></>; // undefined 방지
     return (
         <>
             {isLoading ? (
