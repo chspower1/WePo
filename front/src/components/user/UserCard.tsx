@@ -3,14 +3,14 @@ import { curUserState, usersState, IUser, ILike } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
 
-import styled,{css} from "styled-components";
+import styled, { css } from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
 import { updateUser, curUserToggleLike } from "@api/api";
 import { Star } from "@styled-icons/fluentui-system-regular/Star";
 import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
-import FieldStyle from "@styledComponents/FieldStyle"
+import FieldStyle from "@styledComponents/FieldStyle";
 
 const ItemWrap = styled.div`
     min-width: 350px;
@@ -112,7 +112,7 @@ const EditOrDetailBtnBox = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-top:20px;
+    margin-top: 20px;
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
@@ -163,15 +163,15 @@ const FieldBox = styled.div`
     margin: 0 -4px 10px;
 `;
 const FieldTxt = styled.div`
-    ${(props:any)=>
-        (props.chose)&& css`
-            background-color:${props=> props.theme.filedBgColor};
-        `
-    }
+    ${(props: any) =>
+        props.chose &&
+        css`
+            background-color: ${(props) => props.theme.filedBgColor};
+        `}
     display:inline-block;
-    padding:6px 8px;
-    background:blue;
-    color:red;
+    padding: 6px 8px;
+    background: blue;
+    color: red;
     font-size: 13px;
     border-radius: 5px;
     margin: 0 4px 10px;
@@ -180,7 +180,7 @@ const FieldTxt = styled.div`
 interface IUserFormValue {
     reName: string;
     reDescription: string;
-    reField:string[]
+    reField: string[];
 }
 
 function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
@@ -190,7 +190,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
-    const fieldList = ['frontEnd','backEnd','dataAnalysis','AI'];
+    const fieldList = ["frontEnd", "backEnd", "dataAnalysis", "AI"];
 
     //권한관리
     const { userSeq } = useParams();
@@ -233,28 +233,28 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             return addLikeUser;
         });
     };
-    const EditFieldButton = styled.input.attrs(({
-        type:"checkbox"
-    }))`
-	position: absolute;
-    opacity:0;
-    &:checked ~ .qwe{
-        background-color:${props=>props.theme.filedBgColor};
-        color:white;
-    };
-    `
+    const EditFieldButton = styled.input.attrs({
+        type: "checkbox",
+    })`
+        position: absolute;
+        opacity: 0;
+        &:checked ~ .qwe {
+            background-color: ${(props) => props.theme.filedBgColor};
+            color: white;
+        }
+    `;
     const labeling = styled.label`
-        cursor:pointer;
-    `
+        cursor: pointer;
+    `;
     const FieldSty = styled.div`
-    display:inline-block;
-    padding:6px 8px;
-    background:gray;
-    color:black;
-    font-size: 13px;
-    border-radius : 5px;
-    margin:0 4px 10px;
-    `
+        display: inline-block;
+        padding: 6px 8px;
+        background: gray;
+        color: black;
+        font-size: 13px;
+        border-radius: 5px;
+        margin: 0 4px 10px;
+    `;
 
     return (
         <>
@@ -288,8 +288,31 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         </UserInfoTxt>
                     </InfoBox>
                     <FieldBox>
-                      {onEdit || fieldList.map((elem,index)=> field.includes(elem) && <FieldStyle chose>{elem}</FieldStyle>)}
-                      {onEdit && fieldList.map((elem,index)=> field.includes(elem) == true ? <label style={{cursor:"pointer"}}><EditFieldButton defaultChecked={false} {...register("reField")}></EditFieldButton><FieldSty className="qwe">{elem}</FieldSty></label> : <label style={{cursor:"pointer"}}><EditFieldButton  defaultChecked={false} {...register("reField")}></EditFieldButton><FieldSty className="qwe">{elem}</FieldSty></label>)}
+                        {onEdit ||
+                            fieldList.map(
+                                (elem, index) =>
+                                    field.includes(elem) && <FieldStyle chose>{elem}</FieldStyle>
+                            )}
+                        {onEdit &&
+                            fieldList.map((elem, index) =>
+                                field.includes(elem) == true ? (
+                                    <label style={{ cursor: "pointer" }}>
+                                        <EditFieldButton
+                                            defaultChecked={false}
+                                            {...register("reField")}
+                                        ></EditFieldButton>
+                                        <FieldSty className="qwe">{elem}</FieldSty>
+                                    </label>
+                                ) : (
+                                    <label style={{ cursor: "pointer" }}>
+                                        <EditFieldButton
+                                            defaultChecked={false}
+                                            {...register("reField")}
+                                        ></EditFieldButton>
+                                        <FieldSty className="qwe">{elem}</FieldSty>
+                                    </label>
+                                )
+                            )}
                     </FieldBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
