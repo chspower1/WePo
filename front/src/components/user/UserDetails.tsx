@@ -64,6 +64,10 @@ function UserDetails() {
     //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
     useEffect(() => {
         setUser(curUser!);
+        setEducations(curUser?.educations!);
+        setAwards(curUser?.awards!);
+        setCertificates(curUser?.certificates!);
+        setProjects(curUser?.projects!);
     }, [pathName]);
 
     useEffect(() => {}, [educations, projects, certificates, awards]);

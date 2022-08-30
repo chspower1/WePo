@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { curUserState, usersState, IUser, ILike } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
@@ -179,6 +179,12 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
 
+    //권한관리
+    const { userSeq } = useParams();
+    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
+    const inMyPage = pathName === "/mypage";
+    const admin = inMyPage || compareUser;
+
     //수정완료 후 실행함수
     const onvalid = ({
         reName: name,
@@ -294,7 +300,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                             </>
                         )}
                         {onEdit ||
-                            (_id === curUser?._id && pathName === "/mypage" && (
+                            (admin && (
                                 <DetailBtn title="편집" onClick={onClickEdit}>
                                     편집
                                 </DetailBtn>
