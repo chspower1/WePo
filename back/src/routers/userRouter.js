@@ -8,7 +8,7 @@ import { User } from "../db/models/User"
 import { Trial } from "../db/models/Trial"
 
 import imageUpload from "../utils/imageUpload";
-const upload = imageUpload("src/uploads", 5);
+const upload = imageUpload("uploads", 5);
 
 const userAuthRouter = Router();
 
@@ -187,7 +187,7 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 });
 
 // id의 사용자 정보 update
-userAuthRouter.put("/:id", login_required, upload.single('image'), async function (req, res, next) {
+userAuthRouter.post("/:id", login_required, upload.single('image'), async function (req, res, next) {
     try {
         // if (is.emptyObject(req.body)) {
         //     throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
@@ -206,13 +206,15 @@ userAuthRouter.put("/:id", login_required, upload.single('image'), async functio
         }
 
         // body data 로부터 업데이트할 사용자 정보를 추출함.
-        const { name, description } = req.body;
+        const { name, description, field } = req.body;
         const imageFile = req.file;
-        const picture = imageFile.filename;
-        
-        console.log(imageFile);
+        let picture = null;
 
-        const toUpdate = { name, description, picture };
+        if(imageFile) {
+            picture = imageFile.filename;
+        }
+
+        const toUpdate = { name, description, field, picture };
 
         // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
         const updatedUser = await userAuthService.setUser({
@@ -257,7 +259,20 @@ userAuthRouter.get("/search/:toSearch", login_required, async function (req, res
     }
 });
 
-
+// 비밀번호 변경
+userAuthRouter.post("/changePassword", login_required, async function (req, res, next) {
+    try {
+        const userId = req["currentUserId"];
+        const { oldPassword, newPassword } = req.body;
+        const updatedUser = await userAuthService.changePassword({userId, oldPassword, newPassword})
+        if(updatedUser.errorMessage){
+            throw new Error(updatedUser.errorMessage)
+        }
+        res.status(200).send("비밀번호 변경 성공")
+    } catch(error){
+        next(error)
+    } 
+})
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
