@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
-import { ReactEventHandler, useEffect,useState } from "react";
+import { ReactEventHandler, useEffect, useState } from "react";
 import { createtUser } from "@api/api";
 import { usersState } from "@/atoms";
 import { IUser } from "@/atoms";
@@ -10,7 +10,7 @@ import { useQuery } from "react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
 import CheckFieldBox from "./CheckFieldBox";
-import { EyeOffOutline,EyeOutline } from "styled-icons/evaicons-outline";
+import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 export interface IRegister {
     email: string;
     name: string;
@@ -35,8 +35,8 @@ const Label = styled.label`
 `;
 export default function RegisterForm() {
     const [users, setUsers] = useRecoilState(usersState);
-    const [viewCheckPassword,setViewCheckPassword] = useState(false);
-    const [viewPassword,setViewPassword] = useState(false);
+    const [viewCheckPassword, setViewCheckPassword] = useState(false);
+    const [viewPassword, setViewPassword] = useState(false);
     const {
         register,
         handleSubmit,
@@ -77,13 +77,13 @@ export default function RegisterForm() {
             message: "비밀번호를 한번 더 입력해 주세요",
         });
     }, []);
-    function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
+    function handleViewButton(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setViewPassword(prev => !prev);
+        setViewPassword((prev) => !prev);
     }
-    function handleViewCheckButton(e:React.FormEvent<HTMLButtonElement>){
+    function handleViewCheckButton(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setViewCheckPassword(prev => !prev);
+        setViewCheckPassword((prev) => !prev);
     }
     return (
         <RegisterStyled.Root>
@@ -152,7 +152,13 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton onClick={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton onClick={handleViewButton}>
+                                    {viewPassword ? (
+                                        <EyeOutline color="#3687FF" />
+                                    ) : (
+                                        <EyeOffOutline color="#3687FF" />
+                                    )}
+                                </RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.password ? (
                                 <RegisterStyled.ErrMsg>
@@ -183,7 +189,13 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton onClick={handleViewCheckButton}>{viewCheckPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton onClick={handleViewCheckButton}>
+                                    {viewCheckPassword ? (
+                                        <EyeOutline color="#3687FF" />
+                                    ) : (
+                                        <EyeOffOutline color="#3687FF" />
+                                    )}
+                                </RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.checkPassword ? (
                                 <RegisterStyled.ErrMsg>
@@ -196,23 +208,45 @@ export default function RegisterForm() {
                                 </RegisterStyled.SuccessMsg>
                             )}
                         </RegisterStyled.InputBox>
-                        <RegisterStyled.InputBox style={{display:"flex",justifyContent:"space-between"}}>
+                        <RegisterStyled.InputBox
+                            style={{ display: "flex", justifyContent: "space-between" }}
+                        >
                             <h1>선호분야</h1>
                             <div>
-                                <input type="checkbox" id="frontEnd" value="frontEnd"{...register("field")}></input>
-                                <label  htmlFor="frontEnd">프론트엔드</label>
+                                <input
+                                    type="checkbox"
+                                    id="frontEnd"
+                                    value="frontEnd"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="frontEnd">프론트엔드</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="backEnd" value="backEnd"{...register("field")}></input>
-                                <label  htmlFor="backEnd">백엔드</label>
+                                <input
+                                    type="checkbox"
+                                    id="backEnd"
+                                    value="backEnd"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="backEnd">백엔드</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="dataAnalysis" value="dataAnalysis"{...register("field")}></input>
-                                <label  htmlFor="dataAnalysis">데이터분석</label>
+                                <input
+                                    type="checkbox"
+                                    id="dataAnalysis"
+                                    value="dataAnalysis"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="dataAnalysis">데이터분석</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="AI" value="AI"{...register("field")}></input>
-                                <label  htmlFor="AI">AI</label>
+                                <input
+                                    type="checkbox"
+                                    id="AI"
+                                    value="AI"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="AI">AI</label>
                             </div>
                         </RegisterStyled.InputBox>
                         <RegisterStyled.SubmitButtonBox>

@@ -48,7 +48,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
         setIsAddFormActive((isAddFormActive) => !isAddFormActive);
     }
     return (
-        <Droppable droppableId="project" isDropDisabled={compareUser || inMyPage ? false : true}>
+        <Droppable droppableId="projects" isDropDisabled={compareUser || inMyPage ? false : true}>
             {(magic) => (
                 <div ref={magic.innerRef} {...magic.droppableProps}>
                     <ProjectStyled.Container>

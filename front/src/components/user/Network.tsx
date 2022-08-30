@@ -120,14 +120,13 @@ function Network() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
-
+    // Field 선택시
     useEffect(() => {
         setNetUsers(filterUsersState!);
-        console.log("필드선택-----------------------", netUsers);
     }, [filterUsersState]);
+    // 검색시
     useEffect(() => {
         setNetUsers(searchUsers!);
-        console.log("검색조건-----------------------", netUsers);
     }, [searchUsers]);
 
     function handleCheckedBox(name: string) {

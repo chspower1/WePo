@@ -154,24 +154,35 @@ export const searchUsersState = selector<IUser[]>({
             else if (
                 projects?.filter((project) => {
                     if (project.title.includes(searchWord)) return project;
+                    else if (project.description.includes(searchWord)) return project;
                 })
             )
                 return user;
             else if (
                 awards?.filter((award) => {
                     if (award.title.includes(searchWord)) return award;
+                    else if (award.description.includes(searchWord)) return award;
                 })
             )
                 return user;
             else if (
                 educations?.filter((education) => {
                     if (education.major.includes(searchWord)) return education;
+                    else if (education.school.includes(searchWord)) return education;
                 })
             )
                 return user;
             else if (
                 projects?.filter((project) => {
                     if (project.title.includes(searchWord)) return project;
+                    else if (project.description.includes(searchWord)) return project;
+                })
+            )
+                return user;
+            else if (
+                certificates?.filter((certificate) => {
+                    if (certificate.title.includes(searchWord)) return certificate;
+                    else if (certificate.description.includes(searchWord)) return certificate;
                 })
             )
                 return user;
