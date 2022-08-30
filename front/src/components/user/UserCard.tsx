@@ -209,7 +209,6 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             return addLikeUser 
         })
     };
-
     
     return (
         <>

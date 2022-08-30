@@ -126,6 +126,14 @@ function UserDetails() {
             console.log(projects);
         }
     };
+    useEffect(()=>{
+        setUser((prev:any)=>{
+            const newUser = {...prev};
+            newUser.name = curUser?.name;
+            newUser.description = curUser?.description;
+            return newUser
+        })
+    },[curUser?.name,curUser?.description])
 
     if (!user) return <></>; // undefined 방지
     if (isLoading) return <></>; // undefined 방지
