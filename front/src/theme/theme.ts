@@ -15,6 +15,7 @@ export const lightTheme: DefaultTheme = {
     inputBgColor: "#fff",
     circleColor: "#3687FF",
     cardColor: "#fff",
+    modeBgColor: "#666666",
     headerBorderColor: "#f0f0f9",
     headerActiveColor: "#fff",
 };
@@ -34,6 +35,7 @@ export const darkTheme: DefaultTheme = {
     inputBgColor: "#4f555f",
     circleColor: "#a7b6cc1a",
     cardColor: "#36363c",
+    modeBgColor: "white",
     headerBorderColor: "#737373",
-    headerActiveColor: "#1E1D28",
+    headerActiveColor: "#666666",
 };

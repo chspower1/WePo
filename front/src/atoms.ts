@@ -22,6 +22,13 @@ export interface IUser {
     _v?: number;
 }
 
+export enum Efield {
+    frontEnd = "프론트엔드",
+    backEnd = "백엔드",
+    dataAnalysis = "데이터분석",
+    AI = "인공지능",
+}
+
 export interface IEducation {
     _id?: string;
     eduId: string;

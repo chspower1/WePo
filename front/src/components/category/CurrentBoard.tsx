@@ -19,6 +19,7 @@ const Title = styled(CurBoard.Title)`
     width: 100%;
     font-size: 16px;
     text-align: center;
+    color: ${(props) => props.theme.textColor};
 `;
 const ContentAccent = styled(CurBoard.ContentAccent)`
     width: 100%;
