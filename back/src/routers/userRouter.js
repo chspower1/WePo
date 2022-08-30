@@ -8,7 +8,7 @@ import { User } from "../db/models/User"
 import { Trial } from "../db/models/Trial"
 
 import imageUpload from "../utils/imageUpload";
-const upload = imageUpload("src/uploads", 5);
+const upload = imageUpload("uploads", 5);
 
 const userAuthRouter = Router();
 
