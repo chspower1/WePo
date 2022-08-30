@@ -4,7 +4,7 @@ export const Root = styled.div`
     width: 100%;
     min-height: 100%;
     padding: 70px 0 0;
-    background: ${props=> props.theme.bgColor};
+    background: ${(props) => props.theme.bgColor};
 `;
 
 export const Wrapper = styled.div`
@@ -24,8 +24,8 @@ export const FromContainer = styled.div`
     padding: 70px 80px;
     margin: 80px auto;
     border-radius: 15px;
-    background: ${props=>props.theme.opacityBgColor};
-    box-shadow: 10px 10px 15px ${props=>props.theme.boxShadowGrayColor};
+    background: ${(props) => props.theme.opacityBgColor};
+    box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
 `;
 
 export const TitleBox = styled.div`
@@ -35,7 +35,7 @@ export const TitleBox = styled.div`
 export const Title = styled.h2`
     font-size: 24px;
     font-weight: bold;
-    color:${props=>props.theme.textColor}
+    color: ${(props) => props.theme.textColor};
 `;
 
 export const InputBox = styled.div`
@@ -48,27 +48,27 @@ export const Input = styled.input`
     height: 50px;
     border-radius: 7px;
     outline: 0;
-    border: 1px solid ${props=>props.theme.opacityBgColor};
+    border: 1px solid ${(props) => props.theme.opacityBgColor};
     font-size: 15px;
     padding: 0 20px;
     margin-bottom: 10px;
-    box-shadow: 5px 4px 5px ${props=>props.theme.boxShadowGrayColor};
-    color:${props=>props.theme.textColor};
-    background:${props=> props.theme.inputBgColor};
+    box-shadow: 5px 4px 5px ${(props) => props.theme.boxShadowGrayColor};
+    color: ${(props) => props.theme.textColor};
+    background: ${(props) => props.theme.inputBgColor};
     &::placeholder {
         font-size: 12px;
-        color: ${props=>props.theme.textColor};
+        color: ${(props) => props.theme.textColor};
         font-family: "Elice";
     }
-    &.password{
+    &.password {
         font-family: sans-serif;
         letter-spacing: 1px;
     }
-    &.password[type="password"]{
+    &.password[type="password"] {
         color: #3687ff;
     }
-    &.password[type="text"]{
-        color: ${props=>props.theme.textColor};
+    &.password[type="text"] {
+        color: ${(props) => props.theme.textColor};
     }
 `;
 
@@ -98,12 +98,17 @@ export const SubmitButton = styled.button`
     color: ${(props) => props.theme.btnTextColor};
     border-radius: 10px;
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowBlueColor};
-    
+
     &:disabled {
         background: #8a929e;
         box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
         cursor: not-allowed;
     }
+`;
+export const SosialButton = styled(SubmitButton)`
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
 `;
 
 export const RegisterButton = styled.button`
@@ -139,39 +144,31 @@ export const SuccessMsg = styled.p`
 `;
 
 export const InputInnerBox = styled.div`
-    position:relative;
-`
+    position: relative;
+`;
 
 export const ViewButton = styled.button`
-    width:30px;
-    height:30px;
-    position:absolute;
-    right:5px;
-    top:50%;
-    transform:translateY(-70%);
-`
-export const FiledBox = styled.div`
-
-`
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-70%);
+`;
+export const FiledBox = styled.div``;
 export const FiledSelectBox = styled.div`
     display: flex;
     justify-content: space-around;
-
-`
+`;
 export const FiledTit = styled.h2`
-    width:100%;
-    margin-bottom:20px;
-    font-size:18px;
-    color:${props=>props.theme.textColor}
-`
-export const FiledInputBox = styled.div`
-
-`
-export const FiledInput = styled.input`
-
-`
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: ${(props) => props.theme.textColor};
+`;
+export const FiledInputBox = styled.div``;
+export const FiledInput = styled.input``;
 export const FiledLabel = styled.label`
-color:${props=>props.theme.textColor};
-user-select: none;
-
-`
+    color: ${(props) => props.theme.textColor};
+    user-select: none;
+`;

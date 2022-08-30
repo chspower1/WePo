@@ -78,7 +78,7 @@ const NameTxt = styled.h2`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    cursor:default;
+    cursor: default;
 `;
 const EmailTxt = styled.h3`
     font-size: 14px;
@@ -162,14 +162,14 @@ const FieldBox = styled.div`
     margin: 0 -4px 10px;
 `;
 const FieldTxt = styled.div`
-    display:inline-block;
-    padding:6px 8px;
-    background:${props=> props.theme.filedBgColor};
-    color:${props=>props.theme.btnTextColor};
+    display: inline-block;
+    padding: 6px 8px;
+    background: ${(props) => props.theme.filedBgColor};
+    color: ${(props) => props.theme.btnTextColor};
     font-size: 13px;
-    border-radius : 5px;
-    margin:0 4px 10px;
-`
+    border-radius: 5px;
+    margin: 0 4px 10px;
+`;
 
 interface IUserFormValue {
     reName: string;
@@ -315,4 +315,3 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
 }
 
 export default UserCard;
-

@@ -32,7 +32,6 @@ export default function Award({ awards, setAwards }: IAwardProps) {
 
     //parmas
     const { userSeq } = useParams();
-    console.log("파람스", userSeq);
     //현재경로
     const location = useLocation();
     const pathName = location.pathname;

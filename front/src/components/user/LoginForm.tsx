@@ -2,28 +2,39 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { InputHTMLAttributes, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserLogin } from "@api/api";
 import { isLoginState, IUser } from "../../atoms";
 import { curUserState } from "@/atoms";
 import * as LoginStyled from "@styledComponents/SignStyled";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
-import { EyeOffOutline,EyeOutline } from "styled-icons/evaicons-outline";
+import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 import SendMailAlert from "@components/modal/sendMailAlert";
+import { useCookies } from "react-cookie";
+import { checkedBoxValue } from "./../../atoms";
+import { Google } from "@styled-icons/boxicons-logos/Google";
 export interface ILogin {
     email: string;
     password: string;
 }
 
 export default function LoginForm() {
-    const [viewPassword,setViewPassword] = useState(false);
+    const [viewPassword, setViewPassword] = useState(false);
+    const [isEmailRemember, setIsEmailRemember] = useState(false);
+    // const [isPasswordRemember, setIsPasswordRemember] = useState(false);
+    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
     const {
         register,
         handleSubmit,
         formState: { errors },
         setError,
-    } = useForm<ILogin>({ mode: "onChange", defaultValues: { email: "", password: "" } });
+    } = useForm<ILogin>({
+        mode: "onChange",
+        defaultValues: {
+            email: `${cookies.rememberEmail}`,
+        },
+    });
 
     const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
@@ -51,24 +62,57 @@ export default function LoginForm() {
             alert("일치하지 않습니다!");
         }
     };
-    console.log(isLogin);
+
+    //첫 랜더시
     useEffect(() => {
-        if (isLogin) {
-            navigator("/mypage", { replace: true });
+        if (cookies.rememberEmail !== undefined) {
+            console.log(cookies.rememberEmail);
+            setIsEmailRemember(true);
         }
-        setError("email", {
-            type: "costom",
-            message: "이메일을 입력해 주세요",
-        });
+        if (cookies.rememberEmail === "") {
+            setError("email", {
+                type: "costom",
+                message: "이메일을 입력해 주세요",
+            });
+            setIsEmailRemember(false);
+        }
+        if (cookies.rememberPassword !== undefined) {
+        }
         setError("password", {
             type: "custom",
             message: "비밀번호를 입력해 주세요",
         });
+    }, []);
+
+    //로그인상황이 바뀔시
+    useEffect(() => {
+        if (isLogin) {
+            if (isEmailRemember) {
+                setCookies("rememberEmail", curUser?.email!, { maxAge: 3600 });
+            } else {
+                setCookies("rememberEmail", "");
+            }
+            navigator("/mypage", { replace: true });
+        }
     }, [isLogin]);
-    
-    function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
+
+    function handleViewButton(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setViewPassword(prev => !prev);
+        setViewPassword((prev) => !prev);
+    }
+
+    //자동로그인 & 아이디 저장 OnClick시
+    function onChangeAtuoLogin(e: React.FormEvent<HTMLInputElement>) {
+        console.log(e.currentTarget.name);
+        console.log(e.currentTarget.checked);
+        setIsEmailRemember(e.currentTarget.checked);
+        if (e.currentTarget.checked === false) setCookies("rememberEmail", "");
+
+        // if (e.currentTarget.name === "autoLogin") {
+        //     setIsEmailRemember(e.currentTarget.checked);
+        //     setIsPasswordRemember(e.currentTarget.checked);
+        // }
+        // setIsPasswordRemember(false);
     }
     return (
         <LoginStyled.Root>
@@ -111,15 +155,37 @@ export default function LoginForm() {
                                         },
                                     })}
                                 />
-                                <LoginStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</LoginStyled.ViewButton>
+                                <LoginStyled.ViewButton
+                                    tabIndex={-1}
+                                    onMouseDown={handleViewButton}
+                                >
+                                    {viewPassword ? (
+                                        <EyeOutline color="#3687FF" />
+                                    ) : (
+                                        <EyeOffOutline color="#3687FF" />
+                                    )}
+                                </LoginStyled.ViewButton>
                             </LoginStyled.InputInnerBox>
                             {errors.password && (
-                                    <LoginStyled.ErrMsg>
-                                        <LoginStyled.DangerIcon />
-                                        {errors.password.message}
-                                    </LoginStyled.ErrMsg>
+                                <LoginStyled.ErrMsg>
+                                    <LoginStyled.DangerIcon />
+                                    {errors.password.message}
+                                </LoginStyled.ErrMsg>
                             )}
                         </LoginStyled.InputBox>
+                        <div>
+                            아이디 저장하기
+                            <input
+                                type="checkbox"
+                                name="rememberId"
+                                checked={isEmailRemember}
+                                onClick={onChangeAtuoLogin}
+                            />
+                        </div>
+                        {/* <div>
+                            자동 로그인
+                            <input type="checkbox" name="autoLogin" onClick={onChangeAtuoLogin} />
+                        </div> */}
                         <LoginStyled.SubmitButtonBox>
                             <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
                         </LoginStyled.SubmitButtonBox>

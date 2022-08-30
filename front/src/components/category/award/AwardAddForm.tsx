@@ -33,7 +33,6 @@ export default function AwardAddForm({
             userId,
             order: awards.length,
         };
-        console.log("생성완료", newAward);
         setAwards((project) => [...project, newAward]);
         setIsAddFormActive(false);
         addData(newAward, Category.award);

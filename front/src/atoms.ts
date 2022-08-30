@@ -81,16 +81,7 @@ export interface IProject {
     __v?: number;
 }
 const { persistAtom } = recoilPersist();
-// export interface ICerUser {
-//     _id?: string;
-//     description: string;
-//     email: string;
-//     errorMessage: string | null;
-//     name: string;
-//     token: string;
-//     userId: snumber
-//     userSeq: number;
-// }
+
 export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,
@@ -146,7 +137,6 @@ export const searchUsersState = selector<IUser[]>({
             const { name, projects, awards, educations, certificates, description, email, field } =
                 user;
             const searchWord = get(searchWordState);
-            console.log("검색어", searchWord);
             if (name.includes(searchWord)) return user;
             else if (email.includes(searchWord)) return user;
             else if (field.includes(searchWord)) return user;
@@ -187,7 +177,6 @@ export const searchUsersState = selector<IUser[]>({
             )
                 return user;
         });
-        console.log("검색엔진 돌아가는중", newCurUsers);
         return newCurUsers;
     },
 });

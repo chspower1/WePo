@@ -38,7 +38,7 @@ export default function EducationAddForm({
         setEducations((prev) => [...prev, newEducation]);
         setIsAddFormActive(false);
         addData(newEducation, Category.education);
-        console.log(newEducation, Category.education);
+
     };
     useEffect(() => {
         setError("status", {
