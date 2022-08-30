@@ -47,11 +47,8 @@ export default function SearchBar() {
             <Input
                 type="text"
                 placeholder="찾고싶은 정보를 검색해주세요!"
-                {...register("search", {
-                    required: true,
-                })}
+                {...register("search")}
             />
-
             <Button>
                 <MagnifyingGlass size={24} />
             </Button>

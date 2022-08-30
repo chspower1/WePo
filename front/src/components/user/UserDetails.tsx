@@ -50,11 +50,18 @@ function UserDetails() {
     const [certificates, setCertificates] = useState<ICertificate[]>([]);
     const [projects, setProjects] = useState<IProject[]>([]);
 
+    //로그인상태 확인
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
+
+    //오류수정
+    //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
+    useEffect(() => {
+        setUser(curUser!);
+    }, [pathName]);
 
     useEffect(() => {}, [educations, projects, certificates, awards]);
     //드래그 시
