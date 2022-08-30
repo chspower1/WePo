@@ -1,9 +1,10 @@
-import { Link, useLocation, NavLink } from "react-router-dom";
+import { Link, useLocation, NavLink, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { curUserState, isLoginState } from "../atoms";
+import { curUserState, isLoginState } from "@/atoms";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const LinkHover = keyframes`
     0%{color:#343434}
@@ -27,16 +28,16 @@ const HeaderWrap = styled.header`
         background-color: transparent;
     }
     &.active {
-        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.2);
+        border: 1px solid #f0f0f9;
         background-color: #fff;
     }
 `;
 
 export const HeaderContainer = styled.div`
-    max-width: 1300px;
+    max-width: 1800px;
     min-width: 480px;
     width: 100%;
-    height: 100px;
+    height: 80px;
     margin: 0 auto;
     padding: 0 30px;
     display: flex;
@@ -59,10 +60,12 @@ export const LinkButton = styled(NavLink)`
     text-align: center;
     position: relative;
     background-color: transparent;
-    margin: 0 10px;
     font-weight: bold;
     color: #343434;
-    font-size: 14px;
+    font-size: 16px;
+    & + & {
+        margin: 0 20px 0 30px;
+    }
     &.active {
         position: relative;
         font-weight: bold;
@@ -70,7 +73,7 @@ export const LinkButton = styled(NavLink)`
         &:after {
             content: "";
             position: absolute;
-            bottom: -8px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 70%;
@@ -92,7 +95,17 @@ export const LogoBox = styled.div`
 export const LogoImg = styled.img`
     width: 100%;
 `;
-
+const MiniProfileImg = styled.img`
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid gray;
+`;
+const MiniProfileName = styled.span`
+    margin: 0px 20px 0px 10px;
+    font-size: 16px;
+    color: ${(props) => props.theme.textColor};
+`;
 const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
     background: #343434;
@@ -102,22 +115,47 @@ const LoginOrRegiBtn = styled.button`
     margin-left: 20px;
     letter-spacing: -0.4px;
     transition: all 0.4s;
+    font-size: 15px;
     &:hover {
         background: ${(props) => props.theme.bgColor};
         color: #343434;
     }
 `;
 
+const SearchBox = styled.form`
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const Input = styled.input`
+    width: 300px;
+    height: 50px;
+    border-radius: 25px;
+    text-align: center;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:focus {
+        outline: 2px solid ${(props) => props.theme.btnColor};
+    }
+`;
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
     const setCurUser = useSetRecoilState(curUserState);
     const location = useLocation();
     const pathName = location.pathname;
-
+    const curUser = useRecoilValue(curUserState);
     const [navActive, setNavActive] = useState(false);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-
+    const { register, handleSubmit } = useForm();
+    const navigator = useNavigate();
+    const onvalid = (data: any) => {
+        console.log(data);
+        navigator("/search");
+    };
     const scrollFixed = () => {
         if (scrollY > 100) {
             setScrollY(window.pageYOffset);
@@ -143,7 +181,6 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
-    console.log(pathName);
     return (
         <>
             <HeaderWrap
@@ -158,14 +195,26 @@ function Header() {
                             />
                         </LogoBox>
                     </Link>
+                    <SearchBox onSubmit={handleSubmit(onvalid)}>
+                        <Input
+                            type="text"
+                            placeholder="찾고싶은 정보를 검색해주세요!"
+                            {...register("search", {
+                                required: "검색어를 입력해주세요!",
+                            })}
+                        />
+
+                        <button>클릭</button>
+                    </SearchBox>
                     <Nav>
                         {isLogin ? (
                             <>
-                                <LinkButton to="/">홈</LinkButton>
-                                <LinkButton to="/mypage">나의페이지</LinkButton>
                                 <LinkButton to="/network" end>
                                     네트워크
                                 </LinkButton>
+                                <LinkButton to="/mypage">나의페이지</LinkButton>
+                                <MiniProfileImg src={curUser?.picture} />
+                                <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (

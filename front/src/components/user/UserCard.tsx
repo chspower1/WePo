@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { curUserState, IUser } from "./../../atoms";
+import { curUserState, IUser } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
-import { updateUser } from "../../api/api";
+import { updateUser } from "@api/api";
 
 const ItemWrap = styled.div`
     min-width: 350px;
     padding: 20px 30px;
     border-radius: 10px;
-    box-shadow: 10px 10px 15px  rgba(162,190,231,.25);
-    background:#fff;
+    box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
+    background: #fff;
 `;
 const InfoBox = styled.div`
     position: relative;
@@ -26,7 +26,6 @@ const ProfileImageBox = styled.div`
     height: 90px;
     border-radius: 50%;
     overflow: hidden;
-    object-position: center center;
     border: 2px solid #5573df;
 `;
 
@@ -39,10 +38,10 @@ const NameTxt = styled.h2`
     margin-bottom: 10px;
 `;
 const EmailTxt = styled.h3`
-    font-size:14px;
+    font-size: 14px;
     a {
-        display:block;
-        width:170px;
+        display: block;
+        width: 170px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -70,21 +69,27 @@ const ArrowIcon = styled(ArrowRightShort)`
     margin-top: -3px;
 `;
 const DetailBtn = styled.button`
+    text-align: center;
     color: #5573df;
 `;
 
-function UserCard({ _id, name, email, description, field, userId }: IUser) {
+interface IUserFormValue {
+    reName: string;
+    reDescription: string;
+}
+
+function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
-    const onvalid = ({ reName: name, reDescription: description }: any) => {
-        setCurUser((prev: any) => {
+    const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
+        setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
-            return updateCurUser;
+            return updateCurUser as IUser;
         });
         updateUser({ name, description }, curUser?.userId!);
         setOnEdit((cur) => !cur);
@@ -99,7 +104,7 @@ function UserCard({ _id, name, email, description, field, userId }: IUser) {
                 <form onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <img src="https://placeimg.com/32/32/animals" alt="" />
+                            <img src={picture} alt="profileImage" />
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>
@@ -123,7 +128,7 @@ function UserCard({ _id, name, email, description, field, userId }: IUser) {
                                 )}
                             </EmailTxt>
 
-                            <DescTit>{field}</DescTit>
+                            {/* <DescTit>{field}</DescTit> */}
                         </UserInfoTxt>
                     </InfoBox>
                     <DescBox>

@@ -36,6 +36,10 @@ const AwardSchema = new Schema(
     awardId: {
       type: String,
       required: true
+    },
+    order: {
+      type: Number,
+      required: true
     }
   },
   {

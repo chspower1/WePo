@@ -3,7 +3,7 @@ import { Education } from "../db";
 class educationService {
 
   // 학력 추가
-  static async addEducation({ userId, school, major, status, eduId }) {
+  static async addEducation({ userId, school, major, status, eduId, order }) {
 
     // 사용자가 필수로 입력해야하는 값이 모두 있는지 확인
     if(!school || !major || !status) {
@@ -25,7 +25,8 @@ class educationService {
       school, 
       major, 
       status, 
-      eduId 
+      eduId,
+      order
     });
   }
 
@@ -77,6 +78,19 @@ class educationService {
     }
 
     return Education.delete(eduId);
+  }
+
+  // 학력 순서 수정
+  static async updateEducationOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ eduId: newCategory.eduId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Education.updateOrder(newOrder);
+    });
+    
+    return;
   }
 }
 

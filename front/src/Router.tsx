@@ -1,16 +1,17 @@
-import { BrowserRouter, Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import MyPortfolio from "./components/user/MyPortfolio";
-import RegisterForm from "./components/user/RegisterForm";
-import Network from "./components/user/Network";
-import Header from "./components/Header";
-import LoginForm from "./components/user/LoginForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MyPortfolio from "@user/mypage/MyPortfolio";
+import RegisterForm from "@user/RegisterForm";
+import Network from "@user/Network";
+import Header from "@components/Header";
+import LoginForm from "@user/LoginForm";
 import { useRecoilValue } from "recoil";
-import { isLoginState } from "./atoms";
+import { isLoginState } from "@/atoms";
 import { useEffect } from "react";
-import UserDetail from "./components/user/UserDetail";
-import NotFound from "./components/NotFound";
-import Home from "./components/Home";
-import SEO from "./components/SEO";
+import UserDetail from "@user/UserDetail";
+import NotFound from "@components/NotFound";
+import Home from "@components/Home";
+import SEO from "@components/SEO";
+import ResultSearch from "./components/ResultSearch";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
     useEffect(() => {}, [isLogin]);
@@ -26,6 +27,7 @@ function Router() {
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/network" element={<Network />} />
                 <Route path="/network/:userSeq" element={<UserDetail />} />
+                <Route path="/search" element={<ResultSearch />} />
             </Routes>
         </BrowserRouter>
     );

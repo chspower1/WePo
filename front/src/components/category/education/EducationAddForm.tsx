@@ -1,27 +1,26 @@
-import { EduStatus, IEducation, IUser } from "../../atoms";
+import { EduStatus, IEducation, IUser } from "@/atoms";
 import { useForm } from "react-hook-form";
-import { addEducation } from "../../api/api";
-import {
-    MvpContentName,
-    MvpAddInput,
-    MvpAddInputBox,
-    RequiredLabel,
-    Button,
-    MajorGraduate,
-    MajorGraduateLabel,
-} from "../user/MyPortfolio";
+import { addData, Category } from "@api/api";
+import * as EducationStyled from "@styledComponents/CategoryStyled";
 import { Status } from "styled-icons/fluentui-system-filled";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { curUserState } from "./../../atoms";
+import { curUserState } from "@/atoms";
+
+interface IEducationAddFormProps {
+    setEducations: React.Dispatch<React.SetStateAction<IEducation[]>>;
+    setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: number;
+    educations: IEducation[];
+}
 
 export default function EducationAddForm({
     setEducations,
     setIsAddFormActive,
     userId,
-    eduId,
-}: any) {
+    educations,
+}: IEducationAddFormProps) {
     const {
         register,
         handleSubmit,
@@ -33,11 +32,13 @@ export default function EducationAddForm({
         const newEducation: IEducation = {
             ...data,
             eduId,
-            userId: userId,
+            userId,
+            order: educations.length,
         };
-        setEducations((prev: any) => [...prev, newEducation]);
+        setEducations((prev) => [...prev, newEducation]);
         setIsAddFormActive(false);
-        addEducation(newEducation);
+        addData(newEducation, Category.education);
+        console.log(newEducation, Category.education);
     };
     useEffect(() => {
         setError("status", {
@@ -56,14 +57,14 @@ export default function EducationAddForm({
 
     return (
         <form onSubmit={handleSubmit(onvalid)}>
-            <MvpAddInputBox>
+            <EducationStyled.AddInputBox>
                 <p style={{ position: "absolute", right: "20px", top: "20px" }}>
-                    <RequiredLabel>*</RequiredLabel> 필수사항
+                    <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel> 필수사항
                 </p>
-                <MvpContentName>
-                    학교 이름 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MvpAddInput
+                <EducationStyled.ContentName>
+                    학교 이름 <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel>{" "}
+                </EducationStyled.ContentName>
+                <EducationStyled.AddInput
                     type="text"
                     placeholder="학교 이름"
                     width="300"
@@ -78,12 +79,12 @@ export default function EducationAddForm({
                         {errors.school.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    전공 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MvpAddInput
+            </EducationStyled.AddInputBox>
+            <EducationStyled.AddInputBox>
+                <EducationStyled.ContentName>
+                    전공 <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel>{" "}
+                </EducationStyled.ContentName>
+                <EducationStyled.AddInput
                     type="text"
                     placeholder="전공"
                     width="300"
@@ -98,35 +99,43 @@ export default function EducationAddForm({
                         {errors.major.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
+            </EducationStyled.AddInputBox>
             <div style={{ marginBottom: "30px" }}>
-                <MvpContentName>
-                    졸업여부 <RequiredLabel>*</RequiredLabel>{" "}
-                </MvpContentName>
-                <MajorGraduate
+                <EducationStyled.ContentName>
+                    졸업여부 <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel>{" "}
+                </EducationStyled.ContentName>
+                <EducationStyled.MajorGraduate
                     value={EduStatus.attending}
                     id="attending"
                     {...register("status", { required: "필수 입력입니다." })}
                 />
-                <MajorGraduateLabel htmlFor="attending">{EduStatus.attending}</MajorGraduateLabel>
-                <MajorGraduate
+                <EducationStyled.MajorGraduateLabel htmlFor="attending">
+                    {EduStatus.attending}
+                </EducationStyled.MajorGraduateLabel>
+                <EducationStyled.MajorGraduate
                     value={EduStatus.bachelor}
                     id="bachelor"
                     {...register("status", { required: "필수 입력입니다." })}
                 />
-                <MajorGraduateLabel htmlFor="bachelor">{EduStatus.bachelor}</MajorGraduateLabel>
-                <MajorGraduate
+                <EducationStyled.MajorGraduateLabel htmlFor="bachelor">
+                    {EduStatus.bachelor}
+                </EducationStyled.MajorGraduateLabel>
+                <EducationStyled.MajorGraduate
                     value={EduStatus.master}
                     id="master"
                     {...register("status", { required: "필수 입력입니다." })}
                 />
-                <MajorGraduateLabel htmlFor="master">{EduStatus.master}</MajorGraduateLabel>
-                <MajorGraduate
+                <EducationStyled.MajorGraduateLabel htmlFor="master">
+                    {EduStatus.master}
+                </EducationStyled.MajorGraduateLabel>
+                <EducationStyled.MajorGraduate
                     value={EduStatus.doctor}
                     id="doctor"
                     {...register("status", { required: "필수 입력입니다." })}
                 />
-                <MajorGraduateLabel htmlFor="doctor">{EduStatus.doctor}</MajorGraduateLabel>
+                <EducationStyled.MajorGraduateLabel htmlFor="doctor">
+                    {EduStatus.doctor}
+                </EducationStyled.MajorGraduateLabel>
                 <div style={{ marginTop: "10px" }}>
                     {errors.status && (
                         <ErrMsg>
@@ -137,10 +146,12 @@ export default function EducationAddForm({
                 </div>
             </div>
             <div style={{ float: "right", marginBottom: "10px" }}>
-                <Button color="#3687FF" type="submit">
+                <EducationStyled.Button color="#3687FF" type="submit">
                     추가
-                </Button>
-                <Button onClick={() => setIsAddFormActive(false)}>취소</Button>
+                </EducationStyled.Button>
+                <EducationStyled.Button onClick={() => setIsAddFormActive(false)}>
+                    취소
+                </EducationStyled.Button>
             </div>
         </form>
     );

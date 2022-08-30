@@ -1,18 +1,23 @@
 import { useForm } from "react-hook-form";
-import { addAward } from "../../api/api";
-import { IAward } from "../../atoms";
-import { useParams } from "react-router-dom";
-import {
-    MvpContentName,
-    MvpAddInput,
-    MvpAddInputBox,
-    RequiredLabel,
-    Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
+import { addData, Category } from "@api/api";
+import { IAward } from "@/atoms";
+import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
 import { useEffect } from "react";
-
-export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, userId }: any) {
+import * as AwardStyled from "@styledComponents/CategoryStyled";
+interface IAwardAddFormProps {
+    setAwards: React.Dispatch<React.SetStateAction<IAward[]>>;
+    maxDate: string;
+    setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: number;
+    awards: IAward[];
+}
+export default function AwardAddForm({
+    setAwards,
+    maxDate,
+    setIsAddFormActive,
+    userId,
+    awards,
+}: IAwardAddFormProps) {
     const {
         register,
         handleSubmit,
@@ -25,12 +30,13 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
         const newAward: IAward = {
             ...data,
             awardId,
-            userId: userId,
+            userId,
+            order: awards.length,
         };
         console.log("생성완료", newAward);
-        setAwards((project: any) => [...project, newAward]);
-        setAddFormActive(false);
-        addAward(newAward);
+        setAwards((project) => [...project, newAward]);
+        setIsAddFormActive(false);
+        addData(newAward, Category.award);
     };
 
     useEffect(() => {
@@ -57,14 +63,16 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
     }, []);
     return (
         <form onSubmit={handleSubmit(onvalid)}>
-            <MvpAddInputBox>
+            <AwardStyled.AddInputBox>
                 <p style={{ position: "absolute", right: "20px", top: "20px" }}>
-                    <RequiredLabel>*</RequiredLabel> 필수사항
+                    <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
+                    필수사항
                 </p>
-                <MvpContentName>
-                    제목을 입력하세요 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+                <AwardStyled.ContentName>
+                    제목을 입력하세요
+                    <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     width="300"
                     placeholder="제목"
@@ -79,12 +87,13 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
                         {errors.title.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    수상순위을 입력하세요 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    수상순위을 입력하세요
+                    <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     width="300"
                     placeholder="수상순위"
@@ -99,12 +108,12 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
                         {errors.grade.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    날짜을 입력하세요 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    날짜을 입력하세요 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="date"
                     width="130"
                     {...register("date", {
@@ -118,12 +127,12 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
                         {errors.date.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    기관을 입력하세요 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    기관을 입력하세요 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     placeholder="기관"
                     {...register("org", {
@@ -137,12 +146,12 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
                         {errors.org.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    상세내용을 입력하세요 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </AwardStyled.AddInputBox>
+            <AwardStyled.AddInputBox>
+                <AwardStyled.ContentName>
+                    상세내용을 입력하세요 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
+                </AwardStyled.ContentName>
+                <AwardStyled.AddInput
                     type="text"
                     placeholder="수상이력에 대한 설명을 간단하게 작성할 수 있습니다. 너무 길게말고 간단하게만 작성해주세요"
                     {...register("description", {
@@ -156,12 +165,14 @@ export default function AwardAddForm({ setAwards, maxDate, setAddFormActive, use
                         {errors.description.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
+            </AwardStyled.AddInputBox>
             <div style={{ float: "right" }}>
-                <Button color="#3687FF" type="submit">
+                <AwardStyled.Button color="#3687FF" type="submit">
                     추가
-                </Button>
-                <Button onClick={() => setAddFormActive(false)}>취소</Button>
+                </AwardStyled.Button>
+                <AwardStyled.Button onClick={() => setIsAddFormActive(false)}>
+                    취소
+                </AwardStyled.Button>
             </div>
         </form>
     );

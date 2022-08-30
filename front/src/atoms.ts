@@ -8,7 +8,7 @@ export interface IUser {
     password?: string;
     picture?: string;
     description: string;
-    field: EHopeField[];
+    field: IField;
     likes: any[];
     views: number;
     userId: number;
@@ -18,20 +18,20 @@ export interface IUser {
     projects?: IProject[];
     _v?: number;
 }
-export enum EHopeField {
-    undefined = "미정",
-    backEnd = "백엔드",
-    frontEnd = "프론트엔드",
-    dataAnalysis = "데이터분석",
-    AI = "인공지능",
+export interface IField {
+    backEnd: boolean;
+    frontEnd: boolean;
+    dataAnalysis: boolean;
+    AI: boolean;
 }
 export interface IEducation {
     _id?: string;
     eduId: string;
-    userId?: string;
+    userId?: number;
+    order?: number;
     school: string;
     major: string;
-    status: EduStatus;
+    status: EduStatus | string;
     createdAt?: Date;
     updatedAt?: Date;
     __v?: number;
@@ -45,22 +45,23 @@ export enum EduStatus {
 export interface IAward {
     _id?: string;
     awardId: string;
-    userId?: string;
+    userId?: number;
+    order?: number;
     title: string;
     grade: string;
     org: string;
-    date: Date;
+    date: Date | string;
     description: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     __v?: number;
 }
-
 export interface ICertificate {
     _id?: string;
     certId: string;
-    userId?: string;
+    userId?: number;
     title: string;
+    order?: number;
     date: Date;
     org: string;
     description: string;
@@ -71,8 +72,9 @@ export interface ICertificate {
 export interface IProject {
     _id?: string;
     projectId: string;
-    userId?: string;
+    userId?: number;
     title: string;
+    order?: number;
     startDate: Date;
     endDate: Date;
     description: string;
@@ -88,7 +90,7 @@ const { persistAtom } = recoilPersist();
 //     errorMessage: string | null;
 //     name: string;
 //     token: string;
-//     userId: string;
+//     userId: snumber
 //     userSeq: number;
 // }
 export const curUserState = atom<IUser | null>({
@@ -110,7 +112,8 @@ export const isLoginState = selector({
     key: "isLogin",
     get: ({ get }) => {
         const curUser = get(curUserState);
-        const checkLogin = curUser?.token ? true : false;
+        console.log(curUser);
+        const checkLogin = sessionStorage.getItem("userToken") && curUser?.token ? true : false;
         return checkLogin;
     },
 });
@@ -127,7 +130,7 @@ export const hopeJob = selector({
         let userState = get(usersState);
         for (const duty of currentHope) {
             userState = userState.filter((elem) => {
-                return elem.field.findIndex((elem) => elem === duty) >= 0;
+                // return elem.field.findIndex((elem) => elem === true) >= 0;
             });
         }
         return userState;

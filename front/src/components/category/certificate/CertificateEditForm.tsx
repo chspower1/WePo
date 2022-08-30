@@ -1,34 +1,35 @@
 import { useForm } from "react-hook-form";
-import { addCertificate, updateCertificate } from "../../api/api";
-import { ICertificate } from "../../atoms";
-import {
-    MvpContentName,
-    MvpAddInput,
-    MvpAddInputBox,
-    RequiredLabel,
-    Button,
-} from "../user/MyPortfolio";
-import { DangerIcon, ErrMsg } from "../user/LoginForm";
-
+import { Category, updateData } from "@api/api";
+import { ICertificate } from "@/atoms";
+import * as CertStyled from "@styledComponents/CategoryStyled";
+import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
+interface ICertificateEditFormProps {
+    index: number;
+    certificates: ICertificate[];
+    setCertificates: React.Dispatch<React.SetStateAction<ICertificate[]>>;
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+    setTargetIndex: React.Dispatch<React.SetStateAction<number | null | undefined>>;
+    userId: number;
+    certId: string;
+}
 export function CertificateEditForm({
     index,
     certificates,
     setCertificates,
-    setEditing,
     setIsEditing,
     setTargetIndex,
     userId,
     certId,
-}: any) {
+}: ICertificateEditFormProps) {
     const {
         register,
         handleSubmit,
-        formState: { isSubmitting, errors },
-    } = useForm<ICertificate>();
+        formState: { errors },
+    } = useForm<ICertificate>({ mode: "onChange" });
 
     const onvalid = (data: ICertificate) => {
-        updateCertificate(data, userId, certId);
-        setCertificates((cerfiticate: any) => {
+        updateData(data, Category.certificate, userId, certId);
+        setCertificates((cerfiticate) => {
             const newCerfiticate = [...cerfiticate];
             newCerfiticate[index] = { ...data, userId, certId };
             return newCerfiticate;
@@ -36,17 +37,16 @@ export function CertificateEditForm({
         setIsEditing(false);
         setTargetIndex(null);
     };
-    console.log(userId, certId);
     return (
         <form onSubmit={handleSubmit(onvalid)}>
-            <MvpAddInputBox>
+            <CertStyled.AddInputBox>
                 <p style={{ position: "absolute", right: "20px", top: "20px" }}>
-                    <RequiredLabel>*</RequiredLabel> 필수사항
+                    <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel> 필수사항
                 </p>
-                <MvpContentName>
-                    자격증명 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+                <CertStyled.ContentName>
+                    자격증명 <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel>
+                </CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="text"
                     width="300"
                     id="project-title"
@@ -55,23 +55,23 @@ export function CertificateEditForm({
                         required: "자격증명을 입력해주세요",
                         shouldUnregister: true,
                     })}
-                ></MvpAddInput>
+                ></CertStyled.AddInput>
                 {errors.title && (
                     <ErrMsg>
                         <DangerIcon />
                         {errors.title.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    취득날짜 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </CertStyled.AddInputBox>
+            <CertStyled.AddInputBox>
+                <CertStyled.ContentName>
+                    취득날짜 <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel>
+                </CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="date"
                     width="100"
                     id="project-startDate"
-                    defaultValue={certificates[index].date.slice(0,10)}
+                    defaultValue={String(certificates[index]?.date).slice(0, 10)}
                     {...register("date", {
                         required: "발급날짜을 입력해주세요",
                         // pattern: {
@@ -80,19 +80,19 @@ export function CertificateEditForm({
                         // },
                         shouldUnregister: true,
                     })}
-                ></MvpAddInput>
+                ></CertStyled.AddInput>
                 {errors.date && (
                     <ErrMsg>
                         <DangerIcon />
                         {errors.date.message}
                     </ErrMsg>
                 )}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>
-                    발급기관 <RequiredLabel>*</RequiredLabel>
-                </MvpContentName>
-                <MvpAddInput
+            </CertStyled.AddInputBox>
+            <CertStyled.AddInputBox>
+                <CertStyled.ContentName>
+                    발급기관 <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel>
+                </CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="text"
                     width="300"
                     id="project-endDate"
@@ -101,30 +101,30 @@ export function CertificateEditForm({
                         required: "발급기관을 입력해주세요",
                         shouldUnregister: true,
                     })}
-                ></MvpAddInput>
+                ></CertStyled.AddInput>
                 {errors.org?.message && errors.org.message}
-            </MvpAddInputBox>
-            <MvpAddInputBox>
-                <MvpContentName>자격증 설명</MvpContentName>
-                <MvpAddInput
+            </CertStyled.AddInputBox>
+            <CertStyled.AddInputBox>
+                <CertStyled.ContentName>자격증 설명</CertStyled.ContentName>
+                <CertStyled.AddInput
                     type="text"
                     id="project-description"
                     defaultValue={certificates[index].description}
                     {...register("description", { shouldUnregister: true })}
-                ></MvpAddInput>
-            </MvpAddInputBox>
+                ></CertStyled.AddInput>
+            </CertStyled.AddInputBox>
             <div style={{ float: "right", marginBottom: "10px" }}>
-                <Button type="submit" color="#3687FF">
+                <CertStyled.Button type="submit" color="#3687FF">
                     수정
-                </Button>
-                <Button
+                </CertStyled.Button>
+                <CertStyled.Button
                     onClick={() => {
                         setIsEditing(false);
                         setTargetIndex(null);
                     }}
                 >
                     취소
-                </Button>
+                </CertStyled.Button>
             </div>
         </form>
     );

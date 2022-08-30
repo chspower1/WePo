@@ -3,7 +3,7 @@ import { AwardModel } from "../schemas/award";
 class Award {
 
   // 새로운 수상내역 생성
-  static async create({ userId, title, grade, org, date, description, awardId }) {
+  static async create({ userId, title, grade, org, date, description, awardId, order }) {
     return AwardModel.create({
       userId, 
       title, 
@@ -11,7 +11,8 @@ class Award {
       org, 
       date, 
       description, 
-      awardId 
+      awardId,
+      order
     });
   }
 
@@ -38,9 +39,25 @@ class Award {
     return updatedAward;
   }
 
-  // awardId에 해당하는 자격증정보 삭제
+  // awardId에 해당하는 수상내역 삭제
   static async delete(awardId) {
     return AwardModel.findOneAndDelete({ awardId });
+  }
+
+  // 수상내역 순서 변경
+  static async updateOrder(newOrder) {
+
+    const { awardId, order } = newOrder;
+
+    const option = { returnOriginal: false };
+
+    const updatedAward = await AwardModel.findOneAndUpdate(
+      { awardId: awardId },
+      { order: order },
+      option
+    );
+
+    return updatedAward;
   }
 }
 

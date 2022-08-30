@@ -1,4 +1,4 @@
-import { ILogin } from "../components/user/LoginForm";
+import { ILogin } from "@user/LoginForm";
 import {
     curUserState,
     IAward,
@@ -9,22 +9,23 @@ import {
     IUser,
     usersState,
 } from "./../atoms";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import Certificate from "./../components/certificate/Certificate";
+import Certificate from "@certificate/Certificate";
 
 const BASE_URL = `http://${window.location.hostname}:5001`;
+
 export async function UserLogin({ email, password }: ILogin) {
     try {
-        const { data: newUser } = await axios.post(`${BASE_URL}/user/login`, {
+        const { data: loginUser } = await axios.post(`${BASE_URL}/user/login`, {
             email,
             password,
         });
-        await sessionStorage.setItem("userToken", newUser.token);
-        return newUser as IUser;
+        await sessionStorage.setItem("userToken", loginUser.token);
+        return loginUser as IUser;
     } catch (err) {
-        alert("dd");
+        alert("로그인 정보가 옳지 않습니다!"); // 수정예정
         console.log(err);
     }
 }
@@ -49,7 +50,7 @@ export async function createtUser({ email, password, name }: IUser) {
         console.log(err);
     }
 }
-
+//유저 정보 불러오기
 export async function getUsers() {
     try {
         const { data: users } = await axios.get(`${BASE_URL}/userlist`, {
@@ -57,12 +58,12 @@ export async function getUsers() {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
-        console.log(users);
         return users as IUser[];
     } catch (err) {
         console.log(err);
     }
 }
+//유저 리스트 정보 불러오기
 export async function getUser(userId: number) {
     try {
         const { data } = await axios.get(`${BASE_URL}/users/${userId}`, {
@@ -75,9 +76,13 @@ export async function getUser(userId: number) {
         console.log(err);
     }
 }
-export async function updateUser(data: any, userId: number) {
+interface IUpdateUserProps {
+    name: string;
+    description: string;
+}
+// 유저 정보 수정
+export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
-        console.log(userId);
         await axios.put(
             `${BASE_URL}/users/${userId}`,
             { ...data },
@@ -93,12 +98,22 @@ export async function updateUser(data: any, userId: number) {
     }
 }
 
-// -----------------------MVP 추가 수정 ----------------------
-// Award 추가,수정
-export async function addAward(data: IAward) {
+//카테고리
+export enum Category {
+    project = "project",
+    award = "award",
+    certificate = "certificate",
+    education = "education",
+}
+
+// MVP 추가,수정기능 API
+export async function addData(
+    data: IProject | IAward | ICertificate | IEducation,
+    category: Category
+) {
     try {
-        return await axios.post(
-            `${BASE_URL}/award`,
+        await axios.post(
+            `${BASE_URL}/${category}`,
             { ...data },
             {
                 headers: {
@@ -111,11 +126,15 @@ export async function addAward(data: IAward) {
         console.log(err);
     }
 }
-export async function updateAward(data: any, userId: number, awardId: string) {
+export async function updateData(
+    data: IProject | IAward | ICertificate | IEducation,
+    category: Category,
+    userId: number,
+    projectId: string
+) {
     try {
-        console.log("데이터", data, "유저아이디", userId, "어워드아이디", awardId);
         await axios.put(
-            `${BASE_URL}/award/${awardId}`,
+            `${BASE_URL}/${category}/${projectId}`,
             { ...data, userId },
             {
                 headers: {
@@ -128,11 +147,11 @@ export async function updateAward(data: any, userId: number, awardId: string) {
         console.log(err);
     }
 }
-export async function deleteAward(awardId: string, userId: number) {
+export async function deleteData(category: Category, projectId: string, userId: number) {
     try {
-        await axios.delete(`${BASE_URL}/award/${awardId}`, {
+        await axios.delete(`${BASE_URL}/${category}/${projectId}`, {
             data: {
-                userId: userId,
+                userId,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -144,100 +163,14 @@ export async function deleteAward(awardId: string, userId: number) {
     }
 }
 
-// Certificate 추가,수정
-export async function addCertificate(data: ICertificate) {
+export async function mutationCategory(
+    userId: number,
+    category: Category,
+    newCategories: IProject[] | IAward[] | ICertificate[] | IEducation[]
+) {
     try {
-        await axios.post(
-            `${BASE_URL}/certificate`,
-            { ...data },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                },
-            }
-        );
-    } catch (err) {
-        console.log(err);
-    }
-}
-export async function updateCertificate(data: ICertificate, userId: number, certificateId: string) {
-    try {
-        await axios
-            .put(
-                `${BASE_URL}/certificate/${certificateId}`,
-                { ...data, userId },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                    },
-                }
-            )
-            .then((res) => console.log(res));
-    } catch (err) {
-        console.log(err);
-    }
-}
-export async function deleteCertificate(certificateId: string, userId: number) {
-    try {
-        console.log("certificateId", certificateId);
-        await axios
-            .delete(`${BASE_URL}/certificate/${certificateId}`, {
-                data: {
-                    userId: userId,
-                },
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                },
-            })
-            .then((res) => console.log("res", res));
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-// Education 추가,수정
-export async function addEducation(data: IEducation) {
-    try {
-        console.log(data);
-        await axios.post(
-            `${BASE_URL}/education`,
-            { ...data },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                },
-            }
-        );
-    } catch (err) {
-        console.log(err);
-    }
-}
-export async function updateEducation(data: IEducation, userId: string, educationId: string) {
-    try {
-        await axios.put(
-            `${BASE_URL}/education/${educationId}`,
-            { ...data, userId },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                },
-            }
-        );
-    } catch (err) {
-        console.log(err);
-    }
-}
-export async function deleteEducation(educationId: string, userId: number) {
-    try {
-        await axios.delete(`${BASE_URL}/education/${educationId}`, {
-            data: {
-                userId: userId,
-            },
+        await axios.put(`${BASE_URL}/${category}`, {
+            data: { userId, newCategories },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -247,45 +180,11 @@ export async function deleteEducation(educationId: string, userId: number) {
         console.log(err);
     }
 }
-// Project 추가,수정
-export async function addProject(data: IProject) {
+
+export async function searchData(data: string) {
     try {
-        await axios.post(
-            `${BASE_URL}/project`,
-            { ...data },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                },
-            }
-        );
-    } catch (err) {
-        console.log(err);
-    }
-}
-export async function updateProject(data: IProject, userId: number, projectId: string) {
-    try {
-        await axios.put(
-            `${BASE_URL}/project/${projectId}`,
-            { ...data, userId },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                },
-            }
-        );
-    } catch (err) {
-        console.log(err);
-    }
-}
-export async function deleteProject(projectId: string, userId: number) {
-    try {
-        await axios.delete(`${BASE_URL}/project/${projectId}`, {
-            data: {
-                userId: userId,
-            },
+        await axios.get(`${BASE_URL}/search`, {
+            data: { data },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
