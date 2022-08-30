@@ -39,7 +39,7 @@ function UserDetails() {
     const [projects, setProjects] = useState<IProject[]>([]);
 
     //API User정보 받아오기
-    const { isLoading } = useQuery(
+    const { isLoading} = useQuery(
         ["newCurUser"],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
