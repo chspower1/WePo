@@ -136,9 +136,10 @@ function UserDetails() {
             const newUser = { ...prev };
             newUser.name = curUser?.name;
             newUser.description = curUser?.description;
+            newUser.field = curUser?.field;
             return newUser;
         });
-    }, [curUser?.name, curUser?.description]);
+    }, [curUser?.name, curUser?.description, curUser?.field]);
 
     if (!user) return <></>; // undefined 방지
     if (isLoading) return <></>; // undefined 방지

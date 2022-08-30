@@ -7,7 +7,7 @@ const EmailSchema = new Schema(
       required: true
     },
     authCode: {
-      type: Number,
+      type: String,
       required: true
     }
   }
