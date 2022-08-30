@@ -120,14 +120,13 @@ function Network() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
-    // Field 선택시
+
     useEffect(() => {
         setNetUsers(filterUsersState!);
-    }, [filterUsersState]);
-    // 검색시
+    }, [setUsers, filterUsersState]);
     useEffect(() => {
         setNetUsers(searchUsers!);
-    }, [searchUsers]);
+    }, [setUsers, searchUsers]);
 
     function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
