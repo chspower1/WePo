@@ -30,13 +30,20 @@ export async function UserLogin({ email, password }: ILogin) {
     }
 }
 
+interface IRegister {
+    email: string;
+    password: string;
+    name: string;
+    field: string[];
+}
 // 회원가입 완료
-export async function createtUser({ email, password, name }: IUser) {
+export async function createtUser({ email, password, name, field }: IRegister) {
     try {
         const { data } = await axios.post(`${BASE_URL}/user/register`, {
             email,
             password,
             name,
+            field,
         });
         const newUser: IUser = await {
             ...data,
@@ -53,7 +60,7 @@ export async function createtUser({ email, password, name }: IUser) {
 //유저 정보 불러오기
 export async function getUsers() {
     try {
-        const { data: users } = await axios.get(`${BASE_URL}/userlist`, {
+        const { data: users } = await axios.get(`${BASE_URL}/user/list`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -66,7 +73,7 @@ export async function getUsers() {
 //유저 리스트 정보 불러오기
 export async function getUser(userId: number) {
     try {
-        const { data } = await axios.get(`${BASE_URL}/users/${userId}`, {
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
@@ -77,19 +84,21 @@ export async function getUser(userId: number) {
     }
 }
 interface IUpdateUserProps {
-    name: string;
-    description: string;
+    name?: string;
+    description?: string;
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
         await axios.put(
-            `${BASE_URL}/users/${userId}`,
+            `${BASE_URL}/user/${userId}`,
             { ...data },
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -98,6 +107,23 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
     }
 }
 
+export async function curUserToggleLike( userId:number) {
+    try{
+        await axios
+                .put(
+                    `${BASE_URL}/user/togglelike/${userId}`,
+                    {  },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                        }
+                    }
+                )
+    }catch(err){
+        console.log(err);
+    }
+}
 //카테고리
 export enum Category {
     project = "project",
@@ -118,7 +144,9 @@ export async function addData(
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -139,7 +167,9 @@ export async function updateData(
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -147,7 +177,11 @@ export async function updateData(
         console.log(err);
     }
 }
-export async function deleteData(category: Category, projectId: string, userId: number) {
+export async function deleteData(
+    category: Category,
+    projectId: string,
+    userId: number
+) {
     try {
         await axios.delete(`${BASE_URL}/${category}/${projectId}`, {
             data: {
@@ -181,15 +215,18 @@ export async function mutationCategory(
     }
 }
 
-export async function searchData(data: string) {
+export async function searchData(searchData: string) {
     try {
-        await axios.get(`${BASE_URL}/search`, {
-            data: { data },
+        console.log(searchData);
+        const { data: result } = await axios.get(`${BASE_URL}/user/search/${searchData}`, {
+            data: { searchData },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
+        console.log("반환값", result);
+        return result as IUser[];
     } catch (err) {
         console.log(err);
     }

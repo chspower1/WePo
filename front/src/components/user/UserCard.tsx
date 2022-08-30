@@ -1,26 +1,35 @@
-import { useState } from "react";
-import { curUserState, IUser } from "@/atoms";
+import { useEffect, useState } from "react";
+import { curUserState, usersState, IUser, ILike } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
-import { updateUser } from "@api/api";
+import { updateUser,curUserToggleLike } from "@api/api";
+import { Star } from "@styled-icons/fluentui-system-regular/Star";
+import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 
 const ItemWrap = styled.div`
     min-width: 350px;
-    padding: 20px 30px;
+    max-height:335px;
+    padding: 30px 30px;
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
     background: #fff;
 `;
+const From = styled.form`
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+`
 const InfoBox = styled.div`
     position: relative;
     display: flex;
-    margin-bottom: 40px;
 `;
 const ProfileImageBox = styled.div`
+    position: relative;
     transform: translateY(-40px);
     width: 90px;
     height: 90px;
@@ -32,6 +41,22 @@ const ProfileImageBox = styled.div`
 const UserInfoTxt = styled.div`
     margin-left: 20px;
 `;
+const ProfileImg = styled.img`
+    position: relative;
+    z-index: 1;
+`;
+const ImageChangeInput = styled.input`
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    text-indent: -99999px;
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+`;
 const NameTxt = styled.h2`
     font-size: 18px;
     font-weight: bold;
@@ -42,6 +67,7 @@ const EmailTxt = styled.h3`
     a {
         display: block;
         width: 170px;
+        line-height:1.5;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -54,13 +80,17 @@ const DescTit = styled.p`
     margin-bottom: 16px;
 `;
 const DescTxt = styled.p`
-    height: 100px;
+    height: 80px;
     word-break: break-all;
     line-height: 1.2;
+    font-size:14px;
 `;
 
 const EditOrDetailBtnBox = styled.div`
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
@@ -71,7 +101,54 @@ const ArrowIcon = styled(ArrowRightShort)`
 const DetailBtn = styled.button`
     text-align: center;
     color: #5573df;
+    margin: 0 auto;
 `;
+const LikeBtnBox = styled.div`
+    width: 25px;
+    height: 25px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    border: 1px solid ${props=> props.theme.starBorderColor};
+    &.active{
+        background: ${props=> props.theme.starBorderColor};
+    }
+`;
+const LikeBtn = styled.button`
+    display: flex;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+`;
+const EmptyLikeButton = styled(Star)`
+    color: ${props=> props.theme.starBorderColor};
+    width: 80%;
+`;
+const FullLikeButton = styled(StarEmphasis)`
+    color: ${props=> props.theme.starFullColor};
+    width: 75%;
+`;
+const DescTextarea = styled.textarea`
+    width:100%;
+    height:90%;
+    resize:none;
+`
+const FieldBox = styled.div`
+    display:flex;
+    min-height:25px;
+    flex-wrap:wrap;
+    margin: 0 -4px 20px;
+`
+const FieldTxt = styled.div`
+    display:inline-block;
+    padding:6px 8px;
+    background:${props=> props.theme.filedBgColor};
+    color:${props=> props.theme.bgColor};
+    font-size: 13px;
+    border-radius : 5px;
+    margin:0 4px;
+`
 
 interface IUserFormValue {
     reName: string;
@@ -84,6 +161,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
+    const foundLikeUser = curUser?.likes.find((user) => user == userId);
     const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
@@ -98,13 +176,31 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
+
+    const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        curUserToggleLike(userId);
+        setCurUser((prev:any) =>{
+            let filterLike = [...prev.likes]
+            if (filterLike.includes(userId)){
+                filterLike = filterLike.filter((elem) => elem != userId)
+            }
+            else{
+                filterLike.push(userId)
+            }
+            const addLikeUser:IUser = {...prev,likes:filterLike};
+            return addLikeUser 
+        })
+    };
+
+    
     return (
         <>
             <ItemWrap>
-                <form onSubmit={handleSubmit(onvalid)}>
+                <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <img src={picture} alt="profileImage" />
+                            <ProfileImg src={picture} alt="profileImage" />
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>
@@ -127,36 +223,42 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                     </a>
                                 )}
                             </EmailTxt>
-
-                            {/* <DescTit>{field}</DescTit> */}
                         </UserInfoTxt>
                     </InfoBox>
+                    <FieldBox>
+                        {field && field.map(fieldElement => (<FieldTxt>{fieldElement}</FieldTxt>))}
+                    </FieldBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
                         <DescTxt>
                             {onEdit ||
-                                (description?.length > 70
-                                    ? description.slice(0, 70) + "..."
+                                (description?.length > 73
+                                    ?  `${description.slice(0, 73)}...`
                                     : description)}
                             {onEdit && (
-                                <input
-                                    type="text"
-                                    defaultValue={description}
+                                <DescTextarea
                                     {...register("reDescription", {
                                         required: "나에 대한 설명을 입력해주세요",
                                     })}
-                                />
+                                >{description}</DescTextarea>
                             )}
                         </DescTxt>
                     </DescBox>
                     <EditOrDetailBtnBox>
                         {pathName === `/network` && (
-                            <Link to={`${userId}`}>
-                                <DetailBtn title="더보기">
-                                    더보기
-                                    <ArrowIcon />
-                                </DetailBtn>
-                            </Link>
+                            <>
+                                <LikeBtnBox  className={foundLikeUser?"active":""} >
+                                    <LikeBtn onClick={onClickLike}>
+                                        {foundLikeUser  ? <FullLikeButton /> : <EmptyLikeButton />}
+                                    </LikeBtn>
+                                </LikeBtnBox>
+                                <Link to={`${userId}`}>
+                                    <DetailBtn title="더보기">
+                                        더보기
+                                        <ArrowIcon />
+                                    </DetailBtn>
+                                </Link>
+                            </>
                         )}
                         {onEdit ||
                             (_id === curUser?._id && pathName === "/mypage" && (
@@ -173,7 +275,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                             </>
                         )}
                     </EditOrDetailBtnBox>
-                </form>
+                </From>
             </ItemWrap>
         </>
     );
