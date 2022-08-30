@@ -74,6 +74,11 @@ const NameTxt = styled.h2`
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
+    width: 170px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor:default;
 `;
 const EmailTxt = styled.h3`
     font-size: 14px;
