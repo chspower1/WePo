@@ -232,9 +232,6 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             return addLikeUser;
         });
     };
-    function ChangeField(e:any) {
-
-    }
     const EditFieldButton = styled.input.attrs(({
         type:"checkbox"
     }))`
@@ -291,7 +288,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                     </InfoBox>
                     <FieldBox>
                       {onEdit || fieldList.map((elem,index)=> field.includes(elem) && <FieldStyle chose>{elem}</FieldStyle>)}
-                      {onEdit && fieldList.map((elem,index)=> field.includes(elem) ? <label style={{cursor:"pointer"}}><EditFieldButton {...register("reField")}></EditFieldButton><FieldSty className="qwe">{elem}</FieldSty></label> : <label style={{cursor:"pointer"}}><EditFieldButton  {...register("reField")}></EditFieldButton><FieldSty className="qwe">{elem}</FieldSty></label>)}
+                      {onEdit && fieldList.map((elem,index)=> field.includes(elem) == true ? <label style={{cursor:"pointer"}}><EditFieldButton defaultChecked={false} {...register("reField")}></EditFieldButton><FieldSty className="qwe">{elem}</FieldSty></label> : <label style={{cursor:"pointer"}}><EditFieldButton  defaultChecked={false} {...register("reField")}></EditFieldButton><FieldSty className="qwe">{elem}</FieldSty></label>)}
                     </FieldBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>
