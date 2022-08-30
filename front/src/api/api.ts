@@ -25,8 +25,7 @@ export async function UserLogin({ email, password }: ILogin) {
         await sessionStorage.setItem("userToken", loginUser.token);
         return loginUser as IUser;
     } catch (err) {
-        alert("로그인 정보가 옳지 않습니다!"); // 수정예정
-        console.log(err);
+        console.log(err) // 수정예정
     }
 }
 
@@ -53,8 +52,8 @@ export async function createtUser({ email, password, name, field }: IRegister) {
             updatedAt: "",
         };
         return newUser;
-    } catch (err) {
-        console.log(err);
+    } catch (err:any) {
+        alert(err.response.data);
     }
 }
 //유저 정보 불러오기
