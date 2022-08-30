@@ -47,8 +47,7 @@ class emailService {
 
   // 이메일 인증 번호 확인
   static async getAuthCode(userId){
-    const data = await Email.getEmailCodePair(userId)
-    return data.authCode
+    return Email.getEmailCodePair(userId)
   }
 
   // 이메일-인증번호 pair 삭제
