@@ -170,6 +170,32 @@ class userAuthService {
     await User.update({ userId: user.userId, newValues })
     return newPassword
   }
+
+  // 사용자 비밀번호 변경
+  static async changePassword({userId, oldPassword, newPassword}){
+    const user = await User.findByUserId(userId)
+    if(!user) {
+      throw new Error("해당되는 사용자가 존재하지 않습니다.")
+    }
+
+    // 비밀번호 일치 여부 확인
+    const hashedOldPassword = await bcrypt.hash(oldPassword, 10);
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      correctPasswordHash,
+      hashedOldPassword
+    );
+    if (!isPasswordCorrect) {
+      const errorMessage =
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    // 새 비밀번호 적용
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    const newValues = { password: hashedNewPassword }
+    return User.update({ userId: user.userId, newValues })
+  }
 }
 
 export { userAuthService };
