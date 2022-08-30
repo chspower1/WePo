@@ -32,7 +32,7 @@ export const darkTheme: DefaultTheme = {
     boxShadowGrayColor: "#393d4440",
     boxShadowBlueColor: "#5a9cff66",
     inputBgColor:"#4f555f",
-    circleColor: "#a7b6cc1a",
+    circleColor: "#a7A6ccaa",
     cardColor:"#36363c",
     headerBorderColor:"#737373",
     headerActiveColor:"#1E1D28",

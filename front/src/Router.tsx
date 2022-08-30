@@ -11,6 +11,7 @@ import NotFound from "@components/NotFound";
 import Home from "@components/Home";
 import SEO from "@components/SEO";
 import UserDetails from "@user/UserDetails";
+import ThemeChangeBtn from "@components/ThemeChangeBtn";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
     useEffect(() => {}, [isLogin]);
@@ -29,6 +30,7 @@ function Router() {
                 <Route path="/network/:userSeq" element={<UserDetails />} />
                 <Route path="/user/register/:userId/:authCode" element={<Home />} />
             </Routes>
+            <ThemeChangeBtn/>
         </BrowserRouter>
     );
 }
