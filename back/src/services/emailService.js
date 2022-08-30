@@ -34,7 +34,7 @@ class emailService {
   // 이메일 인증 번호 생성
   static async createAuthCode(userId){
     // 인증번호 생성
-    const authCode = Math.floor(10+Math.random()*(99-10))
+    const authCode = Math.random().toString(36).slice(-8)
 
     const data = await Email.getEmailCodePair(userId)
     // 기존 userId-인증번호 pair 존재 시 인증번호 update
