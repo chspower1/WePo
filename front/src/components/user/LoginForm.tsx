@@ -39,7 +39,8 @@ export default function LoginForm() {
 
     const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
-    const [checkedErr, setCheckedErr] = useState(1);
+    const [curUser, setCurUser] = useRecoilState(curUserState);
+    const [ checkedErr , setCheckedErr] = useState(1);
 
     const onvalid = async (formData: ILogin) => {
         try {
