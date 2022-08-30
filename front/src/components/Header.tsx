@@ -172,7 +172,6 @@ function Header() {
                             />
                         </LogoBox>
                     </Link>
-                    <SearchBar />
                     <Nav>
                         {isLogin ? (
                             <>

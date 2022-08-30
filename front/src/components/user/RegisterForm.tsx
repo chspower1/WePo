@@ -81,11 +81,11 @@ export default function RegisterForm() {
     }, []);
     function handleViewButton(e:React.MouseEvent<HTMLButtonElement>){
         e.preventDefault();
-        setViewPassword(prev => !prev);
+        setViewPassword((prev) => !prev);
     }
     function handleViewCheckButton(e:React.MouseEvent<HTMLButtonElement>){
         e.preventDefault();
-        setViewCheckPassword(prev => !prev);
+        setViewCheckPassword((prev) => !prev);
     }
     return (
         <RegisterStyled.Root>
@@ -199,23 +199,45 @@ export default function RegisterForm() {
                                 </RegisterStyled.SuccessMsg>
                             )}
                         </RegisterStyled.InputBox>
-                        <RegisterStyled.InputBox style={{display:"flex",justifyContent:"space-between"}}>
+                        <RegisterStyled.InputBox
+                            style={{ display: "flex", justifyContent: "space-between" }}
+                        >
                             <h1>선호분야</h1>
                             <div>
-                                <input type="checkbox" id="frontEnd" value="frontEnd"{...register("field")}></input>
-                                <label  htmlFor="frontEnd">프론트엔드</label>
+                                <input
+                                    type="checkbox"
+                                    id="frontEnd"
+                                    value="frontEnd"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="frontEnd">프론트엔드</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="backEnd" value="backEnd"{...register("field")}></input>
-                                <label  htmlFor="backEnd">백엔드</label>
+                                <input
+                                    type="checkbox"
+                                    id="backEnd"
+                                    value="backEnd"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="backEnd">백엔드</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="dataAnalysis" value="dataAnalysis"{...register("field")}></input>
-                                <label  htmlFor="dataAnalysis">데이터분석</label>
+                                <input
+                                    type="checkbox"
+                                    id="dataAnalysis"
+                                    value="dataAnalysis"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="dataAnalysis">데이터분석</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="AI" value="AI"{...register("field")}></input>
-                                <label  htmlFor="AI">AI</label>
+                                <input
+                                    type="checkbox"
+                                    id="AI"
+                                    value="AI"
+                                    {...register("field")}
+                                ></input>
+                                <label htmlFor="AI">AI</label>
                             </div>
                         </RegisterStyled.InputBox>
                         <RegisterStyled.SubmitButtonBox>

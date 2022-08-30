@@ -23,14 +23,22 @@ import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 function UserDetails() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
+
     const [curUser, setCurUser] = useRecoilState(curUserState);
 
     const location = useLocation();
     const pathName = location.pathname;
 
     const { userSeq } = useParams();
-    console.log(userSeq!);
-    console.log(pathName);
+
+    //User관련 State
+    const [user, setUser] = useState<IUser>();
+    const [educations, setEducations] = useState<IEducation[]>([]);
+    const [awards, setAwards] = useState<IAward[]>([]);
+    const [certificates, setCertificates] = useState<ICertificate[]>([]);
+    const [projects, setProjects] = useState<IProject[]>([]);
+
+    //API User정보 받아오기
     const { isLoading } = useQuery(
         ["newCurUser"],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
@@ -44,25 +52,28 @@ function UserDetails() {
             },
         }
     );
-    const [user, setUser] = useState<IUser>();
-    const [educations, setEducations] = useState<IEducation[]>([]);
-    const [awards, setAwards] = useState<IAward[]>([]);
-    const [certificates, setCertificates] = useState<ICertificate[]>([]);
-    const [projects, setProjects] = useState<IProject[]>([]);
 
+    //로그인상태 확인
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
 
+    //오류수정
+    //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
+    useEffect(() => {
+        setUser(curUser!);
+    }, [pathName]);
+
     useEffect(() => {}, [educations, projects, certificates, awards]);
     //드래그 시
     const onDragEnd = async ({ draggableId, destination, source }: DropResult) => {
         console.log(draggableId, destination, source);
 
-        //state
-        if (destination?.droppableId === "educations") {
+        if (destination?.droppableId !== source.droppableId) return;
+        //드래그 필드가 Educations
+        else if (destination?.droppableId === "educations") {
             setEducations((prev) => {
                 const resultEducations = [...prev];
                 const education = resultEducations[source.index];
@@ -76,7 +87,8 @@ function UserDetails() {
 
             console.log("set하고 나온 educations", educations);
         }
-        if (destination?.droppableId === "awards") {
+        //드래그 필드가 awards
+        else if (destination?.droppableId === "awards") {
             setAwards((prev) => {
                 const resultAwards = [...prev];
                 const award = resultAwards[source.index];
@@ -89,7 +101,8 @@ function UserDetails() {
 
             console.log(awards);
         }
-        if (destination?.droppableId === "certificates") {
+        //드래그 필드가 certificates
+        else if (destination?.droppableId === "certificates") {
             setCertificates((prev) => {
                 const resultCertificates = [...prev];
                 const certificate = resultCertificates[source.index];
@@ -100,7 +113,8 @@ function UserDetails() {
             });
             console.log(certificates);
         }
-        if (destination?.droppableId === "project") {
+        //드래그 필드가 project
+        else if (destination?.droppableId === "projects") {
             setProjects((prev) => {
                 const resultProjects = [...prev];
                 const project = resultProjects[source.index];
