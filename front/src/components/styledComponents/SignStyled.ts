@@ -95,7 +95,7 @@ export const SubmitButton = styled.button`
     width: 50%;
     height: 50px;
     background: ${(props) => props.theme.btnColor};
-    color: ${(props) => props.theme.textColor};
+    color: ${(props) => props.theme.btnTextColor};
     border-radius: 10px;
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowBlueColor};
     

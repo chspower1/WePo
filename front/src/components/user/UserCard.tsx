@@ -212,20 +212,10 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     return (
         <>
             <ItemWrap>
-                <From onSubmit={handleSubmit(onvalid)} encType="multipart/form-data">
+                <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <ProfileImg src={picture!} alt="profileImage" />
-                            {/* {onEdit && (
-                                <>
-                                    <ImageChangeInput
-                                        type="file"
-                                        id="changeFile"
-                                        {...register("changedImg")}
-                                    />
-                                    <PlusIcon/>
-                                </>
-                            )} */}
+                            <ProfileImg src={picture} alt="profileImage" />
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>
@@ -262,11 +252,10 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                     : description)}
                             {onEdit && (
                                 <DescTextarea
-                                    defaultValue={description}
                                     {...register("reDescription", {
                                         required: "나에 대한 설명을 입력해주세요",
                                     })}
-                                ></DescTextarea>
+                                >{description}</DescTextarea>
                             )}
                         </DescTxt>
                     </DescBox>
@@ -308,3 +297,4 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
 }
 
 export default UserCard;
+

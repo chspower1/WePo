@@ -112,7 +112,7 @@ const LoginOrRegiBtn = styled.button`
     background:  ${(props) => props.theme.textColor};
     border-radius: 20px;
     color: ${(props) => props.theme.bgColor};
-    border: 2px solid #343434;
+    border: 2px solid ${(props) => props.theme.textColor};
     margin-left: 20px;
     letter-spacing: -0.4px;
     transition: all 0.4s;

@@ -134,6 +134,8 @@ export const MajorGraduateLabel = styled.label`
 `;
 export const Root = styled.div`
     background: ${props=>props.theme.bgColor};
+    min-height:100%;
+    display:flex;
 `;
 export const MyPortWrap = styled.div`
     position: relative;
@@ -141,7 +143,7 @@ export const MyPortWrap = styled.div`
     max-width: 1300px;
     display: flex;
     justify-content: flex-end;
-    margin: 80px auto;
+    margin: 80px auto 0;
     padding: 80px 30px;
     @media screen and (max-width: 960px) {
         flex-direction: column;
