@@ -172,7 +172,6 @@ function Header() {
                             />
                         </LogoBox>
                     </Link>
-                    <SearchBar />
                     <Nav>
                         {isLogin ? (
                             <>
@@ -180,7 +179,7 @@ function Header() {
                                     네트워크
                                 </LinkButton>
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
-                                <MiniProfileImg src={curUser?.picture} />
+                                <MiniProfileImg src={curUser?.picture!} />
                                 <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                             </>

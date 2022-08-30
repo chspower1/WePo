@@ -5,10 +5,11 @@ import styled from "styled-components";
 import { MagnifyingGlass } from "@styled-icons/foundation/MagnifyingGlass";
 const SearchBox = styled.form`
     position: relative;
-    width: 40%;
+    width: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin:0 auto;
 `;
 const Input = styled.input`
     width: 100%;
@@ -19,8 +20,10 @@ const Input = styled.input`
     display: flex;
     justify-content: center;
     align-items: center;
+    border:1px solid ${props=>props.theme.btnColor};
+    outline:0;
     &:focus {
-        outline: 2px solid ${(props) => props.theme.btnColor};
+        border: 2px solid ${(props) => props.theme.btnColor};
     }
 `;
 const Button = styled.button`
@@ -28,10 +31,12 @@ const Button = styled.button`
     right: 5px;
     color: ${(props) => props.theme.btnColor};
     transition: color 0.4s ease;
+    transform: scaleX(-1);
     &:hover {
         color: ${(props) => props.theme.accentColor};
     }
 `;
+
 export default function SearchBar() {
     const {
         register,

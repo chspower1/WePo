@@ -7,6 +7,7 @@ import { getUser, getUsers } from "@api/api";
 import { isLoginState, usersState, checkedBoxValue, hopeJob, IUser } from "@/atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
+import SearchBar from "@components/SearchBar";
 
 const LoadingMotion = keyframes`
     0% {
@@ -48,19 +49,20 @@ export const NetworkContainer = styled.div`
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
     color:${props=>props.theme.textColor};
+    margin:0 0 70px;
 `;
 
 const NetworkTitle = styled.h1`
     text-align: center;
-    font-size: 24px;
-    padding: 0 0 30px;
+    font-size: 34px;
+    padding: 0 0 80px;
 `;
 
 const SelectBox = styled.div`
     display: flex;
     justify-content: center;
     gap: 10px;
-    padding: 0 0 30px;
+    padding: 0 0 20px;
 `;
 
 const CheckBoxWrap = styled.div`
@@ -172,6 +174,7 @@ function Network() {
                                         <Label htmlFor="AI">AI</Label>
                                     </CheckBoxWrap>
                                 </SelectBox>
+                                <SearchBar />
                             </NetworkHeadingSelectBox>
                             {isLoading ? (
                                 <LoadingBox>

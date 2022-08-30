@@ -9,7 +9,7 @@ export interface IUser {
     email: string;
     name: string;
     password?: string;
-    picture?: string;
+    picture?: any;
     description: string;
     field: string[];
     likes: number[];

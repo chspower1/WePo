@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
     return (
         <>
-            <ThemeProvider theme={darkTheme}>
+            <ThemeProvider theme={lightTheme}>
                 <GlobalStyle />
                 <Router />
             </ThemeProvider>

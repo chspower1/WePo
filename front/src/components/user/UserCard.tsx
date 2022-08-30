@@ -179,12 +179,11 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
     const onvalid = ({ reName: name, reDescription: description, changedImg:picture }: IUserFormValue) => {
-        console.log("picture",picture)
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
+            console.log(updateCurUser)
             updateCurUser.name = name;
             updateCurUser.description = description;
-            updateCurUser.picture = picture;
             return updateCurUser as IUser;
         });
         updateUser({ name, description }, curUser?.userId!);
@@ -218,11 +217,12 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                 <From onSubmit={handleSubmit(onvalid)} encType="multipart/form-data">
                     <InfoBox>
                         <ProfileImageBox>
-                            <ProfileImg src={picture} alt="profileImage" />
+                            <ProfileImg src={picture!} alt="profileImage" />
                             {onEdit && (
                                 <>
                                     <ImageChangeInput
                                         type="file"
+                                        id="changeFile"
                                         {...register("changedImg")}
                                     />
                                     <PlusIcon/>
@@ -264,10 +264,11 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                     : description)}
                             {onEdit && (
                                 <DescTextarea
+                                    defaultValue={description}
                                     {...register("reDescription", {
                                         required: "나에 대한 설명을 입력해주세요",
                                     })}
-                                >{description}</DescTextarea>
+                                ></DescTextarea>
                             )}
                         </DescTxt>
                     </DescBox>
