@@ -24,6 +24,7 @@ export default function LoginForm() {
     const [isEmailRemember, setIsEmailRemember] = useState(false);
     // const [isPasswordRemember, setIsPasswordRemember] = useState(false);
     const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
+    const curUser = useRecoilState(curUserState);
     const {
         register,
         handleSubmit,
@@ -39,23 +40,27 @@ export default function LoginForm() {
     const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
     const setCurUser = useSetRecoilState(curUserState);
-    const [ checkedErr , setCheckedErr] = useState(1);
+    const [checkedErr, setCheckedErr] = useState(1);
 
     const onvalid = async (formData: ILogin) => {
         try {
             const newUser = await UserLogin({ ...formData });
-            if(checkedErr >= 5){
-                return alert("비밀번호를 5번 이상 틀리셨습니다. 집가서 발 닦고 잠이나 자십시오.")
+            if (checkedErr >= 5) {
+                return alert("비밀번호를 5번 이상 틀리셨습니다. 집가서 발 닦고 잠이나 자십시오.");
             }
-            if(newUser === undefined){
-                setCheckedErr(prev => prev+1)
-                if(checkedErr === 3){
-                    return alert(`비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)\n5번 이상 틀리시면 비밀번호가 초기화 됩니다...\n정확히 써주세요..ㅜㅜ`)
-                }else if(checkedErr === 4){
-                    return alert(`비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)\n5번 이상 틀리시면 비밀번호가 초기화 됩니다...\n마지막 기회에요! 기억해서 입력해주세요!!!`)
+            if (newUser === undefined) {
+                setCheckedErr((prev) => prev + 1);
+                if (checkedErr === 3) {
+                    return alert(
+                        `비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)\n5번 이상 틀리시면 비밀번호가 초기화 됩니다...\n정확히 써주세요..ㅜㅜ`
+                    );
+                } else if (checkedErr === 4) {
+                    return alert(
+                        `비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)\n5번 이상 틀리시면 비밀번호가 초기화 됩니다...\n마지막 기회에요! 기억해서 입력해주세요!!!`
+                    );
                 }
-                alert(`비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)`)
-            }else{
+                alert(`비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)`);
+            } else {
                 await setCurUser(newUser!);
             }
         } catch (err) {
