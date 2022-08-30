@@ -5,8 +5,10 @@ import { projectRouter } from "./routers/projectRouter";
 import { awardRouter } from "./routers/awardRouter";
 import { educationRouter } from "./routers/educationRouter";
 import { certificateRouter } from "./routers/certificateRouter";
-import { uploadRouter } from "./routers/uploadRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+
+const path = require('path');
+
 
 const app = express();
 
@@ -30,7 +32,8 @@ app.use("/project", projectRouter);
 app.use("/award", awardRouter);
 app.use("/education", educationRouter);
 app.use("/certificate", certificateRouter);
-app.use("/upload", uploadRouter)
+
+app.use("/uploads", express.static(path.resolve(__dirname, "uploads")));
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
