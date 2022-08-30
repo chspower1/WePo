@@ -10,6 +10,7 @@ import { curUserState } from "@/atoms";
 import * as LoginStyled from "@styledComponents/SignStyled";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
 import { EyeOffOutline,EyeOutline } from "styled-icons/evaicons-outline";
+import SendMailAlert from "@components/modal/sendMailAlert";
 export interface ILogin {
     email: string;
     password: string;
