@@ -2,14 +2,14 @@ import styled from "styled-components";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
 export const Root = styled.div`
     width: 100%;
-    height: 100vh;
+    min-height: 100%;
     padding: 70px 0 0;
     background: ${props=> props.theme.bgColor};
 `;
 
 export const Wrapper = styled.div`
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     padding: 50px 0;
 `;
@@ -22,7 +22,7 @@ export const FromContainer = styled.div`
     width: 100%;
     height: 560px;
     padding: 70px 80px;
-    margin: auto;
+    margin: 80px auto;
     border-radius: 15px;
     background: ${props=>props.theme.opacityBgColor};
     box-shadow: 10px 10px 15px ${props=>props.theme.boxShadowGrayColor};

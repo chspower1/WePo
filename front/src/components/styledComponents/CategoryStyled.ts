@@ -8,7 +8,7 @@ export const Container = styled.div`
     justify-content: center;
     border-radius: 10px;
     box-shadow: 10px 10px 15px ${props=>props.theme.boxShadowGrayColor};
-    padding: 50px 50px 20px;
+    padding: 50px 50px 80px;
     margin-bottom: 40px;
     background:  ${props=>props.theme.cardColor};
     @media screen and (max-width: 960px) {
@@ -48,8 +48,7 @@ export const ContentAccent = styled.p`
     font-weight: bold;
     margin-bottom: 10px;
     margin-top: 20px;
-    min-width:80%;
-    max-width:80%;
+    max-width:50%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -58,7 +57,7 @@ export const ContentAccent = styled.p`
 export const ContentDetail = styled.p`
     font-size: 15px;
     margin-bottom: 10px;
-    max-width:70%;
+    max-width:50%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -88,7 +87,7 @@ export const DeleteButton = styled.button`
 export const AddButton = styled.button`
     width: 45px;
     height: 45px;
-    margin : 50px 0;
+    margin : 50px 0 0;
 `;
 
 export const AddInput = styled.input.attrs((props) => ({
