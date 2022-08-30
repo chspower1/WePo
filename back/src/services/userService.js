@@ -157,6 +157,19 @@ class userAuthService {
     console.log(newValues)
     return User.update({ userId, newValues })
   }
+
+  // 사용자 비밀번호 초기화
+  static async resetPassword(email){
+    const user = await User.findByEmail(email)
+    if(!user) {
+      throw new Error("해당되는 사용자가 존재하지 않습니다.")
+    }
+    const newPassword = Math.random().toString(36).slice(-8);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const newValues = { password: hashedPassword}
+    await User.update({ userId: user.userId, newValues })
+    return newPassword
+  }
 }
 
 export { userAuthService };

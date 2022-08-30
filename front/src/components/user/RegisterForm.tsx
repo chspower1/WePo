@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
-import { ReactEventHandler, useEffect,useState } from "react";
+import { ReactEventHandler, useEffect, useState } from "react";
 import { createtUser } from "@api/api";
 import { usersState } from "@/atoms";
 import { IUser } from "@/atoms";
@@ -10,7 +10,8 @@ import { useQuery } from "react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
 import CheckFieldBox from "./CheckFieldBox";
-import { EyeOffOutline,EyeOutline } from "styled-icons/evaicons-outline";
+import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
+import SendMailAlert from "@components/modal/sendMailAlert";
 export interface IRegister {
     email: string;
     name: string;
@@ -35,8 +36,9 @@ const Label = styled.label`
 `;
 export default function RegisterForm() {
     const [users, setUsers] = useRecoilState(usersState);
-    const [viewCheckPassword,setViewCheckPassword] = useState(false);
-    const [viewPassword,setViewPassword] = useState(false);
+    const [viewCheckPassword, setViewCheckPassword] = useState(false);
+    const [viewPassword, setViewPassword] = useState(false);
+    const [sendEmail, setSendEmail] = useState(false);
     const {
         register,
         handleSubmit,
@@ -54,7 +56,6 @@ export default function RegisterForm() {
                 newUsers.push(newUser!);
                 return newUsers;
             });
-            navigator("/", { replace: true });
         })();
     };
 
@@ -77,19 +78,19 @@ export default function RegisterForm() {
             message: "비밀번호를 한번 더 입력해 주세요",
         });
     }, []);
-    function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
+    function handleViewButton(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
-        console.log(e)
-        setViewPassword(prev => !prev);
+        setViewPassword((prev) => !prev);
     }
-    function handleViewCheckButton(e:React.FormEvent<HTMLButtonElement>){
+    function handleViewCheckButton(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setViewCheckPassword(prev => !prev);
+        setViewCheckPassword((prev) => !prev);
     }
     return (
         <RegisterStyled.Root>
             <RegisterStyled.RegisterWrapper>
                 <RegisterStyled.RegisterFromContainer>
+                    {sendEmail && <SendMailAlert setSendEmail={setSendEmail}></SendMailAlert>}
                     <RegisterStyled.TitleBox>
                         <RegisterStyled.Title>회원가입</RegisterStyled.Title>
                     </RegisterStyled.TitleBox>
@@ -154,7 +155,13 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>
+                                    {viewPassword ? (
+                                        <EyeOutline color="#3687FF" />
+                                    ) : (
+                                        <EyeOffOutline color="#3687FF" />
+                                    )}
+                                </RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.password ? (
                                 <RegisterStyled.ErrMsg>
@@ -186,7 +193,13 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewCheckButton}>{viewCheckPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewCheckButton}>
+                                    {viewCheckPassword ? (
+                                        <EyeOutline color="#3687FF" />
+                                    ) : (
+                                        <EyeOffOutline color="#3687FF" />
+                                    )}
+                                </RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.checkPassword ? (
                                 <RegisterStyled.ErrMsg>
@@ -221,7 +234,10 @@ export default function RegisterForm() {
                             </RegisterStyled.FiledSelectBox>
                         </RegisterStyled.FiledBox>
                         <RegisterStyled.SubmitButtonBox>
-                            <RegisterStyled.SubmitButton disabled={!valid}>
+                            <RegisterStyled.SubmitButton
+                                disabled={!valid}
+                                onClick={() => setSendEmail(true)}
+                            >
                                 작성완료
                             </RegisterStyled.SubmitButton>
                         </RegisterStyled.SubmitButtonBox>

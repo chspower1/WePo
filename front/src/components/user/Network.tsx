@@ -4,7 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
 import { getUser, getUsers } from "@api/api";
-import { isLoginState, usersState, checkedBoxValue, hopeJob, IUser } from "@/atoms";
+import {
+    isLoginState,
+    usersState,
+    checkedBoxValue,
+    hopeJob,
+    IUser,
+    searchUsersState,
+} from "@/atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
 import SearchBar from "@components/SearchBar";
@@ -94,14 +101,17 @@ function Network() {
     const location = useLocation();
     const pathName = location.pathname;
     const [users, setUsers] = useRecoilState(usersState);
+    const [netUsers, setNetUsers] = useState<IUser[]>([]);
     const [user, setUser] = useState<IUser | null>(null);
     const isLogin = useRecoilValue(isLoginState);
     const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
+    const searchUsers = useRecoilValue(searchUsersState);
     const filterUsersState = useRecoilValue(hopeJob);
 
     const { isLoading } = useQuery(["users"], getUsers, {
         onSuccess(data) {
             setUsers(data!);
+            setNetUsers(data!);
             console.log(users);
         },
     });
@@ -112,12 +122,22 @@ function Network() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
+    // Field 선택시
+    useEffect(() => {
+        setNetUsers(filterUsersState!);
+        console.log("필드선택-----------------------", netUsers);
+    }, [filterUsersState]);
+    useEffect(() => {
+        setNetUsers(searchUsers!);
+        console.log("검색조건-----------------------", netUsers);
+    }, [searchUsers]);
 
     function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
             const currentChecked = [...current];
             const overlap = currentChecked.findIndex((el) => el === name);
             overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
+
             return currentChecked;
         });
     }
@@ -130,6 +150,7 @@ function Network() {
                 <BgWrap>
                     <Root>
                         <NetworkWrap>
+                            <SearchBar />
                             <NetworkHeadingSelectBox>
                                 <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
                                 <SelectBox>
@@ -183,7 +204,7 @@ function Network() {
                                 </LoadingBox>
                             ) : (
                                 <NetworkContainer>
-                                    {filterUsersState.map((user) => (
+                                    {netUsers?.map((user) => (
                                         <UserCard key={user.userId} {...user} />
                                     ))}
                                 </NetworkContainer>

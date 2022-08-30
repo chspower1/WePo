@@ -3,7 +3,7 @@ import { curUserState, IEducation } from "@/atoms";
 import { HandLeft } from "@styled-icons/ionicons-solid/HandLeft";
 import EducationEditForm from "./EducationEditForm";
 import EducationAddForm from "./EducationAddForm";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import * as EducationStyled from "@styledComponents/CategoryStyled";
 import { useRecoilValue } from "recoil";
 import { PlusSquareFill } from "styled-icons/bootstrap";
@@ -21,6 +21,10 @@ export default function Education({ educations, setEducations }: IEducationProps
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
 
+    //parmas
+    const { params } = useParams();
+    const compareUser = params && parseInt(params) === curUser?.userId!;
+
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
@@ -29,6 +33,7 @@ export default function Education({ educations, setEducations }: IEducationProps
     //현재경로
     const location = useLocation();
     const pathName = location.pathname;
+    const inMyPage = pathName === "/mypage";
 
     // 삭제버튼 클릭시
     const onClickDeleteBtn = (education: IEducation, index: number) => {
@@ -47,94 +52,104 @@ export default function Education({ educations, setEducations }: IEducationProps
     }
 
     return (
-        <EducationStyled.Container>
-            <EducationStyled.TitleBox>
-                <EducationStyled.Title>학력</EducationStyled.Title>
-            </EducationStyled.TitleBox>
-            <EducationStyled.ContentContainer>
-                {isAddFormActive && (
-                    <EducationAddForm
-                        setIsAddFormActive={setIsAddFormActive}
-                        setEducations={setEducations}
-                        userId={curUser?.userId!}
-                        educations={educations}
-                    />
-                )}
-                {!isAddFormActive &&
-                    educations?.map((education, index) => (
-                        <Draggable
-                            key={String(education?.eduId!)}
-                            draggableId={String(education?.eduId!)}
-                            index={index}
-                        >
-                            {(magic) => (
-                                <EducationStyled.ContentBox key={index}>
-                                    {targetIndex !== index && (
-                                        <div
-                                            ref={magic.innerRef}
-                                            {...magic.draggableProps}
-                                            {...magic.dragHandleProps}
-                                        >
-                                            <EducationStyled.ContentAccent title={education.school}>
-                                                {education.school}
-                                            </EducationStyled.ContentAccent>
-                                            <div style={{ display: "flex" }}>
-                                                <EducationStyled.ContentDetail
-                                                    style={{ marginRight: "10px" }}
-                                                    title={education.major}
-                                                >
-                                                    {education.major}
-                                                </EducationStyled.ContentDetail>
-                                                <EducationStyled.ContentDetail title={education.status}>
-                                                    ({education.status})
-                                                </EducationStyled.ContentDetail>
-                                            </div>
-                                            {curUser &&
-                                                pathName === "/mypage" &&
-                                                targetIndex !== index && (
-                                                    <>
-                                                        <EducationStyled.EditButton
-                                                            onClick={() => {
-                                                                setIsEditing(true);
-                                                                setTargetIndex(index);
-                                                            }}
-                                                        >
-                                                            <Pencil color="#3867FF" />
-                                                        </EducationStyled.EditButton>
-                                                        <EducationStyled.DeleteButton
-                                                            onClick={() => {
-                                                                onClickDeleteBtn(education, index);
-                                                            }}
-                                                        >
-                                                            <Trash2 color="#3867FF" />
-                                                        </EducationStyled.DeleteButton>
-                                                    </>
-                                                )}
-                                        </div>
-                                    )}
-
-                                    {isEditing && targetIndex === index && (
-                                        <EducationEditForm
-                                            index={index}
-                                            educations={educations}
-                                            setEducations={setEducations}
-                                            setIsEditing={setIsEditing}
-                                            userId={education.userId!}
-                                            eduId={education.eduId}
-                                            setTargetIndex={setTargetIndex}
-                                        />
-                                    )}
-                                </EducationStyled.ContentBox>
+        <Droppable droppableId="educations" isDropDisabled={compareUser || inMyPage ? false : true}>
+            {(magic) => (
+                <div ref={magic.innerRef} {...magic.droppableProps}>
+                    <EducationStyled.Container>
+                        <EducationStyled.TitleBox>
+                            <EducationStyled.Title>학력</EducationStyled.Title>
+                        </EducationStyled.TitleBox>
+                        <EducationStyled.ContentContainer>
+                            {isAddFormActive && (
+                                <EducationAddForm
+                                    setIsAddFormActive={setIsAddFormActive}
+                                    setEducations={setEducations}
+                                    userId={curUser?.userId!}
+                                    educations={educations}
+                                />
                             )}
-                        </Draggable>
-                    ))}
-            </EducationStyled.ContentContainer>
+                            {!isAddFormActive &&
+                                educations?.map((education, index) => (
+                                    <Draggable
+                                        key={String(education?.eduId!)}
+                                        draggableId={String(education?.eduId!)}
+                                        index={index}
+                                    >
+                                        {(magic) => (
+                                            <EducationStyled.ContentBox key={index}>
+                                                {targetIndex !== index && (
+                                                    <div
+                                                        ref={magic.innerRef}
+                                                        {...magic.draggableProps}
+                                                        {...magic.dragHandleProps}
+                                                    >
+                                                        <EducationStyled.ContentAccent title={education.school}>
+                                                            {education.school}
+                                                        </EducationStyled.ContentAccent>
+                                                        <div style={{ display: "flex" }}>
+                                                            <EducationStyled.ContentDetail
+                                                                style={{ marginRight: "10px" }}
+                                                                title={education.major}
+                                                                >
+                                                                {education.major}
+                                                            </EducationStyled.ContentDetail>
+                                                            <EducationStyled.ContentDetail title={education.status}>
+                                                                ({education.status})
+                                                            </EducationStyled.ContentDetail>
+                                                        </div>
+                                                        {curUser &&
+                                                            pathName === "/mypage" &&
+                                                            targetIndex !== index && (
+                                                                <>
+                                                                    <EducationStyled.EditButton
+                                                                        onClick={() => {
+                                                                            setIsEditing(true);
+                                                                            setTargetIndex(index);
+                                                                        }}
+                                                                    >
+                                                                        <Pencil color="#3867FF" />
+                                                                    </EducationStyled.EditButton>
+                                                                    <EducationStyled.DeleteButton
+                                                                        onClick={() => {
+                                                                            onClickDeleteBtn(
+                                                                                education,
+                                                                                index
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        <Trash2 color="#3867FF" />
+                                                                    </EducationStyled.DeleteButton>
+                                                                </>
+                                                            )}
+                                                    </div>
+                                                )}
 
-            {curUser && pathName === "/mypage" && !isAddFormActive && (
-                <EducationStyled.AddButton onClick={handleIsAddFormActive}>
-                    <PlusSquareFill color="#3687FF" />
-                </EducationStyled.AddButton>
+                                                {isEditing && targetIndex === index && (
+                                                    <EducationEditForm
+                                                        index={index}
+                                                        educations={educations}
+                                                        setEducations={setEducations}
+                                                        setIsEditing={setIsEditing}
+                                                        userId={education.userId!}
+                                                        eduId={education.eduId}
+                                                        setTargetIndex={setTargetIndex}
+                                                    />
+                                                )}
+                                            </EducationStyled.ContentBox>
+                                        )}
+                                    </Draggable>
+                                ))}
+                        </EducationStyled.ContentContainer>
+                        {magic.placeholder}
+
+                        {curUser && pathName === "/mypage" && !isAddFormActive && (
+                            <EducationStyled.AddButton onClick={handleIsAddFormActive}>
+                                <PlusSquareFill color="#3687FF" />
+                            </EducationStyled.AddButton>
+                        )}
+                    </EducationStyled.Container>
+                </div>
             )}
-        </EducationStyled.Container>
+        </Droppable>
     );
 }
