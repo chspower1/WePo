@@ -206,13 +206,15 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         }
 
         // body data 로부터 업데이트할 사용자 정보를 추출함.
-        const { name, description } = req.body;
+        const { name, description, field } = req.body;
         const imageFile = req.file;
-        const picture = imageFile.filename;
-        
-        console.log(imageFile);
+        let picture = null;
 
-        const toUpdate = { name, description, picture };
+        if(imageFile) {
+            picture = imageFile.filename;
+        }
+
+        const toUpdate = { name, description, field, picture };
 
         // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
         const updatedUser = await userAuthService.setUser({
