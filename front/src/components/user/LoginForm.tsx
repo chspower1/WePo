@@ -2,35 +2,47 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { InputHTMLAttributes, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserLogin } from "@api/api";
 import { isLoginState, IUser } from "../../atoms";
 import { curUserState } from "@/atoms";
 import * as LoginStyled from "@styledComponents/SignStyled";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
-import { EyeOffOutline,EyeOutline } from "styled-icons/evaicons-outline";
+import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 import SendMailAlert from "@components/modal/sendMailAlert";
+import { useCookies } from "react-cookie";
+import { checkedBoxValue } from "./../../atoms";
 export interface ILogin {
     email: string;
     password: string;
 }
 
 export default function LoginForm() {
-    const [viewPassword,setViewPassword] = useState(false);
+    const [viewPassword, setViewPassword] = useState(false);
+    const [isEmailRemember, setIsEmailRemember] = useState(false);
+    const [isPasswordRemember, setIsPasswordRemember] = useState(false);
+    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
     const {
         register,
         handleSubmit,
         formState: { errors },
         setError,
-    } = useForm<ILogin>({ mode: "onChange", defaultValues: { email: "", password: "" } });
+    } = useForm<ILogin>({
+        mode: "onChange",
+        defaultValues: {
+            email: `${isEmailRemember} ? ${cookies.rememberEmail as string} : null`,
+            password: `${isPasswordRemember} ? ${cookies.rememberPassword as string} : null `,
+        },
+    });
 
     const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
-    const setCurUser = useSetRecoilState(curUserState);
+    const [curUser, setCurUser] = useRecoilState(curUserState);
 
     const onvalid = async (formData: ILogin) => {
         try {
+            console.log(cookies.rememberEmail, cookies.rememberPassword);
             const newUser = await UserLogin({ ...formData });
             await setCurUser(newUser!);
         } catch (err) {
@@ -39,7 +51,14 @@ export default function LoginForm() {
     };
     console.log(isLogin);
     useEffect(() => {
+        if (cookies.rememberEmail !== undefined) {
+        }
+        if (cookies.rememberPassword !== undefined) {
+        }
+    }, []);
+    useEffect(() => {
         if (isLogin) {
+            setCookies("rememberEmail", curUser?.email!, { maxAge: 2000 });
             navigator("/mypage", { replace: true });
         }
         setError("email", {
@@ -51,10 +70,23 @@ export default function LoginForm() {
             message: "비밀번호를 입력해 주세요",
         });
     }, [isLogin]);
-    
-    function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
+
+    function handleViewButton(e: React.FormEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setViewPassword(prev => !prev);
+        setViewPassword((prev) => !prev);
+    }
+
+    //자동로그인 & 아이디 저장 OnClick시
+    function onChangeAtuoLogin(e: React.FormEvent<HTMLInputElement>) {
+        console.log(e.currentTarget.name);
+        if (e.currentTarget.name === "autoLogin") {
+            setIsEmailRemember(e.currentTarget.checked);
+            setIsPasswordRemember(e.currentTarget.checked);
+        }
+        if (e.currentTarget.name === "rememberId") {
+            setIsEmailRemember(e.currentTarget.checked);
+            setIsPasswordRemember(false);
+        }
     }
     return (
         <LoginStyled.Root>
@@ -97,15 +129,32 @@ export default function LoginForm() {
                                         },
                                     })}
                                 />
-                                <LoginStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</LoginStyled.ViewButton>
+                                <LoginStyled.ViewButton
+                                    tabIndex={-1}
+                                    onMouseDown={handleViewButton}
+                                >
+                                    {viewPassword ? (
+                                        <EyeOutline color="#3687FF" />
+                                    ) : (
+                                        <EyeOffOutline color="#3687FF" />
+                                    )}
+                                </LoginStyled.ViewButton>
                             </LoginStyled.InputInnerBox>
                             {errors.password && (
-                                    <LoginStyled.ErrMsg>
-                                        <LoginStyled.DangerIcon />
-                                        {errors.password.message}
-                                    </LoginStyled.ErrMsg>
+                                <LoginStyled.ErrMsg>
+                                    <LoginStyled.DangerIcon />
+                                    {errors.password.message}
+                                </LoginStyled.ErrMsg>
                             )}
                         </LoginStyled.InputBox>
+                        <div>
+                            아이디 저장하기
+                            <input type="checkbox" name="rememberId" onClick={onChangeAtuoLogin} />
+                        </div>
+                        <div>
+                            자동 로그인
+                            <input type="checkbox" name="autoLogin" onClick={onChangeAtuoLogin} />
+                        </div>
                         <LoginStyled.SubmitButtonBox>
                             <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
                         </LoginStyled.SubmitButtonBox>

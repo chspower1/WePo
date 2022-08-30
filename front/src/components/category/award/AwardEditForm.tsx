@@ -36,7 +36,6 @@ export default function AwardEditForm({
             newAward[index] = { ...data, userId, awardId };
             return newAward;
         });
-        console.log(awards);
         setIsEditing(false);
         setTargetIndex(null);
     };
