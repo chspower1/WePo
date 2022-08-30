@@ -4,76 +4,15 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { emailService } from "../services/emailService";
-import { User } from "../db/models/User"
+import { User } from "../db/models/User";
 
+import imageUpload from "../utils/imageUpload";
+const upload = imageUpload("src/uploads", 5);
 
 const userAuthRouter = Router();
 
-// 회원가입 - 이메일 인증번호 전송
-userAuthRouter.post("/register/email-send", async function (req, res, next) {
-    try {
-        if (is.emptyObject(req.body)) {
-            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-        }
 
-        // req (request) 에서 데이터 가져오기
-        const { name, email } = req.body;
-
-        // email 중복확인
-        const user = await User.findByEmail({ email });
-        if (user) {
-            throw new Error("이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.");
-        }
-
-        // 인증 이메일 전송
-        const codeAdded = await emailService.createAuthCode(email)
-
-        const mailContent = {
-            from: '"Limit" <wnsdml0120@gmail.com>', // sender address
-            to: email, // list of receivers: "*@*.*, *@*.*"
-            subject: "WePo 회원가입 인증번호", // Subject line
-            text: `${name}님의 인증번호는 ${codeAdded.authCode}입니다.`, // plain text body
-            html: `<b>${name}<b/>님의 인증번호는<br/>
-                    <h3>${codeAdded.authCode}</h3>입니다.`, // html body
-          }
-        
-        const emailSent = await emailService.sendEmail(mailContent)
-        if(emailSent.rejected.length!==0){
-            throw new Error("이메일 전송을 실패했습니다.")
-        }
-
-        res.status(201).send("인증번호 전송 성공");
-    } catch (error) {
-        next(error);
-    }
-});
-
-// 회원가입 - 이메일 인증번호 확인
-userAuthRouter.post("/register/email-check", async function (req, res, next) {
-    try {
-        if (is.emptyObject(req.body)) {
-            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-        }
-
-        // req (request) 에서 데이터 가져오기
-        const { email, authCode } = req.body;
-        
-        // 입력된 authCode DB와 비교
-        const gotAuthCode = await emailService.getAuthCode(email)
-        if(gotAuthCode!==authCode){
-            throw new Error("인증번호가 틀렸습니다.")
-        }
-
-        // 인증 성공 시 email-authCode pair DB에서 삭제
-        await emailService.deleteAuthCode(email)
-
-        res.status(201).send("인증성공");
-    } catch (error) {
-        next(error);
-    }
-});      
-
-// 회원가입 - 최종 단계
+// 회원가입
 userAuthRouter.post("/register", async function (req, res, next) {
     try {
         if (is.emptyObject(req.body)) {
@@ -185,11 +124,11 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 });
 
 // id의 사용자 정보 update
-userAuthRouter.put("/:id", login_required, async function (req, res, next) {
+userAuthRouter.put("/:id", login_required, upload.single('image'), async function (req, res, next) {
     try {
-        if (is.emptyObject(req.body)) {
-            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-        }
+        // if (is.emptyObject(req.body)) {
+        //     throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        // }
 
         // User authentication
         const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
@@ -205,8 +144,12 @@ userAuthRouter.put("/:id", login_required, async function (req, res, next) {
 
         // body data 로부터 업데이트할 사용자 정보를 추출함.
         const { name, description } = req.body;
+        const imageFile = req.file;
+        const picture = imageFile.filename;
+        
+        console.log(imageFile);
 
-        const toUpdate = { name, description };
+        const toUpdate = { name, description, picture };
 
         // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
         const updatedUser = await userAuthService.setUser({
@@ -224,6 +167,70 @@ userAuthRouter.put("/:id", login_required, async function (req, res, next) {
     }
 });
 
+// 회원가입시 이메일 인증번호 전송
+userAuthRouter.post("/register/email-send", async function (req, res, next) {
+    try {
+        if (is.emptyObject(req.body)) {
+            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        }
+
+        // req (request) 에서 데이터 가져오기
+        const { name, email } = req.body;
+
+        // email 중복확인
+        const user = await User.findByEmail({ email });
+        if (user) {
+            throw new Error("이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.");
+        }
+
+        // 인증 이메일 전송
+        const codeAdded = await emailService.createAuthCode(email)
+
+        const mailContent = {
+            from: '"Limit" <wnsdml0120@gmail.com>', // sender address
+            to: email, // list of receivers: "*@*.*, *@*.*"
+            subject: "WePo 회원가입 인증번호", // Subject line
+            text: `${name}님의 인증번호는 ${codeAdded.authCode}입니다.`, // plain text body
+            html: `<b>${name}<b/>님의 인증번호는<br/>
+                    <h3>${codeAdded.authCode}</h3>입니다.`, // html body
+          }
+        
+        const emailSent = await emailService.sendEmail(mailContent)
+        if(emailSent.rejected.length!==0){
+            throw new Error("이메일 전송을 실패했습니다.")
+        }
+
+        res.status(201).send("인증번호 전송 성공");
+    } catch (error) {
+        next(error);
+    }
+});
+
+// 회원가입시 이메일 인증번호 확인
+userAuthRouter.post("/register/email-check", async function (req, res, next) {
+    try {
+        if (is.emptyObject(req.body)) {
+            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        }
+
+        // req (request) 에서 데이터 가져오기
+        const { email, authCode } = req.body;
+        
+        // 입력된 authCode DB와 비교
+        const gotAuthCode = await emailService.getAuthCode(email)
+        if(gotAuthCode!==authCode){
+            throw new Error("인증번호가 틀렸습니다.")
+        }
+
+        // 인증 성공 시 email-authCode pair DB에서 삭제
+        await emailService.deleteAuthCode(email)
+
+        res.status(201).send("인증성공");
+    } catch (error) {
+        next(error);
+    }
+});   
+
 // id를 즐겨찾기에 추가/삭제
 userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, next) {
     try {
@@ -239,7 +246,6 @@ userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, 
         next(error);
     }
 });
-
 
 // 검색하기-- 구현하기!!
 userAuthRouter.get("/search/:toSearch", login_required, async function (req, res, next) {
