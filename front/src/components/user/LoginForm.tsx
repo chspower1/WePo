@@ -24,7 +24,7 @@ export default function LoginForm() {
     const [isEmailRemember, setIsEmailRemember] = useState(false);
     // const [isPasswordRemember, setIsPasswordRemember] = useState(false);
     const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
-    const curUser = useRecoilState(curUserState);
+    const [curUser, setCurUser] = useRecoilState(curUserState);
     const {
         register,
         handleSubmit,
@@ -39,7 +39,6 @@ export default function LoginForm() {
 
     const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
-    const setCurUser = useSetRecoilState(curUserState);
     const [checkedErr, setCheckedErr] = useState(1);
 
     const onvalid = async (formData: ILogin) => {
