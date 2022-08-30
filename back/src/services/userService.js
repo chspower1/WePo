@@ -1,4 +1,4 @@
-import { User, Image } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 // import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -17,7 +17,10 @@ class userAuthService {
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
-    const picture = await Image.getRandomURL();
+
+    // 저장되어 있는 기본 프로필이미지 중 랜덤으로 파일명 넣어주기
+    const randomSrc = Math.floor(10 * Math.random() + 1);
+    const picture = "default_images/random_profile" + randomSrc + ".png";
 
     // db에 저장
     const createdNewUser = await User.create({ 
