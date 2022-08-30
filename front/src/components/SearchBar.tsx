@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MagnifyingGlass } from "@styled-icons/foundation/MagnifyingGlass";
+import { useSetRecoilState } from "recoil";
+import { searchWordState } from "@/atoms";
 const SearchBox = styled.form`
     position: relative;
     width: 40%;
@@ -33,15 +35,12 @@ const Button = styled.button`
     }
 `;
 export default function SearchBar() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-    const navigator = useNavigate();
+    const setSearchWord = useSetRecoilState(searchWordState);
+    const { register, handleSubmit, reset } = useForm();
     const onvalid = ({ search }: any) => {
         console.log(search);
-        navigator(`/search/${search}`);
+        setSearchWord(search);
+        reset();
     };
     return (
         <SearchBox onSubmit={handleSubmit(onvalid)}>

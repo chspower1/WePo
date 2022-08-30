@@ -134,3 +134,49 @@ export const hopeJob = selector({
         return userState;
     },
 });
+export const searchWordState = atom<string>({
+    key: "searchData",
+    default: "",
+});
+export const searchUsersState = selector<IUser[]>({
+    key: "searchUsers",
+    get: ({ get }) => {
+        const currentUsers = get(usersState);
+        const newCurUsers = currentUsers?.filter((user) => {
+            const { name, projects, awards, educations, certificates, description, email, field } =
+                user;
+            const searchWord = get(searchWordState);
+            console.log("검색어", searchWord);
+            if (name.includes(searchWord)) return user;
+            else if (email.includes(searchWord)) return user;
+            else if (field.includes(searchWord)) return user;
+            else if (description.includes(searchWord)) return user;
+            else if (
+                projects?.filter((project) => {
+                    if (project.title.includes(searchWord)) return project;
+                })
+            )
+                return user;
+            else if (
+                awards?.filter((award) => {
+                    if (award.title.includes(searchWord)) return award;
+                })
+            )
+                return user;
+            else if (
+                educations?.filter((education) => {
+                    if (education.major.includes(searchWord)) return education;
+                })
+            )
+                return user;
+            else if (
+                projects?.filter((project) => {
+                    if (project.title.includes(searchWord)) return project;
+                })
+            )
+                return user;
+        });
+        console.log("검색엔진 돌아가는중", newCurUsers);
+        return newCurUsers;
+    },
+});

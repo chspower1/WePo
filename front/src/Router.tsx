@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import NotFound from "@components/NotFound";
 import Home from "@components/Home";
 import SEO from "@components/SEO";
-import ResultSearch from "./components/ResultSearch";
 import UserDetails from "@user/UserDetails";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
@@ -27,7 +26,6 @@ function Router() {
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/network" element={<Network />} />
                 <Route path="/network/:userSeq" element={<UserDetails />} />
-                <Route path="/search/:params" element={<ResultSearch />} />
             </Routes>
         </BrowserRouter>
     );
