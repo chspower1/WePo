@@ -204,7 +204,8 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         reName: name,
         reDescription: description,
         reField: field,
-    }: // changedImg: picture,
+        // changedImg: picture,
+    }: 
     IUserFormValue) => {
         setCurUser((prev) => {
             console.log(name, description, field);
@@ -214,7 +215,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             updateCurUser.field = field;
             return updateCurUser as IUser;
         });
-        // updateUser({ name, description }, curUser?.userId!);
+        updateUser({ name, description, field }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -258,6 +259,9 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         border-radius: 5px;
         margin: 0 4px 10px;
     `;
+
+    useEffect(() => {}, [curUser]);
+    console.log(field);
     return (
         <>
             <ItemWrap>
@@ -290,16 +294,13 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         </UserInfoTxt>
                     </InfoBox>
                     <FieldBox>
-                        {onEdit ||
-                            fieldList.map(
-                                (elem, index) =>
-                                    field.includes(elem) && <FieldStyle chose>{elem}</FieldStyle>
-                            )}
+                        {onEdit || field.map((elem) => <FieldStyle chose>{elem}</FieldStyle>)}
                         {onEdit &&
                             fieldList.map((elem, index) =>
                                 field.includes(elem) ? (
                                     <>
                                         <input
+                                            key={elem}
                                             type="checkbox"
                                             value={elem}
                                             defaultChecked={true}
@@ -309,6 +310,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                 ) : (
                                     <>
                                         <input
+                                            key={elem}
                                             type="checkbox"
                                             value={elem}
                                             defaultChecked={false}

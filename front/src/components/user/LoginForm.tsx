@@ -80,7 +80,8 @@ export default function LoginForm() {
             });
             setIsEmailRemember(false);
         }
-        if (cookies.rememberPassword !== undefined) {
+        if (!cookies.rememberPassword) {
+            setCookies("rememberEmail", "");
         }
         setError("password", {
             type: "custom",
