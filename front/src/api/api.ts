@@ -85,21 +85,27 @@ export async function getUser(userId: number) {
 interface IUpdateUserProps {
     name?: string;
     description?: string;
-    field: string[];
+    field: any;
+    picture: any;
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
     try {
+        const formData = new FormData();
+                data.field && formData.append('field', data.field)
+                data.picture && formData.append('image', data.picture)
+                data.description && formData.append('description', data.description)
+                data.name && formData.append('name', data.name)
         await axios.post(
             `${BASE_URL}/user/${userId}`,
-            { ...data },
+            formData,
             {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 },
             }
-        );
+        ).then(console.log);
     } catch (err) {
         console.log(err);
     }
