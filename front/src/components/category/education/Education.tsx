@@ -24,7 +24,7 @@ export default function Education({ educations, setEducations }: IEducationProps
     //parmas
     const { params } = useParams();
     const compareUser = params && parseInt(params) === curUser?.userId!;
-    
+
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
@@ -139,6 +139,7 @@ export default function Education({ educations, setEducations }: IEducationProps
                                     </Draggable>
                                 ))}
                         </EducationStyled.ContentContainer>
+                        {magic.placeholder}
 
                         {curUser && pathName === "/mypage" && !isAddFormActive && (
                             <EducationStyled.AddButton onClick={handleIsAddFormActive}>
@@ -146,7 +147,6 @@ export default function Education({ educations, setEducations }: IEducationProps
                             </EducationStyled.AddButton>
                         )}
                     </EducationStyled.Container>
-                    {magic.placeholder}
                 </div>
             )}
         </Droppable>

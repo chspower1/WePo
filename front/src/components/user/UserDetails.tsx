@@ -16,12 +16,11 @@ import {
     IUser,
 } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import UserCard from "../UserCard";
-import UserDetail from "../UserDetail";
+import UserCard from "./UserCard";
 import styled from "styled-components";
 import * as Mypage from "@styledComponents/CategoryStyled";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-function MyPortfolio() {
+function UserDetails() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
     const [curUser, setCurUser] = useRecoilState(curUserState);
@@ -138,4 +137,4 @@ function MyPortfolio() {
     );
 }
 
-export default MyPortfolio;
+export default UserDetails;

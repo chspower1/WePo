@@ -146,6 +146,7 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                     </Draggable>
                                 ))}
                         </CertStyled.ContentContainer>
+                        {magic.placeholder}
                         {curUser && pathName === "/mypage" && !isAddFormActive && (
                             <CertStyled.AddButton onClick={handleIsAddFormActive}>
                                 <PlusSquareFill color="#3687FF" />

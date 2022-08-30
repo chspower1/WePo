@@ -139,6 +139,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                     </Draggable>
                                 ))}
                         </ProjectStyled.ContentContainer>
+                        {magic.placeholder}
 
                         {curUser && pathName === "/mypage" && !isAddFormActive && (
                             <ProjectStyled.AddButton onClick={handleIsAddFormActive}>

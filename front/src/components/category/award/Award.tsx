@@ -158,6 +158,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                     </Draggable>
                                 ))}
                         </AwardStyled.ContentContainer>
+                        {magic.placeholder}
 
                         {curUser && pathName === "/mypage" && !isAddFormActive && (
                             <AwardStyled.AddButton onClick={handleIsAddFormActive}>
