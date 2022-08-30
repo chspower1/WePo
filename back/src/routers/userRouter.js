@@ -33,15 +33,20 @@ userAuthRouter.post("/register", async function (req, res, next) {
         if (newUser.errorMessage) {
             throw new Error(newUser.errorMessage);
         }
+        
+        // 인증코드 생성
+        const codeAdded = await emailService.createAuthCode(newUser.userId)
+        const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${newUser.userId}/${codeAdded.authCode}`
 
-        // 회원 가입 완료 이메일 전송
+        // 인증 이메일 전송
         const mailContent = {
             from: '"Limit" <wnsdml0120@gmail.com>', // sender address
             to: email, // list of receivers: "*@*.*, *@*.*"
-            subject: "환영합니다!", // Subject line
-            text: `${name}님, WePo에 가입하신 걸 축하드립니다!`, // plain text body
-            html: `<h2><b>${name}<b/>님,</h2><br/>
-                    WePo에 가입하신 걸 축하드립니다!`, // html body
+            subject: "[WePo] 이메일 인증", // Subject line
+            text: `${name}님, 다음 링크로 이메일 인증 부탁드립니다: ${authURL}`, // plain text body
+            html: `<br>${name}<b/>님,<br/>
+            아래 버튼을 눌러 이메일 인증 부탁드립니다:</br>
+            <a href="${authURL}">이메일 인증하기</a>`, // html body
           }
         
         const emailSent = await emailService.sendEmail(mailContent)
@@ -55,6 +60,27 @@ userAuthRouter.post("/register", async function (req, res, next) {
     }
 });
 
+// 회원가입 - 이메일 인증
+userAuthRouter.post("/register/:userId/:authCode", async function (req, res, next) {
+    try {
+        // path parameter 가져오기
+        const { userId, authCode } = req.params;
+        
+        // 입력된 authCode DB와 비교
+        const gotAuthCode = await emailService.getAuthCode(userId)
+        if(gotAuthCode!=authCode){
+            throw new Error("인증 실패했습니다.")
+        }
+        
+        // 인증 성공 시 userId-authCode pair DB에서 삭제
+        await emailService.deleteAuthCode(userId)
+
+        res.status(201).send("인증성공");
+    } catch (error) {
+        next(error);
+    }
+});      
+
 // 로그인
 userAuthRouter.post("/login", async function (req, res, next) {
     try {
@@ -66,6 +92,12 @@ userAuthRouter.post("/login", async function (req, res, next) {
 
         if (user.errorMessage) {
             throw new Error(user.errorMessage);
+        }
+
+        // user의 이메일 인증여부 확인
+        const gotAuthCode = await emailService.getAuthCode(user.userId)
+        if(gotAuthCode) {
+            throw new Error("이메일 인증 완료 부탁드립니다.")
         }
 
         res.status(200).send(user);

@@ -2,8 +2,7 @@ import { Schema, model } from "mongoose";
 
 const EmailSchema = new Schema(
   {
-    //이미지 URL들을 담고 있는 배열
-    email: {
+    userId: {
       type: String,
       required: true
     },
