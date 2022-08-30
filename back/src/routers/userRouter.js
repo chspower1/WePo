@@ -187,7 +187,7 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 });
 
 // id의 사용자 정보 update
-userAuthRouter.put("/:id", login_required, upload.single('image'), async function (req, res, next) {
+userAuthRouter.post("/:id", login_required, upload.single('image'), async function (req, res, next) {
     try {
         // if (is.emptyObject(req.body)) {
         //     throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
