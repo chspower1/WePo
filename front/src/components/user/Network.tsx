@@ -28,7 +28,7 @@ const LoadingMotion = keyframes`
 const BgWrap = styled.div`
     width: 100%;
     min-height: 100vh;
-    background: ${props=>props.theme.bgColor};
+    background: ${(props) => props.theme.bgColor};
     padding: 100px 0 0;
 `;
 
@@ -55,8 +55,8 @@ export const NetworkContainer = styled.div`
 
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
-    color:${props=>props.theme.textColor};
-    margin:0 0 70px;
+    color: ${(props) => props.theme.textColor};
+    margin: 0 0 70px;
 `;
 
 const NetworkTitle = styled.h1`
@@ -141,7 +141,8 @@ function Network() {
             return currentChecked;
         });
     }
-
+    if (!users) return <></>; // undefined 방지
+    if (isLoading) return <></>; // undefined 방지
     return (
         <>
             {isLoading ? (
@@ -150,7 +151,6 @@ function Network() {
                 <BgWrap>
                     <Root>
                         <NetworkWrap>
-                            <SearchBar />
                             <NetworkHeadingSelectBox>
                                 <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
                                 <SelectBox>
