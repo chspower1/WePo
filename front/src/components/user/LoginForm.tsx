@@ -44,9 +44,6 @@ export default function LoginForm() {
     const onvalid = async (formData: ILogin) => {
         try {
             const newUser = await UserLogin({ ...formData });
-            if (checkedErr >= 5) {
-                return alert("비밀번호를 5번 이상 틀리셨습니다. 집가서 발 닦고 잠이나 자십시오.");
-            }
             if (newUser === undefined) {
                 setCheckedErr((prev) => prev + 1);
                 if (checkedErr === 3) {
@@ -57,6 +54,10 @@ export default function LoginForm() {
                     return alert(
                         `비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)\n5번 이상 틀리시면 비밀번호가 초기화 됩니다...\n마지막 기회에요! 기억해서 입력해주세요!!!`
                     );
+                }else if(checkedErr === 5){
+                    return  alert("비밀번호를 5번 이상 틀리셨습니다.\n해당 이메일로 초기화 비밀번호를 보냈습니다.\n초기화된 비밀번호로 로그인해 주세요.")
+                }else if(checkedErr > 5){
+                    return  alert("이메일로 발송된 초기화 비밀번호를 적어주세요!")
                 }
                 alert(`비밀번호가 일치하지 않습니다. 다시 확인해 주세요.(${checkedErr}회)`);
             } else {
