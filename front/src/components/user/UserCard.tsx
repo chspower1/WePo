@@ -11,6 +11,7 @@ import { Star } from "@styled-icons/fluentui-system-regular/Star";
 import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
 import FieldStyle from "@styledComponents/FieldStyle";
+import { E } from "styled-icons/simple-icons";
 
 const ItemWrap = styled.div`
     min-width: 350px;
@@ -187,7 +188,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { register, handleSubmit } = useForm<IUserFormValue>();
+    const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
     const fieldList = ["frontEnd", "backEnd", "dataAnalysis", "AI"];
@@ -206,12 +207,14 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     }: // changedImg: picture,
     IUserFormValue) => {
         setCurUser((prev) => {
+            console.log(name, description, field);
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
+            updateCurUser.field = field;
             return updateCurUser as IUser;
         });
-        updateUser({ name, description }, curUser?.userId!);
+        // updateUser({ name, description }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -255,7 +258,6 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         border-radius: 5px;
         margin: 0 4px 10px;
     `;
-
     return (
         <>
             <ItemWrap>
@@ -295,22 +297,24 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                             )}
                         {onEdit &&
                             fieldList.map((elem, index) =>
-                                field.includes(elem) == true ? (
-                                    <label style={{ cursor: "pointer" }}>
-                                        <EditFieldButton
-                                            defaultChecked={false}
+                                field.includes(elem) ? (
+                                    <>
+                                        <input
+                                            type="checkbox"
+                                            value={elem}
+                                            defaultChecked={true}
                                             {...register("reField")}
-                                        ></EditFieldButton>
-                                        <FieldSty className="qwe">{elem}</FieldSty>
-                                    </label>
+                                        />
+                                    </>
                                 ) : (
-                                    <label style={{ cursor: "pointer" }}>
-                                        <EditFieldButton
+                                    <>
+                                        <input
+                                            type="checkbox"
+                                            value={elem}
                                             defaultChecked={false}
                                             {...register("reField")}
-                                        ></EditFieldButton>
-                                        <FieldSty className="qwe">{elem}</FieldSty>
-                                    </label>
+                                        />
+                                    </>
                                 )
                             )}
                     </FieldBox>
