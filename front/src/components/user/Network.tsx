@@ -28,7 +28,7 @@ const LoadingMotion = keyframes`
 const BgWrap = styled.div`
     width: 100%;
     min-height: 100vh;
-    background: #eff3ff;
+    background: ${(props) => props.theme.bgColor};
     padding: 100px 0 0;
 `;
 
@@ -55,19 +55,21 @@ export const NetworkContainer = styled.div`
 
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
+    color: ${(props) => props.theme.textColor};
+    margin: 0 0 70px;
 `;
 
 const NetworkTitle = styled.h1`
     text-align: center;
-    font-size: 24px;
-    padding: 0 0 30px;
+    font-size: 34px;
+    padding: 0 0 80px;
 `;
 
 const SelectBox = styled.div`
     display: flex;
     justify-content: center;
     gap: 10px;
-    padding: 0 0 30px;
+    padding: 0 0 20px;
 `;
 
 const CheckBoxWrap = styled.div`
@@ -110,7 +112,6 @@ function Network() {
         onSuccess(data) {
             setUsers(data!);
             setNetUsers(data!);
-            console.log(users);
         },
     });
 
@@ -120,14 +121,13 @@ function Network() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
+    
     // Field 선택시
     useEffect(() => {
         setNetUsers(filterUsersState!);
-        console.log("필드선택-----------------------", netUsers);
     }, [filterUsersState]);
     useEffect(() => {
         setNetUsers(searchUsers!);
-        console.log("검색조건-----------------------", netUsers);
     }, [searchUsers]);
 
     function handleCheckedBox(name: string) {
@@ -139,7 +139,7 @@ function Network() {
             return currentChecked;
         });
     }
-    if (!netUsers) return <></>; // undefined 방지
+    if (!users) return <></>; // undefined 방지
     if (isLoading) return <></>; // undefined 방지
     return (
         <>
@@ -149,7 +149,6 @@ function Network() {
                 <BgWrap>
                     <Root>
                         <NetworkWrap>
-                            <SearchBar />
                             <NetworkHeadingSelectBox>
                                 <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
                                 <SelectBox>
@@ -194,6 +193,7 @@ function Network() {
                                         <Label htmlFor="AI">AI</Label>
                                     </CheckBoxWrap>
                                 </SelectBox>
+                                <SearchBar />
                             </NetworkHeadingSelectBox>
                             {isLoading ? (
                                 <LoadingBox>

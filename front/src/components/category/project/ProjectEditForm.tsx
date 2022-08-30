@@ -42,9 +42,9 @@ export function ProjectEditForm({
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <ProjectStyled.AddInputBox>
-                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                <ProjectStyled.ImportantTxt>
                     <ProjectStyled.RequiredLabel>*</ProjectStyled.RequiredLabel> 필수사항
-                </p>
+                </ProjectStyled.ImportantTxt>
                 <ProjectStyled.ContentName>
                     프로젝트 명 <ProjectStyled.RequiredLabel>*</ProjectStyled.RequiredLabel>
                 </ProjectStyled.ContentName>
@@ -119,7 +119,7 @@ export function ProjectEditForm({
                     {...register("description")}
                 ></ProjectStyled.AddInput>
             </ProjectStyled.AddInputBox>
-            <div style={{ float: "right", marginBottom: "10px" }}>
+            <ProjectStyled.SubmitOrCencerBtnBox>
                 <ProjectStyled.Button type="submit" color="#3687FF">
                     수정
                 </ProjectStyled.Button>
@@ -131,7 +131,7 @@ export function ProjectEditForm({
                 >
                     취소
                 </ProjectStyled.Button>
-            </div>
+            </ProjectStyled.SubmitOrCencerBtnBox>
         </form>
     );
 }

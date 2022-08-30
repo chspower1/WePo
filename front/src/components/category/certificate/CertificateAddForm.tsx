@@ -57,9 +57,9 @@ export function CertificateAddForm({
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <CertStyled.AddInputBox>
-                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                <CertStyled.ImportantTxt>
                     <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel> 필수사항
-                </p>
+                </CertStyled.ImportantTxt>
                 <CertStyled.ContentName>
                     자격증 <CertStyled.RequiredLabel>*</CertStyled.RequiredLabel>
                 </CertStyled.ContentName>
@@ -132,14 +132,14 @@ export function CertificateAddForm({
                 ></CertStyled.AddInput>
             </CertStyled.AddInputBox>
 
-            <div style={{ float: "right" }}>
+            <CertStyled.SubmitOrCencerBtnBox>
                 <CertStyled.Button color="#3687FF" type="submit">
                     추가
                 </CertStyled.Button>
                 <CertStyled.Button onClick={() => setIsAddFormActive(false)}>
                     취소
                 </CertStyled.Button>
-            </div>
+            </CertStyled.SubmitOrCencerBtnBox>
         </form>
     );
 }

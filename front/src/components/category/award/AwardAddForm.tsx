@@ -33,7 +33,6 @@ export default function AwardAddForm({
             userId,
             order: awards.length,
         };
-        console.log("생성완료", newAward);
         setAwards((project) => [...project, newAward]);
         setIsAddFormActive(false);
         addData(newAward, Category.award);
@@ -64,10 +63,10 @@ export default function AwardAddForm({
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <AwardStyled.AddInputBox>
-                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                <AwardStyled.ImportantTxt>
                     <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
                     필수사항
-                </p>
+                </AwardStyled.ImportantTxt>
                 <AwardStyled.ContentName>
                     제목을 입력하세요
                     <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>
@@ -166,14 +165,14 @@ export default function AwardAddForm({
                     </ErrMsg>
                 )}
             </AwardStyled.AddInputBox>
-            <div style={{ float: "right" }}>
+            <AwardStyled.SubmitOrCencerBtnBox>
                 <AwardStyled.Button color="#3687FF" type="submit">
                     추가
                 </AwardStyled.Button>
                 <AwardStyled.Button onClick={() => setIsAddFormActive(false)}>
                     취소
                 </AwardStyled.Button>
-            </div>
+            </AwardStyled.SubmitOrCencerBtnBox>
         </form>
     );
 }

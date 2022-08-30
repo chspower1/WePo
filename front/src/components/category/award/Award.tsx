@@ -31,12 +31,15 @@ export default function Award({ awards, setAwards }: IAwardProps) {
     )}-${String(newDate.getDate()).padStart(2, "0")}`;
 
     //parmas
-    const { params } = useParams();
-    const compareUser = params && parseInt(params) === curUser?.userId!;
+    const { userSeq } = useParams();
     //현재경로
     const location = useLocation();
     const pathName = location.pathname;
+
+    //권한관리
+    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
     const inMyPage = pathName === "/mypage";
+    const admin = inMyPage || compareUser;
 
     // 삭제버튼 클릭시
     const onClickDeleteBtn = (award: IAward, index: number) => {
@@ -56,7 +59,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
     }
 
     return (
-        <Droppable droppableId="awards" isDropDisabled={compareUser || inMyPage ? false : true}>
+        <Droppable droppableId="awards" isDropDisabled={admin ? false : true}>
             {(magic) => (
                 <div ref={magic.innerRef} {...magic.droppableProps}>
                     <AwardStyled.Container>
@@ -90,11 +93,14 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                                     >
                                                         <div
                                                             style={{
+                                                                width: "80%",
                                                                 display: "flex",
                                                                 alignItems: "center",
                                                             }}
                                                         >
-                                                            <AwardStyled.ContentAccent>
+                                                            <AwardStyled.ContentAccent
+                                                                title={award.title}
+                                                            >
                                                                 {award.title}
                                                             </AwardStyled.ContentAccent>
                                                             <AwardStyled.ContentDetail
@@ -102,43 +108,46 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                                                     marginTop: "20px",
                                                                     marginLeft: "20px",
                                                                 }}
+                                                                title={award.grade}
                                                             >
                                                                 {award.grade}
                                                             </AwardStyled.ContentDetail>
                                                         </div>
-                                                        <AwardStyled.ContentDetail>
+                                                        <AwardStyled.ContentDetail
+                                                            title={award.org}
+                                                        >
                                                             {award.org}
                                                         </AwardStyled.ContentDetail>
                                                         <AwardStyled.ContentDate>
                                                             {String(award.date).slice(0, 10)}
                                                         </AwardStyled.ContentDate>
-                                                        <AwardStyled.ContentDetail>
+                                                        <AwardStyled.ContentDetail
+                                                            title={award.description}
+                                                        >
                                                             {award.description}
                                                         </AwardStyled.ContentDetail>
-                                                        {curUser &&
-                                                            pathName === "/mypage" &&
-                                                            targetIndex !== index && (
-                                                                <>
-                                                                    <AwardStyled.EditButton
-                                                                        onClick={() => {
-                                                                            setIsEditing(true);
-                                                                            setTargetIndex(index);
-                                                                        }}
-                                                                    >
-                                                                        <Pencil color="#3867FF" />
-                                                                    </AwardStyled.EditButton>
-                                                                    <AwardStyled.DeleteButton
-                                                                        onClick={() => {
-                                                                            onClickDeleteBtn(
-                                                                                award,
-                                                                                index
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        <Trash2 color="#3867FF" />
-                                                                    </AwardStyled.DeleteButton>
-                                                                </>
-                                                            )}
+                                                        {curUser && admin && targetIndex !== index && (
+                                                            <>
+                                                                <AwardStyled.EditButton
+                                                                    onClick={() => {
+                                                                        setIsEditing(true);
+                                                                        setTargetIndex(index);
+                                                                    }}
+                                                                >
+                                                                    <Pencil color="#3867FF" />
+                                                                </AwardStyled.EditButton>
+                                                                <AwardStyled.DeleteButton
+                                                                    onClick={() => {
+                                                                        onClickDeleteBtn(
+                                                                            award,
+                                                                            index
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    <Trash2 color="#3867FF" />
+                                                                </AwardStyled.DeleteButton>
+                                                            </>
+                                                        )}
                                                     </div>
                                                 )}
                                                 {isEditing && targetIndex === index && (
@@ -160,7 +169,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                         </AwardStyled.ContentContainer>
                         {magic.placeholder}
 
-                        {curUser && pathName === "/mypage" && !isAddFormActive && (
+                        {curUser && admin && !isAddFormActive && (
                             <AwardStyled.AddButton onClick={handleIsAddFormActive}>
                                 <PlusSquareFill color="#3687FF" />
                             </AwardStyled.AddButton>

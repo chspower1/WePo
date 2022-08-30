@@ -7,7 +7,7 @@ position:relative;
 width: 100%;
 height: 100vh;
 padding-top:100px;
-background:#eff3ff;
+background:${props=> props.theme.bgColor};
 overflow:hidden;
 `
 
@@ -25,6 +25,7 @@ align-items: center;
 
 const TextBox = styled.div`
     max-width:500px;
+    color:${props=>props.theme.textColor};
 `
 
 const TitleBox = styled.div`
@@ -93,17 +94,17 @@ left: 200px;
 top:560px;
 border-radius: 50%;
 background: #3686ffc9;
-box-shadow: 0 0 450px 140px ${props=> props.theme.btnColor};
+box-shadow: 0 0 450px 140px ${props=> props.theme.circleColor};
 `
 const Circle1 = styled(Circle)`
 left: 750px;
 top:130px;
-box-shadow: 0 0 300px 100px ${props=> props.theme.btnColor};
+box-shadow: 0 0 300px 100px ${props=> props.theme.circleColor};
 `
 const Circle2 = styled(Circle)`
 left: 1600px;
 top:680px;
-box-shadow: 0 0 260px 100px ${props=> props.theme.btnColor};
+box-shadow: 0 0 260px 100px ${props=> props.theme.circleColor};
 `
 
 

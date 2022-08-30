@@ -27,12 +27,15 @@ export default function Certificate({ certificates, setCertificates }: ICertific
     const [targetIndex, setTargetIndex] = useState<number | null>();
 
     //parmas
-    const { params } = useParams();
-    const compareUser = params && parseInt(params) === curUser?.userId!;
+    const { userSeq } = useParams();
     //현재경로
     const location = useLocation();
     const pathName = location.pathname;
+
+    //권한관리
+    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
     const inMyPage = pathName === "/mypage";
+    const admin = inMyPage || compareUser;
 
     // 삭제버튼 클릭시
     const onClickDeleteBtn = (certificate: ICertificate, index: number) => {
@@ -51,10 +54,7 @@ export default function Certificate({ certificates, setCertificates }: ICertific
         setIsAddFormActive((isAddFormActive) => !isAddFormActive);
     }
     return (
-        <Droppable
-            droppableId="certificates"
-            isDropDisabled={compareUser || inMyPage ? false : true}
-        >
+        <Droppable droppableId="certificates" isDropDisabled={admin ? false : true}>
             {(magic) => (
                 <div ref={magic.innerRef} {...magic.droppableProps}>
                     <CertStyled.Container>
@@ -86,7 +86,9 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                                         {...magic.dragHandleProps}
                                                     >
                                                         <>
-                                                            <CertStyled.ContentAccent>
+                                                            <CertStyled.ContentAccent
+                                                                title={certificate.title}
+                                                            >
                                                                 {certificate.title}
                                                             </CertStyled.ContentAccent>
                                                             <CertStyled.ContentDate>
@@ -95,14 +97,18 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                                                     10
                                                                 )}
                                                             </CertStyled.ContentDate>
-                                                            <CertStyled.ContentDetail>
+                                                            <CertStyled.ContentDetail
+                                                                title={certificate.org}
+                                                            >
                                                                 {certificate.org}
                                                             </CertStyled.ContentDetail>
-                                                            <CertStyled.ContentDetail>
+                                                            <CertStyled.ContentDetail
+                                                                title={certificate.description}
+                                                            >
                                                                 {certificate.description}
                                                             </CertStyled.ContentDetail>
                                                             {curUser &&
-                                                                pathName === "/mypage" &&
+                                                                admin &&
                                                                 targetIndex !== index && (
                                                                     <>
                                                                         <CertStyled.EditButton
@@ -147,7 +153,7 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                 ))}
                         </CertStyled.ContentContainer>
                         {magic.placeholder}
-                        {curUser && pathName === "/mypage" && !isAddFormActive && (
+                        {curUser && admin && !isAddFormActive && (
                             <CertStyled.AddButton onClick={handleIsAddFormActive}>
                                 <PlusSquareFill color="#3687FF" />
                             </CertStyled.AddButton>

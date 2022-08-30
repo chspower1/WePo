@@ -23,14 +23,14 @@ const HeaderWrap = styled.header`
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #eff3ff;
+    background: ${props=>props.theme.bgColor};
     transition: box-shadow 0.6s, background 0.6s;
     &.home {
-        background-color: transparent;
+        background: transparent;
     }
     &.active {
-        border: 1px solid #f0f0f9;
-        background-color: #fff;
+        border-bottom: 1px solid  ${props=>props.theme.headerBorderColor};
+        background: ${props=>props.theme.headerActiveColor};
     }
 `;
 
@@ -62,7 +62,7 @@ export const LinkButton = styled(NavLink)`
     position: relative;
     background-color: transparent;
     font-weight: bold;
-    color: #343434;
+    color: ${(props) => props.theme.textColor};
     font-size: 16px;
     & + & {
         margin: 0 20px 0 30px;
@@ -109,17 +109,17 @@ const MiniProfileName = styled.span`
 `;
 const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
-    background: #343434;
+    background:  ${(props) => props.theme.textColor};
     border-radius: 20px;
     color: ${(props) => props.theme.bgColor};
-    border: 2px solid #343434;
+    border: 2px solid ${(props) => props.theme.textColor};
     margin-left: 20px;
     letter-spacing: -0.4px;
     transition: all 0.4s;
     font-size: 15px;
     &:hover {
         background: ${(props) => props.theme.bgColor};
-        color: #343434;
+        color: ${(props) => props.theme.textColor};
     }
 `;
 
@@ -179,7 +179,7 @@ function Header() {
                                     네트워크
                                 </LinkButton>
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
-                                <MiniProfileImg src={curUser?.picture} />
+                                <MiniProfileImg src={curUser?.picture!} />
                                 <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                             </>

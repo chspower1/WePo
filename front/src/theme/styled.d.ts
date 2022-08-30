@@ -4,11 +4,19 @@ declare module "styled-components" {
         bgColor: string;
         textColor: string;
         btnColor: string;
-        accentColor: string;
         btnTextColor: string;
+        accentColor: string;
         contentColor: string;
         filedBgColor: string;
         starBorderColor: string;
         starFullColor: string;
+        opacityBgColor: string;
+        boxShadowGrayColor: string;
+        boxShadowBlueColor: string;
+        inputBgColor: string;
+        circleColor: string;
+        cardColor: string;
+        headerBorderColor: string;
+        headerActiveColor: string;
     }
 }

@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
-import { lightTheme } from "./theme/theme";
+import { lightTheme, darkTheme } from "./theme/theme";
 import Router from "./Router";
 import "./font/font.css";
 import { useRecoilValue } from "recoil";

@@ -24,12 +24,15 @@ export default function Project({ projects, setProjects }: IProjectProps) {
     const [targetIndex, setTargetIndex] = useState<Number | null>();
 
     //parmas
-    const { params } = useParams();
-    const compareUser = params && parseInt(params) === curUser?.userId!;
+    const { userSeq } = useParams();
     //현재경로
     const location = useLocation();
     const pathName = location.pathname;
+
+    //권한관리
+    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
     const inMyPage = pathName === "/mypage";
+    const admin = inMyPage || compareUser;
 
     // 삭제 버튼 클릭 시
     const onClickDeleteBtn = (project: IProject, index: number) => {
@@ -48,7 +51,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
         setIsAddFormActive((isAddFormActive) => !isAddFormActive);
     }
     return (
-        <Droppable droppableId="projects" isDropDisabled={compareUser || inMyPage ? false : true}>
+        <Droppable droppableId="projects" isDropDisabled={admin ? false : true}>
             {(magic) => (
                 <div ref={magic.innerRef} {...magic.droppableProps}>
                     <ProjectStyled.Container>
@@ -80,10 +83,14 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                                         {...magic.dragHandleProps}
                                                     >
                                                         <>
-                                                            <ProjectStyled.ContentAccent>
+                                                            <ProjectStyled.ContentAccent
+                                                                title={project.title}
+                                                            >
                                                                 {project.title}
                                                             </ProjectStyled.ContentAccent>
-                                                            <ProjectStyled.ContentDetail>
+                                                            <ProjectStyled.ContentDetail
+                                                                title={project.description}
+                                                            >
                                                                 {project.description}
                                                             </ProjectStyled.ContentDetail>
                                                             <ProjectStyled.ContentDate>{`${String(
@@ -95,7 +102,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                                                 10
                                                             )}`}</ProjectStyled.ContentDate>
                                                             {curUser &&
-                                                                pathName === "/mypage" &&
+                                                                admin &&
                                                                 targetIndex !== index && (
                                                                     <>
                                                                         <ProjectStyled.EditButton
@@ -141,7 +148,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                         </ProjectStyled.ContentContainer>
                         {magic.placeholder}
 
-                        {curUser && pathName === "/mypage" && !isAddFormActive && (
+                        {curUser && admin && !isAddFormActive && (
                             <ProjectStyled.AddButton onClick={handleIsAddFormActive}>
                                 <PlusSquareFill color="#3687FF" />
                             </ProjectStyled.AddButton>

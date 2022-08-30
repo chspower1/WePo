@@ -7,7 +7,11 @@ import { emailService } from "../services/emailService";
 import { User } from "../db/models/User"
 import { Trial } from "../db/models/Trial"
 
+import imageUpload from "../utils/imageUpload";
+const upload = imageUpload("src/uploads", 5);
+
 const userAuthRouter = Router();
+
 
 // 회원가입
 userAuthRouter.post("/register", async function (req, res, next) {
@@ -183,11 +187,11 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 });
 
 // id의 사용자 정보 update
-userAuthRouter.put("/:id", login_required, async function (req, res, next) {
+userAuthRouter.put("/:id", login_required, upload.single('image'), async function (req, res, next) {
     try {
-        if (is.emptyObject(req.body)) {
-            throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-        }
+        // if (is.emptyObject(req.body)) {
+        //     throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        // }
 
         // User authentication
         const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
@@ -203,8 +207,12 @@ userAuthRouter.put("/:id", login_required, async function (req, res, next) {
 
         // body data 로부터 업데이트할 사용자 정보를 추출함.
         const { name, description } = req.body;
+        const imageFile = req.file;
+        const picture = imageFile.filename;
+        
+        console.log(imageFile);
 
-        const toUpdate = { name, description };
+        const toUpdate = { name, description, picture };
 
         // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
         const updatedUser = await userAuthService.setUser({
@@ -238,8 +246,7 @@ userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, 
     }
 });
 
-
-// 검색하기-- 구현하기!!
+// 검색하기
 userAuthRouter.get("/search/:toSearch", login_required, async function (req, res, next) {
     try {
         const toSearch = req.params.toSearch

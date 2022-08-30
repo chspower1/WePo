@@ -54,9 +54,9 @@ export const ProjectAddForm = ({
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <ProjectStyled.AddInputBox>
-                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                <ProjectStyled.ImportantTxt>
                     <ProjectStyled.RequiredLabel>*</ProjectStyled.RequiredLabel> 필수사항
-                </p>
+                </ProjectStyled.ImportantTxt>
                 <ProjectStyled.ContentName>
                     프로젝트 명 <ProjectStyled.RequiredLabel>*</ProjectStyled.RequiredLabel>
                 </ProjectStyled.ContentName>
@@ -120,14 +120,14 @@ export const ProjectAddForm = ({
                     {...register("description")}
                 ></ProjectStyled.AddInput>
             </ProjectStyled.AddInputBox>
-            <div style={{ float: "right" }}>
+            <ProjectStyled.SubmitOrCencerBtnBox>
                 <ProjectStyled.Button color="#3687FF" type="submit">
                     추가
                 </ProjectStyled.Button>
                 <ProjectStyled.Button onClick={() => setIsAddFormActive(false)}>
                     취소
                 </ProjectStyled.Button>
-            </div>
+            </ProjectStyled.SubmitOrCencerBtnBox>
         </form>
     );
 };
