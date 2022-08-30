@@ -150,7 +150,6 @@ function Network() {
                 <BgWrap>
                     <Root>
                         <NetworkWrap>
-                            <SearchBar />
                             <NetworkHeadingSelectBox>
                                 <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
                                 <SelectBox>

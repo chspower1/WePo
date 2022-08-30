@@ -159,7 +159,7 @@ const FieldTxt = styled.div`
     display:inline-block;
     padding:6px 8px;
     background:${props=> props.theme.filedBgColor};
-    color:${props=>props.theme.textColor};
+    color:${props=>props.theme.btnTextColor};
     font-size: 13px;
     border-radius : 5px;
     margin:0 4px 10px;
@@ -168,7 +168,6 @@ const FieldTxt = styled.div`
 interface IUserFormValue {
     reName: string;
     reDescription: string;
-    changedImg: any;
 }
 
 function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
@@ -178,10 +177,9 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
-    const onvalid = ({ reName: name, reDescription: description, changedImg:picture }: IUserFormValue) => {
+    const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
-            console.log(updateCurUser)
             updateCurUser.name = name;
             updateCurUser.description = description;
             return updateCurUser as IUser;
@@ -218,7 +216,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg src={picture!} alt="profileImage" />
-                            {onEdit && (
+                            {/* {onEdit && (
                                 <>
                                     <ImageChangeInput
                                         type="file"
@@ -227,7 +225,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                     />
                                     <PlusIcon/>
                                 </>
-                            )}
+                            )} */}
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>

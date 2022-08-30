@@ -86,7 +86,6 @@ export async function getUser(userId: number) {
 interface IUpdateUserProps {
     name?: string;
     description?: string;
-    picture?: any ;
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
