@@ -96,9 +96,7 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem(
-                        "userToken"
-                    )}`,
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 },
             }
         );
@@ -107,20 +105,19 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
     }
 }
 
-export async function curUserToggleLike( userId:number) {
-    try{
-        await axios
-                .put(
-                    `${BASE_URL}/user/togglelike/${userId}`,
-                    {  },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-                        }
-                    }
-                )
-    }catch(err){
+export async function curUserToggleLike(userId: number) {
+    try {
+        await axios.put(
+            `${BASE_URL}/user/togglelike/${userId}`,
+            {},
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+                },
+            }
+        );
+    } catch (err) {
         console.log(err);
     }
 }
@@ -144,9 +141,7 @@ export async function addData(
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem(
-                        "userToken"
-                    )}`,
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 },
             }
         );
@@ -167,9 +162,7 @@ export async function updateData(
             {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem(
-                        "userToken"
-                    )}`,
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 },
             }
         );
@@ -177,11 +170,7 @@ export async function updateData(
         console.log(err);
     }
 }
-export async function deleteData(
-    category: Category,
-    projectId: string,
-    userId: number
-) {
+export async function deleteData(category: Category, projectId: string, userId: number) {
     try {
         await axios.delete(`${BASE_URL}/${category}/${projectId}`, {
             data: {
