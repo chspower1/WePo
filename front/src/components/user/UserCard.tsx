@@ -11,6 +11,8 @@ import { Star } from "@styled-icons/fluentui-system-regular/Star";
 import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
 import FieldStyle from "@styledComponents/FieldStyle";
+import { E } from "styled-icons/simple-icons";
+import FiledStyle from "@styledComponents/FieldStyle";
 
 const ItemWrap = styled.div`
     min-width: 350px;
@@ -187,7 +189,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { register, handleSubmit } = useForm<IUserFormValue>();
+    const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
     const fieldList = ["frontEnd", "backEnd", "dataAnalysis", "AI"];
@@ -206,12 +208,14 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     }: // changedImg: picture,
     IUserFormValue) => {
         setCurUser((prev) => {
+            console.log(name, description, field);
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
+            updateCurUser.field = field;
             return updateCurUser as IUser;
         });
-        updateUser({ name, description }, curUser?.userId!);
+        updateUser({ name, description, field }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -255,7 +259,22 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         border-radius: 5px;
         margin: 0 4px 10px;
     `;
+    const InputBtn = styled.input`
+        position:absolute;
+        left:-99999px;
+        &+label{
+            background-color: gray;
+            color: white; 
+        }
+        &:checked + label{
+            background-color: #3867ff;
+            color: white;
+        }
+    `
 
+
+    useEffect(() => {}, [curUser]);
+    console.log(field);
     return (
         <>
             <ItemWrap>
@@ -288,31 +307,28 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         </UserInfoTxt>
                     </InfoBox>
                     <FieldBox>
-                        {onEdit ||
-                            fieldList.map(
-                                (elem, index) =>
-                                    field.includes(elem) && <FieldStyle chose>{elem}</FieldStyle>
-                            )}
+                        {onEdit || field.map((elem) => <FieldStyle chose={field.includes(elem) ? true : false}>{elem}</FieldStyle>)}
                         {onEdit &&
-                            fieldList.map((elem, index) =>
-                                field.includes(elem) == true ? (
-                                    <label style={{ cursor: "pointer" }}>
-                                        <EditFieldButton
-                                            defaultChecked={false}
+                            fieldList.map((elem, index) => (
+                                <>
+                                    <div style={{display:"inline-block"}}>
+                                        <InputBtn
+                                            id={elem}
+                                            key={elem}
+                                            type="checkbox"
+                                            value={elem}
+                                            defaultChecked={field.includes(elem) ? true : false}
                                             {...register("reField")}
-                                        ></EditFieldButton>
-                                        <FieldSty className="qwe">{elem}</FieldSty>
-                                    </label>
-                                ) : (
-                                    <label style={{ cursor: "pointer" }}>
-                                        <EditFieldButton
-                                            defaultChecked={false}
-                                            {...register("reField")}
-                                        ></EditFieldButton>
-                                        <FieldSty className="qwe">{elem}</FieldSty>
-                                    </label>
-                                )
-                            )}
+                                        />
+                                        <FiledStyle
+                                            htmlFor={elem}
+                                            chose={field.includes(elem) ? true : false}
+                                        >
+                                        {elem}
+                                        </FiledStyle>
+                                    </div>
+                                </>
+                            ))}
                     </FieldBox>
                     <DescBox>
                         <DescTit>한마디</DescTit>

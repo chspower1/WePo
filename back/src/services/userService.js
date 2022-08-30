@@ -1,4 +1,4 @@
-import { User, Image } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 // import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -17,7 +17,10 @@ class userAuthService {
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
-    const picture = await Image.getRandomURL();
+
+    // 저장되어 있는 기본 프로필이미지 중 랜덤으로 파일명 넣어주기
+    const randomSrc = Math.floor(10 * Math.random() + 1);
+    const picture = "default_images/random_profile" + randomSrc + ".png";
 
     // db에 저장
     const createdNewUser = await User.create({ 
@@ -89,11 +92,12 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const { name, description, picture } = toUpdate;
+    const { name, description, field, picture } = toUpdate;
 
     const newValues = {
       ...(name && { name }),
       ...(description && { description }),
+      ...(field && { field }),
       ...(picture && { picture }),
     };
 
@@ -169,6 +173,32 @@ class userAuthService {
     const newValues = { password: hashedPassword}
     await User.update({ userId: user.userId, newValues })
     return newPassword
+  }
+
+  // 사용자 비밀번호 변경
+  static async changePassword({userId, oldPassword, newPassword}){
+    const user = await User.findByUserId(userId)
+    if(!user) {
+      throw new Error("해당되는 사용자가 존재하지 않습니다.")
+    }
+
+    // 비밀번호 일치 여부 확인
+    const hashedOldPassword = await bcrypt.hash(oldPassword, 10);
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      correctPasswordHash,
+      hashedOldPassword
+    );
+    if (!isPasswordCorrect) {
+      const errorMessage =
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    // 새 비밀번호 적용
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    const newValues = { password: hashedNewPassword }
+    return User.update({ userId: user.userId, newValues })
   }
 }
 
