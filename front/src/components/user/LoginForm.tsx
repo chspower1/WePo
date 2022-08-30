@@ -96,7 +96,7 @@ export default function LoginForm() {
                                         },
                                     })}
                                 />
-                                <LoginStyled.ViewButton onClick={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</LoginStyled.ViewButton>
+                                <LoginStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</LoginStyled.ViewButton>
                             </LoginStyled.InputInnerBox>
                             {errors.password && (
                                     <LoginStyled.ErrMsg>

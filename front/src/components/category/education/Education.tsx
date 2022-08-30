@@ -75,16 +75,17 @@ export default function Education({ educations, setEducations }: IEducationProps
                                             {...magic.draggableProps}
                                             {...magic.dragHandleProps}
                                         >
-                                            <EducationStyled.ContentAccent>
+                                            <EducationStyled.ContentAccent title={education.school}>
                                                 {education.school}
                                             </EducationStyled.ContentAccent>
                                             <div style={{ display: "flex" }}>
                                                 <EducationStyled.ContentDetail
                                                     style={{ marginRight: "10px" }}
+                                                    title={education.major}
                                                 >
                                                     {education.major}
                                                 </EducationStyled.ContentDetail>
-                                                <EducationStyled.ContentDetail>
+                                                <EducationStyled.ContentDetail title={education.status}>
                                                     ({education.status})
                                                 </EducationStyled.ContentDetail>
                                             </div>

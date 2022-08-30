@@ -20,7 +20,7 @@ const LoadingMotion = keyframes`
 const BgWrap = styled.div`
     width: 100%;
     min-height: 100vh;
-    background: #eff3ff;
+    background: ${props=>props.theme.bgColor};
     padding: 100px 0 0;
 `;
 
@@ -47,6 +47,7 @@ export const NetworkContainer = styled.div`
 
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
+    color:${props=>props.theme.textColor};
 `;
 
 const NetworkTitle = styled.h1`

@@ -117,6 +117,7 @@ export const RegisterCommentBox = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 14px;
+    color: ${(props) => props.theme.textColor};
 `;
 
 export const RegisterFromContainer = styled(FromContainer)`
@@ -148,4 +149,29 @@ export const ViewButton = styled.button`
     right:5px;
     top:50%;
     transform:translateY(-70%);
+`
+export const FiledBox = styled.div`
+
+`
+export const FiledSelectBox = styled.div`
+    display: flex;
+    justify-content: space-around;
+
+`
+export const FiledTit = styled.h2`
+    width:100%;
+    margin-bottom:20px;
+    font-size:18px;
+    color:${props=>props.theme.textColor}
+`
+export const FiledInputBox = styled.div`
+
+`
+export const FiledInput = styled.input`
+
+`
+export const FiledLabel = styled.label`
+color:${props=>props.theme.textColor};
+user-select: none;
+
 `

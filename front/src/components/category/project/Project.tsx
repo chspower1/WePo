@@ -73,10 +73,10 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                             {...magic.dragHandleProps}
                                         >
                                             <>
-                                                <ProjectStyled.ContentAccent>
+                                                <ProjectStyled.ContentAccent title={project.title}>
                                                     {project.title}
                                                 </ProjectStyled.ContentAccent>
-                                                <ProjectStyled.ContentDetail>
+                                                <ProjectStyled.ContentDetail title={project.description}>
                                                     {project.description}
                                                 </ProjectStyled.ContentDetail>
                                                 <ProjectStyled.ContentDate>{`${String(

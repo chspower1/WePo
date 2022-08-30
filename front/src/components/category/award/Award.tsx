@@ -83,11 +83,12 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                         >
                                             <div
                                                 style={{
+                                                    width:"80%",
                                                     display: "flex",
                                                     alignItems: "center",
                                                 }}
                                             >
-                                                <AwardStyled.ContentAccent>
+                                                <AwardStyled.ContentAccent title={award.title}>
                                                     {award.title}
                                                 </AwardStyled.ContentAccent>
                                                 <AwardStyled.ContentDetail
@@ -95,17 +96,18 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                                         marginTop: "20px",
                                                         marginLeft: "20px",
                                                     }}
+                                                    title={award.grade}
                                                 >
                                                     {award.grade}
                                                 </AwardStyled.ContentDetail>
                                             </div>
-                                            <AwardStyled.ContentDetail>
+                                            <AwardStyled.ContentDetail title={award.org}>
                                                 {award.org}
                                             </AwardStyled.ContentDetail>
                                             <AwardStyled.ContentDate>
                                                 {String(award.date).slice(0, 10)}
                                             </AwardStyled.ContentDate>
-                                            <AwardStyled.ContentDetail>
+                                            <AwardStyled.ContentDetail title={award.description}>
                                                 {award.description}
                                             </AwardStyled.ContentDetail>
                                             {curUser &&

@@ -79,6 +79,7 @@ export default function RegisterForm() {
     }, []);
     function handleViewButton(e:React.FormEvent<HTMLButtonElement>){
         e.preventDefault();
+        console.log(e)
         setViewPassword(prev => !prev);
     }
     function handleViewCheckButton(e:React.FormEvent<HTMLButtonElement>){
@@ -153,7 +154,7 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton onClick={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>{viewPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.password ? (
                                 <RegisterStyled.ErrMsg>
@@ -185,7 +186,7 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton onClick={handleViewCheckButton}>{viewCheckPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
+                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewCheckButton}>{viewCheckPassword ? <EyeOutline color="#3687FF"/> : <EyeOffOutline color="#3687FF"/>}</RegisterStyled.ViewButton>
                             </RegisterStyled.InputInnerBox>
                             {errors.checkPassword ? (
                                 <RegisterStyled.ErrMsg>
@@ -198,25 +199,27 @@ export default function RegisterForm() {
                                 </RegisterStyled.SuccessMsg>
                             )}
                         </RegisterStyled.InputBox>
-                        <RegisterStyled.InputBox style={{display:"flex",justifyContent:"space-between"}}>
-                            <h1>선호분야</h1>
-                            <div>
-                                <input type="checkbox" id="frontEnd" value="frontEnd"{...register("field")}></input>
-                                <label  htmlFor="frontEnd">프론트엔드</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="backEnd" value="backEnd"{...register("field")}></input>
-                                <label  htmlFor="backEnd">백엔드</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="dataAnalysis" value="dataAnalysis"{...register("field")}></input>
-                                <label  htmlFor="dataAnalysis">데이터분석</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="AI" value="AI"{...register("field")}></input>
-                                <label  htmlFor="AI">AI</label>
-                            </div>
-                        </RegisterStyled.InputBox>
+                        <RegisterStyled.FiledBox>
+                            <RegisterStyled.FiledTit>선호분야</RegisterStyled.FiledTit>
+                            <RegisterStyled.FiledSelectBox>
+                                <RegisterStyled.FiledInputBox>
+                                    <RegisterStyled.FiledInput type="checkbox" id="frontEnd" value="frontEnd"{...register("field")}/>
+                                    <RegisterStyled.FiledLabel  htmlFor="frontEnd">프론트엔드</RegisterStyled.FiledLabel>
+                                </RegisterStyled.FiledInputBox>
+                                <RegisterStyled.FiledInputBox>
+                                    <RegisterStyled.FiledInput type="checkbox" id="backEnd" value="backEnd"{...register("field")}/>
+                                    <RegisterStyled.FiledLabel  htmlFor="backEnd">백엔드</RegisterStyled.FiledLabel>
+                                </RegisterStyled.FiledInputBox>
+                                <RegisterStyled.FiledInputBox>
+                                    <RegisterStyled.FiledInput type="checkbox" id="dataAnalysis" value="dataAnalysis"{...register("field")}/>
+                                    <RegisterStyled.FiledLabel  htmlFor="dataAnalysis">데이터분석</RegisterStyled.FiledLabel>
+                                </RegisterStyled.FiledInputBox>
+                                <RegisterStyled.FiledInputBox>
+                                    <RegisterStyled.FiledInput type="checkbox" id="AI" value="AI"{...register("field")}/>
+                                    <RegisterStyled.FiledLabel  htmlFor="AI">AI</RegisterStyled.FiledLabel>
+                                </RegisterStyled.FiledInputBox>
+                            </RegisterStyled.FiledSelectBox>
+                        </RegisterStyled.FiledBox>
                         <RegisterStyled.SubmitButtonBox>
                             <RegisterStyled.SubmitButton disabled={!valid}>
                                 작성완료

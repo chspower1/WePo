@@ -58,9 +58,9 @@ export default function EducationAddForm({
     return (
         <form onSubmit={handleSubmit(onvalid)}>
             <EducationStyled.AddInputBox>
-                <p style={{ position: "absolute", right: "20px", top: "20px" }}>
+                <EducationStyled.ImportantTxt>
                     <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel> 필수사항
-                </p>
+                </EducationStyled.ImportantTxt>
                 <EducationStyled.ContentName>
                     학교 이름 <EducationStyled.RequiredLabel>*</EducationStyled.RequiredLabel>{" "}
                 </EducationStyled.ContentName>
@@ -145,14 +145,14 @@ export default function EducationAddForm({
                     )}
                 </div>
             </div>
-            <div style={{ float: "right", marginBottom: "10px" }}>
+            <EducationStyled.SubmitOrCencerBtnBox>
                 <EducationStyled.Button color="#3687FF" type="submit">
                     추가
                 </EducationStyled.Button>
                 <EducationStyled.Button onClick={() => setIsAddFormActive(false)}>
                     취소
                 </EducationStyled.Button>
-            </div>
+            </EducationStyled.SubmitOrCencerBtnBox>
         </form>
     );
 }

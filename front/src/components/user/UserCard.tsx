@@ -9,14 +9,15 @@ import { useForm } from "react-hook-form";
 import { updateUser,curUserToggleLike } from "@api/api";
 import { Star } from "@styled-icons/fluentui-system-regular/Star";
 import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
+import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
 
 const ItemWrap = styled.div`
     min-width: 350px;
-    max-height:335px;
+    min-height:335px;
     padding: 30px 30px;
     border-radius: 10px;
-    box-shadow: 10px 10px 15px rgba(162, 190, 231, 0.25);
-    background: #fff;
+    box-shadow: 10px 10px 15px ${props=>props.theme.boxShadowGrayColor};
+    background: ${props=>props.theme.cardColor};
 `;
 const From = styled.form`
     height:100%;
@@ -35,11 +36,12 @@ const ProfileImageBox = styled.div`
     height: 90px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #5573df;
+    border: 2px solid ${props=>props.theme.filedBgColor};
 `;
 
 const UserInfoTxt = styled.div`
     margin-left: 20px;
+    color:${props=>props.theme.textColor};
 `;
 const ProfileImg = styled.img`
     position: relative;
@@ -54,9 +56,20 @@ const ImageChangeInput = styled.input`
     display: inline-flex;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.5);
     cursor: pointer;
 `;
+const PlusIcon = styled(PlusOutline)`
+    position: absolute;
+    z-index: 3;
+    width:30px;
+    height:30px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    color:#fff;
+`
+
 const NameTxt = styled.h2`
     font-size: 18px;
     font-weight: bold;
@@ -74,7 +87,9 @@ const EmailTxt = styled.h3`
         color: ${(props) => props.theme.btnColor};
     }
 `;
-const DescBox = styled.div``;
+const DescBox = styled.div`
+    color:${props=>props.theme.textColor};
+`;
 const DescTit = styled.p`
     font-weight: bold;
     margin-bottom: 16px;
@@ -138,21 +153,22 @@ const FieldBox = styled.div`
     display:flex;
     min-height:25px;
     flex-wrap:wrap;
-    margin: 0 -4px 20px;
+    margin: 0 -4px 10px;
 `
 const FieldTxt = styled.div`
     display:inline-block;
     padding:6px 8px;
     background:${props=> props.theme.filedBgColor};
-    color:${props=> props.theme.bgColor};
+    color:${props=>props.theme.textColor};
     font-size: 13px;
     border-radius : 5px;
-    margin:0 4px;
+    margin:0 4px 10px;
 `
 
 interface IUserFormValue {
     reName: string;
     reDescription: string;
+    changedImg: any;
 }
 
 function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
@@ -162,11 +178,13 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const { register, handleSubmit } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
-    const onvalid = ({ reName: name, reDescription: description }: IUserFormValue) => {
+    const onvalid = ({ reName: name, reDescription: description, changedImg:picture }: IUserFormValue) => {
+        console.log("picture",picture)
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
+            updateCurUser.picture = picture;
             return updateCurUser as IUser;
         });
         updateUser({ name, description }, curUser?.userId!);
@@ -197,10 +215,19 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     return (
         <>
             <ItemWrap>
-                <From onSubmit={handleSubmit(onvalid)}>
+                <From onSubmit={handleSubmit(onvalid)} encType="multipart/form-data">
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg src={picture} alt="profileImage" />
+                            {onEdit && (
+                                <>
+                                    <ImageChangeInput
+                                        type="file"
+                                        {...register("changedImg")}
+                                    />
+                                    <PlusIcon/>
+                                </>
+                            )}
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>

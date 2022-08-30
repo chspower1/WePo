@@ -10,13 +10,14 @@ export const Container = styled.div`
     box-shadow: 10px 10px 15px ${props=>props.theme.boxShadowGrayColor};
     padding: 50px 50px 20px;
     margin-bottom: 40px;
-    background: ${props=> props.theme.bgColor};
+    background:  ${props=>props.theme.cardColor};
     @media screen and (max-width: 960px) {
         margin-top: 40px;
     }
 `;
 export const TitleBox = styled.div`
     width: 100%;
+    color: ${props=>props.theme.textColor};
 `;
 export const Title = styled.h2`
     font-size: 25px;
@@ -40,19 +41,30 @@ export const ContentName = styled.h2`
     font-weight: bold;
     margin-bottom: 10px;
     margin-top: 20px;
+    color: ${props=>props.theme.textColor};
 `;
-export const ContentAccent = styled.h2`
+export const ContentAccent = styled.p`
     font-size: 15px;
     font-weight: bold;
     margin-bottom: 10px;
     margin-top: 20px;
+    min-width:80%;
+    max-width:80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     color: ${props=> props.theme.btnColor};;
 `;
-export const ContentDetail = styled.h3`
+export const ContentDetail = styled.p`
     font-size: 15px;
     margin-bottom: 10px;
+    max-width:70%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: ${props=>props.theme.textColor};
 `;
-export const ContentDate = styled.h3`
+export const ContentDate = styled.p`
     font-size: 15px;
     color: ${props=>props.theme.contentColor};
     margin-bottom: 20px;
@@ -108,7 +120,7 @@ export const Button = styled.button`
     width: 80px;
     height: 40px;
     border-radius: 10px;
-    margin-right: 10px;
+    margin: 0 10px;
 `;
 export const MajorGraduate = styled.input.attrs((props) => ({
     type: "radio",
@@ -117,8 +129,8 @@ export const MajorGraduate = styled.input.attrs((props) => ({
 }))``;
 
 export const MajorGraduateLabel = styled.label`
-    color: black;
     margin-right: 10px;
+    color: ${props=>props.theme.textColor};
 `;
 export const Root = styled.div`
     background: ${props=>props.theme.bgColor};
@@ -138,7 +150,7 @@ export const MyPortWrap = styled.div`
 export const Wrap = styled.div`
     width: 100%;
     max-width: 800px;
-    margin-left: 100px;
+    margin-left: auto;
     @media screen and (max-width: 960px) {
         margin-left: 0;
         max-width: 100%;
@@ -150,3 +162,15 @@ export const UserCardBox = styled.div`
         max-width: 100%;
     }
 `;
+export const ImportantTxt = styled.div`
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: ${props=>props.theme.textColor};
+`
+export const SubmitOrCencerBtnBox =styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:40px 0;
+`

@@ -76,16 +76,16 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                             {...magic.dragHandleProps}
                                         >
                                             <>
-                                                <CertStyled.ContentAccent>
+                                                <CertStyled.ContentAccent title={certificate.title}>
                                                     {certificate.title}
                                                 </CertStyled.ContentAccent>
                                                 <CertStyled.ContentDate>
                                                     {String(certificate.date).slice(0, 10)}
                                                 </CertStyled.ContentDate>
-                                                <CertStyled.ContentDetail>
+                                                <CertStyled.ContentDetail title={certificate.org}>
                                                     {certificate.org}
                                                 </CertStyled.ContentDetail>
-                                                <CertStyled.ContentDetail>
+                                                <CertStyled.ContentDetail title={certificate.description}>
                                                     {certificate.description}
                                                 </CertStyled.ContentDetail>
                                                 {curUser &&
