@@ -4,6 +4,7 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { emailService } from "../services/emailService";
+const utf8 = require('utf8');
 
 import imageUpload from "../utils/imageUpload";
 const upload = imageUpload("uploads", 5);
@@ -180,8 +181,9 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         let picture = null;
 
         if(imageFile) {
-            picture = imageFile.filename;
+            picture = utf8.encode(imageFile.filename);
         }
+        
 
         const toUpdate = { name, description, field, picture };
 
