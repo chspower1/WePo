@@ -33,6 +33,12 @@ const ItemWrap = styled.div`
         box-shadow: 12px 12px 18px #95a9e070;
         transform: translate(0, -10px);
     }
+    &.sticky{
+        position:sticky;
+        left:0;
+        top:100px;
+    }
+    
 `;
 const From = styled.form`
     height: 100%;
@@ -197,15 +203,15 @@ const CheckMe = styled.div`
     z-index: 0;
     position: absolute;
     text-align: center;
-    width: 150px;
-    height: 60px;
     background-color: ${(props) => props.theme.btnColor};
     color: ${(props) => props.theme.btnTextColor};
     border-radius: 10px 10px 0px 0px;
     right: 10px;
-    top: -60px;
+    top: 0;
     padding-top: 15px;
-    font-size: 26px;
+    font-size: 16px;
+    padding:10px 30px;
+    transform: translateY(-100%);
 `;
 const InputBtn = styled.input`
     position: absolute;
@@ -311,20 +317,22 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     return (
         <>
             {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
-            <ItemWrap>
-                {curUser?.userId === userId && pathName === "/network" && (
-                    <CheckMe>It's Me!</CheckMe>
-                )}
-                {onLikeModalState && (
+            {onLikeModalState && (
                     <>
                         <LikeModal
                             likeUsers={likes}
                             setOnLikeModalState={setOnLikeModalState}
                             onLikeModalState={onLikeModalState}
                         ></LikeModal>
-                        <ModalDelBtn>X</ModalDelBtn>
                     </>
+            )}
+            <ItemWrap
+                className={pathName==="/mypage" ? "sticky" : ""}
+                >
+                {curUser?.userId === userId && pathName === "/network" && (
+                    <CheckMe>It's Me!</CheckMe>
                 )}
+                
                 <From
                     onSubmit={handleSubmit(onvalid)}
                     encType="multipart/form-data"

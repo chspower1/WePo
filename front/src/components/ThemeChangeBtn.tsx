@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { isDarkState } from "@/atoms";
 const ThemeBtnBox = styled.div`
     position: fixed;
-    z-index: 3000;
+    z-index: 1005;
     right: 50px;
     bottom: 60px;
     width: 60px;
