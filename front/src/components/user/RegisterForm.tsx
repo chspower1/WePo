@@ -9,7 +9,6 @@ import { IUser } from "@/atoms";
 import { useQuery } from "react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
-import CheckFieldBox from "./CheckFieldBox";
 import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 import SendMailAlert from "@components/modal/sendMailAlert";
 export interface IRegister {

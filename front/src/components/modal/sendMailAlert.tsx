@@ -1,5 +1,5 @@
 import React from "react";
-import styled,{keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -24,7 +24,7 @@ const modalShow = keyframes`
         opacity:1;
         transform:translateY(0%);
     }
-`
+`;
 const Modal = styled.div`
     animation: ${modalShow} 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 800px;
@@ -55,7 +55,8 @@ const ModalMsg = styled.p`
 const ModalCloseButton = styled.button`
     width: 40%;
     height: 50px;
-    background-color: #3687ff;
+    background-color: ${(props) => props.theme.btnColor};
+    color: ${(props) => props.theme.btnTextColor};
 `;
 const AccentWord = styled.span`
     color: #3867ff;

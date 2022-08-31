@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import Certificate from "@certificate/Certificate";
 
 const BASE_URL = `http://${window.location.hostname}:5001`;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export async function UserLogin({ email, password }: ILogin) {
     try {
@@ -24,7 +25,7 @@ export async function UserLogin({ email, password }: ILogin) {
         });
         await sessionStorage.setItem("userToken", loginUser.token);
         return loginUser as IUser;
-    } catch (err:any) {
+    } catch (err: any) {
         alert(err.response.data); // 수정예정
     }
 }
@@ -44,6 +45,7 @@ export async function createtUser({ email, password, name, field }: IRegister) {
             name,
             field,
         });
+
         const newUser: IUser = await {
             ...data,
             description: "",

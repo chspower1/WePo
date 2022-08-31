@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { curUserState, usersState, IUser, ILike, Efield } from "@/atoms";
+import { curUserState, usersState, IUser, Efield } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
 
@@ -13,6 +13,8 @@ import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
 import FieldStyle from "@styledComponents/FieldStyle";
 import { E } from "styled-icons/simple-icons";
 import FiledStyle from "@styledComponents/FieldStyle";
+import { LoadingBox, LoadingIcon } from "./Network";
+import LikeModal from "@components/modal/LikeModal";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -29,11 +31,11 @@ const From = styled.form`
     flex-direction: column;
     justify-content: space-between;
 `;
-const InfoBox = styled.div`
+export const InfoBox = styled.div`
     position: relative;
     display: flex;
 `;
-const ProfileImageBox = styled.div`
+export const ProfileImageBox = styled.div`
     position: relative;
     transform: translateY(-40px);
     width: 90px;
@@ -43,11 +45,11 @@ const ProfileImageBox = styled.div`
     border: 2px solid ${(props) => props.theme.filedBgColor};
 `;
 
-const UserInfoTxt = styled.div`
+export const UserInfoTxt = styled.div`
     margin-left: 20px;
     color: ${(props) => props.theme.textColor};
 `;
-const ProfileImg = styled.img`
+export const ProfileImg = styled.img`
     position: relative;
     z-index: 1;
     height:100%;
@@ -75,7 +77,7 @@ const PlusIcon = styled(PlusOutline)`
     color: #fff;
 `;
 
-const NameTxt = styled.h2`
+export const NameTxt = styled.h2`
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
@@ -85,7 +87,7 @@ const NameTxt = styled.h2`
     white-space: nowrap;
     cursor: default;
 `;
-const EmailTxt = styled.h3`
+export const EmailTxt = styled.h3`
     font-size: 14px;
     a {
         display: block;
@@ -196,17 +198,20 @@ const CheckMe = styled.div`
     font-size: 26px;
 `;
 const InputBtn = styled.input`
-position: absolute;
-left: -99999px;
-& + label {
-    background-color: gray;
-    color: white;
-}
-&:checked + label {
-    background-color: #3867ff;
-    color: white;
-}
+    position: absolute;
+    left: -99999px;
+    & + label {
+        background-color: gray;
+        color: white;
+    }
+    &:checked + label {
+        background-color: #3867ff;
+        color: white;
+    }
 `;
+
+const ModalDelBtn = styled.button``;
+
 interface IUserFormValue {
     reName: string;
     reDescription: string;
@@ -214,13 +219,15 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
+function UserCard({ _id, name, email, description, field, userId, picture, likes }: IUser) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
+    const [pictureState, setPictureState] = useState(picture);
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
+    const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
-    const foundLikeUser = curUser?.likes.find((user) => user === userId);
+    const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
     const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
     //권한관리
     const { userSeq } = useParams();
@@ -235,20 +242,31 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
+        console.log(picture);
+        console.log(picture.length);
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            updateCurUser.picture = picture[0].name;
+            if (picture.length !== 0) {
+                updateCurUser.picture = picture[0]?.name;
+                setPictureState(picture[0].name);
+            }
+
             return updateCurUser as IUser;
         });
+
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setOnEdit((cur) => !cur);
+    };
+
+    const onClickLikesModal = () => {
+        setOnLikeModalState((cur) => !cur);
     };
 
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -275,13 +293,29 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         }
     }, [newPicture]);
     useEffect(() => {}, [curUser]);
+    if (!curUser)
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        );
     return (
         <>
             <ItemWrap>
                 {curUser?.userId === userId && pathName === "/network" && (
                     <CheckMe>It's Me!</CheckMe>
                 )}
-                <From onSubmit={handleSubmit(onvalid)} encType="multipart/form-data" acceptCharset="UTF-8">
+                {onLikeModalState && (
+                    <>
+                        <LikeModal
+                            likeUsers={likes}
+                            setOnLikeModalState={setOnLikeModalState}
+                        ></LikeModal>
+                        <ModalDelBtn>X</ModalDelBtn>
+                    </>
+                )}
+                <From onSubmit={handleSubmit(onvalid)}  encType="multipart/form-data" acceptCharset="UTF-8">
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
@@ -387,10 +421,23 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                     편집
                                 </DetailBtn>
                             ))}
+                        {pathName !== "/network" && (
+                            <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
+                                즐겨찾기목록
+                            </DetailBtn>
+                        )}
                         {onEdit && (
                             <>
                                 <DetailBtn title="수정완료">수정완료</DetailBtn>
-                                <DetailBtn title="취소" onClick={(e)=>{onClickEdit(e); setNewPicturePreview(`http://localhost:5001/uploads/${picture}`)}}>
+                                <DetailBtn
+                                    title="취소"
+                                    onClick={(e) => {
+                                        onClickEdit(e);
+                                        setNewPicturePreview(
+                                            `http://localhost:5001/uploads/${picture}`
+                                        );
+                                    }}
+                                >
                                     취소
                                 </DetailBtn>
                             </>
