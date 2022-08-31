@@ -143,13 +143,11 @@ function Network() {
             const currentChecked = [...current];
             const overlap = currentChecked.findIndex((el) => el === name);
             overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
-
+            console.log("필터",currentChecked)
             return currentChecked;
         });
     }
-    useEffect(()=>{
-        refetch()
-    },[netUsers])
+    console.log("필터",filterUsersState)
     if (!users)
         return (
             <LoadingBox>

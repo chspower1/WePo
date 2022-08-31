@@ -270,9 +270,6 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
-    useEffect(()=>{
-        refetch()
-    },[curUser])
 
     const onClickLikesModal = () => {
         setOnLikeModalState((cur) => !cur);
