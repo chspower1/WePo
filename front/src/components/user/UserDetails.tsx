@@ -37,29 +37,30 @@ function UserDetails() {
     const admin = inMyPage || compareUser;
 
     //User관련 State
-    const [user, setUser] = useState<IUser | null>(curUser);
     const [educations, setEducations] = useState<IEducation[]>([]);
     const [awards, setAwards] = useState<IAward[]>([]);
     const [certificates, setCertificates] = useState<ICertificate[]>([]);
     const [projects, setProjects] = useState<IProject[]>([]);
     //API User정보 받아오기
-    const { isLoading, data: user,refetch } = useQuery(
+    const {
+        isLoading,
+        data: user,
+        refetch,
+    } = useQuery(
         ["newCurUser", userSeq],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
             onSuccess(sucessUser) {
-                setUser(sucessUser!);
                 setEducations(sucessUser?.educations!);
                 setAwards(sucessUser?.awards!);
                 setCertificates(sucessUser?.certificates!);
                 setProjects(sucessUser?.projects!);
             },
         }
-    
     );
-    useEffect(()=>{
-        refetch()
-    },[curUser])
+    useEffect(() => {
+        refetch();
+    }, [curUser]);
     console.log(educations, awards, certificates, certificates, certificates);
     const allSet = user && educations && awards && certificates && projects && !isLoading;
     //로그인상태 확인
@@ -130,7 +131,9 @@ function UserDetails() {
         <>
             <Mypage.Root>
                 <Mypage.MyPortWrap>
-                    <Mypage.UserCardBox>{curUser && <UserCard user={user!} refetch={refetch}/>}</Mypage.UserCardBox>
+                    <Mypage.UserCardBox>
+                        {curUser && <UserCard user={user!} refetch={refetch} />}
+                    </Mypage.UserCardBox>
                     <Mypage.Wrap>
                         <DragDropContext onDragEnd={onDragEnd}>
                             <CurrentBoard
