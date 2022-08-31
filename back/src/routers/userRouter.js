@@ -182,7 +182,7 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
 
         if(imageFile) {
             // 한글 파일 이름 깨짐 방지
-            picture = utf8.encode(imageFile.filename);
+            picture = utf8.decode(imageFile.filename);
         }
         
 

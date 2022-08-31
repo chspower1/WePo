@@ -1,6 +1,7 @@
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const utf8 = require("utf8")
 
 function imageUpload(upload_path, file_size) {
   try {
@@ -16,7 +17,8 @@ function imageUpload(upload_path, file_size) {
     },
     filename: function (req, file, done) {   // 파일명을 어떤 이름으로 올릴지
       const ext = path.extname(file.originalname); // 파일의 확장자
-      done(null, path.basename(file.originalname, ext) + "_" + Date.now() + ext); // 파일이름 + 날짜 + 확장자 이름으로 저장
+      done(null, path.basename(utf8.decode(file.originalname), ext) 
+        + "_" + Date.now() + ext); // 파일이름 + 날짜 + 확장자 이름으로 저장
     }
   });
 
