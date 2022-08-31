@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled,{keyframes} from "styled-components"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { approveRegister } from '@api/api';
+
 
 
 const Root = styled.div`
@@ -52,8 +54,13 @@ const NavigateButton = styled.button`
 `
 
 export default function SuccessRegister(){
-    const [change,setChange] = useState(false)
+    const {userId} = useParams();
+    const {authCode} = useParams();
+    const [change,setChange] = useState(false);
     const navigator = useNavigate();
+    useEffect(()=>{
+        approveRegister(userId,authCode);
+    },[])
     return(
             <Root>
                 {change && <Test></Test>}

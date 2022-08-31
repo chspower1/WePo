@@ -226,3 +226,14 @@ export async function searchData(searchData: string) {
         console.log(err);
     }
 }
+
+
+//회원가입 이메일 인증
+export async function approveRegister(userId :any ,authCode : any){
+    try{
+        console.log("요청",userId,authCode);
+        await axios.post(`${BASE_URL}/user/register/${userId}/${authCode}`,)
+    } catch(err){
+        console.log("에러남",err);
+    }
+}
