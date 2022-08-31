@@ -219,15 +219,14 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
-    const foundLikeUser = curUser?.likes.find((user) => user == userId);
-    const fieldList = ["frontEnd", "backEnd", "dataAnalysis", "AI"];
+    const foundLikeUser = curUser?.likes.find((user) => user === userId);
+    const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
+
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
     const inMyPage = pathName === "/mypage";
     const admin = inMyPage || compareUser;
-
-    console.log("1",name, description, field, picture);
 
     //수정완료 후 실행함수
     const onvalid = ({
@@ -235,9 +234,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         reDescription: description,
         reField: field,
         rePicture: picture,
-    }:
-    IUserFormValue) => {
-        console.log("2",name, description, field, picture);
+    }: IUserFormValue) => {
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
@@ -246,7 +243,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             updateCurUser.picture = picture[0];
             return updateCurUser as IUser;
         });
-        updateUser({name, description, field, picture} , curUser?.userId!);
+        updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -270,7 +267,6 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     };
 
 
-
     useEffect(() => {}, [curUser]);
     return (
         <>
@@ -282,14 +278,17 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                 <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <ProfileImg src={`http://localhost:5001/uploads/${picture}`} alt="profileImage" />
-                            {onEdit && 
+                            <ProfileImg
+                                src={`http://localhost:5001/uploads/${picture}`}
+                                alt="profileImage"
+                            />
+                            {onEdit && (
                                 <ImageChangeInput
                                     type="file"
-                                    accept='image/*'
+                                    accept="image/*"
                                     {...register("rePicture")}
                                 />
-                            }
+                            )}
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>

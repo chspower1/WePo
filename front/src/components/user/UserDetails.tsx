@@ -150,7 +150,12 @@ function UserDetails() {
                     <Mypage.UserCardBox>{curUser && <UserCard {...user} />}</Mypage.UserCardBox>
                     <Mypage.Wrap>
                         <DragDropContext onDragEnd={onDragEnd}>
-                            <CurrentBoard {...user} />
+                            <CurrentBoard
+                                educations={educations}
+                                awards={awards}
+                                certificates={certificates}
+                                projects={projects}
+                            />
                             <Education educations={educations} setEducations={setEducations} />
                             <Award awards={awards} setAwards={setAwards} />
                             <Certificate
