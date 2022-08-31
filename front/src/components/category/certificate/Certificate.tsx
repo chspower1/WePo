@@ -102,11 +102,11 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                                             >
                                                                 {certificate.org}
                                                             </CertStyled.ContentDetail>
-                                                            <CertStyled.ContentDetail
+                                                            <CertStyled.ContentDesc
                                                                 title={certificate.description}
                                                             >
                                                                 {certificate.description}
-                                                            </CertStyled.ContentDetail>
+                                                            </CertStyled.ContentDesc>
                                                             {curUser &&
                                                                 admin &&
                                                                 targetIndex !== index && (
