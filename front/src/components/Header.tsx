@@ -23,14 +23,14 @@ const HeaderWrap = styled.header`
     top: 0;
     left: 0;
     width: 100%;
-    background: ${props=>props.theme.bgColor};
-    transition: box-shadow 0.6s, background 0.6s;
+    background: ${(props) => props.theme.bgColor};
+    transition: box-shadow 0.5s ease, background 0.5s ease;
     &.home {
         background: transparent;
     }
     &.active {
-        border-bottom: 1px solid  ${props=>props.theme.headerBorderColor};
-        background: ${props=>props.theme.headerActiveColor};
+        border-bottom: 1px solid ${(props) => props.theme.headerBorderColor};
+        background: ${(props) => props.theme.headerActiveColor};
     }
 `;
 
@@ -109,13 +109,13 @@ const MiniProfileName = styled.span`
 `;
 const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
-    background:  ${(props) => props.theme.textColor};
+    background: ${(props) => props.theme.textColor};
     border-radius: 20px;
     color: ${(props) => props.theme.bgColor};
     border: 2px solid ${(props) => props.theme.textColor};
     margin-left: 20px;
     letter-spacing: -0.4px;
-    transition: all 0.4s;
+    transition: all 0.3s ease;
     font-size: 15px;
     &:hover {
         background: ${(props) => props.theme.bgColor};

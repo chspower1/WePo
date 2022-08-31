@@ -4,6 +4,7 @@ export const Root = styled.div`
     width: 100%;
     min-height: 100%;
     padding: 70px 0 0;
+    transition: background 0.5s ease;
     background: ${(props) => props.theme.bgColor};
 `;
 

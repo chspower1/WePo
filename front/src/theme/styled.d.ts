@@ -16,6 +16,7 @@ declare module "styled-components" {
         inputBgColor: string;
         circleColor: string;
         cardColor: string;
+        modeBgColor: string;
         headerBorderColor: string;
         headerActiveColor: string;
     }

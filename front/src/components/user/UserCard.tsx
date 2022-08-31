@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { curUserState, usersState, IUser, ILike } from "@/atoms";
+import { curUserState, usersState, IUser, ILike, Efield } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
 
@@ -15,6 +15,7 @@ import { E } from "styled-icons/simple-icons";
 import FiledStyle from "@styledComponents/FieldStyle";
 
 const ItemWrap = styled.div`
+    position: relative;
     min-width: 350px;
     min-height: 335px;
     padding: 30px 30px;
@@ -133,6 +134,7 @@ const LikeBtnBox = styled.div`
     border: 1px solid #000;
     border-radius: 5px;
     border: 1px solid ${(props) => props.theme.starBorderColor};
+    transition: all 0.3s ease;
     &.active {
         background: ${(props) => props.theme.starBorderColor};
     }
@@ -178,7 +180,20 @@ const FieldTxt = styled.div`
     border-radius: 5px;
     margin: 0 4px 10px;
 `;
-
+const CheckMe = styled.div`
+    z-index: 0;
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 60px;
+    background-color: ${(props) => props.theme.btnColor};
+    color: ${(props) => props.theme.btnTextColor};
+    border-radius: 10px 10px 0px 0px;
+    right: 10px;
+    top: -60px;
+    padding-top: 15px;
+    font-size: 26px;
+`;
 interface IUserFormValue {
     reName: string;
     reDescription: string;
@@ -279,6 +294,10 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     return (
         <>
             <ItemWrap>
+                {curUser?.userId === userId && pathName === "/network" && (
+                    <CheckMe>It's Me!</CheckMe>
+                )}
+
                 <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
