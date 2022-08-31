@@ -13,6 +13,7 @@ import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
 import FieldStyle from "@styledComponents/FieldStyle";
 import { E } from "styled-icons/simple-icons";
 import FiledStyle from "@styledComponents/FieldStyle";
+import { LoadingBox, LoadingIcon } from "./Network";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -195,16 +196,16 @@ const CheckMe = styled.div`
     font-size: 26px;
 `;
 const InputBtn = styled.input`
-position: absolute;
-left: -99999px;
-& + label {
-    background-color: gray;
-    color: white;
-}
-&:checked + label {
-    background-color: #3867ff;
-    color: white;
-}
+    position: absolute;
+    left: -99999px;
+    & + label {
+        background-color: gray;
+        color: white;
+    }
+    &:checked + label {
+        background-color: #3867ff;
+        color: white;
+    }
 `;
 interface IUserFormValue {
     reName: string;
@@ -217,11 +218,11 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
+    const [pictureState, setPictureState] = useState(picture);
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user === userId);
     const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
-
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
@@ -240,9 +241,11 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            updateCurUser.picture = picture[0];
+            updateCurUser.picture = picture[0].name;
             return updateCurUser as IUser;
         });
+        setPictureState(picture[0].name);
+        console.log(picture[0]);
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
@@ -251,6 +254,11 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         setOnEdit((cur) => !cur);
     };
 
+    const encodeFileToBase64 = (fileBlob: any) => {
+        const reader = new FileReader();
+
+        reader.readAsDataURL(fileBlob);
+    };
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         curUserToggleLike(userId);
@@ -265,9 +273,14 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             return addLikeUser;
         });
     };
-
-
     useEffect(() => {}, [curUser]);
+    if (!curUser)
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        );
     return (
         <>
             <ItemWrap>
@@ -279,8 +292,8 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
-                                src={`http://localhost:5001/uploads/${picture}`}
-                                alt="profileImage"
+                                src={`http://localhost:5001/uploads/${pictureState}`}
+                                alt={`http://localhost:5001/uploads/random_profile2.png`}
                             />
                             {onEdit && (
                                 <ImageChangeInput

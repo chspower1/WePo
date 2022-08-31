@@ -81,16 +81,17 @@ const Label = styled.label`
     user-select: none;
 `;
 
-const LoadingBox = styled.div`
+export const LoadingBox = styled.div`
     width: 100%;
-    height: 80%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     user-select: none;
+    background-color: ${(props) => props.theme.bgColor};
 `;
-const LoadingIcon = styled(ArrowRepeat)`
+export const LoadingIcon = styled(ArrowRepeat)`
     width: 26px;
     height: 26px;
     margin-right: 10px;
@@ -102,7 +103,6 @@ function Network() {
     const pathName = location.pathname;
     const [users, setUsers] = useRecoilState(usersState);
     const [netUsers, setNetUsers] = useState<IUser[]>([]);
-    const [user, setUser] = useState<IUser | null>(null);
     const isLogin = useRecoilValue(isLoginState);
     const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
     const searchUsers = useRecoilValue(searchUsersState);
@@ -121,7 +121,7 @@ function Network() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
-    
+
     // Field 선택시
     useEffect(() => {
         setNetUsers(filterUsersState!);
@@ -139,12 +139,27 @@ function Network() {
             return currentChecked;
         });
     }
-    if (!users) return <></>; // undefined 방지
-    if (isLoading) return <></>; // undefined 방지
+    if (!users)
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        ); // undefined 방지
+    if (isLoading)
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        ); // undefined 방지
     return (
         <>
             {isLoading ? (
-                <>로딩중</>
+                <LoadingBox>
+                    <LoadingIcon />
+                    Loading...
+                </LoadingBox>
             ) : (
                 <BgWrap>
                     <Root>

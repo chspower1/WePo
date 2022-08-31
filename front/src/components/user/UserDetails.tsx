@@ -21,6 +21,7 @@ import styled from "styled-components";
 import * as Mypage from "@styledComponents/CategoryStyled";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import CurrentBoard from "@components/category/CurrentBoard";
+import { LoadingBox, LoadingIcon } from "./Network";
 function UserDetails() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
@@ -141,8 +142,22 @@ function UserDetails() {
         });
     }, [curUser?.name, curUser?.description, curUser?.field]);
 
-    if (!user) return <></>; // undefined 방지
-    if (isLoading) return <></>; // undefined 방지
+    if (!user)
+        // undefined 방지
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        );
+    if (isLoading)
+        // undefined 방지
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        );
     return (
         <>
             <Mypage.Root>

@@ -130,7 +130,6 @@ function Header() {
     const location = useLocation();
     const pathName = location.pathname;
     const curUser = useRecoilValue(curUserState);
-    const [navActive, setNavActive] = useState(false);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
 
