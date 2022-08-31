@@ -4,8 +4,6 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { emailService } from "../services/emailService";
-import { User } from "../db/models/User";
-import { Trial } from "../db/models/Trial";
 
 import imageUpload from "../utils/imageUpload";
 const upload = imageUpload("uploads", 5);
@@ -33,10 +31,7 @@ userAuthRouter.post("/register", async function (req, res, next) {
         if (newUser.errorMessage) {
             throw new Error(newUser.errorMessage);
         }
-
-        // 로그인 시도 횟수 초기화
-        await Trial.setTrials(email);
-
+        
         // 인증코드 생성
         const codeAdded = await emailService.createAuthCode(newUser.userId);
         const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${newUser.userId}/${codeAdded.authCode}`;
@@ -50,12 +45,9 @@ userAuthRouter.post("/register", async function (req, res, next) {
             html: `<br>${name}<b/>님,<br/>
             아래 버튼을 눌러 이메일 인증 부탁드립니다:</br>
             <a href="${authURL}">이메일 인증하기</a>`, // html body
-        };
-
-        const emailSent = await emailService.sendEmail(mailContent);
-        if (!emailSent.accepted) {
-            throw new Error("이메일 전송을 실패했습니다.");
-        }
+          }
+        
+        const emailSent = await emailService.sendEmail(mailContent)
 
         res.status(201).json(newUser);
     } catch (error) {
@@ -93,33 +85,16 @@ userAuthRouter.post("/login", async function (req, res, next) {
         // 위 데이터를 이용하여 유저 db에서 유저 찾기
         const user = await userAuthService.getUser({ email, password });
 
-        if (user.errorMessage) {
-            if (user.errorMessage === "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.") {
-                const loginTrial = await Trial.increaseTrials(email);
-                // 로그인 시도 횟수가 5번 이상이면 비밀번호 초기화 이메일 전송
-                if (loginTrial.trials >= 5) {
-                    const newPassword = await userAuthService.resetPassword(email);
-                    // 이메일 전송
-                    const mailContent = {
-                        from: '"Limit" <wnsdml0120@gmail.com>', // sender address
-                        to: email, // list of receivers: "*@*.*, *@*.*"
-                        subject: "[WePo] 비밀번호 초기화", // Subject line
-                        text: `다음 비밀번호를 사용하여 로그인 부탁드립니다: ${newPassword}`, // plain text body
-                        html: `다음 비밀번호를 사용하여 로그인 부탁드립니다:<br/>
-                        <b>${newPassword}<b/>`, // html body
-                    };
-                    const emailSent = await emailService.sendEmail(mailContent);
-                    if (!emailSent.accepted) {
-                        throw new Error("이메일 전송을 실패했습니다.");
-                    }
-                    await Trial.resetTrials(email);
+        if(user.errorMessage) {
+            throw new Error(user.errorMessage)
+        }
 
-                    throw new Error(
-                        "로그인 시도 가능 횟수를 초과하여, 새 비밀번호를 이메일로 보내드렸습니다."
-                    );
-                }
-            }
-            throw new Error(user.errorMessage);
+        // 로그인 시도 횟수 4회 초과 시 비밀번호 리셋 후 이메일 전송
+        if(user.mailContent) {
+            await emailService.sendEmail(user.mailContent)
+            const errorMessage = 
+                "로그인 시도 가능 횟수를 초과하여 이메일로 새 비밀번호를 보내드렸습니다."
+            throw new Error(errorMessage)
         }
 
         // user의 이메일 인증여부 확인
@@ -127,9 +102,6 @@ userAuthRouter.post("/login", async function (req, res, next) {
         if (gotAuthCode) {
             throw new Error("이메일 인증 완료 부탁드립니다.");
         }
-
-        // 로그인 시도 횟수 초기화
-        await Trial.resetTrials(email);
 
         res.status(200).send(user);
     } catch (error) {
@@ -187,20 +159,12 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 });
 
 // id의 사용자 정보 update
-userAuthRouter.post(
-    "/:id",
-    login_required,
-    upload.single("image"),
-    async function (req, res, next) {
-        try {
-            // if (is.emptyObject(req.body)) {
-            //     throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-            // }
-
-            // User authentication
-            const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
-            // URI로부터 사용자 id를 추출함.
-            const userId = parseInt(req.params.id);
+userAuthRouter.post("/:id", login_required, upload.single('image'), async function (req, res, next) {
+    try {
+        // User authentication
+        const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
+        // URI로부터 사용자 id를 추출함.
+        const userId = parseInt(req.params.id);
 
             if (userId !== currentUserId) {
                 console.log(userId, currentUserId);
@@ -215,8 +179,12 @@ userAuthRouter.post(
             let picture = null;
 
             if (imageFile) {
-                picture = imageFile.filename;
+                // 한글 파일 이름 깨짐 방지
+            const fn = new String(imageFile.filename)
+            const imgFn = new String(fn.getBytes("UTF-8"), "8859-1")
+            picture = imgFn
             }
+        
 
             const toUpdate = { name, description, field, picture };
 
@@ -230,10 +198,20 @@ userAuthRouter.post(
                 throw new Error(updatedUser.errorMessage);
             }
 
-            res.status(200).json(updatedUser);
-        } catch (error) {
-            next(error);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        next(error);
+    }
+});
+
+        if (updatedUser.errorMessage) {
+            throw new Error(updatedUser.errorMessage);
         }
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        next(error);
+>>>>>>> origin/devBack
     }
 );
 
@@ -253,19 +231,8 @@ userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, 
     }
 });
 
-// 검색하기
-userAuthRouter.get("/search/:toSearch", login_required, async function (req, res, next) {
-    try {
-        const toSearch = req.params.toSearch;
-        const results = await User.search(toSearch);
-        res.status(200).send(results);
-    } catch (error) {
-        next(error);
-    }
-});
-
 // 비밀번호 변경
-userAuthRouter.post("/changePassword", login_required, async function (req, res, next) {
+userAuthRouter.put("/changePassword", login_required, async function (req, res, next) {
     try {
         const userId = req["currentUserId"];
         const { oldPassword, newPassword } = req.body;
@@ -277,17 +244,11 @@ userAuthRouter.post("/changePassword", login_required, async function (req, res,
         if (updatedUser.errorMessage) {
             throw new Error(updatedUser.errorMessage);
         }
-        res.status(200).send("비밀번호 변경 성공");
-    } catch (error) {
-        next(error);
-    }
-});
+        res.status(200).send("비밀번호 변경 성공")
+    } catch(error){
+        next(error)
+    } 
+})
 
-// jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
-    res.status(200).send(
-        `안녕하세요 ${req["currentUserId"]}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
-    );
-});
 
 export { userAuthRouter };
