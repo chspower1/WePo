@@ -267,11 +267,10 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     // 이미지 미리보기
     const [newPicturePreview, setNewPicturePreview] = useState('');
     const newPicture = watch('rePicture');
-    console.log("newPicture",newPicture)
     useEffect(() => {
         if (newPicture && newPicture.length > 0) {
         const file = newPicture[0];
-        setNewPicturePreview(decodeURI(URL.createObjectURL(file)));
+        setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
     useEffect(() => {}, [curUser]);
@@ -281,8 +280,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                 {curUser?.userId === userId && pathName === "/network" && (
                     <CheckMe>It's Me!</CheckMe>
                 )}
-
-                <From onSubmit={handleSubmit(onvalid)}>
+                <From onSubmit={handleSubmit(onvalid)} encType="multipart/form-data" acceptCharset="UTF-8">
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
