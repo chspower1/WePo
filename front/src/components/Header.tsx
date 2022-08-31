@@ -97,6 +97,7 @@ export const LogoImg = styled.img`
     width: 100%;
 `;
 const MiniProfileImg = styled.img`
+    object-fit: cover;
     width: 30px;
     height: 30px;
     border-radius: 15px;

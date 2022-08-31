@@ -246,7 +246,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         setCurUser((prev: any) => {
             let filterLike = [...prev.likes];
             if (filterLike.includes(userId)) {
-                filterLike = filterLike.filter((elem) => elem != userId);
+                filterLike = filterLike.filter((elem) => elem !== userId);
             } else {
                 filterLike.push(userId);
             }
