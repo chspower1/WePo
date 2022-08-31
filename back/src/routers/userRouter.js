@@ -180,10 +180,7 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         let picture = null;
 
         if(imageFile) {
-            // 한글 파일 이름 깨짐 방지
-            const fn = new String(imageFile.filename)
-            const imgFn = new String(fn.getBytes("UTF-8"), "8859-1")
-            picture = imgFn
+            picture = imageFile.filename;
         }
         
 
