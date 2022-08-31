@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { curUserState, usersState, IUser, Efield } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -222,7 +222,6 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const [pictureState, setPictureState] = useState(picture);
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
@@ -233,7 +232,6 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
     const inMyPage = pathName === "/mypage";
     const admin = inMyPage || compareUser;
-
     //수정완료 후 실행함수
     const onvalid = ({
         reName: name,
@@ -241,16 +239,14 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
-        console.log(picture);
-        console.log(picture.length);
+        console.log("cur",curUser)
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
             if (picture.length !== 0) {
-                updateCurUser.picture = picture[0]?.name;
-                setPictureState(picture[0].name);
+                updateCurUser.picture = picture[0].name;
             }
             return updateCurUser as IUser;
         });
@@ -266,7 +262,6 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     const onClickLikesModal = () => {
         setOnLikeModalState((cur) => !cur);
     };
-
     //즐겨찾기 추가/삭제
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();

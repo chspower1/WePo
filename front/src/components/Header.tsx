@@ -181,7 +181,7 @@ function Header() {
                                 </LinkButton>
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
                                 <MiniProfileImg
-                                    src={`http://localhost:5001/uploads/${curUser?.picture!}`}
+                                    src={`http://localhost:5001/uploads/${curUser?.userId!}_${curUser?.picture}`}
                                 />
                                 <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
