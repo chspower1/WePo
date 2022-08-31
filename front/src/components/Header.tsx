@@ -32,7 +32,6 @@ const HeaderWrap = styled.header`
         border-bottom: 1px solid ${(props) => props.theme.headerBorderColor};
         background: ${(props) => props.theme.headerActiveColor};
     }
-    
 `;
 
 export const HeaderContainer = styled.div`
@@ -133,7 +132,7 @@ function Header() {
     const curUser = useRecoilValue(curUserState);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-    
+
     const scrollFixed = () => {
         if (scrollY > 100) {
             setScrollY(window.pageYOffset);
@@ -159,6 +158,9 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
+    // useEffect(() => {
+    //     console.log(curUser);
+    // }, [curUser]);
     return (
         <>
             <HeaderWrap
@@ -181,7 +183,7 @@ function Header() {
                                 </LinkButton>
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
                                 <MiniProfileImg
-                                    src={`http://localhost:5001/uploads/${curUser?.picture!}`}
+                                    src={`http://localhost:5001/uploads/${curUser?.userId!}.jpg`}
                                 />
                                 <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>

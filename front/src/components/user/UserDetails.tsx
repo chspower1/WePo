@@ -47,10 +47,11 @@ function UserDetails() {
 
     //API User정보 받아오기
     const { isLoading } = useQuery(
-        ["newCurUser"],
+        ["newCurUser", userSeq],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
             onSuccess(user) {
+                console.log("유저데이터 요청", userSeq);
                 setUser(user!);
                 setEducations(user?.educations!);
                 setAwards(user?.awards!);
@@ -69,21 +70,24 @@ function UserDetails() {
 
     //오류수정
     //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
-    useEffect(() => {
-        if (compareUser) {
-            setUser(curUser!);
-            setEducations(curUser?.educations!);
-            setAwards(curUser?.awards!);
-            setCertificates(curUser?.certificates!);
-            setProjects(curUser?.projects!);
-        } else {
-            setUser(user!);
-            setEducations(user?.educations!);
-            setAwards(user?.awards!);
-            setCertificates(user?.certificates!);
-            setProjects(user?.projects!);
-        }
-    }, [pathName]);
+    // useEffect(() => {
+    //     console.log("전", pathName);
+    //     if (inMyPage) {
+    //         console.log("마이페이지", curUser);
+    //         setUser(curUser!);
+    //         setEducations(curUser?.educations!);
+    //         setAwards(curUser?.awards!);
+    //         setCertificates(curUser?.certificates!);
+    //         setProjects(curUser?.projects!);
+    //     } else {
+    //         setUser(user!);
+    //         setEducations(user?.educations!);
+    //         setAwards(user?.awards!);
+    //         setCertificates(user?.certificates!);
+    //         setProjects(user?.projects!);
+    //     }
+    //     return console.log("후", pathName);
+    // }, [pathName]);
 
     useEffect(() => {}, [educations, projects, certificates, awards]);
     //드래그 시
