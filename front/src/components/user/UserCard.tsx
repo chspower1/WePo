@@ -218,13 +218,7 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({
-    user,
-    setUser,
-}: {
-    user: IUser;
-    setUser?: React.Dispatch<React.SetStateAction<IUser | null>>;
-}) {
+function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
     const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
@@ -260,7 +254,7 @@ function UserCard({
             }
             return updateCurUser as IUser;
         });
-
+        refetch();
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
@@ -268,6 +262,9 @@ function UserCard({
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
+    useEffect(()=>{
+        refetch()
+    },[curUser])
 
     const onClickLikesModal = () => {
         setOnLikeModalState((cur) => !cur);
@@ -302,6 +299,7 @@ function UserCard({
         setOnLikeModalState(false);
     }, [curUser]);
 
+    useEffect(() => {}, [onEdit]);
     if (!curUser)
         return (
             <LoadingBox>

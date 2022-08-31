@@ -42,9 +42,8 @@ function UserDetails() {
     const [awards, setAwards] = useState<IAward[]>([]);
     const [certificates, setCertificates] = useState<ICertificate[]>([]);
     const [projects, setProjects] = useState<IProject[]>([]);
-
     //API User정보 받아오기
-    const { isLoading } = useQuery(
+    const { isLoading, data: user,refetch } = useQuery(
         ["newCurUser", userSeq],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
@@ -56,7 +55,12 @@ function UserDetails() {
                 setProjects(sucessUser?.projects!);
             },
         }
+    
     );
+    useEffect(()=>{
+        refetch()
+    },[curUser])
+    console.log(educations, awards, certificates, certificates, certificates);
     const allSet = user && educations && awards && certificates && projects && !isLoading;
     //로그인상태 확인
     useEffect(() => {
@@ -114,6 +118,7 @@ function UserDetails() {
             });
         }
     };
+
     if (isLoading && !user)
         return (
             <LoadingBox>
@@ -125,9 +130,7 @@ function UserDetails() {
         <>
             <Mypage.Root>
                 <Mypage.MyPortWrap>
-                    <Mypage.UserCardBox>
-                        <UserCard user={user!} setUser={setUser} />
-                    </Mypage.UserCardBox>
+                    <Mypage.UserCardBox>{curUser && <UserCard user={user!} refetch={refetch}/>}</Mypage.UserCardBox>
                     <Mypage.Wrap>
                         <DragDropContext onDragEnd={onDragEnd}>
                             <CurrentBoard

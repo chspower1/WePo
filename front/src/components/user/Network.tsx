@@ -108,7 +108,7 @@ function Network() {
     const searchUsers = useRecoilValue(searchUsersState);
     const filterUsersState = useRecoilValue(hopeJob);
 
-    const { isLoading } = useQuery(["users"], getUsers, {
+    const { isLoading,refetch } = useQuery(["users"], getUsers, {
         onSuccess(data) {
             setUsers(data!);
             setNetUsers(data!);
@@ -129,7 +129,6 @@ function Network() {
     useEffect(() => {
         setNetUsers(searchUsers!);
     }, [searchUsers]);
-
     function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
             const currentChecked = [...current];
@@ -139,6 +138,9 @@ function Network() {
             return currentChecked;
         });
     }
+    useEffect(()=>{
+        refetch()
+    },[netUsers])
     if (!users)
         return (
             <LoadingBox>
@@ -218,7 +220,7 @@ function Network() {
                             ) : (
                                 <NetworkContainer>
                                     {netUsers?.map((user) => (
-                                        <UserCard key={user.userId} user={user} />
+                                        <UserCard key={user.userId} user={user} refetch={refetch}/>
                                     ))}
                                 </NetworkContainer>
                             )}
