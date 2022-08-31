@@ -1,7 +1,7 @@
 import React from "react";
 import * as CurBoard from "@styledComponents/CategoryStyled";
 import styled from "styled-components";
-import { IUser } from "@/atoms";
+import { IAward, ICertificate, IEducation, IProject, IUser } from "@/atoms";
 const Container = styled(CurBoard.Container)`
     display: flex;
     flex-direction: row;
@@ -26,7 +26,18 @@ const ContentAccent = styled(CurBoard.ContentAccent)`
     font-size: 20px;
 `;
 
-export default function CurrentBoard({ educations, certificates, awards, projects }: IUser) {
+interface ICurBoardProps {
+    educations: IEducation[];
+    certificates: ICertificate[];
+    awards: IAward[];
+    projects: IProject[];
+}
+export default function CurrentBoard({
+    educations,
+    certificates,
+    awards,
+    projects,
+}: ICurBoardProps) {
     return (
         <Container>
             <ContentBox>

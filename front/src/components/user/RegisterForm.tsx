@@ -51,9 +51,9 @@ export default function RegisterForm() {
     const onvalid = (data: IRegister) => {
         (async () => {
             const newUser = await createtUser(data);
-            if(newUser === undefined){
-                setSendEmail(false)
-            }else{
+            if (newUser === undefined) {
+                setSendEmail(false);
+            } else {
                 await setUsers((prev) => {
                     const newUsers = [...prev];
                     newUsers.push(newUser!);
@@ -159,7 +159,10 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>
+                                <RegisterStyled.ViewButton
+                                    tabIndex={-1}
+                                    onMouseDown={handleViewButton}
+                                >
                                     {viewPassword ? (
                                         <EyeOutline color="#3687FF" />
                                     ) : (
@@ -197,7 +200,10 @@ export default function RegisterForm() {
                                         },
                                     })}
                                 />
-                                <RegisterStyled.ViewButton tabIndex={-1} onMouseDown={handleViewCheckButton}>
+                                <RegisterStyled.ViewButton
+                                    tabIndex={-1}
+                                    onMouseDown={handleViewCheckButton}
+                                >
                                     {viewCheckPassword ? (
                                         <EyeOutline color="#3687FF" />
                                     ) : (
@@ -220,27 +226,53 @@ export default function RegisterForm() {
                             <RegisterStyled.FiledTit>선호분야</RegisterStyled.FiledTit>
                             <RegisterStyled.FiledSelectBox>
                                 <RegisterStyled.FiledInputBox>
-                                    <RegisterStyled.FiledInput type="checkbox" id="frontEnd" value="frontEnd"{...register("field")}/>
-                                    <RegisterStyled.FiledLabel  htmlFor="frontEnd">프론트엔드</RegisterStyled.FiledLabel>
+                                    <RegisterStyled.FiledInput
+                                        type="checkbox"
+                                        id="frontEnd"
+                                        value="프론트엔드"
+                                        {...register("field")}
+                                    />
+                                    <RegisterStyled.FiledLabel htmlFor="frontEnd">
+                                        프론트엔드
+                                    </RegisterStyled.FiledLabel>
                                 </RegisterStyled.FiledInputBox>
                                 <RegisterStyled.FiledInputBox>
-                                    <RegisterStyled.FiledInput type="checkbox" id="backEnd" value="backEnd"{...register("field")}/>
-                                    <RegisterStyled.FiledLabel  htmlFor="backEnd">백엔드</RegisterStyled.FiledLabel>
+                                    <RegisterStyled.FiledInput
+                                        type="checkbox"
+                                        id="backEnd"
+                                        value="백엔드"
+                                        {...register("field")}
+                                    />
+                                    <RegisterStyled.FiledLabel htmlFor="backEnd">
+                                        백엔드
+                                    </RegisterStyled.FiledLabel>
                                 </RegisterStyled.FiledInputBox>
                                 <RegisterStyled.FiledInputBox>
-                                    <RegisterStyled.FiledInput type="checkbox" id="dataAnalysis" value="dataAnalysis"{...register("field")}/>
-                                    <RegisterStyled.FiledLabel  htmlFor="dataAnalysis">데이터분석</RegisterStyled.FiledLabel>
+                                    <RegisterStyled.FiledInput
+                                        type="checkbox"
+                                        id="dataAnalysis"
+                                        value="데이터분석"
+                                        {...register("field")}
+                                    />
+                                    <RegisterStyled.FiledLabel htmlFor="dataAnalysis">
+                                        데이터분석
+                                    </RegisterStyled.FiledLabel>
                                 </RegisterStyled.FiledInputBox>
                                 <RegisterStyled.FiledInputBox>
-                                    <RegisterStyled.FiledInput type="checkbox" id="AI" value="AI"{...register("field")}/>
-                                    <RegisterStyled.FiledLabel  htmlFor="AI">AI</RegisterStyled.FiledLabel>
+                                    <RegisterStyled.FiledInput
+                                        type="checkbox"
+                                        id="AI"
+                                        value="인공지능"
+                                        {...register("field")}
+                                    />
+                                    <RegisterStyled.FiledLabel htmlFor="AI">
+                                        인공지능
+                                    </RegisterStyled.FiledLabel>
                                 </RegisterStyled.FiledInputBox>
                             </RegisterStyled.FiledSelectBox>
                         </RegisterStyled.FiledBox>
                         <RegisterStyled.SubmitButtonBox>
-                            <RegisterStyled.SubmitButton
-                                disabled={!valid}
-                            >
+                            <RegisterStyled.SubmitButton disabled={!valid}>
                                 작성완료
                             </RegisterStyled.SubmitButton>
                         </RegisterStyled.SubmitButtonBox>
