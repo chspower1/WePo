@@ -24,8 +24,8 @@ export async function UserLogin({ email, password }: ILogin) {
         });
         await sessionStorage.setItem("userToken", loginUser.token);
         return loginUser as IUser;
-    } catch (err) {
-        console.log(err); // 수정예정
+    } catch (err:any) {
+        alert(err.response.data); // 수정예정
     }
 }
 
@@ -85,8 +85,8 @@ export async function getUser(userId: number) {
 interface IUpdateUserProps {
     name?: string;
     description?: string;
-    field?: any;
-    picture?: File[];
+    field: string[];
+    picture: File[];
 }
 // 유저 정보 수정
 export async function updateUser(data: IUpdateUserProps, userId: number) {
