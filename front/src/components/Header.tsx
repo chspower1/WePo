@@ -121,10 +121,10 @@ const LoginOrRegiBtn = styled.button`
     }
 `;
 const MiniProfileBox = styled.div`
-    display: flex;
+    display:flex;
     align-items: center;
-    margin-left: 20px;
-`;
+    margin-left:20px;
+`
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -144,6 +144,7 @@ function Header() {
             setScrollActive(false);
         }
     };
+    
 
     useEffect(() => {
         const scrollListener = () => {
@@ -160,13 +161,14 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
-    console.log(curUser?.picture);
     // useEffect(() => {
     //     console.log(curUser);
     // }, [curUser]);
     return (
         <>
-            <HeaderWrap className={`${scrollActive ? "active" : ""}`}>
+            <HeaderWrap
+                className={`${scrollActive ? "active" : ""}`}
+            >
                 <HeaderContainer>
                     <Link to="/">
                         <LogoBox>
@@ -185,9 +187,7 @@ function Header() {
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
                                 <MiniProfileBox>
                                     <MiniProfileImg
-                                        src={`http://localhost:5001/uploads/${curUser?.userId!}_${
-                                            curUser?.picture
-                                        }`}
+                                        src={`http://localhost:5001/uploads/${curUser?.userId!}_${curUser?.picture}`}
                                     />
                                     <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 </MiniProfileBox>

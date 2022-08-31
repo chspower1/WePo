@@ -27,12 +27,18 @@ const ItemWrap = styled.div`
     box-sizing: border-box;
     border: 1px solid #fff;
     transform: translate(0, 0);
-    transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
+    transition: border .3s, box-shadow .3s, transform .4s;
     &:hover {
         border: 1px solid ${(props) => props.theme.filedBgColor};
         box-shadow: 12px 12px 18px #95a9e070;
         transform: translate(0, -10px);
     }
+    &.sticky{
+        position:sticky;
+        left:0;
+        top:100px;
+    }
+    
 `;
 const From = styled.form`
     height: 100%;
@@ -52,7 +58,7 @@ export const ProfileImageBox = styled.div`
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid ${(props) => props.theme.filedBgColor};
-    box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
+    box-shadow: 5px 5px 10px rgba(196,196,196, .4);
 `;
 
 export const UserInfoTxt = styled.div`
@@ -137,32 +143,8 @@ const ArrowIcon = styled(ArrowRightShort)`
 `;
 const DetailBtn = styled.button`
     text-align: center;
-    color: ${(props) => props.theme.btnColor};
-    background-color: ${(props) => props.theme.btnColor};
+    color: #5573df;
     margin: 0 auto;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 15px;
-    transition: all 0.4s ease;
-    color: white;
-    &:hover {
-        background-color: ${(props) => props.theme.accentColor};
-    }
-`;
-const LikeUserBtn = styled(DetailBtn)`
-    background-color: ${(props) => props.theme.LikeBtnColor};
-    color: ${(props) => props.theme.btnTextColor};
-    &:hover {
-        background-color: #d6a100;
-    }
-`;
-const EditBtn = styled(DetailBtn)`
-    background-color: ${(props) => props.theme.btnColor};
-    text-align: center;
-    color: ${(props) => props.theme.btnTextColor};
-    margin: 0 auto;
-    padding: 10px;
-    border-radius: 10px;
     font-size: 15px;
 `;
 const LikeBtnBox = styled.div`
@@ -221,15 +203,15 @@ const CheckMe = styled.div`
     z-index: 0;
     position: absolute;
     text-align: center;
-    width: 150px;
-    height: 60px;
     background-color: ${(props) => props.theme.btnColor};
     color: ${(props) => props.theme.btnTextColor};
     border-radius: 10px 10px 0px 0px;
     right: 10px;
-    top: -60px;
+    top: 0;
     padding-top: 15px;
-    font-size: 26px;
+    font-size: 16px;
+    padding:10px 30px;
+    transform: translateY(-100%);
 `;
 const InputBtn = styled.input`
     position: absolute;
@@ -253,17 +235,12 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
+function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
     const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm<IUserFormValue>();
+    const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
@@ -343,20 +320,22 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     return (
         <>
             {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
-            <ItemWrap>
-                {curUser?.userId === userId && pathName === "/network" && (
-                    <CheckMe>It's Me!</CheckMe>
-                )}
-                {onLikeModalState && (
+            {onLikeModalState && (
                     <>
                         <LikeModal
                             likeUsers={likes}
                             setOnLikeModalState={setOnLikeModalState}
                             onLikeModalState={onLikeModalState}
                         ></LikeModal>
-                        <ModalDelBtn>X</ModalDelBtn>
                     </>
+            )}
+            <ItemWrap
+                className={pathName==="/mypage" ? "sticky" : ""}
+                >
+                {curUser?.userId === userId && pathName === "/network" && (
+                    <CheckMe>It's Me!</CheckMe>
                 )}
+                
                 <From
                     onSubmit={handleSubmit(onvalid)}
                     encType="multipart/form-data"
@@ -420,9 +399,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                             type="checkbox"
                                             value={elem}
                                             defaultChecked={field.includes(elem) ? true : false}
-                                            {...register("reField", {
-                                                required: "하나를 선택해주세요!",
-                                            })}
+                                            {...register("reField")}
                                         />
                                         <FiledStyle
                                             htmlFor={elem}
@@ -433,7 +410,6 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                     </div>
                                 </>
                             ))}
-                        {errors.reField?.message}
                     </FieldBox>
                     <DescBox>
                         <DescTxt>
@@ -474,14 +450,14 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                         )}
                         {onEdit ||
                             (admin && (
-                                <EditBtn title="편집" onClick={onClickEdit}>
+                                <DetailBtn title="편집" onClick={onClickEdit}>
                                     편집
-                                </EditBtn>
+                                </DetailBtn>
                             ))}
                         {pathName !== "/network" && !onEdit && (
-                            <LikeUserBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
+                            <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
                                 즐겨찾기목록
-                            </LikeUserBtn>
+                            </DetailBtn>
                         )}
                         {onEdit && (
                             <>

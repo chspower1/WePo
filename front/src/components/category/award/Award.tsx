@@ -175,7 +175,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
 
                         {curUser && admin && !isAddFormActive && (
                             <AwardStyled.AddButton onClick={handleIsAddFormActive}>
-                                <AwardStyled.AddButton color="#3687FF" />
+                                <PlusSquareFill color="#3687FF" />
                             </AwardStyled.AddButton>
                         )}
                     </AwardStyled.Container>

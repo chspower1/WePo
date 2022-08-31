@@ -117,7 +117,7 @@ function Network() {
     const searchUsers = useRecoilValue(searchUsersState);
     const filterUsersState = useRecoilValue(hopeJob);
 
-    const { isLoading, refetch } = useQuery(["users"], getUsers, {
+    const { isLoading,refetch } = useQuery(["users"], getUsers, {
         onSuccess(data) {
             setUsers(data!);
             setNetUsers(data!);
@@ -143,13 +143,19 @@ function Network() {
             const currentChecked = [...current];
             const overlap = currentChecked.findIndex((el) => el === name);
             overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
-            console.log("필터", currentChecked);
+            console.log("필터",currentChecked)
             return currentChecked;
         });
     }
-    console.log("필터", filterUsersState);
-
-    if (isLoading && !users)
+    console.log("필터",filterUsersState)
+    if (!users)
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        ); // undefined 방지
+    if (isLoading)
         return (
             <LoadingBox>
                 <LoadingIcon />
@@ -208,7 +214,7 @@ function Network() {
                                             value="인공지능"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
-                                        <Label htmlFor="AI">인공지능</Label>
+                                        <Label htmlFor="AI">AI</Label>
                                     </CheckBoxWrap>
                                 </SelectBox>
                                 <SearchBar />
@@ -221,7 +227,7 @@ function Network() {
                             ) : (
                                 <NetworkContainer>
                                     {netUsers?.map((user) => (
-                                        <UserCard key={user.userId} user={user} refetch={refetch} />
+                                        <UserCard key={user.userId} user={user} refetch={refetch}/>
                                     ))}
                                 </NetworkContainer>
                             )}
