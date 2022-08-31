@@ -272,7 +272,7 @@ export default function RegisterForm() {
                             </RegisterStyled.FiledSelectBox>
                         </RegisterStyled.FiledBox>
                         <RegisterStyled.SubmitButtonBox>
-                            <RegisterStyled.SubmitButton disabled={!valid}>
+                            <RegisterStyled.SubmitButton disabled={!valid} onClick={()=>setSendEmail(true)}>
                                 작성완료
                             </RegisterStyled.SubmitButton>
                         </RegisterStyled.SubmitButtonBox>
