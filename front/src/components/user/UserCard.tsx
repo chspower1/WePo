@@ -236,16 +236,21 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
+        console.log(picture);
+        console.log(picture.length);
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            updateCurUser.picture = picture[0].name;
+            if (picture.length !== 0) {
+                updateCurUser.picture = picture[0]?.name;
+                setPictureState(picture[0].name);
+            }
+
             return updateCurUser as IUser;
         });
-        setPictureState(picture[0].name);
-        console.log(picture[0]);
+
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
@@ -254,11 +259,6 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         setOnEdit((cur) => !cur);
     };
 
-    const encodeFileToBase64 = (fileBlob: any) => {
-        const reader = new FileReader();
-
-        reader.readAsDataURL(fileBlob);
-    };
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         curUserToggleLike(userId);
@@ -274,12 +274,12 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         });
     };
     // 이미지 미리보기
-    const [avatarPreview, setAvatarPreview] = useState('');
-    const avatar = watch('rePicture');
+    const [avatarPreview, setAvatarPreview] = useState("");
+    const avatar = watch("rePicture");
     useEffect(() => {
         if (avatar && avatar.length > 0) {
-        const file = avatar[0];
-        setAvatarPreview(URL.createObjectURL(file));
+            const file = avatar[0];
+            setAvatarPreview(URL.createObjectURL(file));
         }
     }, [avatar]);
     useEffect(() => {}, [curUser]);
@@ -301,7 +301,11 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
-                                src={avatarPreview ? avatarPreview :`http://localhost:5001/uploads/${picture}`}
+                                src={
+                                    avatarPreview
+                                        ? avatarPreview
+                                        : `http://localhost:5001/uploads/${picture}`
+                                }
                                 alt="profileImage"
                             />
                             {onEdit && (
@@ -406,7 +410,15 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         {onEdit && (
                             <>
                                 <DetailBtn title="수정완료">수정완료</DetailBtn>
-                                <DetailBtn title="취소" onClick={(e)=>{onClickEdit(e); setAvatarPreview(`http://localhost:5001/uploads/${picture}`)}}>
+                                <DetailBtn
+                                    title="취소"
+                                    onClick={(e) => {
+                                        onClickEdit(e);
+                                        setAvatarPreview(
+                                            `http://localhost:5001/uploads/${picture}`
+                                        );
+                                    }}
+                                >
                                     취소
                                 </DetailBtn>
                             </>
