@@ -31,7 +31,7 @@ userAuthRouter.post("/register", async function (req, res, next) {
         if (newUser.errorMessage) {
             throw new Error(newUser.errorMessage);
         }
-        
+
         // 인증코드 생성
         const codeAdded = await emailService.createAuthCode(newUser.userId);
         const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${newUser.userId}/${codeAdded.authCode}`;
@@ -45,9 +45,9 @@ userAuthRouter.post("/register", async function (req, res, next) {
             html: `<br>${name}<b/>님,<br/>
             아래 버튼을 눌러 이메일 인증 부탁드립니다:</br>
             <a href="${authURL}">이메일 인증하기</a>`, // html body
-          }
-        
-        const emailSent = await emailService.sendEmail(mailContent)
+        };
+
+        const emailSent = await emailService.sendEmail(mailContent);
 
         res.status(201).json(newUser);
     } catch (error) {
@@ -85,16 +85,16 @@ userAuthRouter.post("/login", async function (req, res, next) {
         // 위 데이터를 이용하여 유저 db에서 유저 찾기
         const user = await userAuthService.getUser({ email, password });
 
-        if(user.errorMessage) {
-            throw new Error(user.errorMessage)
+        if (user.errorMessage) {
+            throw new Error(user.errorMessage);
         }
 
         // 로그인 시도 횟수 4회 초과 시 비밀번호 리셋 후 이메일 전송
-        if(user.mailContent) {
-            await emailService.sendEmail(user.mailContent)
-            const errorMessage = 
-                "로그인 시도 가능 횟수를 초과하여 이메일로 새 비밀번호를 보내드렸습니다."
-            throw new Error(errorMessage)
+        if (user.mailContent) {
+            await emailService.sendEmail(user.mailContent);
+            const errorMessage =
+                "로그인 시도 가능 횟수를 초과하여 이메일로 새 비밀번호를 보내드렸습니다.";
+            throw new Error(errorMessage);
         }
 
         // user의 이메일 인증여부 확인
@@ -159,12 +159,16 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 });
 
 // id의 사용자 정보 update
-userAuthRouter.post("/:id", login_required, upload.single('image'), async function (req, res, next) {
-    try {
-        // User authentication
-        const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
-        // URI로부터 사용자 id를 추출함.
-        const userId = parseInt(req.params.id);
+userAuthRouter.post(
+    "/:id",
+    login_required,
+    upload.single("image"),
+    async function (req, res, next) {
+        try {
+            // User authentication
+            const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
+            // URI로부터 사용자 id를 추출함.
+            const userId = parseInt(req.params.id);
 
             if (userId !== currentUserId) {
                 console.log(userId, currentUserId);
@@ -180,11 +184,10 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
 
             if (imageFile) {
                 // 한글 파일 이름 깨짐 방지
-            const fn = new String(imageFile.filename)
-            const imgFn = new String(fn.getBytes("UTF-8"), "8859-1")
-            picture = imgFn
+                const fn = new String(imageFile.filename);
+                const imgFn = new String(fn.getBytes("UTF-8"), "8859-1");
+                picture = imgFn;
             }
-        
 
             const toUpdate = { name, description, field, picture };
 
@@ -198,20 +201,10 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
                 throw new Error(updatedUser.errorMessage);
             }
 
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        next(error);
-    }
-});
-
-        if (updatedUser.errorMessage) {
-            throw new Error(updatedUser.errorMessage);
+            res.status(200).json(updatedUser);
+        } catch (error) {
+            next(error);
         }
-
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        next(error);
->>>>>>> origin/devBack
     }
 );
 
@@ -244,11 +237,10 @@ userAuthRouter.put("/changePassword", login_required, async function (req, res, 
         if (updatedUser.errorMessage) {
             throw new Error(updatedUser.errorMessage);
         }
-        res.status(200).send("비밀번호 변경 성공")
-    } catch(error){
-        next(error)
-    } 
-})
-
+        res.status(200).send("비밀번호 변경 성공");
+    } catch (error) {
+        next(error);
+    }
+});
 
 export { userAuthRouter };
