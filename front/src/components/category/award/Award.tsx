@@ -57,6 +57,10 @@ export default function Award({ awards, setAwards }: IAwardProps) {
     function handleIsAddFormActive() {
         setIsAddFormActive((current) => !current);
     }
+    // console.log("유저시퀀스", userSeq);
+    // console.log("compareUser", compareUser);
+    // console.log("inMyPage", inMyPage);
+    // console.log("admin", admin);
 
     return (
         <Droppable droppableId="awards" isDropDisabled={admin ? false : true}>

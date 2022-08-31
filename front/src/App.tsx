@@ -5,6 +5,7 @@ import Router from "./Router";
 import "./font/font.css";
 import { useRecoilState } from "recoil";
 import { isDarkState, isLoginState } from "./atoms";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -38,6 +39,7 @@ function App() {
             <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
                 <GlobalStyle />
                 <Router />
+                <ReactQueryDevtools />
             </ThemeProvider>
         </>
     );
