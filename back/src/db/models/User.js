@@ -90,7 +90,7 @@ class User {
 
   // 모든 유저 조회
   static async findAll() {
-    const users = await UserModel.find({});
+    const users = await UserModel.find({}).sort({createdAt: -1});
     return users;
   }
 
