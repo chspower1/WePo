@@ -76,26 +76,21 @@ const LikeCard = ({ name, email, picture, userId }: ILikeCardProps) => {
             <InfoBox style={{ alignItems: "center" }}>
                 <ProfileImageBox style={{ width: "60px", height: "60px" }}>
                     <ProfileImg
-                        // src={`http://localhost:5001/uploads/${picture}`}
-                        src="#"
+                        src={`http://localhost:5001/uploads/${picture}`}
                         alt="profileImage"
                     />
                 </ProfileImageBox>
                 <UserInfoTxt style={{ alignItems: "center" }}>
-                    <NameTxt>
-                        {/* {name} */}
-                        이름
-                    </NameTxt>
+                    <NameTxt>{name}</NameTxt>
 
                     <EmailTxt>
-                        {/* <a href={`mailto:${email}`} title={`${email}에 메일 보내기`}> */}
-                        {/* {email} */}
-                        이메일
-                        {/* </a> */}
+                        <a href={`mailto:${email}`} title={`${email}에 메일 보내기`}>
+                            {email}
+                        </a>
                     </EmailTxt>
                 </UserInfoTxt>
             </InfoBox>
-            <Link to="/">
+            <Link to={`/network/${userId}`}>
                 <button>보러가기</button>
             </Link>
         </LikeBox>
