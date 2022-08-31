@@ -4,7 +4,6 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { emailService } from "../services/emailService";
-import utf8 from 'utf8';
 
 import imageUpload from "../utils/imageUpload";
 const upload = imageUpload("uploads", 5);
@@ -182,7 +181,9 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
 
         if(imageFile) {
             // 한글 파일 이름 깨짐 방지
-            picture = utf8.encode(imageFile.filename);
+            const fn = new String(imageFile.filename)
+            const imgFn = new String(fn.getBytes("UTF-8"), "8859-1")
+            picture = imgFn
         }
         
 

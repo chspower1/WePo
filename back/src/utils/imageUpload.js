@@ -16,7 +16,10 @@ function imageUpload(upload_path, file_size) {
     },
     filename: function (req, file, done) {   // 파일명을 어떤 이름으로 올릴지
       const ext = path.extname(file.originalname); // 파일의 확장자
-      done(null, path.basename(file.originalname, ext) + "_" + Date.now() + ext); // 파일이름 + 날짜 + 확장자 이름으로 저장
+      const fn = new String(file.originalname)
+      const imgFn = new String(fn.getBytes("UTF-8"), "8859-1")
+      done(null, path.basename(imgFn, ext) 
+        + "_" + Date.now() + ext); // 파일이름 + 날짜 + 확장자 이름으로 저장
     }
   });
 
