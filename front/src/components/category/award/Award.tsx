@@ -121,11 +121,11 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                                         <AwardStyled.ContentDate>
                                                             {String(award.date).slice(0, 10)}
                                                         </AwardStyled.ContentDate>
-                                                        <AwardStyled.ContentDetail
+                                                        <AwardStyled.ContentDesc
                                                             title={award.description}
                                                         >
                                                             {award.description}
-                                                        </AwardStyled.ContentDetail>
+                                                        </AwardStyled.ContentDesc>
                                                         {curUser && admin && targetIndex !== index && (
                                                             <>
                                                                 <AwardStyled.EditButton

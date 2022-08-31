@@ -221,7 +221,6 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user === userId);
     const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
-
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
@@ -240,7 +239,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            updateCurUser.picture = picture[0];
+            updateCurUser.picture = picture[0].name;
             return updateCurUser as IUser;
         });
         updateUser({ name, description, field, picture }, curUser?.userId!);
@@ -265,8 +264,15 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             return addLikeUser;
         });
     };
-
-
+    // 이미지 미리보기
+    const [avatarPreview, setAvatarPreview] = useState('');
+    const avatar = watch('rePicture');
+    useEffect(() => {
+        if (avatar && avatar.length > 0) {
+        const file = avatar[0];
+        setAvatarPreview(URL.createObjectURL(file));
+        }
+    }, [avatar]);
     useEffect(() => {}, [curUser]);
     return (
         <>
@@ -279,7 +285,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
-                                src={`http://localhost:5001/uploads/${picture}`}
+                                src={avatarPreview ? avatarPreview :`http://localhost:5001/uploads/${picture}`}
                                 alt="profileImage"
                             />
                             {onEdit && (
@@ -384,7 +390,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         {onEdit && (
                             <>
                                 <DetailBtn title="수정완료">수정완료</DetailBtn>
-                                <DetailBtn title="취소" onClick={onClickEdit}>
+                                <DetailBtn title="취소" onClick={(e)=>{onClickEdit(e); setAvatarPreview(`http://localhost:5001/uploads/${picture}`)}}>
                                     취소
                                 </DetailBtn>
                             </>
