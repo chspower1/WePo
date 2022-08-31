@@ -64,6 +64,15 @@ export const ContentDetail = styled.p`
     white-space: nowrap;
     color: ${(props) => props.theme.textColor};
 `;
+export const ContentDesc = styled.p`
+    font-size: 15px;
+    margin-bottom: 10px;
+    width: 90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: ${(props) => props.theme.textColor};
+`;
 export const ContentDate = styled.p`
     font-size: 15px;
     color: ${(props) => props.theme.contentColor};
