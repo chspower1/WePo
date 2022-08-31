@@ -5,7 +5,6 @@ import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { emailService } from "../services/emailService";
 import { User } from "../db/models/User"
-import { Trial } from "../db/models/Trial"
 
 import imageUpload from "../utils/imageUpload";
 const upload = imageUpload("uploads", 5);
@@ -34,9 +33,6 @@ userAuthRouter.post("/register", async function (req, res, next) {
         if (newUser.errorMessage) {
             throw new Error(newUser.errorMessage);
         }
-
-        // 로그인 시도 횟수 초기화
-        await Trial.setTrials(email)
         
         // 인증코드 생성
         const codeAdded = await emailService.createAuthCode(newUser.userId)
@@ -54,9 +50,6 @@ userAuthRouter.post("/register", async function (req, res, next) {
           }
         
         const emailSent = await emailService.sendEmail(mailContent)
-        if(!emailSent.accepted){
-            throw new Error("이메일 전송을 실패했습니다.")
-        }
 
         res.status(201).json(newUser);
     } catch (error) {
@@ -94,31 +87,16 @@ userAuthRouter.post("/login", async function (req, res, next) {
         // 위 데이터를 이용하여 유저 db에서 유저 찾기
         const user = await userAuthService.getUser({ email, password });
 
-        if (user.errorMessage) {
-            if (user.errorMessage==="비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.") {
-                const loginTrial = await Trial.increaseTrials(email)
-                // 로그인 시도 횟수가 5번 이상이면 비밀번호 초기화 이메일 전송
-                if (loginTrial.trials>=5){
-                    const newPassword = await userAuthService.resetPassword(email)
-                    // 이메일 전송
-                    const mailContent = {
-                        from: '"Limit" <wnsdml0120@gmail.com>', // sender address
-                        to: email, // list of receivers: "*@*.*, *@*.*"
-                        subject: "[WePo] 비밀번호 초기화", // Subject line
-                        text: `다음 비밀번호를 사용하여 로그인 부탁드립니다: ${newPassword}`, // plain text body
-                        html: `다음 비밀번호를 사용하여 로그인 부탁드립니다:<br/>
-                        <b>${newPassword}<b/>`, // html body
-                    }
-                    const emailSent = await emailService.sendEmail(mailContent)
-                    if(!emailSent.accepted){
-                        throw new Error("이메일 전송을 실패했습니다.")
-                    }
-                    await Trial.resetTrials(email)
-                    
-                    throw new Error("로그인 시도 가능 횟수를 초과하여, 새 비밀번호를 이메일로 보내드렸습니다.")
-                }
-            }
-            throw new Error(user.errorMessage);
+        if(user.errorMessage) {
+            throw new Error(user.errorMessage)
+        }
+
+        // 로그인 시도 횟수 4회 초과 시 비밀번호 리셋 후 이메일 전송
+        if(user.mailContent) {
+            await emailService.sendEmail(user.mailContent)
+            const errorMessage = 
+                "로그인 시도 가능 횟수를 초과하여 이메일로 새 비밀번호를 보내드렸습니다."
+            throw new Error(errorMessage)
         }
 
         // user의 이메일 인증여부 확인
@@ -126,10 +104,6 @@ userAuthRouter.post("/login", async function (req, res, next) {
         if(gotAuthCode) {
             throw new Error("이메일 인증 완료 부탁드립니다.")
         }
-
-        // 로그인 시도 횟수 초기화
-        await Trial.resetTrials(email)
-
 
         res.status(200).send(user);
     } catch (error) {

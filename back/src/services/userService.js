@@ -1,4 +1,4 @@
-import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, Trial } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 // import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -31,6 +31,9 @@ class userAuthService {
       field
     });
 
+    // 로그인 시도 횟수 초기화
+    await Trial.setTrials(email)
+
     createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
     return createdNewUser;
@@ -53,10 +56,27 @@ class userAuthService {
       correctPasswordHash
     );
     if (!isPasswordCorrect) {
+      const loginTrial = await Trial.increaseTrials(email)
+      // 로그인 시도 횟수가 5번 이상이면 비밀번호 초기화 이메일 전송
+      if (loginTrial.trials>=5){
+        const newPassword = await userAuthService.resetPassword(email)
+        // 
+        const mailContent = {
+          from: '"Limit" <wnsdml0120@gmail.com>', // sender address
+          to: email, // list of receivers: "*@*.*, *@*.*"
+          subject: "[WePo] 비밀번호 초기화", // Subject line
+          text: `다음 비밀번호를 사용하여 로그인 부탁드립니다: ${newPassword}`, // plain text body
+          html: `<p>다음 비밀번호를 사용하여 로그인 부탁드립니다:<br/>
+          <b>${newPassword}<b/><p>`, // html body
+        }
+        return { mailContent };
+      }
       const errorMessage =
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      `비밀번호가 틀렸습니다(${loginTrial.trials}회).`;
+      return { errorMessage }
     }
+    // 로그인 성공 -> 로그인 시도 횟수 초기화
+    await Trial.resetTrials(email)
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
