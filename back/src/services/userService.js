@@ -183,11 +183,10 @@ class userAuthService {
     }
 
     // 비밀번호 일치 여부 확인
-    const hashedOldPassword = await bcrypt.hash(oldPassword, 10);
     const correctPasswordHash = user.password;
     const isPasswordCorrect = await bcrypt.compare(
-      correctPasswordHash,
-      hashedOldPassword
+      oldPassword,
+      correctPasswordHash
     );
     if (!isPasswordCorrect) {
       const errorMessage =

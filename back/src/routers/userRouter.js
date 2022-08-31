@@ -260,7 +260,7 @@ userAuthRouter.get("/search/:toSearch", login_required, async function (req, res
 });
 
 // 비밀번호 변경
-userAuthRouter.post("/changePassword", login_required, async function (req, res, next) {
+userAuthRouter.put("/changePassword", login_required, async function (req, res, next) {
     try {
         const userId = req["currentUserId"];
         const { oldPassword, newPassword } = req.body;
