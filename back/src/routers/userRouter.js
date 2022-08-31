@@ -163,10 +163,6 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 // id의 사용자 정보 update
 userAuthRouter.post("/:id", login_required, upload.single('image'), async function (req, res, next) {
     try {
-        // if (is.emptyObject(req.body)) {
-        //     throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-        // }
-
         // User authentication
         const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
         // URI로부터 사용자 id를 추출함.
@@ -248,11 +244,5 @@ userAuthRouter.put("/changePassword", login_required, async function (req, res, 
     } 
 })
 
-// jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
-    res.status(200).send(
-        `안녕하세요 ${req["currentUserId"]}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
-    );
-});
 
 export { userAuthRouter };
