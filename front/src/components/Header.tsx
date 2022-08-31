@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { curUserState, isLoginState } from "@/atoms";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import SearchBar from "./SearchBar";
 
@@ -23,11 +23,8 @@ const HeaderWrap = styled.header`
     top: 0;
     left: 0;
     width: 100%;
-    background: ${(props) => props.theme.bgColor};
-    transition: box-shadow 0.5s ease, background 0.5s ease; // 조건문 걸어서 처리
-    &.home {
-        background: transparent;
-    }
+    background: transparent;
+    transition: box-shadow 0.3s ease, background 0.3s ease; // 조건문 걸어서 처리
     &.active {
         border-bottom: 1px solid ${(props) => props.theme.headerBorderColor};
         background: ${(props) => props.theme.headerActiveColor};
@@ -124,6 +121,11 @@ const LoginOrRegiBtn = styled.button`
         color: ${(props) => props.theme.textColor};
     }
 `;
+const MiniProfileBox = styled.div`
+    display:flex;
+    align-items: center;
+    margin-left:20px;
+`
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -133,9 +135,12 @@ function Header() {
     const curUser = useRecoilValue(curUserState);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
+    const [lastPath, setLastPath] = useState("");
     
+    const pathMamo = useMemo<any>(() => setLastPath(pathName), [pathName]);
+
     const scrollFixed = () => {
-        if (scrollY > 100) {
+        if (scrollY > 10) {
             setScrollY(window.pageYOffset);
             setScrollActive(true);
         } else {
@@ -143,6 +148,7 @@ function Header() {
             setScrollActive(false);
         }
     };
+    
 
     useEffect(() => {
         const scrollListener = () => {
@@ -159,10 +165,16 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
+    useEffect(()=>{
+        if(pathName !== pathMamo){
+            setScrollY(0);
+            setScrollActive(false);
+        }
+    })
     return (
         <>
             <HeaderWrap
-                className={`${pathName === "/" ? "home" : ""} ${scrollActive ? "active" : ""}`}
+                className={`${scrollActive ? "active" : ""}`}
             >
                 <HeaderContainer>
                     <Link to="/">
@@ -180,10 +192,12 @@ function Header() {
                                     네트워크
                                 </LinkButton>
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
-                                <MiniProfileImg
-                                    src={`http://localhost:5001/uploads/${curUser?.userId!}_${curUser?.picture}`}
-                                />
-                                <MiniProfileName>{curUser?.name} 님</MiniProfileName>
+                                <MiniProfileBox>
+                                    <MiniProfileImg
+                                        src={`http://localhost:5001/uploads/${curUser?.userId!}_${curUser?.picture}`}
+                                    />
+                                    <MiniProfileName>{curUser?.name} 님</MiniProfileName>
+                                </MiniProfileBox>
                                 <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (
