@@ -198,6 +198,7 @@ interface IUserFormValue {
     reName: string;
     reDescription: string;
     reField: string[];
+    rePicture: any;
 }
 
 function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
@@ -215,22 +216,25 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const inMyPage = pathName === "/mypage";
     const admin = inMyPage || compareUser;
 
+
     //수정완료 후 실행함수
     const onvalid = ({
         reName: name,
         reDescription: description,
         reField: field,
-    }: // changedImg: picture,
+        rePicture: picture,
+    }:
     IUserFormValue) => {
         setCurUser((prev) => {
-            console.log(name, description, field);
+            console.log(name, description, field, picture);
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
+            updateCurUser.picture = picture[0];
             return updateCurUser as IUser;
         });
-        updateUser({ name, description, field }, curUser?.userId!);
+        updateUser({name, description, field, picture} , curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -287,6 +291,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         }
     `;
 
+
     useEffect(() => {}, [curUser]);
     console.log(field);
     return (
@@ -299,7 +304,14 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                 <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <ProfileImg src={picture} alt="profileImage" />
+                            <ProfileImg src={`http://localhost:5001/uploads/${picture}`} alt="profileImage" />
+                            {onEdit && 
+                                <ImageChangeInput
+                                    type="file"
+                                    accept='image/*'
+                                    {...register("rePicture")}
+                                />
+                            }
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>
