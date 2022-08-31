@@ -7,7 +7,8 @@ import { useSetRecoilState } from "recoil";
 import { searchWordState } from "@/atoms";
 const SearchBox = styled.form`
     position: relative;
-    width: 400px;
+    width: 100%;
+    max-width: 560px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,7 +16,8 @@ const SearchBox = styled.form`
 `;
 const Input = styled.input`
     width: 100%;
-    height: 40px;
+    padding: 10px;
+    font-size: 15px;
     border-radius: 25px;
     text-align: center;
     border: none;
@@ -30,7 +32,7 @@ const Input = styled.input`
 `;
 const Button = styled.button`
     position: absolute;
-    right: 5px;
+    right: 10px;
     color: ${(props) => props.theme.btnColor};
     transition: color 0.4s ease;
     transform: scaleX(-1);

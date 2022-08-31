@@ -5,7 +5,7 @@ const FieldTest = styled.label`
     padding: 6px 8px;
     background: gray;
     color: black;
-    font-size: 13px;
+    font-size: 14px;
     border-radius: 5px;
     margin: 0 4px 10px;
     cursor: pointer;
@@ -13,7 +13,7 @@ const FieldTest = styled.label`
     ${(props: any) =>
         props.chose &&
         css`
-            background-color: #3867ff;
+            background-color: ${(props) => props.theme.filedBgColor};
             color: white;
         `}
 `;
