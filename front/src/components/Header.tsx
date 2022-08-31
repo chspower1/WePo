@@ -133,7 +133,7 @@ function Header() {
     const [navActive, setNavActive] = useState(false);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-
+    
     const scrollFixed = () => {
         if (scrollY > 100) {
             setScrollY(window.pageYOffset);
