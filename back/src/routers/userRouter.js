@@ -4,7 +4,6 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { emailService } from "../services/emailService";
-import { User } from "../db/models/User"
 
 import imageUpload from "../utils/imageUpload";
 const upload = imageUpload("uploads", 5);
@@ -213,17 +212,6 @@ userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, 
         const toggleDone = await userAuthService.toggleLike({userId, otherId})
 
         res.status(200).json(toggleDone);
-    } catch (error) {
-        next(error);
-    }
-});
-
-// 검색하기
-userAuthRouter.get("/search/:toSearch", login_required, async function (req, res, next) {
-    try {
-        const toSearch = req.params.toSearch
-        const results = await User.search(toSearch)
-        res.status(200).send(results);
     } catch (error) {
         next(error);
     }
