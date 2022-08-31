@@ -241,14 +241,12 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
-        console.log(picture);
-        console.log(picture.length);
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            if (picture.length !== 0) {
+            if (picture?.length !== 0) {
                 updateCurUser.picture = picture[0]?.name;
                 setPictureState(picture[0].name);
             }
@@ -291,7 +289,10 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
             setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
-    useEffect(() => {}, [curUser]);
+    useEffect(() => {
+        setOnLikeModalState(false);
+    }, [curUser]);
+
     if (!curUser)
         return (
             <LoadingBox>
@@ -310,6 +311,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                         <LikeModal
                             likeUsers={likes}
                             setOnLikeModalState={setOnLikeModalState}
+                            onLikeModalState={onLikeModalState}
                         ></LikeModal>
                         <ModalDelBtn>X</ModalDelBtn>
                     </>

@@ -32,7 +32,11 @@ function UserDetails() {
     const pathName = location.pathname;
     console.log(pathName);
 
+    //권한관리
     const { userSeq } = useParams();
+    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
+    const inMyPage = pathName === "/mypage";
+    const admin = inMyPage || compareUser;
 
     //User관련 State
     const [user, setUser] = useState<IUser>();
@@ -66,13 +70,19 @@ function UserDetails() {
     //오류수정
     //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
     useEffect(() => {
-        return () => {
+        if (compareUser) {
             setUser(curUser!);
             setEducations(curUser?.educations!);
             setAwards(curUser?.awards!);
             setCertificates(curUser?.certificates!);
             setProjects(curUser?.projects!);
-        };
+        } else {
+            setUser(user!);
+            setEducations(user?.educations!);
+            setAwards(user?.awards!);
+            setCertificates(user?.certificates!);
+            setProjects(user?.projects!);
+        }
     }, [pathName]);
 
     useEffect(() => {}, [educations, projects, certificates, awards]);
