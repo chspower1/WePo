@@ -194,11 +194,23 @@ const CheckMe = styled.div`
     padding-top: 15px;
     font-size: 26px;
 `;
+const InputBtn = styled.input`
+position: absolute;
+left: -99999px;
+& + label {
+    background-color: gray;
+    color: white;
+}
+&:checked + label {
+    background-color: #3867ff;
+    color: white;
+}
+`;
 interface IUserFormValue {
     reName: string;
     reDescription: string;
     reField: string[];
-    rePicture: any;
+    rePicture: File[];
 }
 
 function UserCard({ _id, name, email, description, field, userId, picture }: IUser) {
@@ -209,13 +221,13 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const [onEdit, setOnEdit] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user == userId);
     const fieldList = ["frontEnd", "backEnd", "dataAnalysis", "AI"];
-
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
     const inMyPage = pathName === "/mypage";
     const admin = inMyPage || compareUser;
 
+    console.log("1",name, description, field, picture);
 
     //수정완료 후 실행함수
     const onvalid = ({
@@ -225,8 +237,8 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         rePicture: picture,
     }:
     IUserFormValue) => {
+        console.log("2",name, description, field, picture);
         setCurUser((prev) => {
-            console.log(name, description, field, picture);
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
@@ -256,44 +268,10 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             return addLikeUser;
         });
     };
-    const EditFieldButton = styled.input.attrs({
-        type: "checkbox",
-    })`
-        position: absolute;
-        opacity: 0;
-        &:checked ~ .qwe {
-            background-color: ${(props) => props.theme.filedBgColor};
-            color: white;
-        }
-    `;
-    const labeling = styled.label`
-        cursor: pointer;
-    `;
-    const FieldSty = styled.div`
-        display: inline-block;
-        padding: 6px 8px;
-        background: gray;
-        color: black;
-        font-size: 13px;
-        border-radius: 5px;
-        margin: 0 4px 10px;
-    `;
-    const InputBtn = styled.input`
-        position: absolute;
-        left: -99999px;
-        & + label {
-            background-color: gray;
-            color: white;
-        }
-        &:checked + label {
-            background-color: #3867ff;
-            color: white;
-        }
-    `;
+
 
 
     useEffect(() => {}, [curUser]);
-    console.log(field);
     return (
         <>
             <ItemWrap>
