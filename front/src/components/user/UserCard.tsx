@@ -267,18 +267,19 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         setOnLikeModalState((cur) => !cur);
     };
 
+    //즐겨찾기 추가/삭제
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         curUserToggleLike(userId);
-        setCurUser((prev: any) => {
-            let filterLike = [...prev.likes];
-            if (filterLike.includes(userId)) {
-                filterLike = filterLike.filter((elem) => elem !== userId);
+        setCurUser((prev) => {
+            let filterLike = [...prev?.likes!];
+            if (foundLikeUser) {
+                filterLike = filterLike.filter((elem) => elem.userId !== userId);
             } else {
-                filterLike.push(userId);
+                filterLike.push({ userId, name, email, picture });
             }
-            const addLikeUser: IUser = { ...prev, likes: filterLike };
-            return addLikeUser;
+            const addLikeUser = { ...prev, likes: filterLike };
+            return addLikeUser as IUser;
         });
     };
     // 이미지 미리보기
