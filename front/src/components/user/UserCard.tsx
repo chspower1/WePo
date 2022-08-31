@@ -27,7 +27,7 @@ const ItemWrap = styled.div`
     box-sizing: border-box;
     border: 1px solid #fff;
     transform: translate(0, 0);
-    transition: border .3s, box-shadow .3s, transform .4s;
+    transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
     &:hover {
         border: 1px solid ${(props) => props.theme.filedBgColor};
         box-shadow: 12px 12px 18px #95a9e070;
@@ -52,7 +52,7 @@ export const ProfileImageBox = styled.div`
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid ${(props) => props.theme.filedBgColor};
-    box-shadow: 5px 5px 10px rgba(196,196,196, .4);
+    box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
 `;
 
 export const UserInfoTxt = styled.div`
@@ -137,8 +137,32 @@ const ArrowIcon = styled(ArrowRightShort)`
 `;
 const DetailBtn = styled.button`
     text-align: center;
-    color: #5573df;
+    color: ${(props) => props.theme.btnColor};
+    background-color: ${(props) => props.theme.btnColor};
     margin: 0 auto;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.4s ease;
+    color: white;
+    &:hover {
+        background-color: ${(props) => props.theme.accentColor};
+    }
+`;
+const LikeUserBtn = styled(DetailBtn)`
+    background-color: ${(props) => props.theme.LikeBtnColor};
+    color: ${(props) => props.theme.btnTextColor};
+    &:hover {
+        background-color: #d6a100;
+    }
+`;
+const EditBtn = styled(DetailBtn)`
+    background-color: ${(props) => props.theme.btnColor};
+    text-align: center;
+    color: ${(props) => props.theme.btnTextColor};
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 10px;
     font-size: 15px;
 `;
 const LikeBtnBox = styled.div`
@@ -229,12 +253,17 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
+function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { register, handleSubmit, watch } = useForm<IUserFormValue>();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
@@ -391,7 +420,9 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                             type="checkbox"
                                             value={elem}
                                             defaultChecked={field.includes(elem) ? true : false}
-                                            {...register("reField")}
+                                            {...register("reField", {
+                                                required: "하나를 선택해주세요!",
+                                            })}
                                         />
                                         <FiledStyle
                                             htmlFor={elem}
@@ -402,6 +433,7 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                     </div>
                                 </>
                             ))}
+                        {errors.reField?.message}
                     </FieldBox>
                     <DescBox>
                         <DescTxt>
@@ -442,14 +474,14 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                         )}
                         {onEdit ||
                             (admin && (
-                                <DetailBtn title="편집" onClick={onClickEdit}>
+                                <EditBtn title="편집" onClick={onClickEdit}>
                                     편집
-                                </DetailBtn>
+                                </EditBtn>
                             ))}
                         {pathName !== "/network" && !onEdit && (
-                            <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
+                            <LikeUserBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
                                 즐겨찾기목록
-                            </DetailBtn>
+                            </LikeUserBtn>
                         )}
                         {onEdit && (
                             <>

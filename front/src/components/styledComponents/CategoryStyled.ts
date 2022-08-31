@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { PlusSquareFill } from "styled-icons/bootstrap";
 
 export const Container = styled.div`
     width: 100%;
@@ -94,10 +95,16 @@ export const DeleteButton = styled.button`
     right: 0px;
     top: 10px;
 `;
-export const AddButton = styled.button`
-    width: 45px;
-    height: 45px;
+export const AddButton = styled(PlusSquareFill)`
+    width: 30px;
+    height: 30px;
     margin: 50px 0 0;
+    transition: all 0.4s ease;
+    color: ${(props) => props.theme.btnColor};
+    &:hover {
+        cursor: pointer;
+        color: ${(props) => props.theme.accentColor};
+    }
 `;
 
 export const AddInput = styled.input.attrs((props) => ({
