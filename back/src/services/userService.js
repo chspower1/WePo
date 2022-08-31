@@ -60,7 +60,7 @@ class userAuthService {
       // 로그인 시도 횟수가 5번 이상이면 비밀번호 초기화 이메일 전송
       if (loginTrial.trials>=5){
         const newPassword = await userAuthService.resetPassword(email)
-        // 
+        // 비밀번호 초기화 이메일 내용
         const mailContent = {
           from: '"Limit" <wnsdml0120@gmail.com>', // sender address
           to: email, // list of receivers: "*@*.*, *@*.*"
