@@ -52,6 +52,7 @@ export const UserInfoTxt = styled.div`
 export const ProfileImg = styled.img`
     position: relative;
     z-index: 1;
+    height:100%;
 `;
 const ImageChangeInput = styled.input`
     position: absolute;
@@ -284,14 +285,14 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         });
     };
     // 이미지 미리보기
-    const [avatarPreview, setAvatarPreview] = useState("");
-    const avatar = watch("rePicture");
+    const [newPicturePreview, setNewPicturePreview] = useState('');
+    const newPicture = watch('rePicture');
     useEffect(() => {
-        if (avatar && avatar.length > 0) {
-            const file = avatar[0];
-            setAvatarPreview(URL.createObjectURL(file));
+        if (newPicture && newPicture.length > 0) {
+        const file = newPicture[0];
+        setNewPicturePreview(URL.createObjectURL(file));
         }
-    }, [avatar]);
+    }, [newPicture]);
     useEffect(() => {}, [curUser]);
     if (!curUser)
         return (
@@ -315,15 +316,11 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                         <ModalDelBtn>X</ModalDelBtn>
                     </>
                 )}
-                <From onSubmit={handleSubmit(onvalid)}>
+                <From onSubmit={handleSubmit(onvalid)}  encType="multipart/form-data" acceptCharset="UTF-8">
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
-                                src={
-                                    avatarPreview
-                                        ? avatarPreview
-                                        : `http://localhost:5001/uploads/${picture}`
-                                }
+                                src={newPicturePreview ? newPicturePreview :`http://localhost:5001/uploads/${picture}`}
                                 alt="profileImage"
                             />
                             {onEdit && (
@@ -437,7 +434,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                     title="취소"
                                     onClick={(e) => {
                                         onClickEdit(e);
-                                        setAvatarPreview(
+                                        setNewPicturePreview(
                                             `http://localhost:5001/uploads/${picture}`
                                         );
                                     }}
