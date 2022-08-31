@@ -52,7 +52,6 @@ export const UserInfoTxt = styled.div`
 export const ProfileImg = styled.img`
     position: relative;
     z-index: 1;
-    height:100%;
 `;
 const ImageChangeInput = styled.input`
     position: absolute;
@@ -253,7 +252,6 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                 updateCurUser.picture = picture[0]?.name;
                 setPictureState(picture[0].name);
             }
-
             return updateCurUser as IUser;
         });
 
@@ -284,12 +282,12 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         });
     };
     // 이미지 미리보기
-    const [newPicturePreview, setNewPicturePreview] = useState('');
-    const newPicture = watch('rePicture');
+    const [newPicturePreview, setNewPicturePreview] = useState("");
+    const newPicture = watch("rePicture");
     useEffect(() => {
         if (newPicture && newPicture.length > 0) {
-        const file = newPicture[0];
-        setNewPicturePreview(URL.createObjectURL(file));
+            const file = newPicture[0];
+            setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
     useEffect(() => {}, [curUser]);
@@ -315,11 +313,19 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                         <ModalDelBtn>X</ModalDelBtn>
                     </>
                 )}
-                <From onSubmit={handleSubmit(onvalid)}  encType="multipart/form-data" acceptCharset="UTF-8">
+                <From
+                    onSubmit={handleSubmit(onvalid)}
+                    encType="multipart/form-data"
+                    acceptCharset="UTF-8"
+                >
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
-                                src={newPicturePreview ? newPicturePreview :`http://localhost:5001/uploads/${picture}`}
+                                src={
+                                    newPicturePreview
+                                        ? newPicturePreview
+                                        : `http://localhost:5001/uploads/${picture}`
+                                }
                                 alt="profileImage"
                             />
                             {onEdit && (
@@ -421,7 +427,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                     편집
                                 </DetailBtn>
                             ))}
-                        {pathName !== "/network" && (
+                        {pathName !== "/network" && !onEdit && (
                             <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
                                 즐겨찾기목록
                             </DetailBtn>

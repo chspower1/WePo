@@ -151,7 +151,7 @@ function Header() {
         return () => {
             window.removeEventListener("scroll", scrollFixed);
         };
-    });
+    }, [curUser]);
 
     const UserLogout = () => {
         localStorage.removeItem("recoil-persist");
