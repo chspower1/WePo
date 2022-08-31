@@ -12,10 +12,13 @@ function imageUpload(upload_path, file_size) {
 
   const storage = multer.diskStorage({   // 저장한공간 정보 : 하드디스크에 저장
     destination: function (req, file, done) { // 저장 위치
+      console.log(req.body, req.params, req.currentUserId);
       done(null, upload_path + '/'); // uploads라는 폴더 안에 저장
     },
     filename: function (req, file, done) {   // 파일명을 어떤 이름으로 올릴지
-      done(null, file.originalname);
+      const ext = path.extname(file.originalname); // 파일의 확장자
+      done(null, req.currentUserId + ext); // 파일이름 + 날짜 + 확장자 이름으로 저장
+      // done(null, file.originalname);
       // const ext = path.extname(file.originalname); // 파일의 확장자
       // done(null, path.basename(file.originalname, ext) + "_" + Date.now() + ext); // 파일이름 + 날짜 + 확장자 이름으로 저장
     }
