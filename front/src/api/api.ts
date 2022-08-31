@@ -228,3 +228,34 @@ export async function searchData(searchData: string) {
         console.log(err);
     }
 }
+
+
+//회원가입 이메일 인증
+export async function approveRegister(userId :any ,authCode : any){
+    try{
+        console.log("요청",userId,authCode);
+        await axios.post(`${BASE_URL}/user/register/${userId}/${authCode}`,)
+    } catch(err){
+        console.log(err);
+    }
+}
+
+//비밀번호 변경
+
+export async function changePassword(oldPassword:any,newPassword:any){
+    try{
+        const {data:result} = await axios.put(`${BASE_URL}/user/changePassword`,
+            {oldPassword,newPassword},
+            {
+                headers:{
+                    "Content-Type": "application/json",
+                    Authorization:`Bearer ${sessionStorage.getItem("userToken")}`,
+                }
+            }
+        )
+        return result
+    }   catch(err){
+        return(err);
+    }
+
+}

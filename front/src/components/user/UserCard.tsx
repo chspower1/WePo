@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { curUserState, usersState, IUser, Efield } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
-
 import styled, { css } from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
@@ -15,6 +14,7 @@ import { E } from "styled-icons/simple-icons";
 import FiledStyle from "@styledComponents/FieldStyle";
 import { LoadingBox, LoadingIcon } from "./Network";
 import LikeModal from "@components/modal/LikeModal";
+import ChangePassword from "@components/modal/ChangePassword";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -226,6 +226,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
+    const [editPassword,setEditPassword] = useState(false)
     const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
     const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
     //권한관리
@@ -301,6 +302,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         );
     return (
         <>
+            {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
             <ItemWrap>
                 {curUser?.userId === userId && pathName === "/network" && (
                     <CheckMe>It's Me!</CheckMe>
@@ -396,13 +398,15 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                 (description?.length > 73
                                     ? `${description.slice(0, 73)}...`
                                     : description)}
-                            {onEdit && (
+                            {onEdit && (<>
                                 <DescTextarea
                                     defaultValue={description}
                                     {...register("reDescription", {
                                         required: "나에 대한 설명을 입력해주세요",
                                     })}
                                 ></DescTextarea>
+                                <button onClick={()=>setEditPassword(true)}>비밀번호변경</button>
+                                </>
                             )}
                         </DescTxt>
                     </DescBox>
