@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
@@ -218,7 +218,7 @@ function Network() {
                             ) : (
                                 <NetworkContainer>
                                     {netUsers?.map((user) => (
-                                        <UserCard key={user.userId} {...user} />
+                                        <UserCard key={user.userId} user={user} />
                                     ))}
                                 </NetworkContainer>
                             )}

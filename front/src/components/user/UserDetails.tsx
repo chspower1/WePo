@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import Education from "@education/Education";
@@ -39,20 +39,19 @@ function UserDetails() {
     const admin = inMyPage || compareUser;
 
     //User관련 State
-    const [user, setUser] = useState<IUser>();
     const [educations, setEducations] = useState<IEducation[]>([]);
     const [awards, setAwards] = useState<IAward[]>([]);
     const [certificates, setCertificates] = useState<ICertificate[]>([]);
     const [projects, setProjects] = useState<IProject[]>([]);
 
     //API User정보 받아오기
-    const { isLoading } = useQuery(
+    const { isLoading, data: user } = useQuery(
         ["newCurUser", userSeq],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
             onSuccess(user) {
-                console.log("유저데이터 요청", userSeq);
-                setUser(user!);
+                console.log("유저데이터 요청", user);
+                console.log("유저데이터 요청", curUser);
                 setEducations(user?.educations!);
                 setAwards(user?.awards!);
                 setCertificates(user?.certificates!);
@@ -60,37 +59,14 @@ function UserDetails() {
             },
         }
     );
-
+    console.log(educations, awards, certificates, certificates, certificates);
+    const allSet = user && educations && awards && certificates && projects && !isLoading;
     //로그인상태 확인
     useEffect(() => {
         if (!isLogin) {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
-
-    //오류수정
-    //다른 유저정보 보다 나의페이지 넘어오면 보던 유저의 나의 페이지가 나옴
-    // useEffect(() => {
-    //     console.log("전", pathName);
-    //     if (inMyPage) {
-    //         console.log("마이페이지", curUser);
-    //         setUser(curUser!);
-    //         setEducations(curUser?.educations!);
-    //         setAwards(curUser?.awards!);
-    //         setCertificates(curUser?.certificates!);
-    //         setProjects(curUser?.projects!);
-    //     } else {
-    //         setUser(user!);
-    //         setEducations(user?.educations!);
-    //         setAwards(user?.awards!);
-    //         setCertificates(user?.certificates!);
-    //         setProjects(user?.projects!);
-    //     }
-    //     return console.log("후", pathName);
-    // }, [pathName]);
-
-    useEffect(() => {}, [educations, projects, certificates, awards]);
-    //드래그 시
     const onDragEnd = async ({ draggableId, destination, source }: DropResult) => {
         console.log(draggableId, destination, source);
 
@@ -149,26 +125,7 @@ function UserDetails() {
             console.log(projects);
         }
     };
-    useEffect(() => {
-        setUser((prev: any) => {
-            const newUser = { ...prev };
-            newUser.name = curUser?.name;
-            newUser.description = curUser?.description;
-            newUser.field = curUser?.field;
-            return newUser;
-        });
-    }, [curUser?.name, curUser?.description, curUser?.field]);
-
-    if (!user)
-        // undefined 방지
-        return (
-            <LoadingBox>
-                <LoadingIcon />
-                Loading...
-            </LoadingBox>
-        );
-    if (isLoading)
-        // undefined 방지
+    if (isLoading && !user)
         return (
             <LoadingBox>
                 <LoadingIcon />
@@ -179,7 +136,7 @@ function UserDetails() {
         <>
             <Mypage.Root>
                 <Mypage.MyPortWrap>
-                    <Mypage.UserCardBox>{curUser && <UserCard {...user} />}</Mypage.UserCardBox>
+                    <Mypage.UserCardBox>{curUser && <UserCard user={user!} />}</Mypage.UserCardBox>
                     <Mypage.Wrap>
                         <DragDropContext onDragEnd={onDragEnd}>
                             <CurrentBoard

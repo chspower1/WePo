@@ -62,7 +62,7 @@ export default function LoginForm() {
             });
             setIsEmailRemember(false);
         }
-        if (!cookies.rememberEmail) {
+        if (cookies.rememberEmail === undefined) {
             setCookies("rememberEmail", "");
         }
         setError("password", {

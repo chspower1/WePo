@@ -218,7 +218,8 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ _id, name, email, description, field, userId, picture, likes }: IUser) {
+function UserCard({ user }: { user: IUser }) {
+    const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
@@ -290,9 +291,12 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
             setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
+
     useEffect(() => {
         setOnLikeModalState(false);
     }, [curUser]);
+
+    useEffect(() => {}, [onEdit]);
 
     if (!curUser)
         return (
