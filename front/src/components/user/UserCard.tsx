@@ -192,8 +192,8 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onEdit, setOnEdit] = useState(false);
-    const foundLikeUser = curUser?.likes.find((user) => user == userId);
-    const fieldList = ["frontEnd", "backEnd", "dataAnalysis", "AI"];
+    const foundLikeUser = curUser?.likes.find((user) => user === userId);
+    const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
 
     //권한관리
     const { userSeq } = useParams();
@@ -201,15 +201,13 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
     const inMyPage = pathName === "/mypage";
     const admin = inMyPage || compareUser;
 
-
     //수정완료 후 실행함수
     const onvalid = ({
         reName: name,
         reDescription: description,
         reField: field,
         rePicture: picture,
-    }:
-    IUserFormValue) => {
+    }: IUserFormValue) => {
         setCurUser((prev) => {
             console.log(name, description, field, picture);
             const updateCurUser = { ...prev };
@@ -219,7 +217,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
             updateCurUser.picture = picture[0];
             return updateCurUser as IUser;
         });
-        updateUser({name, description, field, picture} , curUser?.userId!);
+        updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -264,19 +262,17 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
         margin: 0 4px 10px;
     `;
     const InputBtn = styled.input`
-        position:absolute;
-        left:-99999px;
-        &+label{
+        position: absolute;
+        left: -99999px;
+        & + label {
             background-color: gray;
-            color: white; 
+            color: white;
         }
-        &:checked + label{
+        &:checked + label {
             background-color: #3867ff;
             color: white;
         }
-    `
-
-
+    `;
 
     useEffect(() => {}, [curUser]);
     console.log(field);
@@ -286,14 +282,17 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                 <From onSubmit={handleSubmit(onvalid)}>
                     <InfoBox>
                         <ProfileImageBox>
-                            <ProfileImg src={`http://localhost:5001/uploads/${picture}`} alt="profileImage" />
-                            {onEdit && 
+                            <ProfileImg
+                                src={`http://localhost:5001/uploads/${picture}`}
+                                alt="profileImage"
+                            />
+                            {onEdit && (
                                 <ImageChangeInput
                                     type="file"
-                                    accept='image/*'
+                                    accept="image/*"
                                     {...register("rePicture")}
                                 />
-                            }
+                            )}
                         </ProfileImageBox>
                         <UserInfoTxt>
                             <NameTxt>
@@ -319,11 +318,16 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                         </UserInfoTxt>
                     </InfoBox>
                     <FieldBox>
-                        {onEdit || field.map((elem) => <FieldStyle chose={field.includes(elem) ? true : false}>{elem}</FieldStyle>)}
+                        {onEdit ||
+                            field.map((elem) => (
+                                <FieldStyle chose={field.includes(elem) ? true : false}>
+                                    {elem}
+                                </FieldStyle>
+                            ))}
                         {onEdit &&
                             fieldList.map((elem, index) => (
                                 <>
-                                    <div style={{display:"inline-block"}}>
+                                    <div style={{ display: "inline-block" }}>
                                         <InputBtn
                                             id={elem}
                                             key={elem}
@@ -336,7 +340,7 @@ function UserCard({ _id, name, email, description, field, userId, picture }: IUs
                                             htmlFor={elem}
                                             chose={field.includes(elem) ? true : false}
                                         >
-                                        {elem}
+                                            {elem}
                                         </FiledStyle>
                                     </div>
                                 </>
