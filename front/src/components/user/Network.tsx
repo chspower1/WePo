@@ -157,7 +157,7 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="frontEnd"
-                                            value="frontEnd"
+                                            value="프론트엔드"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="frontEnd">프론트엔드</Label>
@@ -167,7 +167,7 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="backEnd"
-                                            value="backEnd"
+                                            value="백엔드"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="backEnd">백엔드</Label>
@@ -177,7 +177,7 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="dataAnalysis"
-                                            value="dataAnalysis"
+                                            value="데이터분석"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="dataAnalysis">데이터분석</Label>
@@ -187,7 +187,7 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="AI"
-                                            value="AI"
+                                            value="인공지능"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="AI">AI</Label>
