@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ILike } from "@/atoms";
@@ -57,12 +57,6 @@ const AccentWord = styled.span`
     font-size: 30px;
 `;
 
-interface ILikeCardProps {
-    name: string;
-    email: string;
-    picture: string;
-    userId: number;
-}
 const LikeBox = styled.div`
     width: 80%;
     display: flex;
@@ -70,7 +64,15 @@ const LikeBox = styled.div`
     align-items: center;
     justify-content: space-evenly;
 `;
-const LikeCard = ({ name, email, picture, userId }: ILikeCardProps) => {
+
+interface ILikeCardProps {
+    name: string;
+    email: string;
+    picture: string;
+    userId: number;
+    setOnLikeModalState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCardProps) => {
     return (
         <LikeBox style={{ margin: "10px" }}>
             <InfoBox style={{ alignItems: "center" }}>
@@ -91,13 +93,14 @@ const LikeCard = ({ name, email, picture, userId }: ILikeCardProps) => {
                 </UserInfoTxt>
             </InfoBox>
             <Link to={`/network/${userId}`}>
-                <button>보러가기</button>
+                <button onClick={() => setOnLikeModalState(false)}>보러가기</button>
             </Link>
         </LikeBox>
     );
 };
 
-function LikeModal({ likeUsers, setOnLikeModalState }: any) {
+function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
+    useEffect(() => {}, [onLikeModalState]);
     const navigator = useNavigate();
     return (
         <Wrapper>
@@ -105,7 +108,7 @@ function LikeModal({ likeUsers, setOnLikeModalState }: any) {
                 <AccentWord>내가 팔로우한 사람</AccentWord>
                 <button onClick={() => setOnLikeModalState(false)}> x </button>
                 {likeUsers?.map((user: any, index: number) => (
-                    <LikeCard {...user}></LikeCard>
+                    <LikeCard {...user} setOnLikeModalState={setOnLikeModalState}></LikeCard>
                 ))}
             </Modal>
         </Wrapper>

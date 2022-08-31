@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { curUserState, usersState, IUser, Efield } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
-
 import styled, { css } from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useForm } from "react-hook-form";
@@ -15,6 +14,7 @@ import { E } from "styled-icons/simple-icons";
 import FiledStyle from "@styledComponents/FieldStyle";
 import { LoadingBox, LoadingIcon } from "./Network";
 import LikeModal from "@components/modal/LikeModal";
+import ChangePassword from "@components/modal/ChangePassword";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -52,7 +52,6 @@ export const UserInfoTxt = styled.div`
 export const ProfileImg = styled.img`
     position: relative;
     z-index: 1;
-    height:100%;
 `;
 const ImageChangeInput = styled.input`
     position: absolute;
@@ -227,6 +226,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
+    const [editPassword,setEditPassword] = useState(false)
     const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
     const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
     //권한관리
@@ -242,18 +242,15 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
-        console.log(picture);
-        console.log(picture.length);
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            if (picture.length !== 0) {
+            if (picture?.length !== 0) {
                 updateCurUser.picture = picture[0]?.name;
                 setPictureState(picture[0].name);
             }
-
             return updateCurUser as IUser;
         });
 
@@ -285,15 +282,18 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         });
     };
     // 이미지 미리보기
-    const [newPicturePreview, setNewPicturePreview] = useState('');
-    const newPicture = watch('rePicture');
+    const [newPicturePreview, setNewPicturePreview] = useState("");
+    const newPicture = watch("rePicture");
     useEffect(() => {
         if (newPicture && newPicture.length > 0) {
-        const file = newPicture[0];
-        setNewPicturePreview(URL.createObjectURL(file));
+            const file = newPicture[0];
+            setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
-    useEffect(() => {}, [curUser]);
+    useEffect(() => {
+        setOnLikeModalState(false);
+    }, [curUser]);
+
     if (!curUser)
         return (
             <LoadingBox>
@@ -303,6 +303,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
         );
     return (
         <>
+            {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
             <ItemWrap>
                 {curUser?.userId === userId && pathName === "/network" && (
                     <CheckMe>It's Me!</CheckMe>
@@ -312,15 +313,24 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                         <LikeModal
                             likeUsers={likes}
                             setOnLikeModalState={setOnLikeModalState}
+                            onLikeModalState={onLikeModalState}
                         ></LikeModal>
                         <ModalDelBtn>X</ModalDelBtn>
                     </>
                 )}
-                <From onSubmit={handleSubmit(onvalid)}  encType="multipart/form-data" acceptCharset="UTF-8">
+                <From
+                    onSubmit={handleSubmit(onvalid)}
+                    encType="multipart/form-data"
+                    acceptCharset="UTF-8"
+                >
                     <InfoBox>
                         <ProfileImageBox>
                             <ProfileImg
-                                src={newPicturePreview ? newPicturePreview :`http://localhost:5001/uploads/${picture}`}
+                                src={
+                                    newPicturePreview
+                                        ? newPicturePreview
+                                        : `http://localhost:5001/uploads/${picture}`
+                                }
                                 alt="profileImage"
                             />
                             {onEdit && (
@@ -390,13 +400,15 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                 (description?.length > 73
                                     ? `${description.slice(0, 73)}...`
                                     : description)}
-                            {onEdit && (
+                            {onEdit && (<>
                                 <DescTextarea
                                     defaultValue={description}
                                     {...register("reDescription", {
                                         required: "나에 대한 설명을 입력해주세요",
                                     })}
                                 ></DescTextarea>
+                                <button onClick={()=>setEditPassword(true)}>비밀번호변경</button>
+                                </>
                             )}
                         </DescTxt>
                     </DescBox>
@@ -422,7 +434,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                     편집
                                 </DetailBtn>
                             ))}
-                        {pathName !== "/network" && (
+                        {pathName !== "/network" && !onEdit && (
                             <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
                                 즐겨찾기목록
                             </DetailBtn>

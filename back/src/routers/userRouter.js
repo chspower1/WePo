@@ -183,7 +183,6 @@ userAuthRouter.post(
             let picture = null;
 
             if (imageFile) {
-                // 한글 파일 이름 깨짐 방지
                 picture = imageFile.filename;
             }
 
