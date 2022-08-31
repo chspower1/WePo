@@ -56,7 +56,7 @@ export const NetworkContainer = styled.div`
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
     color: ${(props) => props.theme.textColor};
-    margin: 0 0 70px;
+    margin: 0 0 100px;
 `;
 
 const NetworkTitle = styled.h1`
@@ -69,16 +69,25 @@ const SelectBox = styled.div`
     display: flex;
     justify-content: center;
     gap: 10px;
-    padding: 0 0 20px;
+    padding: 0 0 30px;
 `;
 
 const CheckBoxWrap = styled.div`
     display: flex;
     align-items: center;
+    margin: 0 10px;
+    font-size: 18px;
+
+    & > input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+    }
 `;
 
 const Label = styled.label`
     user-select: none;
+    line-height: 1.5;
 `;
 
 export const LoadingBox = styled.div`

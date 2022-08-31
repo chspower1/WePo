@@ -20,10 +20,19 @@ const ItemWrap = styled.div`
     position: relative;
     min-width: 350px;
     min-height: 335px;
-    padding: 30px 30px;
+    padding: 30px 30px 20px;
     border-radius: 10px;
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
     background: ${(props) => props.theme.cardColor};
+    box-sizing: border-box;
+    border: 1px solid #fff;
+    transform: translate(0, 0);
+    transition: border .3s, box-shadow .3s, transform .4s;
+    &:hover {
+        border: 1px solid ${(props) => props.theme.filedBgColor};
+        box-shadow: 12px 12px 18px #95a9e070;
+        transform: translate(0, -10px);
+    }
 `;
 const From = styled.form`
     height: 100%;
@@ -37,15 +46,17 @@ export const InfoBox = styled.div`
 `;
 export const ProfileImageBox = styled.div`
     position: relative;
-    transform: translateY(-40px);
-    width: 90px;
-    height: 90px;
+    transform: translate(-10px, -50px);
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid ${(props) => props.theme.filedBgColor};
+    border: 4px solid ${(props) => props.theme.filedBgColor};
+    box-shadow: 5px 5px 10px rgba(196,196,196, .4);
 `;
 
 export const UserInfoTxt = styled.div`
+    width: calc(100% - 130px);
     margin-left: 20px;
     color: ${(props) => props.theme.textColor};
 `;
@@ -77,20 +88,18 @@ const PlusIcon = styled(PlusOutline)`
 `;
 
 export const NameTxt = styled.h2`
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    width: 170px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     cursor: default;
 `;
 export const EmailTxt = styled.h3`
-    font-size: 14px;
+    font-size: 16px;
     a {
         display: block;
-        width: 170px;
         line-height: 1.5;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -109,7 +118,8 @@ const DescTxt = styled.p`
     height: 80px;
     word-break: break-all;
     line-height: 1.2;
-    font-size: 14px;
+    font-size: 16px;
+    color: #797979;
 `;
 
 const EditOrDetailBtnBox = styled.div`
@@ -121,18 +131,19 @@ const EditOrDetailBtnBox = styled.div`
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
-    width: 18px;
-    height: 18px;
+    width: 25px;
+    height: 25px;
     margin-top: -3px;
 `;
 const DetailBtn = styled.button`
     text-align: center;
     color: #5573df;
     margin: 0 auto;
+    font-size: 15px;
 `;
 const LikeBtnBox = styled.div`
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #000;
     border-radius: 5px;
     border: 1px solid ${(props) => props.theme.starBorderColor};
@@ -166,7 +177,7 @@ const FieldBox = styled.div`
     display: flex;
     min-height: 25px;
     flex-wrap: wrap;
-    margin: 0 -4px 10px;
+    margin: 0 -4px 20px;
 `;
 const FieldTxt = styled.div`
     ${(props: any) =>
@@ -390,7 +401,6 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                             ))}
                     </FieldBox>
                     <DescBox>
-                        <DescTit>한마디</DescTit>
                         <DescTxt>
                             {onEdit ||
                                 (description?.length > 73
