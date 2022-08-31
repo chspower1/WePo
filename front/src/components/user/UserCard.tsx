@@ -50,6 +50,7 @@ const UserInfoTxt = styled.div`
 const ProfileImg = styled.img`
     position: relative;
     z-index: 1;
+    height:100%;
 `;
 const ImageChangeInput = styled.input`
     position: absolute;
