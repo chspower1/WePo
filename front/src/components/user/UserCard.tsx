@@ -235,14 +235,15 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ _id, name, email, description, field, userId, picture, likes }: IUser) {
+function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
+    const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const { register, handleSubmit, watch } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
-    const [editPassword,setEditPassword] = useState(false)
+    const [editPassword, setEditPassword] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
     const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
     //권한관리
@@ -267,7 +268,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
             }
             return updateCurUser as IUser;
         });
-
+        refetch();
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
@@ -303,10 +304,12 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
             setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
+
     useEffect(() => {
         setOnLikeModalState(false);
     }, [curUser]);
 
+    useEffect(() => {}, [onEdit]);
     if (!curUser)
         return (
             <LoadingBox>
@@ -344,7 +347,7 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                 src={
                                     newPicturePreview
                                         ? newPicturePreview
-                                        : `http://localhost:5001/uploads/${picture}`
+                                        : `http://localhost:5001/uploads/${userId}.jpg`
                                 }
                                 alt="profileImage"
                             />
@@ -414,14 +417,17 @@ function UserCard({ _id, name, email, description, field, userId, picture, likes
                                 (description?.length > 73
                                     ? `${description.slice(0, 73)}...`
                                     : description)}
-                            {onEdit && (<>
-                                <DescTextarea
-                                    defaultValue={description}
-                                    {...register("reDescription", {
-                                        required: "나에 대한 설명을 입력해주세요",
-                                    })}
-                                ></DescTextarea>
-                                <button onClick={()=>setEditPassword(true)}>비밀번호변경</button>
+                            {onEdit && (
+                                <>
+                                    <DescTextarea
+                                        defaultValue={description}
+                                        {...register("reDescription", {
+                                            required: "나에 대한 설명을 입력해주세요",
+                                        })}
+                                    ></DescTextarea>
+                                    <button onClick={() => setEditPassword(true)}>
+                                        비밀번호변경
+                                    </button>
                                 </>
                             )}
                         </DescTxt>

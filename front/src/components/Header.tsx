@@ -29,7 +29,6 @@ const HeaderWrap = styled.header`
         border-bottom: 1px solid ${(props) => props.theme.headerBorderColor};
         background: ${(props) => props.theme.headerActiveColor};
     }
-    
 `;
 
 export const HeaderContainer = styled.div`
@@ -135,9 +134,6 @@ function Header() {
     const curUser = useRecoilValue(curUserState);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-    const [lastPath, setLastPath] = useState("");
-    
-    const pathMamo = useMemo<any>(() => setLastPath(pathName), [pathName]);
 
     const scrollFixed = () => {
         if (scrollY > 10) {
@@ -165,12 +161,9 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
-    useEffect(()=>{
-        if(pathName !== pathMamo){
-            setScrollY(0);
-            setScrollActive(false);
-        }
-    })
+    // useEffect(() => {
+    //     console.log(curUser);
+    // }, [curUser]);
     return (
         <>
             <HeaderWrap

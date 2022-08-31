@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
@@ -117,7 +117,7 @@ function Network() {
     const searchUsers = useRecoilValue(searchUsersState);
     const filterUsersState = useRecoilValue(hopeJob);
 
-    const { isLoading } = useQuery(["users"], getUsers, {
+    const { isLoading,refetch } = useQuery(["users"], getUsers, {
         onSuccess(data) {
             setUsers(data!);
             setNetUsers(data!);
@@ -138,16 +138,16 @@ function Network() {
     useEffect(() => {
         setNetUsers(searchUsers!);
     }, [searchUsers]);
-
     function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
             const currentChecked = [...current];
             const overlap = currentChecked.findIndex((el) => el === name);
             overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
-
+            console.log("필터",currentChecked)
             return currentChecked;
         });
     }
+    console.log("필터",filterUsersState)
     if (!users)
         return (
             <LoadingBox>
@@ -227,7 +227,7 @@ function Network() {
                             ) : (
                                 <NetworkContainer>
                                     {netUsers?.map((user) => (
-                                        <UserCard key={user.userId} {...user} />
+                                        <UserCard key={user.userId} user={user} refetch={refetch}/>
                                     ))}
                                 </NetworkContainer>
                             )}

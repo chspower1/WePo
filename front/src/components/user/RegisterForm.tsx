@@ -6,7 +6,7 @@ import { ReactEventHandler, useEffect, useState } from "react";
 import { createtUser } from "@api/api";
 import { usersState } from "@/atoms";
 import { IUser } from "@/atoms";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
 import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
@@ -271,7 +271,10 @@ export default function RegisterForm() {
                             </RegisterStyled.FiledSelectBox>
                         </RegisterStyled.FiledBox>
                         <RegisterStyled.SubmitButtonBox>
-                            <RegisterStyled.SubmitButton disabled={!valid} onClick={()=>setSendEmail(true)}>
+                            <RegisterStyled.SubmitButton
+                                disabled={!valid}
+                                onClick={() => setSendEmail(true)}
+                            >
                                 작성완료
                             </RegisterStyled.SubmitButton>
                         </RegisterStyled.SubmitButtonBox>
