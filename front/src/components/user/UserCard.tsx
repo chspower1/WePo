@@ -218,7 +218,7 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ user }: { user: IUser }) {
+function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
     const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
@@ -254,7 +254,7 @@ function UserCard({ user }: { user: IUser }) {
             }
             return updateCurUser as IUser;
         });
-
+        refetch();
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
@@ -262,6 +262,9 @@ function UserCard({ user }: { user: IUser }) {
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
+    useEffect(()=>{
+        refetch()
+    },[curUser])
 
     const onClickLikesModal = () => {
         setOnLikeModalState((cur) => !cur);
@@ -297,7 +300,6 @@ function UserCard({ user }: { user: IUser }) {
     }, [curUser]);
 
     useEffect(() => {}, [onEdit]);
-
     if (!curUser)
         return (
             <LoadingBox>
