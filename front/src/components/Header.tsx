@@ -24,7 +24,7 @@ const HeaderWrap = styled.header`
     left: 0;
     width: 100%;
     background: ${(props) => props.theme.bgColor};
-    transition: box-shadow 0.5s ease, background 0.5s ease;
+    transition: box-shadow 0.5s ease, background 0.5s ease; // 조건문 걸어서 처리
     &.home {
         background: transparent;
     }
@@ -32,6 +32,7 @@ const HeaderWrap = styled.header`
         border-bottom: 1px solid ${(props) => props.theme.headerBorderColor};
         background: ${(props) => props.theme.headerActiveColor};
     }
+    
 `;
 
 export const HeaderContainer = styled.div`
@@ -151,7 +152,7 @@ function Header() {
         return () => {
             window.removeEventListener("scroll", scrollFixed);
         };
-    }, [curUser]);
+    });
 
     const UserLogout = () => {
         localStorage.removeItem("recoil-persist");
