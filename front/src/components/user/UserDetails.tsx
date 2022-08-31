@@ -30,8 +30,6 @@ function UserDetails() {
 
     const location = useLocation();
     const pathName = location.pathname;
-    console.log(pathName);
-
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
@@ -39,27 +37,26 @@ function UserDetails() {
     const admin = inMyPage || compareUser;
 
     //User관련 State
+    const [user, setUser] = useState<IUser | null>(curUser);
     const [educations, setEducations] = useState<IEducation[]>([]);
     const [awards, setAwards] = useState<IAward[]>([]);
     const [certificates, setCertificates] = useState<ICertificate[]>([]);
     const [projects, setProjects] = useState<IProject[]>([]);
 
     //API User정보 받아오기
-    const { isLoading, data: user } = useQuery(
+    const { isLoading } = useQuery(
         ["newCurUser", userSeq],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
-            onSuccess(user) {
-                console.log("유저데이터 요청", user);
-                console.log("유저데이터 요청", curUser);
-                setEducations(user?.educations!);
-                setAwards(user?.awards!);
-                setCertificates(user?.certificates!);
-                setProjects(user?.projects!);
+            onSuccess(sucessUser) {
+                setUser(sucessUser!);
+                setEducations(sucessUser?.educations!);
+                setAwards(sucessUser?.awards!);
+                setCertificates(sucessUser?.certificates!);
+                setProjects(sucessUser?.projects!);
             },
         }
     );
-    console.log(educations, awards, certificates, certificates, certificates);
     const allSet = user && educations && awards && certificates && projects && !isLoading;
     //로그인상태 확인
     useEffect(() => {
@@ -67,9 +64,8 @@ function UserDetails() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
+    useEffect(() => {}, [UserCard]);
     const onDragEnd = async ({ draggableId, destination, source }: DropResult) => {
-        console.log(draggableId, destination, source);
-
         if (destination?.droppableId !== source.droppableId) return;
         //드래그 필드가 Educations
         else if (destination?.droppableId === "educations") {
@@ -78,13 +74,10 @@ function UserDetails() {
                 const education = resultEducations[source.index];
                 resultEducations.splice(source.index, 1);
                 resultEducations.splice(destination?.index!, 0, education);
-                console.log("바꾸고 값 저장 전", resultEducations);
 
                 mutationCategory(curUser?.userId!, Category.education, resultEducations); //API요청
                 return resultEducations;
             });
-
-            console.log("set하고 나온 educations", educations);
         }
         //드래그 필드가 awards
         else if (destination?.droppableId === "awards") {
@@ -97,8 +90,6 @@ function UserDetails() {
                 mutationCategory(curUser?.userId!, Category.award, resultAwards); //API요청
                 return resultAwards;
             });
-
-            console.log(awards);
         }
         //드래그 필드가 certificates
         else if (destination?.droppableId === "certificates") {
@@ -110,7 +101,6 @@ function UserDetails() {
                 mutationCategory(curUser?.userId!, Category.certificate, resultCertificates); //API요청
                 return resultCertificates;
             });
-            console.log(certificates);
         }
         //드래그 필드가 project
         else if (destination?.droppableId === "projects") {
@@ -122,7 +112,6 @@ function UserDetails() {
                 mutationCategory(curUser?.userId!, Category.project, resultProjects); //API요청
                 return resultProjects;
             });
-            console.log(projects);
         }
     };
     if (isLoading && !user)
@@ -136,7 +125,9 @@ function UserDetails() {
         <>
             <Mypage.Root>
                 <Mypage.MyPortWrap>
-                    <Mypage.UserCardBox>{curUser && <UserCard user={user!} />}</Mypage.UserCardBox>
+                    <Mypage.UserCardBox>
+                        <UserCard user={user!} setUser={setUser} />
+                    </Mypage.UserCardBox>
                     <Mypage.Wrap>
                         <DragDropContext onDragEnd={onDragEnd}>
                             <CurrentBoard

@@ -218,7 +218,13 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ user }: { user: IUser }) {
+function UserCard({
+    user,
+    setUser,
+}: {
+    user: IUser;
+    setUser?: React.Dispatch<React.SetStateAction<IUser | null>>;
+}) {
     const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
@@ -295,8 +301,6 @@ function UserCard({ user }: { user: IUser }) {
     useEffect(() => {
         setOnLikeModalState(false);
     }, [curUser]);
-
-    useEffect(() => {}, [onEdit]);
 
     if (!curUser)
         return (
