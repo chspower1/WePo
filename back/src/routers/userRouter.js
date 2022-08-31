@@ -159,51 +159,46 @@ userAuthRouter.get("/:id", login_required, async function (req, res, next) {
 });
 
 // id의 사용자 정보 update
-userAuthRouter.post(
-    "/:id",
-    login_required,
-    upload.single("image"),
-    async function (req, res, next) {
-        try {
-            // User authentication
-            const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
-            // URI로부터 사용자 id를 추출함.
-            const userId = parseInt(req.params.id);
+userAuthRouter.post("/:id", login_required, upload.single('image'), async function (req, res, next) {
+    try {
+        // User authentication
+        const currentUserId = req["currentUserId"]; // 현재 로그인 중인 UserId
+        // URI로부터 사용자 id를 추출함.
+        const userId = parseInt(req.params.id);
 
-            if (userId !== currentUserId) {
-                console.log(userId, currentUserId);
-                throw new Error(
-                    "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
-                );
-            }
-
-            // body data 로부터 업데이트할 사용자 정보를 추출함.
-            const { name, description, field } = req.body;
-            const imageFile = req.file;
-            let picture = null;
-
-            if (imageFile) {
-                picture = imageFile.filename;
-            }
-
-            const toUpdate = { name, description, field, picture };
-
-            // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-            const updatedUser = await userAuthService.setUser({
-                userId,
-                toUpdate,
-            });
-
-            if (updatedUser.errorMessage) {
-                throw new Error(updatedUser.errorMessage);
-            }
-
-            res.status(200).json(updatedUser);
-        } catch (error) {
-            next(error);
+        if (userId !== currentUserId) {
+            console.log(userId, currentUserId);
+            throw new Error(
+                "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+            );
         }
+
+        // body data 로부터 업데이트할 사용자 정보를 추출함.
+        const { name, description, field } = req.body;
+        const imageFile = req.file;
+        let picture = null;
+
+        if(imageFile) {
+            picture = imageFile.filename;
+        }
+        
+        const toUpdate = { name, description, field, picture };
+
+        // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+        const updatedUser = await userAuthService.setUser({
+            userId,
+            toUpdate,
+        });
+
+        if (updatedUser.errorMessage) {
+            throw new Error(updatedUser.errorMessage);
+        }
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        next(error);
     }
-);
+});
 
 // id를 즐겨찾기에 추가/삭제
 userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, next) {
