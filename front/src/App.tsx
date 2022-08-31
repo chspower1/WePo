@@ -1,10 +1,10 @@
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
-import { lightTheme } from "./theme/theme";
+import { lightTheme, darkTheme } from "./theme/theme";
 import Router from "./Router";
 import "./font/font.css";
-import { useRecoilValue } from "recoil";
-import { isLoginState } from "./atoms";
+import { useRecoilState} from "recoil";
+import { isDarkState, isLoginState } from "./atoms";
 import { useNavigate, Navigator } from "react-router-dom";
 import { useEffect } from "react";
 const GlobalStyle = createGlobalStyle`
@@ -32,9 +32,10 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 function App() {
+    const [isDark, setIsDark] = useRecoilState(isDarkState);
     return (
         <>
-            <ThemeProvider theme={lightTheme}>
+            <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
                 <GlobalStyle />
                 <Router />
             </ThemeProvider>

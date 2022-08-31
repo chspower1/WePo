@@ -6,10 +6,10 @@ export interface IUser {
     email: string;
     name: string;
     password?: string;
-    picture?: string;
+    picture?: any;
     description: string;
-    field: IField;
-    likes: any[];
+    field: string[];
+    likes: ILike[];
     views: number;
     userId: number;
     educations?: IEducation[];
@@ -18,12 +18,20 @@ export interface IUser {
     projects?: IProject[];
     _v?: number;
 }
-export interface IField {
-    backEnd: boolean;
-    frontEnd: boolean;
-    dataAnalysis: boolean;
-    AI: boolean;
+export interface ILike {
+    name: string;
+    userId: number;
+    email: string;
+    picture: string;
 }
+
+export enum Efield {
+    frontEnd = "프론트엔드",
+    backEnd = "백엔드",
+    dataAnalysis = "데이터분석",
+    AI = "인공지능",
+}
+
 export interface IEducation {
     _id?: string;
     eduId: string;
@@ -83,16 +91,7 @@ export interface IProject {
     __v?: number;
 }
 const { persistAtom } = recoilPersist();
-// export interface ICerUser {
-//     _id?: string;
-//     description: string;
-//     email: string;
-//     errorMessage: string | null;
-//     name: string;
-//     token: string;
-//     userId: snumber
-//     userSeq: number;
-// }
+
 export const curUserState = atom<IUser | null>({
     key: "curUser",
     default: null,
@@ -130,9 +129,64 @@ export const hopeJob = selector({
         let userState = get(usersState);
         for (const duty of currentHope) {
             userState = userState.filter((elem) => {
-                // return elem.field.findIndex((elem) => elem === true) >= 0;
+                return elem.field.findIndex((elem) => elem === duty) >= 0;
             });
         }
         return userState;
+    },
+});
+export const searchWordState = atom<string>({
+    key: "searchData",
+    default: "",
+});
+export const searchUsersState = selector<IUser[]>({
+    key: "searchUsers",
+    get: ({ get }) => {
+        const currentUsers = get(usersState);
+        const newCurUsers = currentUsers?.filter((user) => {
+            const { name, projects, awards, educations, certificates, description, email, field } =
+                user;
+            const searchWord = get(searchWordState);
+            if (name.includes(searchWord)) return user;
+            else if (email.includes(searchWord)) return user;
+            else if (field.includes(searchWord)) return user;
+            else if (description.includes(searchWord)) return user;
+            else if (
+                projects?.filter((project) => {
+                    if (project.title.includes(searchWord)) return project;
+                    else if (project.description.includes(searchWord)) return project;
+                })
+            )
+                return user;
+            else if (
+                awards?.filter((award) => {
+                    if (award.title.includes(searchWord)) return award;
+                    else if (award.description.includes(searchWord)) return award;
+                })
+            )
+                return user;
+            else if (
+                educations?.filter((education) => {
+                    if (education.major.includes(searchWord)) return education;
+                    else if (education.school.includes(searchWord)) return education;
+                })
+            )
+                return user;
+            else if (
+                projects?.filter((project) => {
+                    if (project.title.includes(searchWord)) return project;
+                    else if (project.description.includes(searchWord)) return project;
+                })
+            )
+                return user;
+            else if (
+                certificates?.filter((certificate) => {
+                    if (certificate.title.includes(searchWord)) return certificate;
+                    else if (certificate.description.includes(searchWord)) return certificate;
+                })
+            )
+                return user;
+        });
+        return newCurUsers;
     },
 });

@@ -21,13 +21,11 @@ function imageUpload(upload_path, file_size) {
     }
   });
 
-  const limits = {
-    fileSize: file_size * 1024 * 1024  // 용량 제한
-  }
-  
-  return multer({ storage, limits });
+    const limits = {
+        fileSize: file_size * 1024 * 1024, // 용량 제한
+    };
 
+    return multer({ storage, limits });
 }
 
 export default imageUpload;
-

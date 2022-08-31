@@ -10,7 +10,6 @@ const upload = imageUpload("uploads", 5);
 
 const userAuthRouter = Router();
 
-
 // 회원가입
 userAuthRouter.post("/register", async function (req, res, next) {
     try {
@@ -26,16 +25,16 @@ userAuthRouter.post("/register", async function (req, res, next) {
             name,
             email,
             password,
-            field
+            field,
         });
 
         if (newUser.errorMessage) {
             throw new Error(newUser.errorMessage);
         }
-        
+
         // 인증코드 생성
-        const codeAdded = await emailService.createAuthCode(newUser.userId)
-        const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${newUser.userId}/${codeAdded.authCode}`
+        const codeAdded = await emailService.createAuthCode(newUser.userId);
+        const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${newUser.userId}/${codeAdded.authCode}`;
 
         // 인증 이메일 전송
         const mailContent = {
@@ -46,9 +45,9 @@ userAuthRouter.post("/register", async function (req, res, next) {
             html: `<br>${name}<b/>님,<br/>
             아래 버튼을 눌러 이메일 인증 부탁드립니다:</br>
             <a href="${authURL}">이메일 인증하기</a>`, // html body
-          }
-        
-        const emailSent = await emailService.sendEmail(mailContent)
+        };
+
+        const emailSent = await emailService.sendEmail(mailContent);
 
         res.status(201).json(newUser);
     } catch (error) {
@@ -61,21 +60,21 @@ userAuthRouter.post("/register/:userId/:authCode", async function (req, res, nex
     try {
         // path parameter 가져오기
         const { userId, authCode } = req.params;
-        
+
         // 입력된 authCode DB와 비교
-        const gotAuthCode = await emailService.getAuthCode(userId)
-        if(gotAuthCode.authCode!=authCode){
-            throw new Error("인증 실패했습니다.")
+        const gotAuthCode = await emailService.getAuthCode(userId);
+        if (gotAuthCode.authCode != authCode) {
+            throw new Error("인증 실패했습니다.");
         }
-        
+
         // 인증 성공 시 userId-authCode pair DB에서 삭제
-        await emailService.deleteAuthCode(userId)
+        await emailService.deleteAuthCode(userId);
 
         res.status(201).send("인증성공");
     } catch (error) {
         next(error);
     }
-});      
+});
 
 // 로그인
 userAuthRouter.post("/login", async function (req, res, next) {
@@ -86,22 +85,22 @@ userAuthRouter.post("/login", async function (req, res, next) {
         // 위 데이터를 이용하여 유저 db에서 유저 찾기
         const user = await userAuthService.getUser({ email, password });
 
-        if(user.errorMessage) {
-            throw new Error(user.errorMessage)
+        if (user.errorMessage) {
+            throw new Error(user.errorMessage);
         }
 
         // 로그인 시도 횟수 4회 초과 시 비밀번호 리셋 후 이메일 전송
-        if(user.mailContent) {
-            await emailService.sendEmail(user.mailContent)
-            const errorMessage = 
-                "로그인 시도 가능 횟수를 초과하여 이메일로 새 비밀번호를 보내드렸습니다."
-            throw new Error(errorMessage)
+        if (user.mailContent) {
+            await emailService.sendEmail(user.mailContent);
+            const errorMessage =
+                "로그인 시도 가능 횟수를 초과하여 이메일로 새 비밀번호를 보내드렸습니다.";
+            throw new Error(errorMessage);
         }
 
         // user의 이메일 인증여부 확인
-        const gotAuthCode = await emailService.getAuthCode(user.userId)
-        if(gotAuthCode) {
-            throw new Error("이메일 인증 완료 부탁드립니다.")
+        const gotAuthCode = await emailService.getAuthCode(user.userId);
+        if (gotAuthCode) {
+            throw new Error("이메일 인증 완료 부탁드립니다.");
         }
 
         res.status(200).send(user);
@@ -184,17 +183,17 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         }
         
 
-        const toUpdate = { name, description, field, picture };
+            const toUpdate = { name, description, field, picture };
 
-        // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-        const updatedUser = await userAuthService.setUser({
-            userId,
-            toUpdate,
-        });
+            // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+            const updatedUser = await userAuthService.setUser({
+                userId,
+                toUpdate,
+            });
 
-        if (updatedUser.errorMessage) {
-            throw new Error(updatedUser.errorMessage);
-        }
+            if (updatedUser.errorMessage) {
+                throw new Error(updatedUser.errorMessage);
+            }
 
         res.status(200).json(updatedUser);
     } catch (error) {
@@ -210,7 +209,7 @@ userAuthRouter.put("/togglelike/:id", login_required, async function (req, res, 
         const otherId = parseInt(req.params.id); // 추가/삭제할 id
 
         // 즐겨찾기 추가/삭제
-        const toggleDone = await userAuthService.toggleLike({userId, otherId})
+        const toggleDone = await userAuthService.toggleLike({ userId, otherId });
 
         res.status(200).json(toggleDone);
     } catch (error) {
@@ -223,15 +222,18 @@ userAuthRouter.put("/changePassword", login_required, async function (req, res, 
     try {
         const userId = req["currentUserId"];
         const { oldPassword, newPassword } = req.body;
-        const updatedUser = await userAuthService.changePassword({userId, oldPassword, newPassword})
-        if(updatedUser.errorMessage){
-            throw new Error(updatedUser.errorMessage)
+        const updatedUser = await userAuthService.changePassword({
+            userId,
+            oldPassword,
+            newPassword,
+        });
+        if (updatedUser.errorMessage) {
+            throw new Error(updatedUser.errorMessage);
         }
-        res.status(200).send("비밀번호 변경 성공")
-    } catch(error){
-        next(error)
-    } 
-})
-
+        res.status(200).send("비밀번호 변경 성공");
+    } catch (error) {
+        next(error);
+    }
+});
 
 export { userAuthRouter };

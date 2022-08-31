@@ -3,10 +3,18 @@ import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
-import { getUsers } from "@api/api";
-import { isLoginState, usersState, checkedBoxValue, hopeJob } from "@/atoms";
+import { getUser, getUsers } from "@api/api";
+import {
+    isLoginState,
+    usersState,
+    checkedBoxValue,
+    hopeJob,
+    IUser,
+    searchUsersState,
+} from "@/atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
+import SearchBar from "@components/SearchBar";
 
 const LoadingMotion = keyframes`
     0% {
@@ -20,14 +28,14 @@ const LoadingMotion = keyframes`
 const BgWrap = styled.div`
     width: 100%;
     min-height: 100vh;
-    background: #eff3ff;
+    background: ${(props) => props.theme.bgColor};
     padding: 100px 0 0;
 `;
 
 const Root = styled.div`
-width: 100%;
-padding: 80px 0 0;
-`
+    width: 100%;
+    padding: 80px 0 0;
+`;
 
 const NetworkWrap = styled.div`
     width: 100%;
@@ -35,9 +43,8 @@ const NetworkWrap = styled.div`
     min-width: 480px;
     margin: 0 auto;
     padding: 0 30px;
-
 `;
-const NetworkContainer = styled.div`
+export const NetworkContainer = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -48,19 +55,21 @@ const NetworkContainer = styled.div`
 
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
+    color: ${(props) => props.theme.textColor};
+    margin: 0 0 70px;
 `;
 
 const NetworkTitle = styled.h1`
     text-align: center;
-    font-size: 24px;
-    padding: 0 0 30px;
+    font-size: 34px;
+    padding: 0 0 80px;
 `;
 
 const SelectBox = styled.div`
     display: flex;
     justify-content: center;
     gap: 10px;
-    padding: 0 0 30px;
+    padding: 0 0 20px;
 `;
 
 const CheckBoxWrap = styled.div`
@@ -72,16 +81,17 @@ const Label = styled.label`
     user-select: none;
 `;
 
-const LoadingBox = styled.div`
+export const LoadingBox = styled.div`
     width: 100%;
-    height: 80%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     user-select: none;
+    background-color: ${(props) => props.theme.bgColor};
 `;
-const LoadingIcon = styled(ArrowRepeat)`
+export const LoadingIcon = styled(ArrowRepeat)`
     width: 26px;
     height: 26px;
     margin-right: 10px;
@@ -92,14 +102,16 @@ function Network() {
     const location = useLocation();
     const pathName = location.pathname;
     const [users, setUsers] = useRecoilState(usersState);
+    const [netUsers, setNetUsers] = useState<IUser[]>([]);
     const isLogin = useRecoilValue(isLoginState);
     const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
+    const searchUsers = useRecoilValue(searchUsersState);
     const filterUsersState = useRecoilValue(hopeJob);
 
     const { isLoading } = useQuery(["users"], getUsers, {
         onSuccess(data) {
             setUsers(data!);
-            console.log(users);
+            setNetUsers(data!);
         },
     });
 
@@ -110,19 +122,44 @@ function Network() {
         }
     }, [isLogin]);
 
+    // Field 선택시
+    useEffect(() => {
+        setNetUsers(filterUsersState!);
+    }, [filterUsersState]);
+    useEffect(() => {
+        setNetUsers(searchUsers!);
+    }, [searchUsers]);
+
     function handleCheckedBox(name: string) {
         setSelectCheckBoxValues((current) => {
             const currentChecked = [...current];
             const overlap = currentChecked.findIndex((el) => el === name);
             overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
+
             return currentChecked;
         });
     }
-
+    if (!users)
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        ); // undefined 방지
+    if (isLoading)
+        return (
+            <LoadingBox>
+                <LoadingIcon />
+                Loading...
+            </LoadingBox>
+        ); // undefined 방지
     return (
         <>
             {isLoading ? (
-                <>로딩중</>
+                <LoadingBox>
+                    <LoadingIcon />
+                    Loading...
+                </LoadingBox>
             ) : (
                 <BgWrap>
                     <Root>
@@ -135,7 +172,7 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="frontEnd"
-                                            value="frontEnd"
+                                            value="프론트엔드"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="frontEnd">프론트엔드</Label>
@@ -145,7 +182,7 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="backEnd"
-                                            value="backEnd"
+                                            value="백엔드"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="backEnd">백엔드</Label>
@@ -155,7 +192,7 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="dataAnalysis"
-                                            value="dataAnalysis"
+                                            value="데이터분석"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="dataAnalysis">데이터분석</Label>
@@ -165,12 +202,13 @@ function Network() {
                                             type="checkbox"
                                             name="category"
                                             id="AI"
-                                            value="AI"
+                                            value="인공지능"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
                                         <Label htmlFor="AI">AI</Label>
                                     </CheckBoxWrap>
                                 </SelectBox>
+                                <SearchBar />
                             </NetworkHeadingSelectBox>
                             {isLoading ? (
                                 <LoadingBox>
@@ -179,8 +217,8 @@ function Network() {
                                 </LoadingBox>
                             ) : (
                                 <NetworkContainer>
-                                    {filterUsersState.map((user) => (
-                                        <UserCard key={user._id} {...user} />
+                                    {netUsers?.map((user) => (
+                                        <UserCard key={user.userId} {...user} />
                                     ))}
                                 </NetworkContainer>
                             )}
