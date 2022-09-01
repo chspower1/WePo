@@ -13,24 +13,26 @@ import SEO from "@components/SEO";
 import UserDetails from "@user/UserDetails";
 import ThemeChangeBtn from "@components/ThemeChangeBtn";
 import SuccessRegister from "@components/SuccessRegister";
+import ScrollToTop from "./ScrollToTop";
 function Router() {
     const isLogin = useRecoilValue(isLoginState);
     useEffect(() => {}, [isLogin]);
     return (
         <BrowserRouter>
+            <ScrollToTop />
             <SEO />
             <Header />
             <Routes>
                 <Route path="*" element={<NotFound />} />
-                <Route path="/" element={<Home/>} />
+                <Route path="/" element={<Home />} />
                 <Route path="/mypage" element={<UserDetails />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/network" element={<Network />} />
                 <Route path="/network/:userSeq" element={<UserDetails />} />
-                <Route path="/user/register/:userId/:authCode" element={<SuccessRegister/>} />
+                <Route path="/user/register/:userId/:authCode" element={<SuccessRegister />} />
             </Routes>
-            <ThemeChangeBtn/>
+            <ThemeChangeBtn />
         </BrowserRouter>
     );
 }

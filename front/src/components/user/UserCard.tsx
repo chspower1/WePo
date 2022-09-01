@@ -255,7 +255,12 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { register, handleSubmit, watch } = useForm<IUserFormValue>();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
@@ -325,6 +330,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     }, [curUser]);
 
     useEffect(() => {}, [onEdit]);
+    console.log(field);
     if (!curUser)
         return (
             <LoadingBox>
@@ -385,6 +391,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                     />
                                 )}
                             </NameTxt>
+                            {errors.reName?.message}
 
                             <EmailTxt>
                                 {onEdit || (
@@ -411,8 +418,9 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                             key={elem}
                                             type="checkbox"
                                             value={elem}
-                                            defaultChecked={field.includes(elem) ? true : false}
-                                            {...register("reField")}
+                                            {...register("reField", {
+                                                required: "희망 분야를 선택해주세요!",
+                                            })}
                                         />
                                         <FiledStyle
                                             htmlFor={elem}
@@ -423,6 +431,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                     </div>
                                 </>
                             ))}
+                        {errors.reField?.message}
                     </FieldBox>
                     <DescBox>
                         <DescTxt>
