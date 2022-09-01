@@ -268,6 +268,7 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
             }
             return updateCurUser as IUser;
         });
+        console.log(picture[0].name)
         refetch();
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
@@ -305,6 +306,9 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
         }
     }, [newPicture]);
 
+    // 이미지 초기값 확인
+    const pictureDefault = picture?.split("/")[0] === "default_images";
+    const notDefault = pictureDefault ? "" : userId+"_";
     useEffect(() => {
         setOnLikeModalState(false);
     }, [curUser]);
@@ -347,7 +351,7 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                 src={
                                     newPicturePreview
                                         ? newPicturePreview
-                                        : `http://localhost:5001/uploads/${userId}.jpg`
+                                        : `http://localhost:5001/uploads/${notDefault}${picture}`
                                 }
                                 alt="profileImage"
                             />

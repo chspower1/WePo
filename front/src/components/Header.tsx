@@ -161,9 +161,11 @@ function Header() {
         sessionStorage.removeItem("userToken");
         setCurUser(null);
     };
-    // useEffect(() => {
-    //     console.log(curUser);
-    // }, [curUser]);
+    // 이미지 초기값 확인
+    const pictureDefault = curUser?.picture?.split("/")[0] === "default_images";
+    const notDefault = pictureDefault ? "" : curUser?.userId! + "_"
+
+    console.log(pictureDefault)
     return (
         <>
             <HeaderWrap
@@ -187,7 +189,7 @@ function Header() {
                                 <LinkButton to="/mypage">나의페이지</LinkButton>
                                 <MiniProfileBox>
                                     <MiniProfileImg
-                                        src={`http://localhost:5001/uploads/${curUser?.userId!}_${curUser?.picture}`}
+                                        src={`http://localhost:5001/uploads/${notDefault}${curUser?.picture}`}
                                     />
                                     <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 </MiniProfileBox>
