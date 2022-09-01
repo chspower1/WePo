@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { curUserState, isLoginState } from "@/atoms";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import SearchBar from "./SearchBar";
 
@@ -128,6 +128,7 @@ const MiniProfileBox = styled.div`
     margin-left:20px;
 `
 
+
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
     const setCurUser = useSetRecoilState(curUserState);
@@ -136,26 +137,16 @@ function Header() {
     const curUser = useRecoilValue(curUserState);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-
-    const scrollFixed = () => {
-        if (scrollY > 10) {
-            setScrollY(window.pageYOffset);
-            setScrollActive(true);
-        } else {
-            setScrollY(window.pageYOffset);
-            setScrollActive(false);
-        }
-    };
     
-
     useEffect(() => {
-        const scrollListener = () => {
-            window.addEventListener("scroll", scrollFixed);
-        };
-        scrollListener();
-        return () => {
-            window.removeEventListener("scroll", scrollFixed);
-        };
+        window.addEventListener("scroll", ()=>{
+            setScrollY(window.scrollY)
+        });
+        if(scrollY < 10){
+            setScrollActive(false)
+        }else{
+            setScrollActive(true)
+        }
     });
 
     const UserLogout = () => {
@@ -166,8 +157,12 @@ function Header() {
     // 이미지 초기값 확인
     const pictureDefault = curUser?.picture?.split("/")[0] === "default_images";
     const notDefault = pictureDefault ? "" : curUser?.userId! + "_"
+    useEffect(()=>{
+        window.scrollTo(0,0)
+        setScrollY(0);
+        setScrollActive(false);
+    },[pathName])
 
-    console.log(pictureDefault)
     return (
         <>
             <HeaderWrap
