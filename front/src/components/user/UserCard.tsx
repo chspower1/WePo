@@ -244,8 +244,8 @@ const InputBtn = styled.input`
 const ModalDelBtn = styled.button``;
 
 interface IUserCardProps {
-    profile: IProfile;
-    setProfile: React.Dispatch<React.SetStateAction<IProfile | undefined>>;
+    profile?: IProfile;
+    setProfile?: React.Dispatch<React.SetStateAction<IProfile | undefined>>;
 }
 interface IUserFormValue {
     reName: string;
@@ -255,7 +255,7 @@ interface IUserFormValue {
 }
 
 function UserCard({ profile, setProfile }: IUserCardProps) {
-    const { name, email, description, field, userId, picture, likes } = profile;
+    const { name, email, description, field, userId, picture, likes } = profile!;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
@@ -286,7 +286,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
-        setProfile((prev) => ({
+        setProfile!((prev) => ({
             ...prev,
             name,
             field,

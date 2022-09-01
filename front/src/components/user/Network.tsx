@@ -230,8 +230,7 @@ function Network() {
                                     {netUsers?.map((user) => (
                                         <UserCard
                                             key={user.userId}
-                                            profile={profile!}
-                                            setProfile={setProfile}
+                                            profile={...user}
                                         />
                                     ))}
                                 </NetworkContainer>
