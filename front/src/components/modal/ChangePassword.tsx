@@ -228,7 +228,7 @@ export default function ChangePassword({ setEditPassword }: any) {
                                 {errors.oldPassword.message}
                             </ErrMsg>
                         ) : (
-                            <SuccessMsg>다시 한번 확인해 주세요 :-)</SuccessMsg>
+                            <SuccessMsg>비밀번호가 맞는지 확인해 주세요 :-)</SuccessMsg>
                         )}
                     </ModalInnerBox>
                     <ModalInnerBox>
