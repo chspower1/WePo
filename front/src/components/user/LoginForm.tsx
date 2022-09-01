@@ -53,7 +53,6 @@ export default function LoginForm() {
     //첫 랜더시
     useEffect(() => {
         if (cookies.rememberEmail !== undefined) {
-            setCookies("rememberEmail", "");
             setIsEmailRemember(true);
         }
         if (cookies.rememberEmail === "") {
@@ -64,6 +63,9 @@ export default function LoginForm() {
             setIsEmailRemember(false);
         }
         if (cookies.rememberEmail === undefined) {
+            setCookies("rememberEmail", "");
+        }
+        if (!cookies.rememberEmail) {
             setCookies("rememberEmail", "");
         }
         setError("password", {
