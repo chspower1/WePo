@@ -18,6 +18,15 @@ export interface IUser {
     projects?: IProject[];
     _v?: number;
 }
+export interface IProfile {
+    name?: string;
+    likes?: ILike[];
+    userId?: number;
+    field?: string[];
+    description?: string;
+    picture?: any;
+    email?: string;
+}
 export interface ILike {
     name: string;
     userId: number;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { curUserState, usersState, IUser, Efield } from "@/atoms";
+import { curUserState, usersState, IUser, Efield, IProfile } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -33,10 +33,10 @@ const ItemWrap = styled.div`
         box-shadow: 12px 12px 18px #95a9e070;
         transform: translate(0, -10px);
     }
-    &.sticky{
-        position:sticky;
-        left:0;
-        top:120px;
+    &.sticky {
+        position: sticky;
+        left: 0;
+        top: 120px;
     }
 `;
 const From = styled.form`
@@ -243,6 +243,10 @@ const InputBtn = styled.input`
 
 const ModalDelBtn = styled.button``;
 
+interface IUserCardProps {
+    profile: IProfile;
+    setProfile: React.Dispatch<React.SetStateAction<IProfile | undefined>>;
+}
 interface IUserFormValue {
     reName: string;
     reDescription: string;
@@ -250,8 +254,8 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
-    const { name, email, description, field, userId, picture, likes } = user;
+function UserCard({ profile, setProfile }: IUserCardProps) {
+    const { name, email, description, field, userId, picture, likes } = profile;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
@@ -278,6 +282,13 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
+        setProfile((prev) => ({
+            ...prev,
+            name,
+            field,
+            description,
+            picture,
+        }));
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
@@ -288,8 +299,6 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
             }
             return updateCurUser as IUser;
         });
-        console.log(picture[0].name)
-        refetch();
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
     };
@@ -304,13 +313,18 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     //즐겨찾기 추가/삭제
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        curUserToggleLike(userId);
+        curUserToggleLike(profile?.userId!);
         setCurUser((prev) => {
             let filterLike = [...prev?.likes!];
             if (foundLikeUser) {
                 filterLike = filterLike.filter((elem) => elem.userId !== userId);
             } else {
-                filterLike.push({ userId, name, email, picture });
+                filterLike.push({
+                    userId: profile?.userId!,
+                    name: profile?.name!,
+                    email: profile?.email!,
+                    picture: profile?.picture!,
+                });
             }
             const addLikeUser = { ...prev, likes: filterLike };
             return addLikeUser as IUser;
@@ -327,8 +341,8 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     }, [newPicture]);
 
     // 이미지 초기값 확인
-    const pictureDefault = picture?.split("/")[0] === "default_images";
-    const notDefault = pictureDefault ? "" : userId+"_";
+    // const pictureDefault = picture?.split("/")[0] === "default_images";
+    // const notDefault = pictureDefault ? "" : userId + "_";
     useEffect(() => {
         setOnLikeModalState(false);
     }, [curUser]);
@@ -370,7 +384,8 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                 src={
                                     newPicturePreview
                                         ? newPicturePreview
-                                        : `http://localhost:5001/uploads/${notDefault}${picture}`
+                                        : // : `http://localhost:5001/uploads/${notDefault}${picture}`
+                                          `http://localhost:5001/uploads/${picture}`
                                 }
                                 alt="profileImage"
                             />
@@ -408,8 +423,8 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                     </InfoBox>
                     <FieldBox>
                         {onEdit ||
-                            field.map((elem) => (
-                                <FieldStyle chose={field.includes(elem) ? true : false}>
+                            field?.map((elem) => (
+                                <FieldStyle chose={field?.includes(elem) ? true : false}>
                                     {elem}
                                 </FieldStyle>
                             ))}
@@ -428,7 +443,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                         />
                                         <FiledStyle
                                             htmlFor={elem}
-                                            chose={field.includes(elem) ? true : false}
+                                            chose={field?.includes(elem) ? true : false}
                                         >
                                             {elem}
                                         </FiledStyle>
@@ -440,13 +455,13 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                     <DescBox>
                         <DescTxt>
                             {onEdit ||
-                                (description?.length > 73
-                                    ? `${description.slice(0, 73)}...`
-                                    : description)}
+                                (description!.length > 73
+                                    ? `${description?.slice(0, 73)}...`
+                                    : description!)}
                             {onEdit && (
                                 <>
                                     <DescTextarea
-                                        defaultValue={description}
+                                        defaultValue={description!}
                                         {...register("reDescription", {
                                             required: "나에 대한 설명을 입력해주세요",
                                         })}
