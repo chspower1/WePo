@@ -161,8 +161,9 @@ export default function LoginForm() {
                                 name="rememberId"
                                 checked={isEmailRemember}
                                 onClick={onChangeAtuoLogin}
+                                id="rememberId"
                             />
-                            <label htmlFor="">이메일 기억하기</label>
+                            <label htmlFor="rememberId" style={{userSelect:"none"}}>이메일 기억하기</label>
                         </div>
                         {/* <div>
                             자동 로그인

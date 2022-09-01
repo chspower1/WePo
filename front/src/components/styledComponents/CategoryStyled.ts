@@ -8,7 +8,7 @@ export const Container = styled.div`
     justify-content: center;
     border-radius: 10px;
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
-    padding: 50px 50px 80px;
+    padding: 60px 50px;
     margin-bottom: 40px;
     background: ${(props) => props.theme.cardColor};
 
@@ -23,9 +23,9 @@ export const TitleBox = styled.div`
 export const Title = styled.h2`
     font-size: 25px;
     font-weight: 900;
+    margin-bottom: 60px;
 `;
 export const ContentContainer = styled.div`
-    margin-top: 30px;
     width: 80%;
     height: auto;
 `;
@@ -35,21 +35,20 @@ export const ContentBox = styled.div`
     height: auto;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid ${(props) => props.theme.contentColor};
+    border-bottom: 1px solid #e9e9e9;
+    padding: 30px 3px 10px;
 `;
 export const ContentName = styled.h2`
     font-size: 15px;
     font-weight: bold;
-    margin-bottom: 10px;
-    margin-top: 20px;
+    margin-bottom: 15px;
     color: ${(props) => props.theme.textColor};
 `;
 export const ContentAccent = styled.p`
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
-    margin-top: 20px;
-    max-width: 50%;
+    max-width: 90%;
+    margin-bottom: 20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -58,7 +57,7 @@ export const ContentAccent = styled.p`
 export const ContentDetail = styled.p`
     font-size: 15px;
     margin-bottom: 10px;
-    max-width: 50%;
+    max-width: 90%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -66,7 +65,7 @@ export const ContentDetail = styled.p`
 `;
 export const ContentDesc = styled.p`
     font-size: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     width: 90%;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -74,9 +73,9 @@ export const ContentDesc = styled.p`
     color: ${(props) => props.theme.textColor};
 `;
 export const ContentDate = styled.p`
-    font-size: 15px;
+    font-size: 13px;
     color: ${(props) => props.theme.contentColor};
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 `;
 export const EditButton = styled.button`
     width: 27px;
@@ -104,11 +103,11 @@ export const AddInput = styled.input.attrs((props) => ({
     type: props.type || "text",
 }))`
     width: ${(props) => props.width}px;
-    height: 30px;
     border-radius: 3px;
     border: 0;
     border: solid 1px ${(props) => props.theme.btnColor};
     margin-bottom: 10px;
+    padding: 8px 10px;
 `;
 
 export const AddInputBox = styled.div`
@@ -117,6 +116,7 @@ export const AddInputBox = styled.div`
     height: auto;
     display: ${(props) => props.style?.display || "flex"};
     flex-direction: column;
+    margin-bottom: 30px;
 `;
 export const RequiredLabel = styled.span`
     color: ${(props) => props.theme.btnColor};
@@ -175,9 +175,10 @@ export const UserCardBox = styled.div`
 `;
 export const ImportantTxt = styled.div`
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 0;
+    top: 0;
     color: ${(props) => props.theme.textColor};
+    font-size: 13px;
 `;
 export const SubmitOrCencerBtnBox = styled.div`
     width: 100%;

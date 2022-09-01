@@ -37,7 +37,7 @@ export const darkTheme: DefaultTheme = {
     circleColor: "#a7b6cc1a",
     cardColor: "#36363c",
     modeBgColor: "white",
-    headerBorderColor: "#737373",
-    headerActiveColor: "#666666",
+    headerBorderColor: "#2e2e2e",
+    headerActiveColor: "#222222",
     successColor: "#5573df",
 };

@@ -132,7 +132,7 @@ export default function AwardEditForm({
             </AwardStyled.AddInputBox>
             <AwardStyled.AddInputBox>
                 <AwardStyled.ContentName>
-                    기관 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>{" "}
+                    상세설명 <AwardStyled.RequiredLabel>*</AwardStyled.RequiredLabel>{" "}
                 </AwardStyled.ContentName>
                 <AwardStyled.AddInput
                     type="text"
