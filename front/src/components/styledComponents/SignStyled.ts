@@ -129,14 +129,14 @@ export const ErrMsg = styled.p`
     display: flex;
     align-items: center;
     color: #aabce0;
-    // color: #eb7474;
 `;
 
 export const DangerIcon = styled(Spam2)`
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     margin: 0 3px 0 6px;
+    margin-top:2px;
 `;
 
 export const SubmitButtonBox = styled.div`
@@ -206,6 +206,7 @@ export const CheckImoge = styled(CheckCircle)`
     height:11px;
     margin: 0 3px 0 3px;
     color: ${(props) => props.theme.successColor};
+    margin-top:2px;
 `;
 
 export const InputInnerBox = styled.div`
