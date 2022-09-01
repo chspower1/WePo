@@ -350,7 +350,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
 
     // 이미지 초기값 확인
     const pictureDefault = picture?.split("/")[0] === "default_images";
-    const notDefault = pictureDefault ? "" : userId+"_";
+    const notDefault = pictureDefault ? "" : userId + "_";
     useEffect(() => {
         setOnLikeModalState(false);
     }, [curUser]);

@@ -1,6 +1,25 @@
 import styled, { keyframes } from "styled-components";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
 import { CheckCircle } from "@styled-icons/bootstrap/CheckCircle";
+
+const fadeInUp = keyframes`
+0% {
+    opacity: 0;
+    transform: translate(0, 25px);
+}
+100% {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+`;
+const fadeIn = keyframes`
+0% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+`;
 export const Root = styled.div`
     width: 100%;
     transition: background 0.5s ease;
@@ -17,35 +36,33 @@ export const Wrapper = styled.div`
     &.register:before {
         content: '';
         position: absolute;
+        z-index:1;
         bottom: 80px;
         left: 8%;
         width: 420px;
         height: 420px;
+        opacity:0;
         background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg1.png"}) no-repeat 50% 50%/contain;
+        animation: ${fadeIn} .6s .3s forwards;
     }
     &.login:after {
         content: '';
         position: absolute;
+        z-index:1;
         bottom: 80px;
         right: 8%;
         width: 420px;
         height: 420px;
+        opacity:0;
         background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg2.png"}) no-repeat 50% 50%/contain;
+        animation: ${fadeIn} .6s .3s forwards;
     }
 `;
 
-const fadeInUp = keyframes`
-0% {
-    opacity: 0;
-    transform: translate(0, 25px);
-}
-100% {
-    opacity: 1;
-    transform: translate(0, 0);
-}
-`;
 
 export const FromContainer = styled.div`
+    position:relative;
+    z-index: 30;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
