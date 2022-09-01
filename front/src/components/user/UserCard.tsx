@@ -86,42 +86,42 @@ export const ProfileImg = styled.img`
     z-index: 1;
 `;
 const ImageChangeBox = styled.div`
-position: absolute;
-z-index: 2;
-left: 0;
-top: 0;
-width: 100%;
-height: 100%;
-background: transparent;
-transition: background .3s;
-&:hover{
-    background: rgba(0, 0, 0, 0.5);
-    & svg{
-        color:rgba(255,255,255,1);
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    transition: background 0.3s;
+    &:hover {
+        background: rgba(0, 0, 0, 0.5);
+        & svg {
+            color: rgba(255, 255, 255, 1);
+        }
     }
-}
-`
+`;
 const ImageChangeInput = styled.input`
     text-indent: -99999px;
     width: 100%;
     height: 100%;
 `;
 const ImageChangeLabel = styled.label`
-position: absolute;
-left: 0;
-top: 0;
-width: 100%;
-height: 100%;
-display:flex;
-cursor: pointer;
-`
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    cursor: pointer;
+`;
 const ImageChangeIcon = styled(PlusOutline)`
     margin: auto;
     width: 30px;
     height: 30px;
-    transition: color .3s;
-    color: rgba(255,255,255,0);
-`
+    transition: color 0.3s;
+    color: rgba(255, 255, 255, 0);
+`;
 const PlusIcon = styled(PlusOutline)`
     position: absolute;
     z-index: 3;
@@ -377,10 +377,10 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     }: IUserFormValue) => {
         setProfile!((prev) => {
             const updateProfile = { ...prev };
-            if (picture!.length === 0) {
+            if (picture!.length !== 0) {
                 updateProfile.picture = picture[0]?.name;
             }
-            return { ...prev, name, field, description, picture };
+            return { ...prev, name, field, description, picture: updateProfile.picture };
         });
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
@@ -489,7 +489,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                         {...register("rePicture")}
                                     />
                                     <ImageChangeLabel htmlFor="imgInput">
-                                        <ImageChangeIcon/>
+                                        <ImageChangeIcon />
                                     </ImageChangeLabel>
                                 </ImageChangeBox>
                             )}
