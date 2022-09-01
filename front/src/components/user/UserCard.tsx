@@ -362,10 +362,9 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            if (picture?.length !== 0) {
+            if (picture!.length !== 0) {
                 updateCurUser.picture = picture[0]?.name;
             }
-            console.log("picture[0].name", picture[0]?.name);
             return updateCurUser as IUser;
         });
         updateUser({ name, description, field, picture }, curUser?.userId!);
