@@ -193,7 +193,7 @@ function Header() {
                                     <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 </MiniProfileBox>
                                 <LoginOrRegiBtn onClick={UserLogout} className="logOut">
-                                    로그아웃
+                                    {window.screen.width < 500 ? <>dd</> : <>로그아웃</>}
                                 </LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (

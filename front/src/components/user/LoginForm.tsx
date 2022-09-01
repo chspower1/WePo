@@ -19,7 +19,7 @@ export interface ILogin {
     password: string;
 }
 
-export function LoginForm() {
+export default function LoginForm() {
     const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
     const [viewPassword, setViewPassword] = useState(false);
     const [isEmailRemember, setIsEmailRemember] = useState(false);
