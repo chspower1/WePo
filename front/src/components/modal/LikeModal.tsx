@@ -144,7 +144,7 @@ const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCa
             <LikedUserInfoBox>
                 <LikedUserImgBox>
                     <ProfileImg
-                        src={`http://${window.location.hostname}:5001/uploads/${picture}`}
+                        src={`http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`}
                         alt="profileImage"
                     />
                 </LikedUserImgBox>
