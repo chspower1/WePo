@@ -18,6 +18,7 @@ export const lightTheme: DefaultTheme = {
     modeBgColor: "#666666",
     headerBorderColor: "#f0f0f9",
     headerActiveColor: "#fff",
+    successColor: "#5573df",
 };
 export const darkTheme: DefaultTheme = {
     bgColor: "#1E1E1E",
@@ -38,4 +39,5 @@ export const darkTheme: DefaultTheme = {
     modeBgColor: "white",
     headerBorderColor: "#737373",
     headerActiveColor: "#666666",
+    successColor: "#5573df",
 };

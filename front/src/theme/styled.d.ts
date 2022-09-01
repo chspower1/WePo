@@ -19,5 +19,6 @@ declare module "styled-components" {
         modeBgColor: string;
         headerBorderColor: string;
         headerActiveColor: string;
+        successColor: string;
     }
 }

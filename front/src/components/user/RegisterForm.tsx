@@ -8,7 +8,7 @@ import { usersState } from "@/atoms";
 import { IUser } from "@/atoms";
 import { useQuery } from "@tanstack/react-query";
 import * as RegisterStyled from "@styledComponents/SignStyled";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 import SendMailAlert from "@components/modal/sendMailAlert";
 import { LoadingBox, LoadingIcon } from "./Network";
@@ -19,22 +19,11 @@ export interface IRegister {
     checkPassword?: string;
     field: string[];
 }
-const SelectBox = styled.div`
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 0 30px;
-`;
 
-const CheckBoxWrap = styled.div`
-    display: flex;
-    align-items: center;
-`;
 
-const Label = styled.label`
-    user-select: none;
-`;
 export default function RegisterForm() {
+    const location = useLocation();
+    const pathName = location.pathname;
     const [users, setUsers] = useRecoilState(usersState);
     const [viewCheckPassword, setViewCheckPassword] = useState(false);
     const [viewPassword, setViewPassword] = useState(false);
@@ -100,7 +89,7 @@ export default function RegisterForm() {
     }
     return (
         <RegisterStyled.Root>
-            <RegisterStyled.RegisterWrapper>
+            <RegisterStyled.RegisterWrapper className={pathName === "/register" ? "register" : ""}>
                 <RegisterStyled.RegisterFromContainer>
                     {sendEmail &&<SendMailAlert setSendEmail={setSendEmail}></SendMailAlert>}
                     {loading ? <LoadingBox><LoadingIcon>Loding...</LoadingIcon></LoadingBox>
@@ -129,7 +118,7 @@ export default function RegisterForm() {
                                 </RegisterStyled.ErrMsg>
                             ) : (
                                 <RegisterStyled.SuccessMsg>
-                                    ✔️적합한 Email이에요
+                                    <RegisterStyled.CheckImoge/>적합한 Email이에요
                                 </RegisterStyled.SuccessMsg>
                             )}
                         </RegisterStyled.InputBox>
@@ -152,7 +141,7 @@ export default function RegisterForm() {
                                 </RegisterStyled.ErrMsg>
                             ) : (
                                 <RegisterStyled.SuccessMsg>
-                                    ✔️멋진 이름이에요
+                                    <RegisterStyled.CheckImoge/>멋진 이름이에요
                                 </RegisterStyled.SuccessMsg>
                             )}
                         </RegisterStyled.InputBox>
@@ -188,7 +177,7 @@ export default function RegisterForm() {
                                 </RegisterStyled.ErrMsg>
                             ) : (
                                 <RegisterStyled.SuccessMsg>
-                                    ✔️적합한 비밀번호에요
+                                    <RegisterStyled.CheckImoge/>적합한 비밀번호에요
                                 </RegisterStyled.SuccessMsg>
                             )}
                         </RegisterStyled.InputBox>
@@ -229,7 +218,7 @@ export default function RegisterForm() {
                                 </RegisterStyled.ErrMsg>
                             ) : (
                                 <RegisterStyled.SuccessMsg>
-                                    ✔️비밀번호가 일치해요
+                                    <RegisterStyled.CheckImoge/>비밀번호가 일치해요
                                 </RegisterStyled.SuccessMsg>
                             )}
                         </RegisterStyled.InputBox>

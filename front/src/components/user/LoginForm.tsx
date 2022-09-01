@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios, { AxiosResponse } from "axios";
 import React, { InputHTMLAttributes, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserLogin } from "@api/api";
 import { isLoginState, IUser } from "../../atoms";
 import { curUserState } from "@/atoms";
@@ -36,7 +36,8 @@ export default function LoginForm() {
             email: `${cookies.rememberEmail}`,
         },
     });
-
+    const location = useLocation();
+    const pathName = location.pathname;
     const isLogin = useRecoilValue(isLoginState);
     const navigator = useNavigate();
 
@@ -97,7 +98,7 @@ export default function LoginForm() {
     }
     return (
         <LoginStyled.Root>
-            <LoginStyled.Wrapper>
+            <LoginStyled.Wrapper className={pathName === "/login" ? "login" : ""}>
                 <LoginStyled.FromContainer>
                     <LoginStyled.TitleBox>
                         <LoginStyled.Title>로그인</LoginStyled.Title>

@@ -94,7 +94,7 @@ const PlusIcon = styled(PlusOutline)`
 `;
 
 export const NameTxt = styled.h2`
-    font-size: px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
     text-overflow: ellipsis;
@@ -131,9 +131,19 @@ const DescTxt = styled.p`
 const EditOrDetailBtnBox = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-wrap:wrap;
     align-items: center;
     width: 100%;
     margin-top: 20px;
+`;
+const IsMyCardBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    &.mycard{
+        justify-content: flex-end;
+    }
 `;
 
 const ArrowIcon = styled(ArrowRightShort)`
@@ -142,10 +152,11 @@ const ArrowIcon = styled(ArrowRightShort)`
     margin-top: -3px;
 `;
 const DetailBtn = styled.button`
-    text-align: center;
+    display:inline-block;
     color: #5573df;
     margin: 0 auto;
     font-size: 15px;
+    padding:5px 0;
 `;
 const LikeBtnBox = styled.div`
     width: 30px;
@@ -227,6 +238,16 @@ const InputBtn = styled.input`
 `;
 
 const ModalDelBtn = styled.button``;
+const PasswordChangeBtn = styled.button`
+    display: block;
+    text-align: center;
+    background: #3687FF;
+    padding: 10px 20px;
+    color: #fff;
+    margin: 10px auto;
+    width: 100%;
+    border-radius: 5px;
+`;
 
 interface IUserFormValue {
     reName: string;
@@ -278,7 +299,8 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
         setOnEdit((cur) => !cur);
     };
 
-    const onClickLikesModal = () => {
+    const onClickLikesModal = (e: React.FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         setOnLikeModalState((cur) => !cur);
     };
     //즐겨찾기 추가/삭제
@@ -389,9 +411,9 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                     <FieldBox>
                         {onEdit ||
                             field.map((elem) => (
-                                <FieldStyle chose={field.includes(elem) ? true : false}>
+                                ((field.length > 1) && <FieldStyle chose={field.includes(elem) ? true : false}>
                                     {elem}
-                                </FieldStyle>
+                                </FieldStyle>)
                             ))}
                         {onEdit &&
                             fieldList.map((elem, index) => (
@@ -429,28 +451,26 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                             required: "나에 대한 설명을 입력해주세요",
                                         })}
                                     ></DescTextarea>
-                                    <button onClick={() => setEditPassword(true)}>
-                                        비밀번호변경
-                                    </button>
+                                    
                                 </>
                             )}
                         </DescTxt>
                     </DescBox>
                     <EditOrDetailBtnBox>
                         {pathName === `/network` && (
-                            <>
-                                <LikeBtnBox className={foundLikeUser ? "active" : ""}>
+                            <IsMyCardBox className={userId === curUser?.userId ? "mycard" : ""}>
+                                {(userId !== curUser?.userId) && <LikeBtnBox className={foundLikeUser ? "active" : ""}>
                                     <LikeBtn onClick={onClickLike}>
                                         {foundLikeUser ? <FullLikeButton /> : <EmptyLikeButton />}
                                     </LikeBtn>
-                                </LikeBtnBox>
+                                </LikeBtnBox>}
                                 <Link to={`${userId}`}>
                                     <DetailBtn title="더보기">
                                         더보기
                                         <ArrowIcon />
                                     </DetailBtn>
                                 </Link>
-                            </>
+                            </IsMyCardBox>
                         )}
                         {onEdit ||
                             (admin && (
@@ -458,13 +478,16 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                     편집
                                 </DetailBtn>
                             ))}
-                        {pathName !== "/network" && !onEdit && (
+                        {pathName !== "/network" && !onEdit && admin &&(
                             <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
                                 즐겨찾기목록
                             </DetailBtn>
                         )}
                         {onEdit && (
                             <>
+                                <PasswordChangeBtn onClick={() => setEditPassword(true)}>
+                                    비밀번호변경
+                                </PasswordChangeBtn>
                                 <DetailBtn title="수정완료">수정완료</DetailBtn>
                                 <DetailBtn
                                     title="취소"

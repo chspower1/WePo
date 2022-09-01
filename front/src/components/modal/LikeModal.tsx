@@ -61,9 +61,7 @@ const AccentWord = styled.span`
 const LikeBox = styled.div`
     width: 80%;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
 `;
 const LikeLists = styled.div`
     width:100%;
@@ -83,15 +81,15 @@ interface ILikeCardProps {
 }
 const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCardProps) => {
     return (
-        <LikeBox style={{ margin: "10px" }}>
-            <InfoBox style={{ alignItems: "center" }}>
-                <ProfileImageBox style={{ width: "60px", height: "60px" }}>
+        <LikeBox>
+            <InfoBox>
+                <ProfileImageBox>
                     <ProfileImg
                         src={`http://localhost:5001/uploads/${picture}`}
                         alt="profileImage"
                     />
                 </ProfileImageBox>
-                <UserInfoTxt style={{ alignItems: "center" }}>
+                <UserInfoTxt>
                     <NameTxt>{name}</NameTxt>
 
                     <EmailTxt>

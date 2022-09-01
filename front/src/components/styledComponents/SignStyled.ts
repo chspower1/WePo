@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
+import { CheckCircle } from "@styled-icons/bootstrap/CheckCircle";
 export const Root = styled.div`
     width: 100%;
     transition: background 0.5s ease;
@@ -13,7 +14,7 @@ export const Wrapper = styled.div`
     display: flex;
     padding: 50px 0 0;
     background: url(${process.env.PUBLIC_URL + "/assets/image/waveBg2.png"}) no-repeat left 50% bottom -80px/contain;
-    &:before {
+    &.register:before {
         content: '';
         position: absolute;
         bottom: 80px;
@@ -22,7 +23,7 @@ export const Wrapper = styled.div`
         height: 420px;
         background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg1.png"}) no-repeat 50% 50%/contain;
     }
-    &:after {
+    &.login:after {
         content: '';
         position: absolute;
         bottom: 80px;
@@ -180,9 +181,14 @@ export const SuccessMsg = styled.p`
     font-size: 12px;
     display: flex;
     align-items: center;
-    color: #5573df;
-    // color: #198754;
+    color: ${(props) => props.theme.successColor};
     margin: 0 0 0 5px;
+`;
+export const CheckImoge = styled(CheckCircle)`
+    width:11px;
+    height:11px;
+    margin: 0 3px 0 3px;
+    color: ${(props) => props.theme.successColor};
 `;
 
 export const InputInnerBox = styled.div`
