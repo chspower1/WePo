@@ -19,11 +19,11 @@ export interface ILogin {
     password: string;
 }
 
-export default function LoginForm() {
+export function LoginForm() {
+    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
     const [viewPassword, setViewPassword] = useState(false);
     const [isEmailRemember, setIsEmailRemember] = useState(false);
     // const [isPasswordRemember, setIsPasswordRemember] = useState(false);
-    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const {
         register,
@@ -165,7 +165,10 @@ export default function LoginForm() {
                                 onClick={onChangeAtuoLogin}
                                 id="rememberId"
                             />
-                            <LoginStyled.RememberIdLabel htmlFor="rememberId" style={{ userSelect: "none" }}>
+                            <LoginStyled.RememberIdLabel
+                                htmlFor="rememberId"
+                                style={{ userSelect: "none" }}
+                            >
                                 이메일 기억하기
                             </LoginStyled.RememberIdLabel>
                         </div>

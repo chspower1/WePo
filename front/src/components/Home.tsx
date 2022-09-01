@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useCookies } from "react-cookie";
+import { useEffect } from "react";
 
 const Root = styled.div`
     position: relative;
@@ -132,6 +133,13 @@ const Img = styled.img`
     opacity: ${(props) => props.theme.imgOpacity};
 `;
 export default function Home() {
+    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
+    useEffect(() => {
+        if (cookies.rememberEmail === undefined) {
+            setCookies("rememberEmail", "");
+        }
+    }, []);
+
     return (
         <Root>
             <Wrap>
