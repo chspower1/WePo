@@ -5,6 +5,8 @@ import { ILike } from "@/atoms";
 import {
     EmailTxt,
     InfoBox,
+    LikeModalInfoBox,
+    ModalProfileImageBox,
     NameTxt,
     ProfileImageBox,
     ProfileImg,
@@ -15,8 +17,8 @@ import { Link } from "react-router-dom";
 const Wrapper = styled.div`
     z-index: 1010;
     position: fixed;
-    width:100vw;
-    height:100vh;
+    width: 100vw;
+    height: 100vh;
     top: 0;
     left: 0;
     display: flex;
@@ -36,7 +38,7 @@ const modalShow = keyframes`
     }
 `;
 const Modal = styled.div`
-    position:relative;
+    position: relative;
     animation: ${modalShow} 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 600px;
     height: 600px;
@@ -46,7 +48,7 @@ const Modal = styled.div`
     flex-direction: column;
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
-    padding:50px 30px;
+    padding: 50px 30px;
 `;
 const ModalHeader = styled.h1`
     width: 100%;
@@ -64,12 +66,16 @@ const LikeBox = styled.div`
     align-items: center;
 `;
 const LikeLists = styled.div`
-    width:100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 `;
 const ClsBtn = styled.button`
-    position:absolute;
+    position: absolute;
     right: 50px;
-    top:30px;
+    top: 30px;
 `;
 
 interface ILikeCardProps {
@@ -98,7 +104,7 @@ const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCa
                         </a>
                     </EmailTxt>
                 </UserInfoTxt>
-            </InfoBox>
+            </LikeModalInfoBox>
             <Link to={`/network/${userId}`}>
                 <button onClick={() => setOnLikeModalState(false)}>보러가기</button>
             </Link>
@@ -107,7 +113,7 @@ const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCa
 };
 
 function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
-    useEffect(() => {}, [onLikeModalState]);
+    // useEffect(() => {}, [onLikeModalState]);
     const navigator = useNavigate();
     return (
         <Wrapper>

@@ -22,6 +22,7 @@ import * as Mypage from "@styledComponents/CategoryStyled";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import CurrentBoard from "@components/category/CurrentBoard";
 import { LoadingBox, LoadingIcon } from "./Network";
+
 function UserDetails() {
     const navigator = useNavigate();
     const isLogin = useRecoilValue(isLoginState);
@@ -69,7 +70,7 @@ function UserDetails() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
-    useEffect(() => {}, [UserCard]);
+    // useEffect(() => {}, [UserCard]);
     const onDragEnd = async ({ draggableId, destination, source }: DropResult) => {
         if (destination?.droppableId !== source.droppableId) return;
         //드래그 필드가 Educations

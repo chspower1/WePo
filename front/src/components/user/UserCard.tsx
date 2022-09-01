@@ -27,7 +27,7 @@ const ItemWrap = styled.div`
     box-sizing: border-box;
     border: 1px solid #fff;
     transform: translate(0, 0);
-    transition: border .3s, box-shadow .3s, transform .4s;
+    transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
     &:hover {
         border: 1px solid ${(props) => props.theme.filedBgColor};
         box-shadow: 12px 12px 18px #95a9e070;
@@ -38,7 +38,6 @@ const ItemWrap = styled.div`
         left:0;
         top:120px;
     }
-    
 `;
 const From = styled.form`
     height: 100%;
@@ -53,12 +52,28 @@ export const InfoBox = styled.div`
 export const ProfileImageBox = styled.div`
     position: relative;
     transform: translate(-10px, -50px);
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid ${(props) => props.theme.filedBgColor};
-    box-shadow: 5px 5px 10px rgba(196,196,196, .4);
+    box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
+`;
+export const LikeModalInfoBox = styled(InfoBox)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+`;
+export const ModalProfileImageBox = styled(ProfileImageBox)`
+    position: relative;
+    transform: translate(0, 0);
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid ${(props) => props.theme.filedBgColor};
+    box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
 `;
 
 export const UserInfoTxt = styled.div`
@@ -221,7 +236,7 @@ const CheckMe = styled.div`
     top: 0;
     padding-top: 15px;
     font-size: 16px;
-    padding:10px 30px;
+    padding: 10px 30px;
     transform: translateY(-100%);
 `;
 const InputBtn = styled.input`
@@ -256,12 +271,17 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
+function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     const { name, email, description, field, userId, picture, likes } = user;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { register, handleSubmit, watch } = useForm<IUserFormValue>();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<IUserFormValue>();
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
@@ -336,6 +356,7 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
     }, [curUser]);
 
     useEffect(() => {}, [onEdit]);
+    console.log(field);
     if (!curUser)
         return (
             <LoadingBox>
@@ -347,21 +368,19 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
         <>
             {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
             {onLikeModalState && (
-                    <>
-                        <LikeModal
-                            likeUsers={likes}
-                            setOnLikeModalState={setOnLikeModalState}
-                            onLikeModalState={onLikeModalState}
-                        ></LikeModal>
-                    </>
+                <>
+                    <LikeModal
+                        likeUsers={likes}
+                        setOnLikeModalState={setOnLikeModalState}
+                        onLikeModalState={onLikeModalState}
+                    ></LikeModal>
+                </>
             )}
-            <ItemWrap
-                className={pathName==="/mypage" ? "sticky" : ""}
-                >
+            <ItemWrap className={pathName === "/mypage" ? "sticky" : ""}>
                 {curUser?.userId === userId && pathName === "/network" && (
                     <CheckMe>It's Me!</CheckMe>
                 )}
-                
+
                 <From
                     onSubmit={handleSubmit(onvalid)}
                     encType="multipart/form-data"
@@ -398,6 +417,7 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                     />
                                 )}
                             </NameTxt>
+                            {errors.reName?.message}
 
                             <EmailTxt>
                                 {onEdit || (
@@ -424,8 +444,9 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                             key={elem}
                                             type="checkbox"
                                             value={elem}
-                                            defaultChecked={field.includes(elem) ? true : false}
-                                            {...register("reField")}
+                                            {...register("reField", {
+                                                required: "희망 분야를 선택해주세요!",
+                                            })}
                                         />
                                         <FiledStyle
                                             htmlFor={elem}
@@ -436,6 +457,7 @@ function UserCard({ user,refetch } :{user:IUser,refetch:any}) {
                                     </div>
                                 </>
                             ))}
+                        {errors.reField?.message}
                     </FieldBox>
                     <DescBox>
                         <DescTxt>

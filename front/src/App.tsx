@@ -4,7 +4,7 @@ import { lightTheme, darkTheme } from "./theme/theme";
 import Router from "./Router";
 import "./font/font.css";
 import { useRecoilState } from "recoil";
-import { isDarkState, isLoginState } from "./atoms";
+import { isDarkState } from "./atoms";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const GlobalStyle = createGlobalStyle`
