@@ -36,6 +36,25 @@ class userAuthService {
 
     createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
+    // 인증 이메일 내용
+    const userId = createdNewUser.userId
+    const mailContent = {
+      from: '"Limit" <wnsdml0120@gmail.com>',
+      to: email,
+      subject: "[WePo] 이메일 인증",
+      text: "",
+      html: "",
+      setContent(authCode){
+        const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${userId}/${authCode}`
+        this.text = `${name}님, 다음 링크로 이메일 인증 부탁드립니다: ${authURL}`;
+        this.html = `<br>${name}<b/>님,<br/>
+        아래 버튼을 눌러 이메일 인증 부탁드립니다:</br>
+        <a href="${authURL}">이메일 인증하기</a>`
+      }
+    };
+
+    createdNewUser.mailContent = mailContent
+
     return createdNewUser;
   }
 
@@ -112,7 +131,12 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const { name, description, field, picture } = toUpdate;
+    
+    let { name, description, field, picture } = toUpdate;
+
+    if(!field) {
+      field = [];
+    }
 
     const newValues = {
       ...(name && { name }),

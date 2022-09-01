@@ -541,9 +541,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                             key={elem}
                                             type="checkbox"
                                             value={elem}
-                                            {...register("reField", {
-                                                required: "희망 분야를 선택해주세요!."
-                                            })}
+                                            {...register("reField")}
                                         />
                                         <FiledStyle
                                             htmlFor={elem}
