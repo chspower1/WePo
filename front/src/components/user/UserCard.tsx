@@ -314,7 +314,8 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
         setOnEdit((cur) => !cur);
     };
 
-    const onClickLikesModal = () => {
+    const onClickLikesModal = (e: React.FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         console.log("Dddddddddddddddddd");
         setOnLikeModalState(true);
     };
@@ -357,14 +358,12 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     //     console.log("필드리스트 확인", elem);
     // });
     // 이미지 초기값 확인
-    // const pictureDefault = picture?.split("/")[0] === "default_images";
-    // const notDefault = pictureDefault ? "" : userId + "_";
-    useEffect(() => {
-        setOnLikeModalState(false);
-    }, [curUser]);
-
+    const pictureDefault = picture?.split("/")[0] === "default_images";
+    const notDefault = pictureDefault ? "" : userId + "_";
+    // useEffect(() => {
+    //     setOnLikeModalState(false);
+    // }, [curUser]);
     useEffect(() => {}, [onEdit]);
-    console.log(field);
     if (!profile)
         return (
             <LoadingBox>
@@ -401,7 +400,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                     newPicturePreview
                                         ? newPicturePreview
                                         : // : `http://localhost:5001/uploads/${notDefault}${picture}`
-                                          `http://localhost:5001/uploads/${picture}`
+                                          `http://localhost:5001/uploads/${notDefault}${picture}`
                                 }
                                 alt="profileImage"
                             />
