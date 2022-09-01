@@ -7,7 +7,7 @@ const Container = styled(CurBoard.Container)`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 30px;
+    padding: 40px 30px;
 `;
 const ContentBox = styled(CurBoard.ContentBox)`
     display: flex;
@@ -26,6 +26,7 @@ const ContentAccent = styled(CurBoard.ContentAccent)`
     width: 100%;
     text-align: center;
     font-size: 20px;
+    margin-right:0;
 `;
 
 interface ICurBoardProps {
