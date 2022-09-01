@@ -37,7 +37,7 @@ const ModalInnerBox = styled.div`
 `;
 const ModalHeader = styled.h1`
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     color: ${(props) => props.theme.textColor};
 `;

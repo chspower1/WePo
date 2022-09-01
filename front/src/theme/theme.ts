@@ -1,7 +1,7 @@
 import { DefaultTheme } from "styled-components";
 export const lightTheme: DefaultTheme = {
     bgColor: "#eff3ff",
-    textColor: "#1E1E1E",
+    textColor: "#404040",
     btnColor: "#3687FF",
     btnTextColor: "#fff",
     hoverColor: "#0e3f87",
