@@ -146,7 +146,7 @@ const DescTxt = styled.p`
 const EditOrDetailBtnBox = styled.div`
     display: flex;
     justify-content: space-between;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     align-items: center;
     width: 100%;
     margin-top: 20px;
@@ -156,7 +156,7 @@ const IsMyCardBox = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    &.mycard{
+    &.mycard {
         justify-content: flex-end;
     }
 `;
@@ -167,11 +167,11 @@ const ArrowIcon = styled(ArrowRightShort)`
     margin-top: -3px;
 `;
 const DetailBtn = styled.button`
-    display:inline-block;
+    display: inline-block;
     color: #5573df;
     margin: 0 auto;
     font-size: 15px;
-    padding:5px 0;
+    padding: 5px 0;
 `;
 const LikeBtnBox = styled.div`
     width: 30px;
@@ -256,7 +256,7 @@ const ModalDelBtn = styled.button``;
 const PasswordChangeBtn = styled.button`
     display: block;
     text-align: center;
-    background: #3687FF;
+    background: #3687ff;
     padding: 10px 20px;
     color: #fff;
     margin: 10px auto;
@@ -368,21 +368,10 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
             setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
-    // const test = ["백엔드", "인공지능"];
-    // fieldList.map((elem, index) => {
-    //     fieldList.includes("프론트엔드");
-    //     console.log("프론트엔드", test.includes("프론트엔드"));
-    //     console.log("백엔드", test.includes("백엔드"));
-    //     console.log("데이터분석", test.includes("데이터분석"));
-    //     console.log("인공지능", test.includes("인공지능"));
-    //     console.log("필드리스트 확인", elem);
-    // });
-    // 이미지 초기값 확인
-    const pictureDefault = picture?.split("/")[0] === "default_images";
+
+    const pictureDefault = String(picture).split("/")[0] === "default_images";
     const notDefault = pictureDefault ? "" : userId + "_";
-    // useEffect(() => {
-    //     setOnLikeModalState(false);
-    // }, [curUser]);
+
     useEffect(() => {}, [onEdit]);
     if (!profile)
         return (
@@ -458,11 +447,14 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                     </InfoBox>
                     <FieldBox>
                         {onEdit ||
-                            field?.map((elem) => (
-                                ((field.length > 1) && <FieldStyle chose={field.includes(elem) ? true : false}>
-                                    {elem}
-                                </FieldStyle>)
-                            ))}
+                            field?.map(
+                                (elem) =>
+                                    field.length > 1 && (
+                                        <FieldStyle chose={field.includes(elem) ? true : false}>
+                                            {elem}
+                                        </FieldStyle>
+                                    )
+                            )}
                         {onEdit &&
                             fieldList.map((elem, index) => (
                                 <>
@@ -502,7 +494,6 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                             required: "나에 대한 설명을 입력해주세요",
                                         })}
                                     ></DescTextarea>
-                                    
                                 </>
                             )}
                         </DescTxt>
@@ -510,11 +501,17 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                     <EditOrDetailBtnBox>
                         {pathName === `/network` && (
                             <IsMyCardBox className={userId === curUser?.userId ? "mycard" : ""}>
-                                {(userId !== curUser?.userId) && <LikeBtnBox className={foundLikeUser ? "active" : ""}>
-                                    <LikeBtn onClick={onClickLike}>
-                                        {foundLikeUser ? <FullLikeButton /> : <EmptyLikeButton />}
-                                    </LikeBtn>
-                                </LikeBtnBox>}
+                                {userId !== curUser?.userId && (
+                                    <LikeBtnBox className={foundLikeUser ? "active" : ""}>
+                                        <LikeBtn onClick={onClickLike}>
+                                            {foundLikeUser ? (
+                                                <FullLikeButton />
+                                            ) : (
+                                                <EmptyLikeButton />
+                                            )}
+                                        </LikeBtn>
+                                    </LikeBtnBox>
+                                )}
                                 <Link to={`${userId}`}>
                                     <DetailBtn title="더보기">
                                         더보기
@@ -529,7 +526,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                     편집
                                 </DetailBtn>
                             ))}
-                        {pathName !== "/network" && !onEdit && admin &&(
+                        {pathName !== "/network" && !onEdit && admin && (
                             <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
                                 즐겨찾기목록
                             </DetailBtn>
