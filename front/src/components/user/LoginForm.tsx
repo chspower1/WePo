@@ -161,8 +161,9 @@ export default function LoginForm() {
                                 name="rememberId"
                                 checked={isEmailRemember}
                                 onClick={onChangeAtuoLogin}
+                                id="rememberId"
                             />
-                            <label htmlFor="">이메일 기억하기</label>
+                            <label htmlFor="rememberId" style={{userSelect:"none"}}>이메일 기억하기</label>
                         </div>
                         {/* <div>
                             자동 로그인
@@ -172,7 +173,7 @@ export default function LoginForm() {
                             <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
                         </LoginStyled.SubmitButtonBox>
                     </form>
-                     <LoginStyled.RegisterCommentBox>
+                    <LoginStyled.RegisterCommentBox>
                         아직 회원이 아니신가요?
                         <Link to="/register">
                             <LoginStyled.RegisterButton>회원가입</LoginStyled.RegisterButton>
