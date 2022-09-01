@@ -90,9 +90,9 @@ export default function RegisterForm() {
     }
     return (
         <RegisterStyled.Root>
+            {sendEmail && <SendMailAlert setSendEmail={setSendEmail}></SendMailAlert>}
             <RegisterStyled.RegisterWrapper className={pathName === "/register" ? "register" : ""}>
                 <RegisterStyled.RegisterFromContainer>
-                    {sendEmail && <SendMailAlert setSendEmail={setSendEmail}></SendMailAlert>}
                     {loading ? (
                         <LoadingBox>
                             <LoadingIcon>Loding...</LoadingIcon>

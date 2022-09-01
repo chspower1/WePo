@@ -152,11 +152,15 @@ function Header() {
     const UserLogout = () => {
         localStorage.removeItem("recoil-persist");
         sessionStorage.removeItem("userToken");
+        console.log("logout",curUser);
         setCurUser(null);
     };
     // 이미지 초기값 확인
     const pictureDefault = curUser?.picture?.split("/")[0] === "default_images";
-    const notDefault = pictureDefault ? "" : curUser?.userId! + "_"
+    const findUserId = curUser?.picture?.split("_")[0] === curUser?.userId ? "" : curUser?.userId + "_";
+    const notDefault = pictureDefault ? "" : findUserId;
+
+    console.log("curUser값",curUser);
     useEffect(()=>{
         window.scrollTo(0,0)
         setScrollY(0);

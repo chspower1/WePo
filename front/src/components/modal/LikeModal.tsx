@@ -11,6 +11,7 @@ import {
     UserInfoTxt,
 } from "@user/UserCard";
 import { Link } from "react-router-dom";
+import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
 
 const Wrapper = styled.div`
     z-index: 1010;
@@ -51,15 +52,14 @@ const LikedUserImgBox = styled.div`
     border-radius: 50%;
     margin-right:20px;
     overflow: hidden;
-    border: 4px solid ${(props) => props.theme.filedBgColor};
+    border: 2px solid ${(props) => props.theme.filedBgColor};
     box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
 `;
 const AccentWord = styled.h2`
-    color: #3867ff;
+    color: ${(props) => props.theme.btnColor};
     font-size: 30px;
     text-align:center;
     padding:0 0 30px;
- 
 `;
 
 const LikeBox = styled.div`
@@ -67,9 +67,9 @@ const LikeBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 20px 0;
     &+&{
-        border-top: 2px solid #555555
+        border-top: 1px solid #eee
     }
 `;
 const LikeLists = styled.div`
@@ -83,15 +83,23 @@ const LikeLists = styled.div`
         width: 5px;
     }
     &::-webkit-scrollbar-thumb{
-        background: ${props=>props.theme.btnColor};
+        background: ${props=>props.theme.starBorderColor};
         border-radius: 10px;
     }
 `;
 const ClsBtn = styled.button`
     position: absolute;
-    right: 50px;
-    top: 30px;
+    right: 30px;
+    top: 20px;
+    width:30px;
+    height:30px;
+    padding:0;
 `;
+const CloseBtnIcons = styled(CloseOutline)`
+    width:100%;
+    height:100%;
+    color: #666666;
+`
 const GotoLinkBox = styled.div`
     display:inline-block;
 `
@@ -100,7 +108,7 @@ const GotoLink = styled(Link)`
     color:${props=>props.theme.btnTextColor};
     background:${props=>props.theme.starBorderColor};
     font-size:13px;
-    padding:12px 15px;
+    padding:10px 15px;
     border-radius:10px;
 `
 const LikedUserInfoBox = styled.div`
@@ -160,7 +168,9 @@ function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
         <Wrapper>
             <Modal>
                 <AccentWord>내가 팔로우한 사람</AccentWord>
-                <ClsBtn onClick={() => setOnLikeModalState(false)}> x </ClsBtn>
+                <ClsBtn onClick={() => setOnLikeModalState(false)}> 
+                    <CloseBtnIcons/>
+                </ClsBtn>
                 <LikeLists>
                     {likeUsers?.map((user: any, index: number) => (
                         <LikeCard {...user} setOnLikeModalState={setOnLikeModalState}></LikeCard>

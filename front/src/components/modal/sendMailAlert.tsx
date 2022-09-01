@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
-    z-index: 99;
+    z-index: 1007;
     position: fixed;
     top: 0;
     left: 0;
