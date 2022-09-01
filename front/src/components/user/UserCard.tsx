@@ -150,6 +150,10 @@ export const NameTxt = styled.h2`
         outline: none;
         margin-bottom: 10px;
         padding: 8px 10px;
+        &::placeholder {
+            font-size: 14px;
+            color: #e6494b;
+        }
         &:focus {
             border: 2px solid ${(props) => props.theme.accentColor};
         }
@@ -274,6 +278,10 @@ const DescTextarea = styled.textarea`
     border: solid 1px ${(props) => props.theme.btnColor};
     margin-bottom: 10px;
     padding: 8px 10px;
+    &::placeholder {
+        color: #e6494b;
+        font-size: 14px;
+    }
     &:focus {
         outline: 1.5px solid ${(props) => props.theme.accentColor};
     }
@@ -512,13 +520,13 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                     <input
                                         type="text"
                                         defaultValue={name}
+                                        placeholder={errors.reName?.message}
                                         {...register("reName", {
                                             required: "이름을 입력해주세요",
                                         })}
                                     />
                                 )}
                             </NameTxt>
-                            {errors.reName?.message}
 
                             <EmailTxt>
                                 {onEdit || (
@@ -577,6 +585,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                             {onEdit && (
                                 <>
                                     <DescTextarea
+                                        placeholder={errors.reDescription?.message}
                                         defaultValue={description!}
                                         {...register("reDescription", {
                                             required: "나에 대한 설명을 입력해주세요",

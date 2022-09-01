@@ -20,10 +20,10 @@ export interface ILogin {
 }
 
 export default function LoginForm() {
+    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
     const [viewPassword, setViewPassword] = useState(false);
     const [isEmailRemember, setIsEmailRemember] = useState(false);
     // const [isPasswordRemember, setIsPasswordRemember] = useState(false);
-    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
     const [curUser, setCurUser] = useRecoilState(curUserState);
     const {
         register,
@@ -165,14 +165,13 @@ export default function LoginForm() {
                                 onClick={onChangeAtuoLogin}
                                 id="rememberId"
                             />
-                            <label htmlFor="rememberId" style={{ userSelect: "none" }}>
+                            <LoginStyled.RememberIdLabel
+                                htmlFor="rememberId"
+                                style={{ userSelect: "none" }}
+                            >
                                 이메일 기억하기
-                            </label>
+                            </LoginStyled.RememberIdLabel>
                         </div>
-                        {/* <div>
-                            자동 로그인
-                            <input type="checkbox" name="autoLogin" onClick={onChangeAtuoLogin} />
-                        </div> */}
                         <LoginStyled.SubmitButtonBox>
                             <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
                         </LoginStyled.SubmitButtonBox>
