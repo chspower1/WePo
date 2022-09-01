@@ -236,3 +236,6 @@ export const FiledLabel = styled.label`
     color: ${(props) => props.theme.textColor};
     user-select: none;
 `;
+export const RememberIdLabel = styled.label`
+    color: ${(props) => props.theme.textColor};
+`;
