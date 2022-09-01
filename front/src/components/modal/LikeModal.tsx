@@ -104,7 +104,7 @@ const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCa
                         </a>
                     </EmailTxt>
                 </UserInfoTxt>
-            </LikeModalInfoBox>
+            </InfoBox>
             <Link to={`/network/${userId}`}>
                 <button onClick={() => setOnLikeModalState(false)}>보러가기</button>
             </Link>
