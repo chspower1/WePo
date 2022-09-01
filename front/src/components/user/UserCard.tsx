@@ -38,7 +38,7 @@ const ItemWrap = styled.div`
         top: 120px;
     }
     @media screen and (max-width: 500px) {
-        width: 300px;
+        width: 88%;
         margin: 0px auto;
     }
 `;

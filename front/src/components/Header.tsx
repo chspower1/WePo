@@ -40,6 +40,10 @@ export const HeaderContainer = styled.div`
     padding: 0 30px;
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width: 800px) {
+        padding: 0 20px;
+    }
 `;
 const Nav = styled.nav`
     background-color: transprent;
@@ -48,6 +52,12 @@ const Nav = styled.nav`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+
+    @media screen and (max-width: 500px) {
+        position: absolute;
+        top: 80px;
+        right: 0;
+    }
 `;
 /**
  *  정확한 페이지로 가면 active-style
@@ -92,7 +102,7 @@ export const LogoBox = styled.div`
     display: flex;
     align-items: center;
     @media screen and (max-width: 500px) {
-        width: 100px;
+        width: 120px;
     }
 `;
 export const LogoImg = styled.img`
@@ -139,6 +149,39 @@ const MiniProfileBox = styled.div`
     align-items: center;
     margin-left: 20px;
 `;
+
+const MobileNavBtn = styled.div`
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translate(0, -50%);
+    width: 42px;
+    height: 26px;
+`;
+
+const MobileNavBtnSpan = styled.span`
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #333;
+    border-radius: 5px;
+    position: absolute;
+    left: 0;
+
+    &:nth-child(1) {
+        top: 0px;
+    }
+
+    &:nth-child(2) {
+        top: calc(50% - 1.5px);
+    }
+
+    &:nth-child(3) {
+        bottom: 0px;
+    }
+`;
+
+
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -231,6 +274,11 @@ function Header() {
                         )}
                     </Nav>
                 </HeaderContainer>
+                <MobileNavBtn>
+                    <MobileNavBtnSpan />
+                    <MobileNavBtnSpan />
+                    <MobileNavBtnSpan />
+                </MobileNavBtn>
             </HeaderWrap>
         </>
     );

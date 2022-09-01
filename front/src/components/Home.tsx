@@ -16,14 +16,22 @@ const Wrap = styled.div`
     position: relative;
     z-index: 2;
     width: 100%;
-    min-width: 1000px;
     height: 100%;
     min-height: 480px;
+    padding: 0 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     background: url(${process.env.PUBLIC_URL + "/assets/image/waveBg3.png"}) no-repeat left 50%
         bottom -80px / contain;
+ 
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 40px;
+        background-position: 50% 100%;
+        background-size: 150%;
+    }
 `;
 
 const fadeInUp = keyframes`
@@ -50,16 +58,23 @@ const TextBox = styled.div`
     max-width: 500px;
     margin: 0 0 80px 100px;
     color: ${(props) => props.theme.textColor};
+
+    @media screen and (max-width: 800px) {
+        max-width: none;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto 140px;
+    }
 `;
 
 const TitleBox = styled.div`
-    width: 100%;
     user-select: none;
     opacity: 0;
     animation: ${fadeInUp} 0.8s 0.6s forwards;
 `;
 const TitleTxt = styled.h2`
     position: relative;
+    display: inline-block;
     font-family: "Montserrat", sans-serif;
     font-size: 45px;
     font-weight: bold;
@@ -73,6 +88,11 @@ const TitleTxt = styled.h2`
         border-radius: 50%;
         background: ${(props) => props.theme.filedBgColor};
     }
+
+    @media screen and (max-width: 500px) {
+        font-size: 36px;
+        line-height: 1.5;
+    }
 `;
 const DescBox = styled.div`
     width: 100%;
@@ -85,12 +105,20 @@ const DescTxt = styled.p`
     line-height: 2;
     font-size: 18px;
     color: #676767;
+
+    @media screen and (max-width: 500px) {
+        font-size: 15px;
+    }
 `;
 const ButtonBox = styled.div`
     width: 100%;
     margin: 60px 0 0;
     opacity: 0;
     animation: ${fadeIn} 1s 1s forwards;
+
+    @media screen and (max-width: 500px) {
+        margin: 30px 0 0;
+    }
 `;
 const ViewMoreButton = styled(Link)`
     display: flex;
@@ -112,6 +140,13 @@ const ViewMoreButton = styled(Link)`
             margin-left: 10px;
         }
     }
+
+    @media screen and (max-width: 800px) {
+        margin: 0 auto;
+        font-size: 14px;
+        width: 110px;
+        height: 45px;
+    }
 `;
 const ArrowIcon = styled(ArrowRightShort)`
     width: 0;
@@ -122,9 +157,19 @@ const ArrowIcon = styled(ArrowRightShort)`
 const ImgBox = styled.div`
     max-width: 800px;
     width: 100%;
-    margin-left: 180px;
+    min-width: 360px;
+    margin-left: 10%;
     opacity: 0;
     animation: ${fadeIn} 2.4s forwards;
+
+    @media screen and (max-width: 800px) {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    @media screen and (max-width: 500px) {
+        width: 90%;
+    }
 `;
 const Img = styled.img`
     width: 100%;
