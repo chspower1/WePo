@@ -156,7 +156,9 @@ export const ViewButton = styled.button`
     top: 50%;
     transform: translateY(-70%);
 `;
-export const FiledBox = styled.div``;
+export const FiledBox = styled.div`
+    margin-bottom:10px;
+`;
 export const FiledSelectBox = styled.div`
     display: flex;
     justify-content: space-around;
