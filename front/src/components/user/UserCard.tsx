@@ -142,15 +142,17 @@ export const NameTxt = styled.h2`
     overflow: hidden;
     white-space: nowrap;
     cursor: default;
-
     & > input[type="text"] {
-        font-size: 18px;
+        font-size: 16px;
         width: 100%;
-        border-radius: 3px;
-        border: 0;
+        border-radius: 10px;
         border: solid 1px ${(props) => props.theme.btnColor};
+        outline: none;
         margin-bottom: 10px;
         padding: 8px 10px;
+        &:focus {
+            border: 2px solid ${(props) => props.theme.accentColor};
+        }
     }
 `;
 export const EmailTxt = styled.h3`
@@ -177,14 +179,8 @@ const DescTxt = styled.p`
     line-height: 1.2;
     font-size: 16px;
     color: #797979;
-
-    & > textarea {
-        font-size: 15px;
-        border-radius: 3px;
-        border: 0;
-        border: solid 1px ${(props) => props.theme.btnColor};
-        margin-bottom: 10px;
-        padding: 8px 10px;
+    &:focus {
+        border: 1.5px solid ${(props) => props.theme.accentColor};
     }
 `;
 
@@ -229,6 +225,10 @@ const SubmitButton = styled.button`
     color: ${(props) => props.theme.btnTextColor};
     padding: 10px 15px;
     border-radius: 5px;
+    transition: all 0.4s ease;
+    &:hover {
+        background: ${(props) => props.theme.accentColor};
+    }
 `;
 const ExitButton = styled.button`
     color: ${(props) => props.theme.btnColor};
@@ -268,6 +268,15 @@ const DescTextarea = styled.textarea`
     width: 100%;
     height: 90%;
     resize: none;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 0;
+    border: solid 1px ${(props) => props.theme.btnColor};
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    &:focus {
+        outline: 1.5px solid ${(props) => props.theme.accentColor};
+    }
 `;
 const FieldBox = styled.div`
     display: flex;
