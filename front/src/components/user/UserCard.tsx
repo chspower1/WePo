@@ -152,7 +152,7 @@ export const NameTxt = styled.h2`
         padding: 8px 10px;
         &::placeholder {
             font-size: 14px;
-            color: #e6494b;
+            color: #f32942;
         }
         &:focus {
             border: 2px solid ${(props) => props.theme.accentColor};
@@ -279,7 +279,7 @@ const DescTextarea = styled.textarea`
     margin-bottom: 10px;
     padding: 8px 10px;
     &::placeholder {
-        color: #e6494b;
+        color: #f32942;
         font-size: 14px;
     }
     &:focus {
@@ -373,6 +373,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
         watch,
         formState: { errors },
     } = useForm<IUserFormValue>({
+        mode: "onChange",
         defaultValues: {
             reField: field,
         },
