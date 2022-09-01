@@ -89,7 +89,11 @@ export default function Education({ educations, setEducations }: IEducationProps
                                                         >
                                                             {education.school}
                                                         </EducationStyled.ContentAccent>
-                                                        <div style={{ display: "flex" }}>
+                                                        <div style={{ display: "flex" ,
+                                                                        paddingBottom: 20,
+                                                                        marginBottom:20,
+                                                                        borderBottom: `1px solid #e9e9e9`
+                                                                    }}>
                                                             <EducationStyled.ContentDetail
                                                                 style={{ marginRight: "10px" }}
                                                                 title={education.major}
@@ -98,6 +102,7 @@ export default function Education({ educations, setEducations }: IEducationProps
                                                             </EducationStyled.ContentDetail>
                                                             <EducationStyled.ContentDetail
                                                                 title={education.status}
+                                                                
                                                             >
                                                                 ({education.status})
                                                             </EducationStyled.ContentDetail>

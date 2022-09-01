@@ -35,8 +35,6 @@ export const ContentBox = styled.div`
     height: auto;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #e9e9e9;
-    padding: 30px 3px 10px;
 `;
 export const ContentName = styled.h2`
     font-size: 15px;
@@ -47,8 +45,9 @@ export const ContentName = styled.h2`
 export const ContentAccent = styled.p`
     font-size: 18px;
     font-weight: bold;
+    padding: 10px 0;
     max-width: 90%;
-    margin-bottom: 20px;
+    margin-right:20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -56,26 +55,29 @@ export const ContentAccent = styled.p`
 `;
 export const ContentDetail = styled.p`
     font-size: 15px;
-    margin-bottom: 10px;
     max-width: 90%;
+    padding: 10px 0;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: ${(props) => props.theme.textColor};
+    color:#797979;
 `;
 export const ContentDesc = styled.p`
     font-size: 15px;
+    padding: 0 80px 30px 0;
     margin-bottom: 20px;
-    width: 90%;
+    width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    border-bottom: 1px solid #e9e9e9;
     color: ${(props) => props.theme.textColor};
 `;
 export const ContentDate = styled.p`
     font-size: 13px;
     color: ${(props) => props.theme.contentColor};
-    margin-bottom: 30px;
+    padding : 10px 0 10px;
+    margin-bottom:10px;
 `;
 export const EditButton = styled.button`
     width: 27px;

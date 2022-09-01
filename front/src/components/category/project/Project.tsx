@@ -94,7 +94,12 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                                             >
                                                                 {project.description}
                                                             </ProjectStyled.ContentDetail>
-                                                            <ProjectStyled.ContentDate>{`${String(
+                                                            <ProjectStyled.ContentDate
+                                                                style={{
+                                                                        borderBottom: `1px solid #e9e9e9`,
+                                                                        padding: `10px 0 30px`
+                                                                }}
+                                                            >{`${String(
                                                                 project.startDate
                                                             ).slice(0, 10)} ~ ${String(
                                                                 project.endDate
