@@ -471,9 +471,10 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                     <DescBox>
                         <DescTxt>
                             {onEdit ||
-                                (description!.length > 73
-                                    ? `${description!.slice(0, 73)}...`
-                                    : description!)}
+                                (description &&
+                                    (description!.length > 73
+                                        ? `${description?.slice(0, 73)}...`
+                                        : description!))}
                             {onEdit && (
                                 <>
                                     <DescTextarea
