@@ -437,6 +437,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                             key={elem}
                                             type="checkbox"
                                             value={elem}
+                                            // defaultChecked={field?.includes(elem) ? true : false}
                                             {...register("reField", {
                                                 required: "희망 분야를 선택해주세요!",
                                             })}
