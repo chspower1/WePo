@@ -211,7 +211,7 @@ function Network() {
                                             value="인공지능"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
-                                        <Label htmlFor="AI">AI</Label>
+                                        <Label htmlFor="AI">인공지능</Label>
                                     </CheckBoxWrap>
                                 </SelectBox>
                                 <SearchBar />
