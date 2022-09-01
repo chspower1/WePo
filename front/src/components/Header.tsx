@@ -61,7 +61,7 @@ export const LinkButton = styled(NavLink)`
     font-weight: bold;
     color: ${(props) => props.theme.textColor};
     font-size: 16px;
-    transition: color .3s;
+    transition: color 0.3s;
     & + & {
         margin: 0 20px 0 30px;
     }
@@ -82,7 +82,7 @@ export const LinkButton = styled(NavLink)`
     }
     &:hover {
         // animation: ${LinkHover} 0.8s forwards;
-        color: #839DC9;
+        color: #839dc9;
     }
 `;
 
@@ -121,9 +121,11 @@ const LoginOrRegiBtn = styled.button`
         background: ${(props) => props.theme.bgColor};
         color: ${(props) => props.theme.textColor};
     }
+    &:logout {
+    }
 `;
 const MiniProfileBox = styled.div`
-    display:flex;
+    display: flex;
     align-items: center;
     margin-left:20px;
 `
@@ -137,22 +139,21 @@ function Header() {
     const curUser = useRecoilValue(curUserState);
     const [scrollY, setScrollY] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-    
+
     useEffect(() => {
-        window.addEventListener("scroll", ()=>{
-            setScrollY(window.scrollY)
+        window.addEventListener("scroll", () => {
+            setScrollY(window.scrollY);
         });
-        if(scrollY < 10){
-            setScrollActive(false)
-        }else{
-            setScrollActive(true)
+        if (scrollY < 10) {
+            setScrollActive(false);
+        } else {
+            setScrollActive(true);
         }
     });
 
     const UserLogout = () => {
         localStorage.removeItem("recoil-persist");
         sessionStorage.removeItem("userToken");
-        console.log("logout",curUser);
         setCurUser(null);
     };
     // 이미지 초기값 확인
@@ -160,18 +161,15 @@ function Header() {
     const findUserId = curUser?.picture?.split("_")[0] === curUser?.userId ? "" : curUser?.userId + "_";
     const notDefault = pictureDefault ? "" : findUserId;
 
-    console.log("curUser값",curUser);
     useEffect(()=>{
         window.scrollTo(0,0)
         setScrollY(0);
         setScrollActive(false);
-    },[pathName])
+    }, [pathName]);
 
     return (
         <>
-            <HeaderWrap
-                className={`${scrollActive ? "active" : ""}`}
-            >
+            <HeaderWrap className={`${scrollActive ? "active" : ""}`}>
                 <HeaderContainer>
                     <Link to="/">
                         <LogoBox>
@@ -194,7 +192,9 @@ function Header() {
                                     />
                                     <MiniProfileName>{curUser?.name} 님</MiniProfileName>
                                 </MiniProfileBox>
-                                <LoginOrRegiBtn onClick={UserLogout}>로그아웃</LoginOrRegiBtn>
+                                <LoginOrRegiBtn onClick={UserLogout} className="logOut">
+                                    로그아웃
+                                </LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (
                             <>

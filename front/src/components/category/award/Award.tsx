@@ -5,12 +5,11 @@ import AwardAddForm from "./AwardAddForm";
 import { useLocation, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import * as AwardStyled from "@styledComponents/CategoryStyled";
-import { PlusSquareFill } from "styled-icons/bootstrap";
+import { Plus } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 import { Category, deleteData, mutationCategory } from "@api/api";
 import { Draggable, Droppable, DropResult } from "@hello-pangea/dnd";
-
 interface IAwardProps {
     awards: IAward[];
     setAwards: React.Dispatch<React.SetStateAction<IAward[]>>;
@@ -176,7 +175,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
 
                         {curUser && admin && !isAddFormActive && (
                             <AwardStyled.AddButton onClick={handleIsAddFormActive}>
-                                <PlusSquareFill color="#3687FF" />
+                                <Plus color={"white"} size={36} />
                             </AwardStyled.AddButton>
                         )}
                     </AwardStyled.Container>

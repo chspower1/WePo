@@ -148,21 +148,17 @@ function Network() {
             return currentChecked;
         });
     }
-    console.log("필터", filterUsersState);
-    if (!users)
+
+    // undefined 방지
+    if (isLoading && !users)
         return (
             <LoadingBox>
                 <LoadingIcon />
                 Loading...
             </LoadingBox>
-        ); // undefined 방지
-    if (isLoading)
-        return (
-            <LoadingBox>
-                <LoadingIcon />
-                Loading...
-            </LoadingBox>
-        ); // undefined 방지
+        );
+
+    //네트워크 컴포넌트
     return (
         <>
             {isLoading ? (
@@ -228,10 +224,7 @@ function Network() {
                             ) : (
                                 <NetworkContainer>
                                     {netUsers?.map((user) => (
-                                        <UserCard
-                                            key={user.userId}
-                                            profile={user}
-                                        />
+                                        <UserCard key={user.userId} profile={user} />
                                     ))}
                                 </NetworkContainer>
                             )}

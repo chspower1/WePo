@@ -18,8 +18,8 @@ const Wrapper = styled.div`
     position: fixed;
     width: 100vw;
     height: 100vh;
-    left:0;
-    top:0;
+    left: 0;
+    top: 0;
     background-color: rgba(0, 0, 0, 0.6);
 `;
 
@@ -37,7 +37,7 @@ const Modal = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    transform:translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     animation: ${modalShow} 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 600px;
     height: 600px;
@@ -50,7 +50,7 @@ const LikedUserImgBox = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-right:20px;
+    margin-right: 20px;
     overflow: hidden;
     border: 2px solid ${(props) => props.theme.filedBgColor};
     box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
@@ -78,8 +78,8 @@ const LikeLists = styled.div`
     align-items: center;
     max-height: 480px;
     padding: 0 30px;
-    overflow-y:scroll;
-    &::-webkit-scrollbar{
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
         width: 5px;
     }
     &::-webkit-scrollbar-thumb{
@@ -101,8 +101,8 @@ const CloseBtnIcons = styled(CloseOutline)`
     color: #666666;
 `
 const GotoLinkBox = styled.div`
-    display:inline-block;
-`
+    display: inline-block;
+`;
 const GotoLink = styled(Link)`
     display:inline-block;
     color:${props=>props.theme.btnTextColor};
@@ -112,21 +112,19 @@ const GotoLink = styled(Link)`
     border-radius:10px;
 `
 const LikedUserInfoBox = styled.div`
-    display:flex;
-    align-items:center;
-`
+    display: flex;
+    align-items: center;
+`;
 const LikedUserInfoInner = styled.div`
-    font-size:16px;
-    cursor:default;
-    line-height:1.5;
-`
-const LikedUserName = styled.h3`
-`
+    font-size: 16px;
+    cursor: default;
+    line-height: 1.5;
+`;
+const LikedUserName = styled.h3``;
 const LikedUserEmail = styled.a`
-    display:inline-block; 
+    display: inline-block;
     color: ${(props) => props.theme.btnColor};
-`
-
+`;
 
 interface ILikeCardProps {
     name: string;
@@ -153,7 +151,7 @@ const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCa
                 </LikedUserInfoInner>
             </LikedUserInfoBox>
             <GotoLinkBox>
-                <GotoLink to={`/network/${userId}`}onClick={() => setOnLikeModalState(false)}>
+                <GotoLink to={`/network/${userId}`} onClick={() => setOnLikeModalState(false)}>
                     프로필 보기
                 </GotoLink>
             </GotoLinkBox>

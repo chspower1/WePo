@@ -199,3 +199,8 @@ export const searchUsersState = selector<IUser[]>({
         return newCurUsers;
     },
 });
+
+export const newPictureAtom = atom({
+    key: "newPicture",
+    default: "",
+});

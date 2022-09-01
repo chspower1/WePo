@@ -25,7 +25,7 @@ const ItemWrap = styled.div`
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
     background: ${(props) => props.theme.cardColor};
     box-sizing: border-box;
-    border: 1px solid  ${(props) => props.theme.cardColor};
+    border: 1px solid ${(props) => props.theme.cardColor};
     transform: translate(0, 0);
     transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
     &:hover {
@@ -172,6 +172,10 @@ const DetailBtn = styled.button`
     margin: 0 auto;
     font-size: 15px;
     padding: 5px 0;
+    transition: all 0.4s ease;
+    &:hover {
+        color: ${(props) => props.theme.hoverColor};
+    }
 `;
 const LikeBtnBox = styled.div`
     width: 30px;
@@ -383,7 +387,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                 Loading...
             </LoadingBox>
         );
-    console.log("picture",picture)
+    console.log("picture", picture);
     return (
         <>
             {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}

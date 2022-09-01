@@ -5,6 +5,7 @@ declare module "styled-components" {
         textColor: string;
         btnColor: string;
         btnTextColor: string;
+        hoverColor: string;
         accentColor: string;
         contentColor: string;
         filedBgColor: string;

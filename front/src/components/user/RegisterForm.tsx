@@ -17,9 +17,8 @@ export interface IRegister {
     name: string;
     password: string;
     checkPassword?: string;
-    field: string[];
+    field: string[] | false;
 }
-
 
 export default function RegisterForm() {
     const location = useLocation();
@@ -41,7 +40,8 @@ export default function RegisterForm() {
     const onvalid = (data: IRegister) => {
         (async () => {
             setLoading(true);
-            const newUser = await createtUser(data);
+            const newField = data.field === false ? [""] : data.field;
+            const newUser = await createtUser({ ...data, field: newField });
             if (newUser === undefined) {
                 setSendEmail(false);
                 setLoading(false);
@@ -235,9 +235,7 @@ export default function RegisterForm() {
                                                 id="frontEnd"
                                                 value="프론트엔드"
                                                 defaultChecked={true}
-                                                {...register("field", {
-                                                    required: "필수 선택항목입니다.",
-                                                })}
+                                                {...register("field")}
                                             />
                                             <RegisterStyled.FiledLabel htmlFor="frontEnd">
                                                 프론트엔드
