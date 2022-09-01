@@ -26,7 +26,7 @@ export const darkTheme: DefaultTheme = {
     textColor: "#fff",
     btnColor: "#3687FF",
     btnTextColor: "#fff",
-    hoverColor: "#0e3f87",
+    hoverColor: "#86b7ff",
     accentColor: "#1a5cbd",
     contentColor: "#f0f0f0",
     filedBgColor: "#5573df",

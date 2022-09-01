@@ -234,7 +234,6 @@ export default function RegisterForm() {
                                                 type="checkbox"
                                                 id="frontEnd"
                                                 value="프론트엔드"
-                                                defaultChecked={true}
                                                 {...register("field")}
                                             />
                                             <RegisterStyled.FiledLabel htmlFor="frontEnd">
@@ -272,6 +271,17 @@ export default function RegisterForm() {
                                             />
                                             <RegisterStyled.FiledLabel htmlFor="AI">
                                                 인공지능
+                                            </RegisterStyled.FiledLabel>
+                                        </RegisterStyled.FiledInputBox>
+                                        <RegisterStyled.FiledInputBox>
+                                            <RegisterStyled.FiledInput
+                                                type="checkbox"
+                                                id="ETC"
+                                                value="기타"
+                                                {...register("field")}
+                                            />
+                                            <RegisterStyled.FiledLabel htmlFor="ETC">
+                                            기타
                                             </RegisterStyled.FiledLabel>
                                         </RegisterStyled.FiledInputBox>
                                     </RegisterStyled.FiledSelectBox>

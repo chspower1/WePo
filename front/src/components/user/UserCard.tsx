@@ -347,7 +347,6 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     const { name, email, description, field, userId, picture, likes } = profile
         ? profile!
         : curUser!;
-
     const {
         register,
         handleSubmit,
@@ -362,7 +361,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
-    const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
+    const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능", "기타"];
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
@@ -543,7 +542,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                             type="checkbox"
                                             value={elem}
                                             {...register("reField", {
-                                                required: "희망 분야를 선택해주세요!",
+                                                required: "희망 분야를 선택해주세요!."
                                             })}
                                         />
                                         <FiledStyle
