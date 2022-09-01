@@ -21,6 +21,9 @@ const Title = styled(CurBoard.Title)`
     text-align: center;
     margin-bottom: 30px;
     color: ${(props) => props.theme.textColor};
+    @media screen and (max-width: 500px) {
+        font-size: 14px;
+    }
 `;
 const ContentAccent = styled(CurBoard.ContentAccent)`
     width: 100%;

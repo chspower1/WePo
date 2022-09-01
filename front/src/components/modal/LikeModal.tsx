@@ -44,6 +44,9 @@ const Modal = styled.div`
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
     padding: 50px 30px 10px;
+    @media screen and (max-width: 500px) {
+        width: 400px;
+    }
 `;
 const LikedUserImgBox = styled.div`
     position: relative;
@@ -58,8 +61,8 @@ const LikedUserImgBox = styled.div`
 const AccentWord = styled.h2`
     color: ${(props) => props.theme.textColor};
     font-size: 20px;
-    text-align:center;
-    padding:0 0 40px;
+    text-align: center;
+    padding: 0 0 40px;
 `;
 
 const LikeBox = styled.div`
@@ -68,8 +71,8 @@ const LikeBox = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 20px 0;
-    &+&{
-        border-top: 1px solid #eee
+    & + & {
+        border-top: 1px solid #eee;
     }
 `;
 const LikeLists = styled.div`
@@ -82,8 +85,8 @@ const LikeLists = styled.div`
     &::-webkit-scrollbar {
         width: 5px;
     }
-    &::-webkit-scrollbar-thumb{
-        background: ${props=>props.theme.starBorderColor};
+    &::-webkit-scrollbar-thumb {
+        background: ${(props) => props.theme.starBorderColor};
         border-radius: 10px;
     }
 `;
@@ -91,26 +94,29 @@ const ClsBtn = styled.button`
     position: absolute;
     right: 30px;
     top: 20px;
-    width:30px;
-    height:30px;
-    padding:0;
+    width: 30px;
+    height: 30px;
+    padding: 0;
 `;
 const CloseBtnIcons = styled(CloseOutline)`
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     color: #666666;
-`
+`;
 const GotoLinkBox = styled.div`
     display: inline-block;
+    @media screen and (max-width: 500px) {
+        width: 20px;
+    }
 `;
 const GotoLink = styled(Link)`
-    display:inline-block;
-    color:${props=>props.theme.btnTextColor};
-    background:${props=>props.theme.starBorderColor};
-    font-size:13px;
-    padding:10px 15px;
-    border-radius:10px;
-`
+    display: inline-block;
+    color: ${(props) => props.theme.btnTextColor};
+    background: ${(props) => props.theme.starBorderColor};
+    font-size: 13px;
+    padding: 10px 15px;
+    border-radius: 10px;
+`;
 const LikedUserInfoBox = styled.div`
     display: flex;
     align-items: center;
@@ -119,6 +125,9 @@ const LikedUserInfoInner = styled.div`
     font-size: 16px;
     cursor: default;
     line-height: 1.5;
+    @media screen and (max-width: 500px) {
+        font-size: 14px;
+    }
 `;
 const LikedUserName = styled.h3``;
 const LikedUserEmail = styled.a`
@@ -166,8 +175,8 @@ function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
         <Wrapper>
             <Modal>
                 <AccentWord>나의 즐겨찾기 목록</AccentWord>
-                <ClsBtn onClick={() => setOnLikeModalState(false)}> 
-                    <CloseBtnIcons/>
+                <ClsBtn onClick={() => setOnLikeModalState(false)}>
+                    <CloseBtnIcons />
                 </ClsBtn>
                 <LikeLists>
                     {likeUsers?.map((user: any, index: number) => (

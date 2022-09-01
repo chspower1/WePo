@@ -18,7 +18,6 @@ import ChangePassword from "@components/modal/ChangePassword";
 
 const ItemWrap = styled.div`
     position: relative;
-    min-width: 380px;
     min-height: 335px;
     padding: 30px 30px 20px;
     border-radius: 10px;
@@ -37,6 +36,10 @@ const ItemWrap = styled.div`
         position: sticky;
         left: 0;
         top: 120px;
+    }
+    @media screen and (max-width: 500px) {
+        width: 300px;
+        margin: 0px auto;
     }
 `;
 const From = styled.form`
@@ -542,7 +545,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                             type="checkbox"
                                             value={elem}
                                             {...register("reField", {
-                                                required: "희망 분야를 선택해주세요!."
+                                                required: "희망 분야를 선택해주세요!.",
                                             })}
                                         />
                                         <FiledStyle

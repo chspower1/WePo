@@ -37,6 +37,9 @@ export const ContentBox = styled.div`
     flex-direction: column;
     border-bottom: 1px solid #e9e9e9;
     padding: 30px 3px 10px;
+    @media screen and (max-width: 500px) {
+        display: flex;
+    }
 `;
 export const ContentName = styled.h2`
     font-size: 15px;

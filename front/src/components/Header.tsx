@@ -33,7 +33,7 @@ const HeaderWrap = styled.header`
 
 export const HeaderContainer = styled.div`
     max-width: 1800px;
-    min-width: 480px;
+    min-width: 300px;
     width: 100%;
     height: 80px;
     margin: 0 auto;
@@ -91,6 +91,9 @@ export const LogoBox = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
+    @media screen and (max-width: 500px) {
+        width: 100px;
+    }
 `;
 export const LogoImg = styled.img`
     width: 100%;
@@ -106,6 +109,9 @@ const MiniProfileName = styled.span`
     margin: 0px 20px 0px 10px;
     font-size: 16px;
     color: ${(props) => props.theme.textColor};
+    @media screen and (max-width: 500px) {
+        display: none;
+    }
 `;
 const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
@@ -123,13 +129,16 @@ const LoginOrRegiBtn = styled.button`
     }
     &:logout {
     }
+    @media screen and (max-width: 500px) {
+        padding: 5px;
+        font-size: 12px;
+    }
 `;
 const MiniProfileBox = styled.div`
     display: flex;
     align-items: center;
-    margin-left:20px;
-`
-
+    margin-left: 20px;
+`;
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -158,11 +167,12 @@ function Header() {
     };
     // 이미지 초기값 확인
     const pictureDefault = curUser?.picture?.split("/")[0] === "default_images";
-    const findUserId = curUser?.picture?.split("_")[0] === curUser?.userId ? "" : curUser?.userId + "_";
+    const findUserId =
+        curUser?.picture?.split("_")[0] === curUser?.userId ? "" : curUser?.userId + "_";
     const notDefault = pictureDefault ? "" : findUserId;
 
-    useEffect(()=>{
-        window.scrollTo(0,0)
+    useEffect(() => {
+        window.scrollTo(0, 0);
         setScrollY(0);
         setScrollActive(false);
     }, [pathName]);
@@ -190,7 +200,9 @@ function Header() {
                                     <MiniProfileImg
                                         src={`http://localhost:5001/uploads/${notDefault}${curUser?.picture}`}
                                     />
-                                    <MiniProfileName>{curUser?.name} 님</MiniProfileName>
+                                    <MiniProfileName className="mobileNone">
+                                        {curUser?.name} 님
+                                    </MiniProfileName>
                                 </MiniProfileBox>
                                 <LoginOrRegiBtn onClick={UserLogout} className="logOut">
                                     로그아웃

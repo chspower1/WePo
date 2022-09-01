@@ -36,14 +36,21 @@ const BgWrap = styled.div`
 const Root = styled.div`
     width: 100%;
     padding: 80px 0 0;
+    @media screen and (max-width: 500px) {
+        padding: 0px;
+    }
 `;
 
 const NetworkWrap = styled.div`
     width: 100%;
     max-width: 1300px;
-    min-width: 480px;
+    min-width: 320px;
     margin: 0 auto;
     padding: 0 30px;
+    @media screen and (max-width: 500px) {
+        padding: 0px;
+        margin: 0px auto;
+    }
 `;
 export const NetworkContainer = styled.div`
     width: 100%;
@@ -64,6 +71,10 @@ const NetworkTitle = styled.h1`
     text-align: center;
     font-size: 34px;
     padding: 0 0 80px;
+    @media screen and (max-width: 500px) {
+        margin-top: 60px;
+        font-size: 20px;
+    }
 `;
 
 const SelectBox = styled.div`
@@ -84,11 +95,19 @@ const CheckBoxWrap = styled.div`
         height: 18px;
         margin-right: 10px;
     }
+    @media screen and (max-width: 500px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 const Label = styled.label`
     user-select: none;
     line-height: 1.5;
+    @media screen and (max-width: 500px) {
+        font-size: 14px;
+    }
 `;
 
 export const LoadingBox = styled.div`
@@ -211,7 +230,7 @@ function Network() {
                                             value="인공지능"
                                             onClick={(e) => handleCheckedBox(e.currentTarget.value)}
                                         />
-                                        <Label htmlFor="AI">AI</Label>
+                                        <Label htmlFor="AI">인공지능</Label>
                                     </CheckBoxWrap>
                                 </SelectBox>
                                 <SearchBar />

@@ -12,7 +12,11 @@ const SearchBox = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin:0 auto;
+    margin: 0 auto;
+    @media screen and (max-width: 500px) {
+        width: 80%;
+        margin-bottom: -100px;
+    }
 `;
 const Input = styled.input`
     width: 100%;
@@ -24,8 +28,8 @@ const Input = styled.input`
     display: flex;
     justify-content: center;
     align-items: center;
-    border:1px solid ${props=>props.theme.btnColor};
-    outline:0;
+    border: 1px solid ${(props) => props.theme.btnColor};
+    outline: 0;
     &:focus {
         border: 2px solid ${(props) => props.theme.btnColor};
     }
