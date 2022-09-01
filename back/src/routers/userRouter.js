@@ -34,12 +34,10 @@ userAuthRouter.post("/register", async function (req, res, next) {
 
         // 인증코드 생성
         const codeAdded = await emailService.createAuthCode(newUser.userId);
-        const authCode = codeAdded.authCode
 
         // 인증 이메일 전송
         const mailContent = newUser.mailContent
-        mailContent.setContent(name, newUser.userId, authCode)
-        mailContent.setEmail(email)
+        mailContent.setContent(codeAdded.authCode)
         await emailService.sendEmail(mailContent);
 
         res.status(201).json(newUser);
