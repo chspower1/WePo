@@ -23,6 +23,11 @@ export default function Project({ projects, setProjects }: IProjectProps) {
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [targetIndex, setTargetIndex] = useState<Number | null>();
+    const newDate = new Date();
+    const maxDate = `${newDate.getFullYear()+1}-${String(newDate.getMonth() + 1).padStart(
+        2,
+        "0"
+    )}-${String(newDate.getDate()).padStart(2, "0")}`;
 
     //parmas
     const { userSeq } = useParams();
@@ -62,6 +67,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                         <ProjectStyled.ContentContainer>
                             {isAddFormActive && (
                                 <ProjectAddForm
+                                    maxDate={maxDate}
                                     setIsAddFormActive={setIsAddFormActive}
                                     setProjects={setProjects}
                                     userId={curUser?.userId!}

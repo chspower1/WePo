@@ -9,12 +9,14 @@ interface IProjectAddFormProps {
     setIsAddFormActive: React.Dispatch<React.SetStateAction<boolean>>;
     userId: number;
     projects: IProject[];
+    maxDate:string;
 }
 export const ProjectAddForm = ({
     setIsAddFormActive,
     setProjects,
     userId,
     projects,
+    maxDate,
 }: IProjectAddFormProps) => {
     const {
         register,
@@ -96,6 +98,7 @@ export const ProjectAddForm = ({
                     placeholder="프로젝트 종료기간"
                     {...register("endDate", {
                         required: "기간을 입력해주세요",
+                        max:{value:maxDate,message:"종료기간은 현재년도를 기준으로 1년미만으로만 가능합니다."}
                     })}
                 ></ProjectStyled.AddInput>
                 {(errors.startDate && (
