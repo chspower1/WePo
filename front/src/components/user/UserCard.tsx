@@ -244,7 +244,7 @@ const InputBtn = styled.input`
 const ModalDelBtn = styled.button``;
 
 interface IUserCardProps {
-    profile?: IProfile;
+    profile?: IProfile | IUser;
     setProfile?: React.Dispatch<React.SetStateAction<IProfile | undefined>>;
 }
 interface IUserFormValue {
@@ -255,10 +255,13 @@ interface IUserFormValue {
 }
 
 function UserCard({ profile, setProfile }: IUserCardProps) {
-    const { name, email, description, field, userId, picture, likes } = profile!;
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
+    const { name, email, description, field, userId, picture, likes } = profile
+        ? profile!
+        : curUser!;
+
     const {
         register,
         handleSubmit,
@@ -298,13 +301,13 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            if (picture.length !== 0) {
+            if (picture!.length !== 0) {
                 updateCurUser.picture = picture[0].name;
             }
             return updateCurUser as IUser;
         });
         updateUser({ name, description, field, picture }, curUser?.userId!);
-        setOnEdit((cur) => !cur);
+        setOnEdit(false);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -312,7 +315,8 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     };
 
     const onClickLikesModal = () => {
-        setOnLikeModalState((cur) => !cur);
+        console.log("Dddddddddddddddddd");
+        setOnLikeModalState(true);
     };
     //즐겨찾기 추가/삭제
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -361,7 +365,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
 
     useEffect(() => {}, [onEdit]);
     console.log(field);
-    if (!curUser)
+    if (!profile)
         return (
             <LoadingBox>
                 <LoadingIcon />
@@ -468,7 +472,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                         <DescTxt>
                             {onEdit ||
                                 (description!.length > 73
-                                    ? `${description?.slice(0, 73)}...`
+                                    ? `${description!.slice(0, 73)}...`
                                     : description!)}
                             {onEdit && (
                                 <>
