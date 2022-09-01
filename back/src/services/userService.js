@@ -161,7 +161,22 @@ class userAuthService {
       return { errorMessage };
     }
 
-    return user;
+    // 사용자 즐겨찾기 목록 상세 정보 호출
+    const detailedLikes = user.likes.map( async (userId)=>{
+      const user = await User.findByUserId(userId);
+      return {
+        userId: userId,
+        name: user.name,
+        email: user.email,
+        picture: user.picture
+      }
+    })
+    const detailedUser = {
+      ...user,
+      likes: detailedLikes
+    }
+
+    return detailedUser;
   }
 
 
@@ -212,6 +227,7 @@ class userAuthService {
 
     return User.update({ userId, newValues })
   }
+
 
   // 사용자 비밀번호 초기화
   static async resetPassword(email){
