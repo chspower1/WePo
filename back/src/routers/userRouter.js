@@ -179,7 +179,7 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         let picture = null;
 
         if(imageFile) {
-            picture = imageFile.originalname;
+            picture = Buffer.from(imageFile.originalname, 'latin1').toString('utf8');
         }
         
         const toUpdate = { name, description, field, picture };
