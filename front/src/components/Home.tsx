@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
+import { useCookies } from "react-cookie";
 
 const Root = styled.div`
     position: relative;
@@ -128,44 +129,11 @@ const ImgBox = styled.div`
 `;
 const Img = styled.img`
     width: 100%;
-    opacity:${props => props.theme.imgOpacity};
+    opacity: ${(props) => props.theme.imgOpacity};
 `;
-const CircleBox = styled.div`
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    filter: blur(65px);
-`;
-const Circle = styled.div`
-    position: absolute;
-    z-index: 1;
-    left: 200px;
-    top: 560px;
-    border-radius: 50%;
-    background: #3686ffc9;
-    box-shadow: 0 0 450px 140px ${(props) => props.theme.circleColor};
-`;
-const Circle1 = styled(Circle)`
-    left: 750px;
-    top: 130px;
-    box-shadow: 0 0 300px 100px ${(props) => props.theme.circleColor};
-`;
-const Circle2 = styled(Circle)`
-    left: 1600px;
-    top: 680px;
-    box-shadow: 0 0 260px 100px ${(props) => props.theme.circleColor};
-`;
-
 export default function Home() {
-    const navigate = useNavigate();
     return (
         <Root>
-            <CircleBox>
-                {/* <Circle /> */}
-                {/* <Circle1 /> */}
-                {/* <Circle2 /> */}
-            </CircleBox>
             <Wrap>
                 <TextBox>
                     <TitleBox>
