@@ -47,6 +47,7 @@ const Modal = styled.div`
 `;
 const LikedUserImgBox = styled.div`
     position: relative;
+    display: flex;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -54,6 +55,7 @@ const LikedUserImgBox = styled.div`
     overflow: hidden;
     border: 2px solid ${(props) => props.theme.filedBgColor};
     box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
+    flex-shrink: 0;
 `;
 const AccentWord = styled.h2`
     color: ${(props) => props.theme.textColor};
