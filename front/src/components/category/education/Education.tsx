@@ -6,7 +6,7 @@ import EducationAddForm from "./EducationAddForm";
 import { useLocation, useParams } from "react-router-dom";
 import * as EducationStyled from "@styledComponents/CategoryStyled";
 import { useRecoilValue } from "recoil";
-import { PlusSquareFill } from "styled-icons/bootstrap";
+import { Plus } from "styled-icons/bootstrap";
 import { Pencil } from "styled-icons/boxicons-solid";
 import { Trash2 } from "styled-icons/feather";
 import { Category, deleteData, mutationCategory } from "@api/api";
@@ -21,16 +21,15 @@ export default function Education({ educations, setEducations }: IEducationProps
     // 현재 로그인 유저
     const curUser = useRecoilValue(curUserState);
 
-    
     // form 관리
     const [isAddFormActive, setIsAddFormActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false); // edit버튼 눌러서 editform 활성화
     const [targetIndex, setTargetIndex] = useState<Number | null>(); // index 를 체크해서 맞는 것만 editform 활성화
-    
+
     //현재경로
     const location = useLocation();
     const pathName = location.pathname;
-    
+
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
@@ -148,7 +147,7 @@ export default function Education({ educations, setEducations }: IEducationProps
 
                         {curUser && admin && !isAddFormActive && (
                             <EducationStyled.AddButton onClick={handleIsAddFormActive}>
-                                <PlusSquareFill color="#3687FF" />
+                                <Plus color={"white"} size={36} />
                             </EducationStyled.AddButton>
                         )}
                     </EducationStyled.Container>

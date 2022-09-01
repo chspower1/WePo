@@ -94,9 +94,19 @@ export const DeleteButton = styled.button`
     top: 10px;
 `;
 export const AddButton = styled.button`
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     margin: 50px 0 0;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: ${(props) => props.theme.btnColor};
+    transition: all 0.4s ease;
+    &:hover {
+        background-color: ${(props) => props.theme.accentColor};
+    }
 `;
 
 export const AddInput = styled.input.attrs((props) => ({

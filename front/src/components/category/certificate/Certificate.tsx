@@ -7,7 +7,7 @@ import * as CertStyled from "@styledComponents/CategoryStyled";
 import styled from "styled-components";
 import { useLocation, useParams } from "react-router-dom";
 import { Pencil } from "styled-icons/boxicons-solid";
-import { PlusSquareFill } from "styled-icons/bootstrap";
+import { Plus } from "styled-icons/bootstrap";
 import { Trash2 } from "@styled-icons/feather/Trash2";
 import { Category, deleteData } from "@api/api";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
@@ -155,7 +155,7 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                         {magic.placeholder}
                         {curUser && admin && !isAddFormActive && (
                             <CertStyled.AddButton onClick={handleIsAddFormActive}>
-                                <PlusSquareFill color="#3687FF" />
+                                <Plus color={"white"} size={36} />
                             </CertStyled.AddButton>
                         )}
                     </CertStyled.Container>
