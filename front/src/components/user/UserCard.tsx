@@ -18,14 +18,14 @@ import ChangePassword from "@components/modal/ChangePassword";
 
 const ItemWrap = styled.div`
     position: relative;
-    min-width: 350px;
+    min-width: 380px;
     min-height: 335px;
     padding: 30px 30px 20px;
     border-radius: 10px;
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
     background: ${(props) => props.theme.cardColor};
     box-sizing: border-box;
-    border: 1px solid #fff;
+    border: 1px solid  ${(props) => props.theme.cardColor};
     transform: translate(0, 0);
     transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
     &:hover {
@@ -77,7 +77,7 @@ export const ModalProfileImageBox = styled(ProfileImageBox)`
 `;
 
 export const UserInfoTxt = styled.div`
-    width: calc(100% - 120px);
+    width: calc(100% - 130px);
     margin-left: 20px;
     color: ${(props) => props.theme.textColor};
 `;

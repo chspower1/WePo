@@ -91,17 +91,17 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                                             >
                                                                 {certificate.title}
                                                             </CertStyled.ContentAccent>
+                                                            <CertStyled.ContentDetail
+                                                                title={certificate.org}
+                                                            >
+                                                                {certificate.org}
+                                                            </CertStyled.ContentDetail>
                                                             <CertStyled.ContentDate>
                                                                 {String(certificate.date).slice(
                                                                     0,
                                                                     10
                                                                 )}
                                                             </CertStyled.ContentDate>
-                                                            <CertStyled.ContentDetail
-                                                                title={certificate.org}
-                                                            >
-                                                                {certificate.org}
-                                                            </CertStyled.ContentDetail>
                                                             <CertStyled.ContentDesc
                                                                 title={certificate.description}
                                                             >

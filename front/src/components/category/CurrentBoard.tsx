@@ -7,7 +7,7 @@ const Container = styled(CurBoard.Container)`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding-bottom: 30px;
+    padding: 10px 30px;
 `;
 const ContentBox = styled(CurBoard.ContentBox)`
     display: flex;
@@ -19,6 +19,7 @@ const Title = styled(CurBoard.Title)`
     width: 100%;
     font-size: 16px;
     text-align: center;
+    margin-bottom: 30px;
     color: ${(props) => props.theme.textColor};
 `;
 const ContentAccent = styled(CurBoard.ContentAccent)`
