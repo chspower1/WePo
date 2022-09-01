@@ -11,6 +11,7 @@ import {
     IAward,
     ICertificate,
     IEducation,
+    IProfile,
     IProject,
     isLoginState,
     IUser,
@@ -38,20 +39,26 @@ function UserDetails() {
     const admin = inMyPage || compareUser;
 
     //User관련 State
+    const [profile, setProfile] = useState<IProfile>();
     const [educations, setEducations] = useState<IEducation[]>([]);
     const [awards, setAwards] = useState<IAward[]>([]);
     const [certificates, setCertificates] = useState<ICertificate[]>([]);
     const [projects, setProjects] = useState<IProject[]>([]);
     //API User정보 받아오기
-    const {
-        isLoading,
-        data: user,
-        refetch,
-    } = useQuery(
+    const { isLoading, data: user } = useQuery(
         ["newCurUser", userSeq],
         () => (pathName === "/mypage" ? getUser(curUser?.userId!) : getUser(parseInt(userSeq!))),
         {
             onSuccess(sucessUser) {
+                setProfile({
+                    name: sucessUser?.name!,
+                    likes: sucessUser?.likes!,
+                    userId: sucessUser?.userId!,
+                    field: sucessUser?.field!,
+                    description: sucessUser?.description!,
+                    picture: sucessUser?.picture!,
+                    email: sucessUser?.email!,
+                });
                 setEducations(sucessUser?.educations!);
                 setAwards(sucessUser?.awards!);
                 setCertificates(sucessUser?.certificates!);
@@ -59,9 +66,9 @@ function UserDetails() {
             },
         }
     );
-    useEffect(() => {
-        refetch();
-    }, [curUser]);
+    // useEffect(() => {
+    //     refetch();
+    // }, [curUser]);
     console.log(educations, awards, certificates, certificates, certificates);
     const allSet = user && educations && awards && certificates && projects && !isLoading;
     //로그인상태 확인
@@ -133,7 +140,7 @@ function UserDetails() {
             <Mypage.Root>
                 <Mypage.MyPortWrap>
                     <Mypage.UserCardBox>
-                        {curUser && <UserCard user={user!} refetch={refetch} />}
+                        {curUser && <UserCard profile={profile!} setProfile={setProfile} />}
                     </Mypage.UserCardBox>
                     <Mypage.Wrap>
                         <DragDropContext onDragEnd={onDragEnd}>

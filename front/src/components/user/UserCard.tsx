@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { curUserState, usersState, IUser, Efield } from "@/atoms";
+import { curUserState, usersState, IUser, Efield, IProfile } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -33,10 +33,10 @@ const ItemWrap = styled.div`
         box-shadow: 12px 12px 18px #95a9e070;
         transform: translate(0, -10px);
     }
-    &.sticky{
-        position:sticky;
-        left:0;
-        top:120px;
+    &.sticky {
+        position: sticky;
+        left: 0;
+        top: 120px;
     }
 `;
 const From = styled.form`
@@ -264,6 +264,10 @@ const PasswordChangeBtn = styled.button`
     border-radius: 5px;
 `;
 
+interface IUserCardProps {
+    profile?: IProfile | IUser;
+    setProfile?: React.Dispatch<React.SetStateAction<IProfile | undefined>>;
+}
 interface IUserFormValue {
     reName: string;
     reDescription: string;
@@ -271,17 +275,24 @@ interface IUserFormValue {
     rePicture: File[];
 }
 
-function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
-    const { name, email, description, field, userId, picture, likes } = user;
+function UserCard({ profile, setProfile }: IUserCardProps) {
     const location = useLocation();
     const pathName = location.pathname;
     const [curUser, setCurUser] = useRecoilState(curUserState);
+    const { name, email, description, field, userId, picture, likes } = profile
+        ? profile!
+        : curUser!;
+
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm<IUserFormValue>();
+    } = useForm<IUserFormValue>({
+        defaultValues: {
+            reField: field,
+        },
+    });
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
@@ -299,20 +310,25 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
+        setProfile!((prev) => ({
+            ...prev,
+            name,
+            field,
+            description,
+            picture,
+        }));
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            if (picture.length !== 0) {
+            if (picture!.length !== 0) {
                 updateCurUser.picture = picture[0].name;
             }
             return updateCurUser as IUser;
         });
-        console.log(picture[0].name)
-        refetch();
         updateUser({ name, description, field, picture }, curUser?.userId!);
-        setOnEdit((cur) => !cur);
+        setOnEdit(false);
     };
     const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -326,13 +342,18 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
     //즐겨찾기 추가/삭제
     const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        curUserToggleLike(userId);
+        curUserToggleLike(profile?.userId!);
         setCurUser((prev) => {
             let filterLike = [...prev?.likes!];
             if (foundLikeUser) {
                 filterLike = filterLike.filter((elem) => elem.userId !== userId);
             } else {
-                filterLike.push({ userId, name, email, picture });
+                filterLike.push({
+                    userId: profile?.userId!,
+                    name: profile?.name!,
+                    email: profile?.email!,
+                    picture: profile?.picture!,
+                });
             }
             const addLikeUser = { ...prev, likes: filterLike };
             return addLikeUser as IUser;
@@ -347,17 +368,23 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
             setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
-
+    // const test = ["백엔드", "인공지능"];
+    // fieldList.map((elem, index) => {
+    //     fieldList.includes("프론트엔드");
+    //     console.log("프론트엔드", test.includes("프론트엔드"));
+    //     console.log("백엔드", test.includes("백엔드"));
+    //     console.log("데이터분석", test.includes("데이터분석"));
+    //     console.log("인공지능", test.includes("인공지능"));
+    //     console.log("필드리스트 확인", elem);
+    // });
     // 이미지 초기값 확인
     const pictureDefault = picture?.split("/")[0] === "default_images";
-    const notDefault = pictureDefault ? "" : userId+"_";
-    useEffect(() => {
-        setOnLikeModalState(false);
-    }, [curUser]);
-
+    const notDefault = pictureDefault ? "" : userId + "_";
+    // useEffect(() => {
+    //     setOnLikeModalState(false);
+    // }, [curUser]);
     useEffect(() => {}, [onEdit]);
-    console.log(field);
-    if (!curUser)
+    if (!profile)
         return (
             <LoadingBox>
                 <LoadingIcon />
@@ -392,7 +419,8 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                 src={
                                     newPicturePreview
                                         ? newPicturePreview
-                                        : `http://localhost:5001/uploads/${notDefault}${picture}`
+                                        : // : `http://localhost:5001/uploads/${notDefault}${picture}`
+                                          `http://localhost:5001/uploads/${notDefault}${picture}`
                                 }
                                 alt="profileImage"
                             />
@@ -430,7 +458,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                     </InfoBox>
                     <FieldBox>
                         {onEdit ||
-                            field.map((elem) => (
+                            field?.map((elem) => (
                                 ((field.length > 1) && <FieldStyle chose={field.includes(elem) ? true : false}>
                                     {elem}
                                 </FieldStyle>)
@@ -450,7 +478,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                         />
                                         <FiledStyle
                                             htmlFor={elem}
-                                            chose={field.includes(elem) ? true : false}
+                                            chose={field?.includes(elem) ? true : false}
                                         >
                                             {elem}
                                         </FiledStyle>
@@ -462,13 +490,14 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                     <DescBox>
                         <DescTxt>
                             {onEdit ||
-                                (description?.length > 73
-                                    ? `${description.slice(0, 73)}...`
-                                    : description)}
+                                (description &&
+                                    (description!.length > 73
+                                        ? `${description?.slice(0, 73)}...`
+                                        : description!))}
                             {onEdit && (
                                 <>
                                     <DescTextarea
-                                        defaultValue={description}
+                                        defaultValue={description!}
                                         {...register("reDescription", {
                                             required: "나에 대한 설명을 입력해주세요",
                                         })}
