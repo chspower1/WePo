@@ -14,6 +14,7 @@ declare module "styled-components" {
         opacityBgColor: string;
         boxShadowGrayColor: string;
         boxShadowBlueColor: string;
+        boxShadowHoverColor: string;
         inputBgColor: string;
         circleColor: string;
         cardColor: string;
@@ -21,5 +22,6 @@ declare module "styled-components" {
         headerBorderColor: string;
         headerActiveColor: string;
         successColor: string;
+        imgOpacity: number;
     }
 }

@@ -30,7 +30,7 @@ const ItemWrap = styled.div`
     transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
     &:not(.sticky):hover {
         border: 1px solid ${(props) => props.theme.filedBgColor};
-        box-shadow: 12px 12px 18px #95a9e070;
+        box-shadow: 12px 12px 18px ${props=>props.theme.boxShadowHoverColor};
         transform: translate(0, -10px);
     }
     &.sticky {
@@ -361,7 +361,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
     const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
-    const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능", "기타"];
+    const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
     //권한관리
     const { userSeq } = useParams();
     const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;

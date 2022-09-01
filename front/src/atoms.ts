@@ -39,7 +39,6 @@ export enum Efield {
     backEnd = "백엔드",
     dataAnalysis = "데이터분석",
     AI = "인공지능",
-    ETC = "기타",
 }
 
 export interface IEducation {

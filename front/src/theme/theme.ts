@@ -13,6 +13,7 @@ export const lightTheme: DefaultTheme = {
     opacityBgColor: "#a2bee71a",
     boxShadowGrayColor: "#a2bee740",
     boxShadowBlueColor: "#5a9cff66",
+    boxShadowHoverColor: "#95a9e070",
     inputBgColor: "#fff",
     circleColor: "#3687FF",
     cardColor: "#fff",
@@ -20,6 +21,7 @@ export const lightTheme: DefaultTheme = {
     headerBorderColor: "#f0f0f9",
     headerActiveColor: "#fff",
     successColor: "#5573df",
+    imgOpacity: 1,
 };
 export const darkTheme: DefaultTheme = {
     bgColor: "#1E1E1E",
@@ -35,6 +37,7 @@ export const darkTheme: DefaultTheme = {
     opacityBgColor: "#a7b6cc1a",
     boxShadowGrayColor: "#393d4440",
     boxShadowBlueColor: "#5a9cff66",
+    boxShadowHoverColor: "#8498d030",
     inputBgColor: "#4f555f",
     circleColor: "#a7b6cc1a",
     cardColor: "#36363c",
@@ -42,4 +45,5 @@ export const darkTheme: DefaultTheme = {
     headerBorderColor: "#2e2e2e",
     headerActiveColor: "#222222",
     successColor: "#5573df",
+    imgOpacity: .8,
 };

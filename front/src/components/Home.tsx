@@ -128,6 +128,7 @@ const ImgBox = styled.div`
 `;
 const Img = styled.img`
     width: 100%;
+    opacity:${props => props.theme.imgOpacity};
 `;
 const CircleBox = styled.div`
     position: absolute;

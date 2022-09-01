@@ -273,17 +273,6 @@ export default function RegisterForm() {
                                                 인공지능
                                             </RegisterStyled.FiledLabel>
                                         </RegisterStyled.FiledInputBox>
-                                        <RegisterStyled.FiledInputBox>
-                                            <RegisterStyled.FiledInput
-                                                type="checkbox"
-                                                id="ETC"
-                                                value="기타"
-                                                {...register("field")}
-                                            />
-                                            <RegisterStyled.FiledLabel htmlFor="ETC">
-                                            기타
-                                            </RegisterStyled.FiledLabel>
-                                        </RegisterStyled.FiledInputBox>
                                     </RegisterStyled.FiledSelectBox>
                                 </RegisterStyled.FiledBox>
                                 {errors.field && (

@@ -12,14 +12,7 @@ const fadeInUp = keyframes`
     transform: translate(0, 0);
 }
 `;
-const fadeIn = keyframes`
-0% {
-    opacity: 0;
-}
-100% {
-    opacity: 1;
-}
-`;
+
 export const Root = styled.div`
     width: 100%;
     transition: background 0.5s ease;
@@ -41,9 +34,8 @@ export const Wrapper = styled.div`
         left: 8%;
         width: 420px;
         height: 420px;
-        opacity:0;
+        opacity:${(props) => props.theme.imgOpacity};
         background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg1.png"}) no-repeat 50% 50%/contain;
-        animation: ${fadeIn} .6s .3s forwards;
     }
     &.login:after {
         content: '';
@@ -53,9 +45,8 @@ export const Wrapper = styled.div`
         right: 8%;
         width: 420px;
         height: 420px;
-        opacity:0;
+        opacity:${(props) => props.theme.imgOpacity};
         background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg2.png"}) no-repeat 50% 50%/contain;
-        animation: ${fadeIn} .6s .3s forwards;
     }
 `;
 
@@ -230,8 +221,7 @@ export const FiledBox = styled.div`
 `;
 export const FiledSelectBox = styled.div`
     display: flex;
-    flex-wrap: wrap;
-    
+    justify-content: space-around;    
 `;
 export const FiledTit = styled.h2`
     width: 100%;
