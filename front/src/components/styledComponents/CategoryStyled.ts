@@ -178,7 +178,7 @@ export const Wrap = styled.div`
     }
 `;
 export const UserCardBox = styled.div`
-    max-width: 350px;
+    max-width: 380px;
     @media screen and (max-width: 960px) {
         max-width: 100%;
     }
