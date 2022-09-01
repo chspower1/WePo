@@ -33,10 +33,10 @@ const ItemWrap = styled.div`
         box-shadow: 12px 12px 18px #95a9e070;
         transform: translate(0, -10px);
     }
-    &.sticky {
-        position: sticky;
-        left: 0;
-        top: 100px;
+    &.sticky{
+        position:sticky;
+        left:0;
+        top:120px;
     }
 `;
 const From = styled.form`
@@ -77,7 +77,7 @@ export const ModalProfileImageBox = styled(ProfileImageBox)`
 `;
 
 export const UserInfoTxt = styled.div`
-    width: calc(100% - 130px);
+    width: calc(100% - 120px);
     margin-left: 20px;
     color: ${(props) => props.theme.textColor};
 `;
@@ -109,7 +109,7 @@ const PlusIcon = styled(PlusOutline)`
 `;
 
 export const NameTxt = styled.h2`
-    font-size: 20px;
+    font-size: px;
     font-weight: bold;
     margin-bottom: 10px;
     text-overflow: ellipsis;
@@ -288,6 +288,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
             }
             return updateCurUser as IUser;
         });
+        console.log(picture[0].name)
         refetch();
         updateUser({ name, description, field, picture }, curUser?.userId!);
         setOnEdit((cur) => !cur);
@@ -325,6 +326,9 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
         }
     }, [newPicture]);
 
+    // 이미지 초기값 확인
+    const pictureDefault = picture?.split("/")[0] === "default_images";
+    const notDefault = pictureDefault ? "" : userId+"_";
     useEffect(() => {
         setOnLikeModalState(false);
     }, [curUser]);
@@ -366,7 +370,7 @@ function UserCard({ user, refetch }: { user: IUser; refetch: any }) {
                                 src={
                                     newPicturePreview
                                         ? newPicturePreview
-                                        : `http://localhost:5001/uploads/${userId}.jpg`
+                                        : `http://localhost:5001/uploads/${notDefault}${picture}`
                                 }
                                 alt="profileImage"
                             />

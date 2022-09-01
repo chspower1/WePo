@@ -11,6 +11,7 @@ import * as RegisterStyled from "@styledComponents/SignStyled";
 import { useNavigate } from "react-router-dom";
 import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 import SendMailAlert from "@components/modal/sendMailAlert";
+import { LoadingBox, LoadingIcon } from "./Network";
 export interface IRegister {
     email: string;
     name: string;
@@ -38,6 +39,7 @@ export default function RegisterForm() {
     const [viewCheckPassword, setViewCheckPassword] = useState(false);
     const [viewPassword, setViewPassword] = useState(false);
     const [sendEmail, setSendEmail] = useState(false);
+    const [loading,setLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -49,20 +51,27 @@ export default function RegisterForm() {
 
     const onvalid = (data: IRegister) => {
         (async () => {
+            setLoading(true);
             const newUser = await createtUser(data);
             if (newUser === undefined) {
                 setSendEmail(false);
+                setLoading(false);
+                setError("email",{
+                    type:"custom",
+                    message:"이미 사용중인 이메일입니다!"
+                })
             } else {
                 await setUsers((prev) => {
                     const newUsers = [...prev];
                     newUsers.push(newUser!);
                     return newUsers;
                 });
+                setSendEmail(true);
             }
         })();
     };
 
-    const valid = !errors.email && !errors.checkPassword && !errors.name && !errors.password;
+    const valid = !errors.email && !errors.checkPassword && !errors.name && !errors.password && !errors.field;
     useEffect(() => {
         setError("email", {
             type: "costom",
@@ -93,7 +102,10 @@ export default function RegisterForm() {
         <RegisterStyled.Root>
             <RegisterStyled.RegisterWrapper>
                 <RegisterStyled.RegisterFromContainer>
-                    {sendEmail && <SendMailAlert setSendEmail={setSendEmail}></SendMailAlert>}
+                    {sendEmail &&<SendMailAlert setSendEmail={setSendEmail}></SendMailAlert>}
+                    {loading ? <LoadingBox><LoadingIcon>Loding...</LoadingIcon></LoadingBox>
+                    
+                    :<>
                     <RegisterStyled.TitleBox>
                         <RegisterStyled.Title>회원가입</RegisterStyled.Title>
                     </RegisterStyled.TitleBox>
@@ -229,7 +241,10 @@ export default function RegisterForm() {
                                         type="checkbox"
                                         id="frontEnd"
                                         value="프론트엔드"
-                                        {...register("field")}
+                                        defaultChecked={true}
+                                        {...register("field",{
+                                            required:"필수 선택항목입니다.",
+                                        })}
                                     />
                                     <RegisterStyled.FiledLabel htmlFor="frontEnd">
                                         프론트엔드
@@ -270,15 +285,16 @@ export default function RegisterForm() {
                                 </RegisterStyled.FiledInputBox>
                             </RegisterStyled.FiledSelectBox>
                         </RegisterStyled.FiledBox>
+                        {errors.field && <RegisterStyled.ErrMsg><RegisterStyled.DangerIcon></RegisterStyled.DangerIcon> {errors.field.message}</RegisterStyled.ErrMsg>}
                         <RegisterStyled.SubmitButtonBox>
                             <RegisterStyled.SubmitButton
                                 disabled={!valid}
-                                onClick={() => setSendEmail(true)}
                             >
                                 작성완료
                             </RegisterStyled.SubmitButton>
                         </RegisterStyled.SubmitButtonBox>
                     </form>
+                </>}
                 </RegisterStyled.RegisterFromContainer>
             </RegisterStyled.RegisterWrapper>
         </RegisterStyled.Root>

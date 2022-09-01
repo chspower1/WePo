@@ -1,18 +1,47 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
 export const Root = styled.div`
     width: 100%;
-    min-height: 100%;
-    padding: 70px 0 0;
     transition: background 0.5s ease;
     background: ${(props) => props.theme.bgColor};
 `;
 
 export const Wrapper = styled.div`
+    position: relative;
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     display: flex;
-    padding: 50px 0;
+    padding: 50px 0 0;
+    background: url(${process.env.PUBLIC_URL + "/assets/image/waveBg2.png"}) no-repeat left 50% bottom -80px/contain;
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: 80px;
+        left: 8%;
+        width: 420px;
+        height: 420px;
+        background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg1.png"}) no-repeat 50% 50%/contain;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: 80px;
+        right: 8%;
+        width: 420px;
+        height: 420px;
+        background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg2.png"}) no-repeat 50% 50%/contain;
+    }
+`;
+
+const fadeInUp = keyframes`
+0% {
+    opacity: 0;
+    transform: translate(0, 25px);
+}
+100% {
+    opacity: 1;
+    transform: translate(0, 0);
+}
 `;
 
 export const FromContainer = styled.div`
@@ -27,6 +56,9 @@ export const FromContainer = styled.div`
     border-radius: 15px;
     background: ${(props) => props.theme.opacityBgColor};
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowGrayColor};
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    animation: ${fadeInUp} .6s .3s forwards;
 `;
 
 export const TitleBox = styled.div`
@@ -57,8 +89,9 @@ export const Input = styled.input`
     color: ${(props) => props.theme.textColor};
     background: ${(props) => props.theme.inputBgColor};
     &::placeholder {
-        font-size: 12px;
-        color: ${(props) => props.theme.textColor};
+        font-size: 14px;
+        color: #c9c9c9;
+        // color: ${(props) => props.theme.textColor};
         font-family: "Elice";
     }
     &.password {
@@ -77,7 +110,8 @@ export const ErrMsg = styled.p`
     font-size: 12px;
     display: flex;
     align-items: center;
-    color: #eb7474;
+    color: #aabce0;
+    // color: #eb7474;
 `;
 
 export const DangerIcon = styled(Spam2)`
@@ -93,12 +127,13 @@ export const SubmitButtonBox = styled.div`
     padding-top: 40px;
 `;
 export const SubmitButton = styled.button`
-    width: 50%;
+    width: 100%;
     height: 50px;
     background: ${(props) => props.theme.btnColor};
     color: ${(props) => props.theme.btnTextColor};
     border-radius: 10px;
     box-shadow: 10px 10px 15px ${(props) => props.theme.boxShadowBlueColor};
+    font-size: 16px;
 
     &:disabled {
         background: #8a929e;
@@ -113,6 +148,7 @@ export const SosialButton = styled(SubmitButton)`
 `;
 
 export const RegisterButton = styled.button`
+    font-size: 16px;
     text-decoration: underline;
     color: ${(props) => props.theme.btnColor};
 `;
@@ -122,8 +158,12 @@ export const RegisterCommentBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 16px;
     color: ${(props) => props.theme.textColor};
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 200%);
 `;
 
 export const RegisterFromContainer = styled(FromContainer)`
@@ -140,7 +180,8 @@ export const SuccessMsg = styled.p`
     font-size: 12px;
     display: flex;
     align-items: center;
-    color: #198754;
+    color: #5573df;
+    // color: #198754;
     margin: 0 0 0 5px;
 `;
 
@@ -156,7 +197,9 @@ export const ViewButton = styled.button`
     top: 50%;
     transform: translateY(-70%);
 `;
-export const FiledBox = styled.div``;
+export const FiledBox = styled.div`
+    margin-bottom:10px;
+`;
 export const FiledSelectBox = styled.div`
     display: flex;
     justify-content: space-around;

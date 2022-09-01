@@ -155,13 +155,13 @@ export default function LoginForm() {
                             )}
                         </LoginStyled.InputBox>
                         <div>
-                            아이디 저장하기
                             <input
                                 type="checkbox"
                                 name="rememberId"
                                 checked={isEmailRemember}
                                 onClick={onChangeAtuoLogin}
                             />
+                            <label htmlFor="">이메일 기억하기</label>
                         </div>
                         {/* <div>
                             자동 로그인
@@ -170,13 +170,13 @@ export default function LoginForm() {
                         <LoginStyled.SubmitButtonBox>
                             <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
                         </LoginStyled.SubmitButtonBox>
-                        <LoginStyled.RegisterCommentBox>
-                            아직 회원이 아니신가요?
-                            <Link to="/register">
-                                <LoginStyled.RegisterButton>회원가입</LoginStyled.RegisterButton>
-                            </Link>
-                        </LoginStyled.RegisterCommentBox>
                     </form>
+                     <LoginStyled.RegisterCommentBox>
+                        아직 회원이 아니신가요?
+                        <Link to="/register">
+                            <LoginStyled.RegisterButton>회원가입</LoginStyled.RegisterButton>
+                        </Link>
+                    </LoginStyled.RegisterCommentBox>
                 </LoginStyled.FromContainer>
             </LoginStyled.Wrapper>
         </LoginStyled.Root>
