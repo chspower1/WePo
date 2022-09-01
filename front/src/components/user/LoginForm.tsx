@@ -163,14 +163,10 @@ export default function LoginForm() {
                                 onClick={onChangeAtuoLogin}
                                 id="rememberId"
                             />
-                            <label htmlFor="rememberId" style={{ userSelect: "none" }}>
+                            <LoginStyled.RememberIdLabel htmlFor="rememberId" style={{ userSelect: "none" }}>
                                 이메일 기억하기
-                            </label>
+                            </LoginStyled.RememberIdLabel>
                         </div>
-                        {/* <div>
-                            자동 로그인
-                            <input type="checkbox" name="autoLogin" onClick={onChangeAtuoLogin} />
-                        </div> */}
                         <LoginStyled.SubmitButtonBox>
                             <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
                         </LoginStyled.SubmitButtonBox>

@@ -487,7 +487,8 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                 src={
                                     newPicturePreview
                                         ? newPicturePreview
-                                        : `http://localhost:5001/uploads/${notDefault}${picture}`
+                                        : `http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`
+
                                 }
                                 alt="profileImage"
                             />
