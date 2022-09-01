@@ -13,12 +13,12 @@ import {
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
-    z-index: 99;
+    z-index: 1010;
     position: fixed;
+    width:100vw;
+    height:100vh;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,16 +36,17 @@ const modalShow = keyframes`
     }
 `;
 const Modal = styled.div`
+    position:relative;
     animation: ${modalShow} 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    margin-top: 50px;
-    width: 400px;
+    width: 600px;
     height: 600px;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
+    padding:50px 30px;
 `;
 const ModalHeader = styled.h1`
     width: 100%;
@@ -63,6 +64,14 @@ const LikeBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+`;
+const LikeLists = styled.div`
+    width:100%;
+`;
+const ClsBtn = styled.button`
+    position:absolute;
+    right: 50px;
+    top:30px;
 `;
 
 interface ILikeCardProps {
@@ -106,10 +115,12 @@ function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
         <Wrapper>
             <Modal>
                 <AccentWord>내가 팔로우한 사람</AccentWord>
-                <button onClick={() => setOnLikeModalState(false)}> x </button>
-                {likeUsers?.map((user: any, index: number) => (
-                    <LikeCard {...user} setOnLikeModalState={setOnLikeModalState}></LikeCard>
-                ))}
+                <ClsBtn onClick={() => setOnLikeModalState(false)}> x </ClsBtn>
+                <LikeLists>
+                    {likeUsers?.map((user: any, index: number) => (
+                        <LikeCard {...user} setOnLikeModalState={setOnLikeModalState}></LikeCard>
+                    ))}
+                </LikeLists>
             </Modal>
         </Wrapper>
     );
