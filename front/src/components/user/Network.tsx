@@ -220,7 +220,7 @@ function Network() {
                                 </SelectBox>
                                 <SearchBar />
                             </NetworkHeadingSelectBox>
-                            {/* {isLoading ? (
+                            {isLoading ? (
                                 <LoadingBox>
                                     <LoadingIcon />
                                     Loading...
@@ -230,11 +230,11 @@ function Network() {
                                     {netUsers?.map((user) => (
                                         <UserCard
                                             key={user.userId}
-                                            profile={...user}
+                                            profile={user}
                                         />
                                     ))}
                                 </NetworkContainer>
-                            )} */}
+                            )}
                         </NetworkWrap>
                     </Root>
                 </BgWrap>
