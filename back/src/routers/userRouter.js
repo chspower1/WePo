@@ -179,7 +179,7 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         let picture = null;
 
         if(imageFile) {
-            picture = imageFile.filename;
+            picture = imageFile.originalname;
         }
         
         const toUpdate = { name, description, field, picture };
