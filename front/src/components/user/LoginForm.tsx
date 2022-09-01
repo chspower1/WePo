@@ -172,7 +172,7 @@ export default function LoginForm() {
                             <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
                         </LoginStyled.SubmitButtonBox>
                     </form>
-                     <LoginStyled.RegisterCommentBox>
+                    <LoginStyled.RegisterCommentBox>
                         아직 회원이 아니신가요?
                         <Link to="/register">
                             <LoginStyled.RegisterButton>회원가입</LoginStyled.RegisterButton>
