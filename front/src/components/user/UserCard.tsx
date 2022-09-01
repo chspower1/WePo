@@ -617,7 +617,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                     onClick={(e) => {
                                         onClickEdit(e);
                                         setNewPicturePreview(
-                                            `http://localhost:5001/uploads/${picture}`
+                                            `http://localhost:5001/uploads/${notDefault}${picture}`
                                         );
                                     }}
                                 >
