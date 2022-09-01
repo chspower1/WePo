@@ -54,6 +54,7 @@ const LikedUserImgBox = styled.div`
     overflow: hidden;
     border: 2px solid ${(props) => props.theme.filedBgColor};
     box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
+    flex-shrink: 0;
 `;
 const AccentWord = styled.h2`
     color: ${(props) => props.theme.textColor};
@@ -104,6 +105,7 @@ const CloseBtnIcons = styled(CloseOutline)`
 `
 const GotoLinkBox = styled.div`
     display: inline-block;
+    flex-shrink: 0;
 `;
 const GotoLink = styled(Link)`
     display:inline-block;
@@ -116,16 +118,28 @@ const GotoLink = styled(Link)`
 const LikedUserInfoBox = styled.div`
     display: flex;
     align-items: center;
+    width:100%; 
 `;
 const LikedUserInfoInner = styled.div`
     font-size: 16px;
     cursor: default;
     line-height: 1.5;
+    width:100%; 
 `;
-const LikedUserName = styled.h3``;
+const LikedUserName = styled.h3`
+    display: block;
+    width:100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+`;
 const LikedUserEmail = styled.a`
-    display: inline-block;
+    display: block;
     color: ${(props) => props.theme.btnColor};
+    width:100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 `;
 
 interface ILikeCardProps {
