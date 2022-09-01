@@ -264,7 +264,11 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm<IUserFormValue>();
+    } = useForm<IUserFormValue>({
+        defaultValues: {
+            reField: field,
+        },
+    });
     const [onLikeModalState, setOnLikeModalState] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
@@ -339,7 +343,15 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
             setNewPicturePreview(URL.createObjectURL(file));
         }
     }, [newPicture]);
-
+    // const test = ["백엔드", "인공지능"];
+    // fieldList.map((elem, index) => {
+    //     fieldList.includes("프론트엔드");
+    //     console.log("프론트엔드", test.includes("프론트엔드"));
+    //     console.log("백엔드", test.includes("백엔드"));
+    //     console.log("데이터분석", test.includes("데이터분석"));
+    //     console.log("인공지능", test.includes("인공지능"));
+    //     console.log("필드리스트 확인", elem);
+    // });
     // 이미지 초기값 확인
     // const pictureDefault = picture?.split("/")[0] === "default_images";
     // const notDefault = pictureDefault ? "" : userId + "_";
@@ -437,7 +449,6 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                             key={elem}
                                             type="checkbox"
                                             value={elem}
-                                            // defaultChecked={field?.includes(elem) ? true : false}
                                             {...register("reField", {
                                                 required: "희망 분야를 선택해주세요!",
                                             })}
