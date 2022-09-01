@@ -107,6 +107,11 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                                                 {award.title}
                                                             </AwardStyled.ContentAccent>
                                                             <AwardStyled.ContentDetail
+                                                                style={{
+                                                                    color: "#797979",
+                                                                    marginBottom: "20px",
+                                                                    marginLeft: "20px",
+                                                                }}
                                                                 title={award.grade}
                                                             >
                                                                 {award.grade}
