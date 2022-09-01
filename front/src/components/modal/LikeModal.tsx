@@ -136,12 +136,15 @@ interface ILikeCardProps {
     setOnLikeModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCardProps) => {
+    const pictureDefault = String(picture).split("/")[0] === "default_images";
+    const findUserId = String(picture).split("_")[0] === String(userId) ? "" : userId + "_";
+    const notDefault = pictureDefault ? "" : findUserId;
     return (
         <LikeBox>
             <LikedUserInfoBox>
                 <LikedUserImgBox>
                     <ProfileImg
-                        src={`http://localhost:5001/uploads/${picture}`}
+                        src={`http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`}
                         alt="profileImage"
                     />
                 </LikedUserImgBox>
