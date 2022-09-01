@@ -116,6 +116,16 @@ export const NameTxt = styled.h2`
     overflow: hidden;
     white-space: nowrap;
     cursor: default;
+
+    & > input[type="text"] {
+        font-size: 18px;
+        width: 100%;
+        border-radius: 3px;
+        border: 0;
+        border: solid 1px ${(props) => props.theme.btnColor};
+        margin-bottom: 10px;
+        padding: 8px 10px;
+    }
 `;
 export const EmailTxt = styled.h3`
     font-size: 16px;
@@ -141,15 +151,24 @@ const DescTxt = styled.p`
     line-height: 1.2;
     font-size: 16px;
     color: #797979;
+
+    & > textarea {
+        font-size: 15px;
+        border-radius: 3px;
+        border: 0;
+        border: solid 1px ${(props) => props.theme.btnColor};
+        margin-bottom: 10px;
+        padding: 8px 10px;
+    }
 `;
 
 const EditOrDetailBtnBox = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 40px;
 `;
 const IsMyCardBox = styled.div`
     display: flex;
@@ -173,6 +192,21 @@ const DetailBtn = styled.button`
     font-size: 15px;
     padding: 5px 0;
 `;
+
+const SubmitButton = styled.button`
+    background: ${(props) => props.theme.btnColor};
+    color: ${(props) => props.theme.btnTextColor};
+    padding: 8px 15px;
+    border-radius: 5px;
+`;
+const ExitButton = styled.button`
+    background: #f24b5d;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-right: 10px;
+`;
+
 const LikeBtnBox = styled.div`
     width: 30px;
     height: 30px;
@@ -243,7 +277,7 @@ const InputBtn = styled.input`
     position: absolute;
     left: -99999px;
     & + label {
-        background-color: gray;
+        background-color: #cdd7f4;
         color: white;
     }
     &:checked + label {
@@ -256,12 +290,14 @@ const ModalDelBtn = styled.button``;
 const PasswordChangeBtn = styled.button`
     display: block;
     text-align: center;
-    background: #3687ff;
-    padding: 10px 20px;
+    font-size: 13px;
+    background: #343434;
+    padding: 7px;
     color: #fff;
-    margin: 10px auto;
-    width: 100%;
+    margin: 0 0 0 auto;
+    width: 100px;
     border-radius: 5px;
+    transform: translate(0, -58px);
 `;
 
 interface IUserCardProps {
@@ -446,6 +482,11 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                             </EmailTxt>
                         </UserInfoTxt>
                     </InfoBox>
+                    {onEdit && (
+                    <PasswordChangeBtn onClick={() => setEditPassword(true)}>
+                            비밀번호 변경
+                    </PasswordChangeBtn>
+                    )}
                     <FieldBox>
                         {onEdit ||
                             field?.map(
@@ -534,11 +575,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                         )}
                         {onEdit && (
                             <>
-                                <PasswordChangeBtn onClick={() => setEditPassword(true)}>
-                                    비밀번호변경
-                                </PasswordChangeBtn>
-                                <DetailBtn title="수정완료">수정완료</DetailBtn>
-                                <DetailBtn
+                                <ExitButton
                                     title="취소"
                                     onClick={(e) => {
                                         onClickEdit(e);
@@ -548,7 +585,8 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                     }}
                                 >
                                     취소
-                                </DetailBtn>
+                                </ExitButton>
+                                <SubmitButton>수정완료</SubmitButton>
                             </>
                         )}
                     </EditOrDetailBtnBox>
