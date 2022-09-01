@@ -38,7 +38,7 @@ const Modal = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: ${modalShow} .5s;
+    animation: ${modalShow} 0.5s;
     width: 600px;
     height: 600px;
     border-radius: 10px;
@@ -58,8 +58,8 @@ const LikedUserImgBox = styled.div`
 const AccentWord = styled.h2`
     color: ${(props) => props.theme.textColor};
     font-size: 20px;
-    text-align:center;
-    padding:0 0 40px;
+    text-align: center;
+    padding: 0 0 40px;
 `;
 
 const LikeBox = styled.div`
@@ -68,8 +68,8 @@ const LikeBox = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 20px 0;
-    &+&{
-        border-top: 1px solid #eee
+    & + & {
+        border-top: 1px solid #eee;
     }
 `;
 const LikeLists = styled.div`
@@ -84,8 +84,8 @@ const LikeLists = styled.div`
     &::-webkit-scrollbar {
         width: 5px;
     }
-    &::-webkit-scrollbar-thumb{
-        background: ${props=>props.theme.starBorderColor};
+    &::-webkit-scrollbar-thumb {
+        background: ${(props) => props.theme.starBorderColor};
         border-radius: 10px;
     }
 `;
@@ -93,26 +93,26 @@ const ClsBtn = styled.button`
     position: absolute;
     right: 30px;
     top: 20px;
-    width:30px;
-    height:30px;
-    padding:0;
+    width: 30px;
+    height: 30px;
+    padding: 0;
 `;
 const CloseBtnIcons = styled(CloseOutline)`
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     color: #666666;
-`
+`;
 const GotoLinkBox = styled.div`
     display: inline-block;
 `;
 const GotoLink = styled(Link)`
-    display:inline-block;
-    color:${props=>props.theme.btnTextColor};
-    background:${props=>props.theme.starBorderColor};
-    font-size:13px;
-    padding:10px 15px;
-    border-radius:10px;
-`
+    display: inline-block;
+    color: ${(props) => props.theme.btnTextColor};
+    background: ${(props) => props.theme.starBorderColor};
+    font-size: 13px;
+    padding: 10px 15px;
+    border-radius: 10px;
+`;
 const LikedUserInfoBox = styled.div`
     display: flex;
     align-items: center;
@@ -141,7 +141,7 @@ const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCa
             <LikedUserInfoBox>
                 <LikedUserImgBox>
                     <ProfileImg
-                        src={`http://localhost:5001/uploads/${picture}`}
+                        src={`http://${window.location.hostname}:5001/uploads/${picture}`}
                         alt="profileImage"
                     />
                 </LikedUserImgBox>
@@ -168,8 +168,8 @@ function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
         <Wrapper>
             <Modal>
                 <AccentWord>나의 즐겨찾기 목록</AccentWord>
-                <ClsBtn onClick={() => setOnLikeModalState(false)}> 
-                    <CloseBtnIcons/>
+                <ClsBtn onClick={() => setOnLikeModalState(false)}>
+                    <CloseBtnIcons />
                 </ClsBtn>
                 <LikeLists>
                     {likeUsers?.map((user: any, index: number) => (
