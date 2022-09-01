@@ -56,10 +56,10 @@ const LikedUserImgBox = styled.div`
     box-shadow: 5px 5px 10px rgba(196, 196, 196, 0.4);
 `;
 const AccentWord = styled.h2`
-    color: ${(props) => props.theme.btnColor};
-    font-size: 30px;
+    color: ${(props) => props.theme.textColor};
+    font-size: 20px;
     text-align:center;
-    padding:0 0 30px;
+    padding:0 0 40px;
 `;
 
 const LikeBox = styled.div`
@@ -165,7 +165,7 @@ function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
     return (
         <Wrapper>
             <Modal>
-                <AccentWord>내가 팔로우한 사람</AccentWord>
+                <AccentWord>나의 즐겨찾기 목록</AccentWord>
                 <ClsBtn onClick={() => setOnLikeModalState(false)}> 
                     <CloseBtnIcons/>
                 </ClsBtn>

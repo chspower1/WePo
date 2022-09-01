@@ -193,7 +193,7 @@ const EditOrDetailBtnBox = styled.div`
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    margin-top: 40px;
+    margin-top: 30px;
 `;
 const IsMyCardBox = styled.div`
     display: flex;
@@ -223,17 +223,17 @@ const DetailBtn = styled.button`
 `;
 
 const SubmitButton = styled.button`
+    width: 100%;
     background: ${(props) => props.theme.btnColor};
     color: ${(props) => props.theme.btnTextColor};
-    padding: 8px 15px;
+    padding: 10px 15px;
     border-radius: 5px;
 `;
 const ExitButton = styled.button`
-    background: #f24b5d;
-    color: white;
+    color: ${(props) => props.theme.btnColor};
     padding: 8px 15px;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-top: 10px;
 `;
 
 const LikeBtnBox = styled.div`
@@ -611,6 +611,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                         )}
                         {onEdit && (
                             <>
+                                <SubmitButton>수정완료</SubmitButton>
                                 <ExitButton
                                     title="취소"
                                     onClick={(e) => {
@@ -622,7 +623,6 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                 >
                                     취소
                                 </ExitButton>
-                                <SubmitButton>수정완료</SubmitButton>
                             </>
                         )}
                     </EditOrDetailBtnBox>
