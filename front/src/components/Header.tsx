@@ -61,6 +61,7 @@ export const LinkButton = styled(NavLink)`
     font-weight: bold;
     color: ${(props) => props.theme.textColor};
     font-size: 16px;
+    transition: color .3s;
     & + & {
         margin: 0 20px 0 30px;
     }
@@ -80,7 +81,8 @@ export const LinkButton = styled(NavLink)`
         }
     }
     &:hover {
-        animation: ${LinkHover} 0.8s forwards;
+        // animation: ${LinkHover} 0.8s forwards;
+        color: #839DC9;
     }
 `;
 

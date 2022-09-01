@@ -137,6 +137,14 @@ class userAuthService {
       return { errorMessage };
     }
 
+
+    if(!isNaN(parseInt(user.picture.split('_')[0]))) {
+      return {
+        ...user,
+        picture: user.picture.substr(user.picture.indexOf('_')+1)
+      }
+    }
+
     return user;
   }
 
