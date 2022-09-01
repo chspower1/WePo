@@ -15,6 +15,7 @@ import FiledStyle from "@styledComponents/FieldStyle";
 import { LoadingBox, LoadingIcon } from "./Network";
 import LikeModal from "@components/modal/LikeModal";
 import ChangePassword from "@components/modal/ChangePassword";
+import { LockPassword } from "styled-icons/remix-line";
 
 const ItemWrap = styled.div`
     position: relative;
@@ -30,7 +31,7 @@ const ItemWrap = styled.div`
     transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
     &:not(.sticky):hover {
         border: 1px solid ${(props) => props.theme.filedBgColor};
-        box-shadow: 12px 12px 18px ${props=>props.theme.boxShadowHoverColor};
+        box-shadow: 12px 12px 18px ${(props) => props.theme.boxShadowHoverColor};
         transform: translate(0, -10px);
     }
     &.sticky {
@@ -141,15 +142,17 @@ export const NameTxt = styled.h2`
     overflow: hidden;
     white-space: nowrap;
     cursor: default;
-
     & > input[type="text"] {
-        font-size: 18px;
+        font-size: 16px;
         width: 100%;
-        border-radius: 3px;
-        border: 0;
+        border-radius: 10px;
         border: solid 1px ${(props) => props.theme.btnColor};
+        outline: none;
         margin-bottom: 10px;
         padding: 8px 10px;
+        &:focus {
+            border: 2px solid ${(props) => props.theme.accentColor};
+        }
     }
 `;
 export const EmailTxt = styled.h3`
@@ -176,14 +179,8 @@ const DescTxt = styled.p`
     line-height: 1.2;
     font-size: 16px;
     color: #797979;
-
-    & > textarea {
-        font-size: 15px;
-        border-radius: 3px;
-        border: 0;
-        border: solid 1px ${(props) => props.theme.btnColor};
-        margin-bottom: 10px;
-        padding: 8px 10px;
+    &:focus {
+        border: 1.5px solid ${(props) => props.theme.accentColor};
     }
 `;
 
@@ -228,6 +225,10 @@ const SubmitButton = styled.button`
     color: ${(props) => props.theme.btnTextColor};
     padding: 10px 15px;
     border-radius: 5px;
+    transition: all 0.4s ease;
+    &:hover {
+        background: ${(props) => props.theme.accentColor};
+    }
 `;
 const ExitButton = styled.button`
     color: ${(props) => props.theme.btnColor};
@@ -267,6 +268,15 @@ const DescTextarea = styled.textarea`
     width: 100%;
     height: 90%;
     resize: none;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 0;
+    border: solid 1px ${(props) => props.theme.btnColor};
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    &:focus {
+        outline: 1.5px solid ${(props) => props.theme.accentColor};
+    }
 `;
 const FieldBox = styled.div`
     display: flex;
@@ -317,16 +327,18 @@ const InputBtn = styled.input`
 
 const ModalDelBtn = styled.button``;
 const PasswordChangeBtn = styled.button`
-    display: block;
+    display: flex;
     text-align: center;
     font-size: 13px;
-    background: #343434;
     padding: 7px;
-    color: #fff;
+    color: tomato;
     margin: 0 0 0 auto;
-    width: 100px;
     border-radius: 5px;
     transform: translate(0, -58px);
+    transition: all 0.4s ease;
+    &:hover {
+        color: #ff0000;
+    }
 `;
 
 interface IUserCardProps {
@@ -519,6 +531,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                     </InfoBox>
                     {onEdit && (
                         <PasswordChangeBtn onClick={() => setEditPassword(true)}>
+                            <LockPassword size={18} style={{ marginRight: "5px" }} />
                             비밀번호 변경
                         </PasswordChangeBtn>
                     )}

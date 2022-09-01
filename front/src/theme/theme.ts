@@ -45,5 +45,5 @@ export const darkTheme: DefaultTheme = {
     headerBorderColor: "#2e2e2e",
     headerActiveColor: "#222222",
     successColor: "#5573df",
-    imgOpacity: .8,
+    imgOpacity: 0.8,
 };

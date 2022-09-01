@@ -9,13 +9,17 @@ const FieldTest = styled.label`
     border-radius: 5px;
     margin: 0 4px 10px;
     cursor: pointer;
-    user-select:none;
+    user-select: none;
+    transition: all 0.4s ease;
     ${(props: any) =>
         props.chose &&
         css`
             background-color: ${(props) => props.theme.filedBgColor};
             color: white;
         `}
+    &:hover {
+        background: #86baff;
+    }
 `;
 
 export default function FiledStyle({ children, ...props }: any) {
