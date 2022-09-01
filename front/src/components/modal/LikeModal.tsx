@@ -26,11 +26,11 @@ const Wrapper = styled.div`
 const modalShow = keyframes`
     from{
         opacity:0;
-        top:-100%;
+        transform: translate(-50%, -45%);
     }
     to{
         opacity:1;
-        top:50%;
+        transform: translate(-50%, -50%);
     }
 `;
 const Modal = styled.div`
@@ -38,7 +38,7 @@ const Modal = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: ${modalShow} 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: ${modalShow} .5s;
     width: 600px;
     height: 600px;
     border-radius: 10px;
@@ -79,6 +79,8 @@ const LikeLists = styled.div`
     max-height: 480px;
     padding: 0 30px;
     overflow-y: scroll;
+    overscroll-behavior: contain;
+
     &::-webkit-scrollbar {
         width: 5px;
     }

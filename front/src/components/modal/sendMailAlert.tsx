@@ -18,15 +18,15 @@ const Wrapper = styled.div`
 const modalShow = keyframes`
     from{
         opacity:0;
-        transform:translateY(-100%);
+        transform:translateY(40px);
     }
     to{
         opacity:1;
-        transform:translateY(0%);
+        transform:translateY(0px);
     }
 `;
 const Modal = styled.div`
-    animation: ${modalShow} 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: ${modalShow} .6s;
     width: 800px;
     height: 500px;
     display: flex;
@@ -38,8 +38,10 @@ const Modal = styled.div`
 `;
 const ModalHeader = styled.h1`
     width: 100%;
-    font-size: 20px;
-    font-weight: 400;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 60px;
 `;
 
 const ModalMsgBox = styled.div`
@@ -49,7 +51,8 @@ const ModalMsgBox = styled.div`
 
 const ModalMsg = styled.p`
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    text-align: center;
 `;
 
 const ModalCloseButton = styled.button`
@@ -60,28 +63,25 @@ const ModalCloseButton = styled.button`
 `;
 const AccentWord = styled.span`
     color: #3867ff;
-    font-size: 30px;
+    font-weight: 600;
 `;
 function SendMailAlert({ setSendEmail }: any) {
     const navigator = useNavigate();
     return (
         <Wrapper>
             <Modal>
-                <div style={{ width: "70%", marginBottom: "50px" }}>
-                    <ModalHeader>
-                        <AccentWord>인증메일</AccentWord>을 보내드렸어요.
-                    </ModalHeader>
-                    <ModalHeader>
-                        <AccentWord>인증메일</AccentWord>을 확인해주세요.✉️
-                    </ModalHeader>
-                </div>
+                <ModalHeader>
+                    ✉️ 이메일을 인증해주세요
+                    
+                </ModalHeader>
                 <ModalMsgBox>
-                    <ModalMsg>반가워요 WEPO에 오신것을 환영합니다!😆😆 </ModalMsg>
-                    <ModalMsg>아직 한 단계가 남아있습니다.</ModalMsg>
                     <ModalMsg>
-                        가입하신 이메일을 인증해주시면, WEPO의 서비스를 마음껏 이용하실 수 있습니다.
+                        반가워요 ! <AccentWord>WEPO</AccentWord> 에 오신 것을 환영합니다 😆
                     </ModalMsg>
-                    <ModalMsg>👍🏻가입해주셔서 감사합니다👍🏻</ModalMsg>
+                    <ModalMsg>아직 한 단계가 남아있어요 !</ModalMsg>
+                    <ModalMsg>
+                        가입하신 이메일을 인증한 후 <AccentWord>WEPO</AccentWord> 를 마음껏 이용해 주세요
+                    </ModalMsg>
                 </ModalMsgBox>
                 <ModalCloseButton
                     onClick={() => {
@@ -89,7 +89,7 @@ function SendMailAlert({ setSendEmail }: any) {
                         navigator("/login", { replace: true });
                     }}
                 >
-                    로그인 페이지로 돌아가기
+                    로그인 페이지로 이동하기
                 </ModalCloseButton>
             </Modal>
         </Wrapper>

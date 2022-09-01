@@ -112,7 +112,12 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const { name, description, field, picture } = toUpdate;
+    
+    let { name, description, field, picture } = toUpdate;
+
+    if(!field) {
+      field = [];
+    }
 
     const newValues = {
       ...(name && { name }),
