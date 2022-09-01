@@ -28,7 +28,7 @@ const ItemWrap = styled.div`
     border: 1px solid ${(props) => props.theme.cardColor};
     transform: translate(0, 0);
     transition: border 0.3s, box-shadow 0.3s, transform 0.4s;
-    &:hover {
+    &:not(.sticky):hover {
         border: 1px solid ${(props) => props.theme.filedBgColor};
         box-shadow: 12px 12px 18px #95a9e070;
         transform: translate(0, -10px);
@@ -85,18 +85,43 @@ export const ProfileImg = styled.img`
     position: relative;
     z-index: 1;
 `;
+const ImageChangeBox = styled.div`
+position: absolute;
+z-index: 2;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background: transparent;
+transition: background .3s;
+&:hover{
+    background: rgba(0, 0, 0, 0.5);
+    & svg{
+        color:rgba(255,255,255,1);
+    }
+}
+`
 const ImageChangeInput = styled.input`
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    top: 0;
     text-indent: -99999px;
-    display: inline-flex;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    cursor: pointer;
 `;
+const ImageChangeLabel = styled.label`
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+display:flex;
+cursor: pointer;
+`
+const ImageChangeIcon = styled(PlusOutline)`
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    transition: color .3s;
+    color: rgba(255,255,255,0);
+`
 const PlusIcon = styled(PlusOutline)`
     position: absolute;
     z-index: 3;
@@ -456,11 +481,17 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                                 alt="profileImage"
                             />
                             {onEdit && (
-                                <ImageChangeInput
-                                    type="file"
-                                    accept="image/*"
-                                    {...register("rePicture")}
-                                />
+                                <ImageChangeBox>
+                                    <ImageChangeInput
+                                        type="file"
+                                        id="imgInput"
+                                        accept="image/*"
+                                        {...register("rePicture")}
+                                    />
+                                    <ImageChangeLabel htmlFor="imgInput">
+                                        <ImageChangeIcon/>
+                                    </ImageChangeLabel>
+                                </ImageChangeBox>
                             )}
                         </ProfileImageBox>
                         <UserInfoTxt>
