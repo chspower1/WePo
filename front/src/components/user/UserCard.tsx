@@ -36,7 +36,7 @@ const ItemWrap = styled.div`
     &.sticky{
         position:sticky;
         left:0;
-        top:100px;
+        top:120px;
     }
     
 `;
@@ -53,8 +53,8 @@ export const InfoBox = styled.div`
 export const ProfileImageBox = styled.div`
     position: relative;
     transform: translate(-10px, -50px);
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid ${(props) => props.theme.filedBgColor};
@@ -62,7 +62,7 @@ export const ProfileImageBox = styled.div`
 `;
 
 export const UserInfoTxt = styled.div`
-    width: calc(100% - 130px);
+    width: calc(100% - 120px);
     margin-left: 20px;
     color: ${(props) => props.theme.textColor};
 `;
@@ -94,7 +94,7 @@ const PlusIcon = styled(PlusOutline)`
 `;
 
 export const NameTxt = styled.h2`
-    font-size: 20px;
+    font-size: px;
     font-weight: bold;
     margin-bottom: 10px;
     text-overflow: ellipsis;
