@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -15,6 +16,10 @@ export const Container = styled.div`
     @media screen and (max-width: 960px) {
         margin-top: 40px;
     }
+
+    @media screen and (max-width: 500px) {
+        padding: 25px;
+    }
 `;
 export const TitleBox = styled.div`
     width: 100%;
@@ -24,10 +29,18 @@ export const Title = styled.h2`
     font-size: 25px;
     font-weight: 900;
     margin-bottom: 60px;
+
+    @media screen and (max-width: 500px) {
+        font-size: 18px;
+    }
 `;
 export const ContentContainer = styled.div`
     width: 80%;
     height: auto;
+
+    @media screen and (max-width: 500px) {
+        width: 100%;
+    }
 `;
 export const ContentBox = styled.div`
     width: 100%;
@@ -35,6 +48,11 @@ export const ContentBox = styled.div`
     height: auto;
     display: flex;
     flex-direction: column;
+    border-bottom: 1px solid #e9e9e9;
+    padding: 30px 3px 10px;
+    @media screen and (max-width: 500px) {
+        display: flex;
+    }
 `;
 export const ContentName = styled.h2`
     font-size: 15px;
@@ -123,7 +141,6 @@ export const AddInput = styled.input.attrs((props) => ({
 `;
 
 export const AddInputBox = styled.div`
-    position: relative;
     width: auto;
     height: auto;
     display: ${(props) => props.style?.display || "flex"};
@@ -152,6 +169,10 @@ export const MajorGraduate = styled.input.attrs((props) => ({
 export const MajorGraduateLabel = styled.label`
     margin-right: 10px;
     color: ${(props) => props.theme.textColor};
+
+    @media screen and (max-width: 500px) {
+        font-size: 14px;
+    }
 `;
 export const Root = styled.div`
     background: ${(props) => props.theme.bgColor};
@@ -169,6 +190,10 @@ export const MyPortWrap = styled.div`
     @media screen and (max-width: 960px) {
         flex-direction: column;
     }
+
+    @media screen and (max-width: 500px) {
+        padding: 150px 0 0;
+    }
 `;
 export const Wrap = styled.div`
     width: 100%;
@@ -177,6 +202,7 @@ export const Wrap = styled.div`
     @media screen and (max-width: 960px) {
         margin-left: 0;
         max-width: 100%;
+        padding: 0 20px;
     }
 `;
 export const UserCardBox = styled.div`
@@ -187,10 +213,14 @@ export const UserCardBox = styled.div`
 `;
 export const ImportantTxt = styled.div`
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 60px;
+    top: 50px;
     color: ${(props) => props.theme.textColor};
     font-size: 13px;
+    @media screen and (max-width: 960px) {
+        top: 30px;
+        right: 20px;
+    }
 `;
 export const SubmitOrCencerBtnBox = styled.div`
     width: 100%;

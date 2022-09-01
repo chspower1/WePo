@@ -13,6 +13,14 @@ const ThemeBtnBox = styled.div`
     border: none;
     border-radius: 50%;
     overflow: hidden;
+
+    @media screen and (max-width: 500px) {
+        top: 20px;
+        right: 20px;
+        bottom: auto;
+        width: 45px;
+        height: 45px;
+    }
 `;
 /* ${(props:any)=>{
         props.light && css`
@@ -33,11 +41,21 @@ const LightIcon = styled(Sun)`
     width: 30px;
     height: 30px;
     color: ${(props) => props.theme.starFullColor};
+
+    @media screen and (max-width: 500px) {
+        width: 25px;
+        height: 25px;
+    }
 `;
 const DarkIcon = styled(MoonStarsFill)`
     width: 25px;
     height: 25px;
     color: ${(props) => props.theme.starFullColor};
+
+    @media screen and (max-width: 500px) {
+        width: 20px;
+        height: 20px;
+    }
 `;
 
 export default function ThemeChangeBtn() {
