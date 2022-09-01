@@ -44,8 +44,9 @@ const Modal = styled.div`
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
     padding: 50px 30px 10px;
+
     @media screen and (max-width: 500px) {
-        width: 400px;
+        width: 90%;
     }
 `;
 const LikedUserImgBox = styled.div`
@@ -73,6 +74,10 @@ const LikeBox = styled.div`
     padding: 20px 0;
     & + & {
         border-top: 1px solid #eee;
+    }
+
+    @media screen and (max-width: 500px) {
+        flex-wrap: wrap;
     }
 `;
 const LikeLists = styled.div`
@@ -106,7 +111,9 @@ const CloseBtnIcons = styled(CloseOutline)`
 const GotoLinkBox = styled.div`
     display: inline-block;
     @media screen and (max-width: 500px) {
-        width: 20px;
+        width: 100%;
+        margin-top: 10px;
+        text-align: right;
     }
 `;
 const GotoLink = styled(Link)`

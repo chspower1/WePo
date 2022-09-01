@@ -57,6 +57,16 @@ export const Wrapper = styled.div`
         background: url(${process.env.PUBLIC_URL + "/assets/image/loginConceptImg2.png"}) no-repeat 50% 50%/contain;
         animation: ${fadeIn} .6s .3s forwards;
     }
+
+    @media screen and (max-width: 500px) {
+        &.login:after {
+            display: none;
+        }
+
+        &.register:before {
+            display: none;
+        }
+    }
 `;
 
 
@@ -77,6 +87,13 @@ export const FromContainer = styled.div`
     backdrop-filter: blur(8px);
     opacity: 0;
     animation: ${fadeInUp} .6s .3s forwards;
+
+    @media screen and (max-width: 500px) {
+        width: 85%;
+        height: 460px;
+        padding: 35px 30px;
+        margin: 150px auto 0;
+    }
 `;
 
 export const TitleBox = styled.div`
@@ -87,6 +104,11 @@ export const Title = styled.h2`
     font-size: 24px;
     font-weight: bold;
     color: ${(props) => props.theme.textColor};
+
+    @media screen and (max-width: 500px) {
+        font-size: 22px;
+        text-align: center;
+    }
 `;
 
 export const InputBox = styled.div`
@@ -182,12 +204,26 @@ export const RegisterCommentBox = styled.div`
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 200%);
+
+    @media screen and (max-width: 500px) {
+        width: 100%;
+    }
 `;
 
 export const RegisterFromContainer = styled(FromContainer)`
     padding: 60px 80px;
     height: 750px;
     margin: auto;
+
+    @media screen and (max-width: 500px) {
+        height: auto;
+        padding: 35px 30px;
+        margin: 150px auto 0;
+
+        & > div > h2 {
+            margin-bottom: 40px;
+        }
+    }
 `;
 
 export const RegisterWrapper = styled(Wrapper)`
@@ -227,6 +263,11 @@ export const FiledBox = styled.div`
 export const FiledSelectBox = styled.div`
     display: flex;
     justify-content: space-around;
+
+    @media screen and (max-width: 500px) {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
 `;
 export const FiledTit = styled.h2`
     width: 100%;
@@ -234,7 +275,13 @@ export const FiledTit = styled.h2`
     font-size: 18px;
     color: ${(props) => props.theme.textColor};
 `;
-export const FiledInputBox = styled.div``;
+export const FiledInputBox = styled.div`
+    margin: 0;
+
+    @media screen and (max-width: 500px) {
+        margin: 8px 5px;
+    }
+`;
 export const FiledInput = styled.input``;
 export const FiledLabel = styled.label`
     color: ${(props) => props.theme.textColor};

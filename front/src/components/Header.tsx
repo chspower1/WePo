@@ -56,7 +56,9 @@ const Nav = styled.nav`
     @media screen and (max-width: 500px) {
         position: absolute;
         top: 80px;
-        right: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        justify-content: center;
     }
 `;
 /**
@@ -139,9 +141,9 @@ const LoginOrRegiBtn = styled.button`
     }
     &:logout {
     }
+
     @media screen and (max-width: 500px) {
-        padding: 5px;
-        font-size: 12px;
+        font-size: 14px;
     }
 `;
 const MiniProfileBox = styled.div`
@@ -149,38 +151,6 @@ const MiniProfileBox = styled.div`
     align-items: center;
     margin-left: 20px;
 `;
-
-const MobileNavBtn = styled.div`
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translate(0, -50%);
-    width: 42px;
-    height: 26px;
-`;
-
-const MobileNavBtnSpan = styled.span`
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: #333;
-    border-radius: 5px;
-    position: absolute;
-    left: 0;
-
-    &:nth-child(1) {
-        top: 0px;
-    }
-
-    &:nth-child(2) {
-        top: calc(50% - 1.5px);
-    }
-
-    &:nth-child(3) {
-        bottom: 0px;
-    }
-`;
-
 
 
 function Header() {
@@ -274,11 +244,6 @@ function Header() {
                         )}
                     </Nav>
                 </HeaderContainer>
-                <MobileNavBtn>
-                    <MobileNavBtnSpan />
-                    <MobileNavBtnSpan />
-                    <MobileNavBtnSpan />
-                </MobileNavBtn>
             </HeaderWrap>
         </>
     );

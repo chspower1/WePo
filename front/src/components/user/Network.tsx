@@ -31,6 +31,10 @@ const BgWrap = styled.div`
     min-height: 100vh;
     background: ${(props) => props.theme.bgColor};
     padding: 100px 0 0;
+
+    @media screen and (max-width: 500px) {
+        padding: 150px 0 0;
+    }
 `;
 
 const Root = styled.div`
