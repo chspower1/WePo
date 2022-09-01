@@ -53,7 +53,7 @@ export default function LoginForm() {
     //첫 랜더시
     useEffect(() => {
         if (cookies.rememberEmail !== undefined) {
-            console.log(cookies.rememberEmail);
+            setCookies("rememberEmail", "");
             setIsEmailRemember(true);
         }
         if (cookies.rememberEmail === "") {
@@ -76,7 +76,7 @@ export default function LoginForm() {
     useEffect(() => {
         if (isLogin) {
             if (isEmailRemember) {
-                setCookies("rememberEmail", curUser?.email!, { maxAge: 3600 });
+                setCookies("rememberEmail", curUser?.email!, { maxAge: 360000 });
             } else {
                 setCookies("rememberEmail", "");
             }
@@ -163,7 +163,9 @@ export default function LoginForm() {
                                 onClick={onChangeAtuoLogin}
                                 id="rememberId"
                             />
-                            <label htmlFor="rememberId" style={{userSelect:"none"}}>이메일 기억하기</label>
+                            <label htmlFor="rememberId" style={{ userSelect: "none" }}>
+                                이메일 기억하기
+                            </label>
                         </div>
                         {/* <div>
                             자동 로그인
