@@ -362,10 +362,10 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
             updateCurUser.name = name;
             updateCurUser.description = description;
             updateCurUser.field = field;
-            if (picture!.length !== 0) {
-                updateCurUser.picture = picture[0].name;
+            if (picture?.length !== 0) {
+                updateCurUser.picture = picture[0]?.name;
             }
-            console.log("picture[0].name",picture[0].name)
+            console.log("picture[0].name", picture[0]?.name);
             return updateCurUser as IUser;
         });
         updateUser({ name, description, field, picture }, curUser?.userId!);
@@ -375,7 +375,8 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
         e.preventDefault();
         setOnEdit((cur) => !cur);
     };
-    console.log(picture)
+    console.log(picture);
+
     const onClickLikesModal = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setOnLikeModalState((cur) => !cur);
@@ -413,7 +414,6 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     const pictureDefault = String(picture).split("/")[0] === "default_images";
     const findUserId = String(picture).split("_")[0] === String(userId) ? "" : userId + "_";
     const notDefault = pictureDefault ? "" : findUserId;
-    
 
     useEffect(() => {}, [onEdit]);
     if (!profile)
@@ -489,9 +489,9 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                         </UserInfoTxt>
                     </InfoBox>
                     {onEdit && (
-                    <PasswordChangeBtn onClick={() => setEditPassword(true)}>
+                        <PasswordChangeBtn onClick={() => setEditPassword(true)}>
                             비밀번호 변경
-                    </PasswordChangeBtn>
+                        </PasswordChangeBtn>
                     )}
                     <FieldBox>
                         {onEdit ||

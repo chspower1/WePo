@@ -23,6 +23,7 @@ import * as Mypage from "@styledComponents/CategoryStyled";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import CurrentBoard from "@components/category/CurrentBoard";
 import { LoadingBox, LoadingIcon } from "./Network";
+import { usersState } from "./../../atoms";
 
 function UserDetails() {
     const navigator = useNavigate();
@@ -39,6 +40,7 @@ function UserDetails() {
     const admin = inMyPage || compareUser;
 
     //User관련 State
+    const users = useRecoilValue(usersState);
     const [profile, setProfile] = useState<IProfile>();
     const [educations, setEducations] = useState<IEducation[]>([]);
     const [awards, setAwards] = useState<IAward[]>([]);
@@ -77,7 +79,9 @@ function UserDetails() {
             navigator("/login", { replace: true });
         }
     }, [isLogin]);
-    // useEffect(() => {}, [UserCard]);
+    useEffect(() => {
+        // const checkUser = users.filter((user) => user.userId === userSeq!);
+    }, []);
     const onDragEnd = async ({ draggableId, destination, source }: DropResult) => {
         if (destination?.droppableId !== source.droppableId) return;
         //드래그 필드가 Educations
