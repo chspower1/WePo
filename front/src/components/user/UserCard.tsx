@@ -370,7 +370,8 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
     }, [newPicture]);
 
     const pictureDefault = String(picture).split("/")[0] === "default_images";
-    const notDefault = pictureDefault ? "" : userId + "_";
+    const findUserId = String(picture).split("_")[0] === String(userId) ? "" : userId + "_";
+    const notDefault = pictureDefault ? "" : findUserId;
 
     useEffect(() => {}, [onEdit]);
     if (!profile)
@@ -380,6 +381,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                 Loading...
             </LoadingBox>
         );
+    console.log("picture",picture)
     return (
         <>
             {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
