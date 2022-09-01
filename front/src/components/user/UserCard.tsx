@@ -350,13 +350,13 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
         reField: field,
         rePicture: picture,
     }: IUserFormValue) => {
-        setProfile!((prev) => ({
-            ...prev,
-            name,
-            field,
-            description,
-            picture,
-        }));
+        setProfile!((prev) => {
+            const updateProfile = { ...prev };
+            if (picture!.length === 0) {
+                updateProfile.picture = picture[0]?.name;
+            }
+            return { ...prev, name, field, description, picture };
+        });
         setCurUser((prev) => {
             const updateCurUser = { ...prev };
             updateCurUser.name = name;
