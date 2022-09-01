@@ -34,20 +34,13 @@ userAuthRouter.post("/register", async function (req, res, next) {
 
         // 인증코드 생성
         const codeAdded = await emailService.createAuthCode(newUser.userId);
-        const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${newUser.userId}/${codeAdded.authCode}`;
+        const authCode = codeAdded.authCode
 
         // 인증 이메일 전송
-        const mailContent = {
-            from: '"Limit" <wnsdml0120@gmail.com>', // sender address
-            to: email, // list of receivers: "*@*.*, *@*.*"
-            subject: "[WePo] 이메일 인증", // Subject line
-            text: `${name}님, 다음 링크로 이메일 인증 부탁드립니다: ${authURL}`, // plain text body
-            html: `<br>${name}<b/>님,<br/>
-            아래 버튼을 눌러 이메일 인증 부탁드립니다:</br>
-            <a href="${authURL}">이메일 인증하기</a>`, // html body
-        };
-
-        const emailSent = await emailService.sendEmail(mailContent);
+        const mailContent = newUser.mailContent
+        mailContent.setContent(name, newUser.userId, authCode)
+        mailContent.setEmail(email)
+        await emailService.sendEmail(mailContent);
 
         res.status(201).json(newUser);
     } catch (error) {
