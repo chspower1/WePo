@@ -56,7 +56,7 @@ export const NetworkContainer = styled.div`
 const NetworkHeadingSelectBox = styled.div`
     width: 100%;
     color: ${(props) => props.theme.textColor};
-    margin: 0 0 100px;
+    margin: 0 0 130px;
 `;
 
 const NetworkTitle = styled.h1`
