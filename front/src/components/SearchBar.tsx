@@ -30,7 +30,7 @@ const Input = styled.input`
     border: 1px solid ${(props) => props.theme.btnColor};
     outline: 0;
     &:focus {
-        border: 2px solid ${(props) => props.theme.btnColor};
+        outline: 2px solid ${(props) => props.theme.btnColor};
     }
 `;
 const Button = styled.button`
