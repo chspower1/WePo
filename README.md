@@ -129,4 +129,5 @@ Back-end | 이준의, 정소희
 본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다. Copyright 2022 엘리스 Inc. All rights reserved.
 
 [README (Back-end)](back/README.md#wepo--백엔드)
+
 [README (Front-end)](front/README.md#wepo-front-end)
