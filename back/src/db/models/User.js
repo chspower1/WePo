@@ -122,6 +122,23 @@ class User {
     return updatedView;
   }
 
+  // 사용자 즐겨찾기 목록 상세 정보 호출
+  static async getDetailedLikes(userId) {
+    const user = await UserModel.findOne({userId})
+    const detailedLikes = user.likes.map( async (userId)=>{
+      const user = await User.findByUserId(userId);
+      const detailedLike = {
+        userId: userId,
+        name: user.name,
+        email: user.email,
+        picture: user.picture
+      }
+      return detailedLike
+    })
+    return Promise.all(detailedLikes)
+  }
+  
+
 }
 
 export { User };
