@@ -166,7 +166,7 @@ function Header() {
         setScrollY(0);
         setScrollActive(false);
     }, [pathName]);
-
+    useEffect(() => {}, [curUser?.picture]);
     return (
         <>
             <HeaderWrap className={`${scrollActive ? "active" : ""}`}>
