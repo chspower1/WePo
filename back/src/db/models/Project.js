@@ -43,7 +43,7 @@ class Project {
     return ProjectModel.findOneAndDelete({ projectId });
   }
 
-  // 자격증 순서 변경
+  // 프로젝트 순서 변경
   static async updateOrder(newOrder) {
 
     const { projectId, order } = newOrder;

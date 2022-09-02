@@ -31,12 +31,12 @@ class emailService {
     return transporter.sendMail({ from, to, subject, text, html });
   }
 
-  // 이메일 인증 번호 생성
+  // 이메일 인증코드 생성
   static async createAuthCode(userId){
     // 인증번호 생성
     const authCode = Math.random().toString(36).slice(-8)
 
-    const data = await Email.getEmailCodePair(userId)
+    const data = await Email.getUserIdCodePair(userId)
     // 기존 userId-인증번호 pair 존재 시 인증번호 update
     if(data){
       return Email.update({userId, authCode})
@@ -45,12 +45,12 @@ class emailService {
     return Email.add({userId, authCode})
   }
 
-  // 이메일 인증 번호 확인
+  // 이메일 인증코드 확인
   static async getAuthCode(userId){
-    return Email.getEmailCodePair(userId)
+    return Email.getUserIdCodePair(userId)
   }
 
-  // 이메일-인증번호 pair 삭제
+  // 이메일 인증코드 삭제
   static async deleteAuthCode(userId){
     await Email.delete(userId)
   }

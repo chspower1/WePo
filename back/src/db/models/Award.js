@@ -38,12 +38,7 @@ class Award {
     );
     return updatedAward;
   }
-
-  // awardId에 해당하는 수상내역 삭제
-  static async delete(awardId) {
-    return AwardModel.findOneAndDelete({ awardId });
-  }
-
+  
   // 수상내역 순서 변경
   static async updateOrder(newOrder) {
 
@@ -58,6 +53,11 @@ class Award {
     );
 
     return updatedAward;
+  }
+
+  // awardId에 해당하는 수상내역 삭제
+  static async delete(awardId) {
+    return AwardModel.findOneAndDelete({ awardId });
   }
 }
 

@@ -37,12 +37,7 @@ class Certificate {
     );
     return updatedCertificate;
   }
-
-  // certId에 해당하는 자격증정보 삭제
-  static async delete(certId) {
-    return CertificateModel.findOneAndDelete({ certId });
-  }
-
+  
   // 자격증 순서 변경
   static async updateOrder(newOrder) {
 
@@ -57,6 +52,11 @@ class Certificate {
     );
 
     return updatedCertificate;
+  }
+
+  // certId에 해당하는 자격증정보 삭제
+  static async delete(certId) {
+    return CertificateModel.findOneAndDelete({ certId });
   }
 }
 

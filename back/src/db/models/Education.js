@@ -37,11 +37,6 @@ class Education {
     return updatedEducation;
   }
 
-  // eduId에 해당하는 학력정보 삭제
-  static async delete(eduId) {
-    return EducationModel.findOneAndDelete({ eduId });
-  }
-
   // 학력 순서 변경
   static async updateOrder(newOrder) {
 
@@ -58,7 +53,10 @@ class Education {
     return updatedEducation;
   }
 
-
+  // eduId에 해당하는 학력정보 삭제
+  static async delete(eduId) {
+    return EducationModel.findOneAndDelete({ eduId });
+  }
 }
 
 export { Education };
