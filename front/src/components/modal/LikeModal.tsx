@@ -113,6 +113,7 @@ const CloseBtnIcons = styled(CloseOutline)`
 `;
 const GotoLinkBox = styled.div`
     display: inline-block;
+    flex-shrink: 0;
     @media screen and (max-width: 500px) {
         width: 100%;
         margin-top: 10px;
@@ -133,6 +134,7 @@ const LikedUserInfoBox = styled.div`
     width:100%; 
 `;
 const LikedUserInfoInner = styled.div`
+    width:100%;
     font-size: 16px;
     cursor: default;
     line-height: 1.5;
@@ -140,11 +142,16 @@ const LikedUserInfoInner = styled.div`
         font-size: 14px;
     }
 `;
-const LikedUserName = styled.h3``;
+const LikedUserName = styled.h3`
+    width: 275px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+`;
 const LikedUserEmail = styled.a`
     display: block;
     color: ${(props) => props.theme.btnColor};
-    width:100%;
+    width: 275px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
