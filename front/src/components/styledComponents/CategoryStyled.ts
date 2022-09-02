@@ -48,8 +48,6 @@ export const ContentBox = styled.div`
     height: auto;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #e9e9e9;
-    padding: 30px 3px 10px;
     @media screen and (max-width: 500px) {
         display: flex;
     }
@@ -65,7 +63,7 @@ export const ContentAccent = styled.p`
     font-weight: bold;
     padding: 10px 0;
     max-width: 90%;
-    margin-right:20px;
+    margin-right: 20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -78,7 +76,7 @@ export const ContentDetail = styled.p`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color:#797979;
+    color: #797979;
 `;
 export const ContentDesc = styled.p`
     font-size: 15px;
@@ -94,8 +92,8 @@ export const ContentDesc = styled.p`
 export const ContentDate = styled.p`
     font-size: 13px;
     color: ${(props) => props.theme.contentColor};
-    padding : 10px 0 10px;
-    margin-bottom:10px;
+    padding: 10px 0 10px;
+    margin-bottom: 10px;
 `;
 export const EditButton = styled.button`
     width: 27px;

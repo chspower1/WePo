@@ -161,22 +161,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    // 사용자 즐겨찾기 목록 상세 정보 호출
-    const detailedLikes = user.likes.map( async (userId)=>{
-      const user = await User.findByUserId(userId);
-      return {
-        userId: userId,
-        name: user.name,
-        email: user.email,
-        picture: user.picture
-      }
-    })
-    const detailedUser = {
-      ...user,
-      likes: detailedLikes
-    }
-
-    return detailedUser;
+    return user;
   }
 
 
@@ -198,6 +183,7 @@ class userAuthService {
   // 사용자 즐겨찾기 추가/삭제
   static async toggleLike({userId, otherId}) {
     const user = await User.findByUserId(userId);
+    const otherUser = await User.findByUserId(otherId);
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
@@ -206,21 +192,26 @@ class userAuthService {
     }
     
     // 아이디가 존재하면 즐겨찾기에서 삭제
-    if(user.likes.includes(otherId)){
+    if(user.likes.filter(likeUser => likeUser.userId === otherId).length) {
       const newValues = {
-        likes: user.likes.filter( id => id!==otherId )
-      }
-      return User.update({ userId, newValues })
+        likes: user.likes.filter(likeUser => likeUser.userId !== otherId)
+      };
+      return User.update({ userId, newValues });
     }
     
     // 아이디가 없으면 즐겨찾기에 새로 추가
     const newValues = {
-      likes: [ ...user.likes, otherId ]
-    }
-    console.log(newValues)
+      likes: [
+        ...user.likes, {
+        userId: otherId,
+        name: otherUser.name,
+        email: otherUser.email,
+        picture: otherUser.picture
+      }]
+    };
+
     return User.update({ userId, newValues })
   }
-
 
   // 사용자 비밀번호 초기화
   static async resetPassword(email){

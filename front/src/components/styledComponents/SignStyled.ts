@@ -254,12 +254,22 @@ export const FiledBox = styled.div`
 `;
 export const FiledSelectBox = styled.div`
     display: flex;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    justify-content: space-around;    
+=======
+>>>>>>> rollbackTwo
     justify-content: space-around;
 
     @media screen and (max-width: 500px) {
         flex-wrap: wrap;
         justify-content: flex-start;
     }
+<<<<<<< HEAD
+=======
+>>>>>>> mobile
+>>>>>>> rollbackTwo
 `;
 export const FiledTit = styled.h2`
     width: 100%;

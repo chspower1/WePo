@@ -86,6 +86,8 @@ export const UserInfoTxt = styled.div`
     color: ${(props) => props.theme.textColor};
 `;
 export const ProfileImg = styled.img`
+    object-fit: cover;
+    height: 100%;
     position: relative;
     z-index: 1;
 `;
