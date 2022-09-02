@@ -17,6 +17,8 @@
   <img src="https://img.shields.io/badge/GitLab-FC6D26?style=flat-square&logo=GitLab&logoColor=white"/>
 </div>
 
+---
+
 ## 기술 사용 이유
 ### TypeScript
 타입을 직접 지정해주고 컴파일 시점에 에러를 잡아 낼 수 있습니다.<br>
@@ -50,6 +52,8 @@ props를 활용하여 조건부 스타일링이 가능하다
 ### Axios
 Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
 응답 초과 시간에 대한 처리를 하여 에러 처리를 할 수 있는 부분이 있어 사용하게 되었습니다.
+
+---
 
 ## 폴더구조
 ```

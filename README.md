@@ -25,6 +25,8 @@ Front-end | 김경원, 조호성, 한동룡
 
 Back-end | 이준의, 정소희
 
+---
+
 ## ⚙️ 설치 방법
 
 1. 프론트엔드 서버 실행
@@ -54,19 +56,13 @@ Back-end | 이준의, 정소희
         yarn start
         ```
         
+---
 
 ## 🛠️ 사용 기술
 
-1. 프론트엔드
-- React
-- Typescript
-- Axios
-1. 백엔드
-- Express (nodemon, babel-node로 실행됩니다.)
-- Mongodb, Mongoose
-- Nodemailer
-- Multer
-- JWT
+> front, back 폴더 내 README 참고
+
+---
 
 ## 📋 기능 설명
 
