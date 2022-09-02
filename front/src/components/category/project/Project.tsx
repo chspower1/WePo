@@ -82,6 +82,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                         index={index}
                                     >
                                         {(magic) => (
+                                            <>
                                             <ProjectStyled.ContentBox key={index}>
                                                 {targetIndex !== index && (
                                                     <div
@@ -142,6 +143,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                                         </>
                                                     </div>
                                                 )}
+                                            </ProjectStyled.ContentBox>
                                                 {isEditing && targetIndex === index && (
                                                     <ProjectEditForm
                                                         index={index}
@@ -153,7 +155,7 @@ export default function Project({ projects, setProjects }: IProjectProps) {
                                                         projectId={project.projectId!}
                                                     />
                                                 )}
-                                            </ProjectStyled.ContentBox>
+                                            </>
                                         )}
                                     </Draggable>
                                 ))}

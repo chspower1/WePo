@@ -87,6 +87,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                         index={index}
                                     >
                                         {(magic) => (
+                                            <>
                                             <AwardStyled.ContentBox key={index}>
                                                 {targetIndex !== index && (
                                                     <div
@@ -149,6 +150,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                                         )}
                                                     </div>
                                                 )}
+                                            </AwardStyled.ContentBox>
                                                 {isEditing && targetIndex === index && (
                                                     <AwardEditForm
                                                         index={index}
@@ -161,7 +163,7 @@ export default function Award({ awards, setAwards }: IAwardProps) {
                                                         setTargetIndex={setTargetIndex}
                                                     />
                                                 )}
-                                            </AwardStyled.ContentBox>
+                                            </>
                                         )}
                                     </Draggable>
                                 ))}
