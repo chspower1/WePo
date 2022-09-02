@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MagnifyingGlass } from "@styled-icons/foundation/MagnifyingGlass";
 import { useSetRecoilState } from "recoil";
 import { searchWordState } from "@/atoms";
+import { useEffect } from "react";
 
 const SearchBox = styled.form`
     position: relative;
@@ -45,21 +46,25 @@ const Button = styled.button`
 `;
 
 export default function SearchBar() {
-  const setSearchWord = useSetRecoilState(searchWordState);
-  const { register, handleSubmit, reset } = useForm();
-  const onvalid = ({ search }: any) => {
-    setSearchWord(search);
-  };
-  return (
-    <SearchBox onSubmit={handleSubmit(onvalid)}>
-      <Input
-        type="text"
-        placeholder="찾고싶은 정보를 검색해주세요!"
-        {...register("search")}
-      />
-      <Button>
-        <MagnifyingGlass size={24} />
-      </Button>
-    </SearchBox>
-  );
+    const setSearchWord = useSetRecoilState(searchWordState);
+    const { register, handleSubmit, watch } = useForm();
+    const onvalid = ({ search }: any) => {
+        setSearchWord(search);
+    };
+    useEffect(() => {
+        setSearchWord(watch("search"));
+    }, [watch("search")]);
+
+    return (
+        <SearchBox onSubmit={handleSubmit(onvalid)}>
+            <Input
+                type="text"
+                placeholder="찾고싶은 정보를 검색해주세요!"
+                {...register("search")}
+            />
+            <Button>
+                <MagnifyingGlass size={24} />
+            </Button>
+        </SearchBox>
+    );
 }
