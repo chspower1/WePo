@@ -151,7 +151,10 @@ const MiniProfileBox = styled.div`
     align-items: center;
     margin-left: 20px;
 `;
+<<<<<<< HEAD
 
+=======
+>>>>>>> rollbackTwo
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -189,7 +192,7 @@ function Header() {
         setScrollY(0);
         setScrollActive(false);
     }, [pathName]);
-
+    useEffect(() => {}, [curUser?.picture]);
     return (
         <>
             <HeaderWrap className={`${scrollActive ? "active" : ""}`}>
@@ -218,7 +221,7 @@ function Header() {
                                     </MiniProfileName>
                                 </MiniProfileBox>
                                 <LoginOrRegiBtn onClick={UserLogout} className="logOut">
-                                    {window.screen.width < 500 ? <>dd</> : <>로그아웃</>}
+                                    <>로그아웃</>
                                 </LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (

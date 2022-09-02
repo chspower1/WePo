@@ -38,7 +38,7 @@ const Modal = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: ${modalShow} .5s;
+    animation: ${modalShow} 0.5s;
     width: 600px;
     height: 600px;
     border-radius: 10px;
@@ -51,6 +51,7 @@ const Modal = styled.div`
 `;
 const LikedUserImgBox = styled.div`
     position: relative;
+    display: flex;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -76,7 +77,6 @@ const LikeBox = styled.div`
     & + & {
         border-top: 1px solid #eee;
     }
-
     @media screen and (max-width: 500px) {
         flex-wrap: wrap;
     }

@@ -86,8 +86,13 @@ export const UserInfoTxt = styled.div`
     color: ${(props) => props.theme.textColor};
 `;
 export const ProfileImg = styled.img`
+<<<<<<< HEAD
     height: 100%;
     object-fit: cover;
+=======
+    object-fit: cover;
+    height: 100%;
+>>>>>>> rollbackTwo
     position: relative;
     z-index: 1;
 `;
