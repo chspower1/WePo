@@ -23,5 +23,6 @@ declare module "styled-components" {
     headerActiveColor: string;
     successColor: string;
     imgOpacity: number;
+    subTextColor : string;
   }
 }

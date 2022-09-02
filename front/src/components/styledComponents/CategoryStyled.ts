@@ -76,7 +76,7 @@ export const ContentDetail = styled.p`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: #797979;
+    color:  ${props=> props.theme.subTextColor};
 `;
 export const ContentDesc = styled.p`
     font-size: 15px;

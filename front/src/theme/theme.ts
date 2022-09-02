@@ -22,6 +22,7 @@ export const lightTheme: DefaultTheme = {
   headerActiveColor: "#fff",
   successColor: "#5573df",
   imgOpacity: 1,
+  subTextColor: "#797979",
 };
 export const darkTheme: DefaultTheme = {
   bgColor: "#1E1E1E",
@@ -46,4 +47,5 @@ export const darkTheme: DefaultTheme = {
   headerActiveColor: "#222222",
   successColor: "#5573df",
   imgOpacity: 0.8,
+  subTextColor: "#bdbdbd",
 };

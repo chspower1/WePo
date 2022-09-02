@@ -186,7 +186,7 @@ const DescTxt = styled.p`
     word-break: break-all;
     line-height: 1.2;
     font-size: 16px;
-    color: #797979;
+    color: ${props=> props.theme.subTextColor};
     &:focus {
         border: 1.5px solid ${(props) => props.theme.accentColor};
     }
