@@ -64,7 +64,7 @@ const TextBox = styled.div`
         max-width: none;
         width: 100%;
         text-align: center;
-        margin: 0 auto 140px;
+        margin: 0px 140px 50px;
     }
 `;
 
