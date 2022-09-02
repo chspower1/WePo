@@ -1,11 +1,10 @@
-// @ts-ignore
 import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { emailService } from "../services/emailService";
-
 import imageUpload from "../utils/imageUpload";
+
 const upload = imageUpload("uploads", 5);
 
 const userAuthRouter = Router();
@@ -158,7 +157,6 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         const userId = parseInt(req.params.id);
 
         if (userId !== currentUserId) {
-            console.log(userId, currentUserId);
             throw new Error(
                 "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
             );
@@ -169,10 +167,10 @@ userAuthRouter.post("/:id", login_required, upload.single('image'), async functi
         const imageFile = req.file;
         let picture = null;
 
-        if(imageFile) {
+        if (imageFile) {
             picture = Buffer.from(imageFile.originalname, 'latin1').toString('utf8');
         }
-        
+
         const toUpdate = { name, description, field, picture };
 
         // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함

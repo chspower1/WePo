@@ -128,7 +128,7 @@ export const AddButton = styled.button`
 `;
 
 export const AddInput = styled.input.attrs((props) => ({
-    type: props.type || "text",
+  type: props.type || "text",
 }))`
     width: ${(props) => props.width}px;
     border-radius: 3px;
@@ -159,9 +159,9 @@ export const Button = styled.button`
     margin: 0 10px;
 `;
 export const MajorGraduate = styled.input.attrs((props) => ({
-    type: "radio",
-    name: props.name,
-    value: props.value,
+  type: "radio",
+  name: props.name,
+  value: props.value,
 }))``;
 
 export const MajorGraduateLabel = styled.label`

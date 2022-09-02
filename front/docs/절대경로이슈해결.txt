@@ -1,2 +1,0 @@
-참고사이트
-https://www.howdy-mj.me/boilerplate/craco-absolute-paths-setting/

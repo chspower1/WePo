@@ -5,13 +5,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { keyframes } from "styled-components";
 import { getUser, getUsers } from "@api/api";
 import {
-    isLoginState,
-    usersState,
-    checkedBoxValue,
-    hopeJob,
-    IUser,
-    searchUsersState,
-    IProfile,
+  isLoginState,
+  usersState,
+  checkedBoxValue,
+  hopeJob,
+  IUser,
+  searchUsersState,
+  IProfile,
 } from "@/atoms";
 import UserCard from "./UserCard";
 import { ArrowRepeat } from "@styled-icons/bootstrap/ArrowRepeat";
@@ -132,131 +132,127 @@ export const LoadingIcon = styled(ArrowRepeat)`
 `;
 
 function Network() {
-    const location = useLocation();
-    const pathName = location.pathname;
-    const [users, setUsers] = useRecoilState(usersState);
-    const [netUsers, setNetUsers] = useState<IUser[]>([]);
-    const isLogin = useRecoilValue(isLoginState);
-    const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
-    const searchUsers = useRecoilValue(searchUsersState);
-    const filterUsersState = useRecoilValue(hopeJob);
-    const [profile, setProfile] = useState<IProfile>();
-    const { isLoading, refetch } = useQuery(["users"], getUsers, {
-        onSuccess(data) {
-            setUsers(data!);
-            setNetUsers(data!);
-        },
-    });
+  const [users, setUsers] = useRecoilState(usersState);
+  const [netUsers, setNetUsers] = useState<IUser[]>([]);
+  const isLogin = useRecoilValue(isLoginState);
+  const [selectCheckBoxValues, setSelectCheckBoxValues] = useRecoilState(checkedBoxValue);
+  const searchUsers = useRecoilValue(searchUsersState);
+  const filterUsersState = useRecoilValue(hopeJob);
+  const { isLoading, refetch } = useQuery(["users"], getUsers, {
+    onSuccess(data) {
+      setUsers(data!);
+      setNetUsers(data!);
+    },
+  });
 
-    const navigator = useNavigate();
-    useEffect(() => {
-        if (!isLogin) {
-            navigator("/login", { replace: true });
-        }
-    }, [isLogin]);
-
-    // Field 선택시
-    useEffect(() => {
-        setNetUsers(filterUsersState!);
-    }, [filterUsersState]);
-    useEffect(() => {
-        setNetUsers(searchUsers!);
-    }, [searchUsers]);
-    function handleCheckedBox(name: string) {
-        setSelectCheckBoxValues((current) => {
-            const currentChecked = [...current];
-            const overlap = currentChecked.findIndex((el) => el === name);
-            overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
-            console.log("필터", currentChecked);
-            return currentChecked;
-        });
+  const navigator = useNavigate();
+  useEffect(() => {
+    if (!isLogin) {
+      navigator("/login", { replace: true });
     }
+  }, [isLogin]);
 
-    // undefined 방지
-    if (isLoading && !users)
-        return (
-            <LoadingBox>
-                <LoadingIcon />
-                Loading...
-            </LoadingBox>
-        );
+  // Field 선택시
+  useEffect(() => {
+    setNetUsers(filterUsersState!);
+  }, [filterUsersState]);
+  useEffect(() => {
+    setNetUsers(searchUsers!);
+  }, [searchUsers]);
+  function handleCheckedBox(name: string) {
+    setSelectCheckBoxValues((current) => {
+      const currentChecked = [...current];
+      const overlap = currentChecked.findIndex((el) => el === name);
+      overlap === -1 ? currentChecked.push(name) : currentChecked.splice(overlap, 1);
+      return currentChecked;
+    });
+  }
 
-    //네트워크 컴포넌트
+  // undefined 방지
+  if (isLoading && !users)
     return (
-        <>
-            {isLoading ? (
-                <LoadingBox>
-                    <LoadingIcon />
-                    Loading...
-                </LoadingBox>
-            ) : (
-                <BgWrap>
-                    <Root>
-                        <NetworkWrap>
-                            <NetworkHeadingSelectBox>
-                                <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
-                                <SelectBox>
-                                    <CheckBoxWrap>
-                                        <input
-                                            type="checkbox"
-                                            name="category"
-                                            id="frontEnd"
-                                            value="프론트엔드"
-                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                        />
-                                        <Label htmlFor="frontEnd">프론트엔드</Label>
-                                    </CheckBoxWrap>
-                                    <CheckBoxWrap>
-                                        <input
-                                            type="checkbox"
-                                            name="category"
-                                            id="backEnd"
-                                            value="백엔드"
-                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                        />
-                                        <Label htmlFor="backEnd">백엔드</Label>
-                                    </CheckBoxWrap>
-                                    <CheckBoxWrap>
-                                        <input
-                                            type="checkbox"
-                                            name="category"
-                                            id="dataAnalysis"
-                                            value="데이터분석"
-                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                        />
-                                        <Label htmlFor="dataAnalysis">데이터분석</Label>
-                                    </CheckBoxWrap>
-                                    <CheckBoxWrap>
-                                        <input
-                                            type="checkbox"
-                                            name="category"
-                                            id="AI"
-                                            value="인공지능"
-                                            onClick={(e) => handleCheckedBox(e.currentTarget.value)}
-                                        />
-                                        <Label htmlFor="AI">인공지능</Label>
-                                    </CheckBoxWrap>
-                                </SelectBox>
-                                <SearchBar />
-                            </NetworkHeadingSelectBox>
-                            {isLoading ? (
-                                <LoadingBox>
-                                    <LoadingIcon />
-                                    Loading...
-                                </LoadingBox>
-                            ) : (
-                                <NetworkContainer>
-                                    {netUsers?.map((user) => (
-                                        <UserCard key={user.userId} profile={user} />
-                                    ))}
-                                </NetworkContainer>
-                            )}
-                        </NetworkWrap>
-                    </Root>
-                </BgWrap>
-            )}
-        </>
+      <LoadingBox>
+        <LoadingIcon />
+        Loading...
+      </LoadingBox>
     );
+
+  //네트워크 컴포넌트
+  return (
+    <>
+      {isLoading ? (
+        <LoadingBox>
+          <LoadingIcon />
+          Loading...
+        </LoadingBox>
+      ) : (
+        <BgWrap>
+          <Root>
+            <NetworkWrap>
+              <NetworkHeadingSelectBox>
+                <NetworkTitle>우리들의 포트폴리오를 만나보세요</NetworkTitle>
+                <SelectBox>
+                  <CheckBoxWrap>
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="frontEnd"
+                      value="프론트엔드"
+                      onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                    />
+                    <Label htmlFor="frontEnd">프론트엔드</Label>
+                  </CheckBoxWrap>
+                  <CheckBoxWrap>
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="backEnd"
+                      value="백엔드"
+                      onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                    />
+                    <Label htmlFor="backEnd">백엔드</Label>
+                  </CheckBoxWrap>
+                  <CheckBoxWrap>
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="dataAnalysis"
+                      value="데이터분석"
+                      onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                    />
+                    <Label htmlFor="dataAnalysis">데이터분석</Label>
+                  </CheckBoxWrap>
+                  <CheckBoxWrap>
+                    <input
+                      type="checkbox"
+                      name="category"
+                      id="AI"
+                      value="인공지능"
+                      onClick={(e) => handleCheckedBox(e.currentTarget.value)}
+                    />
+                    <Label htmlFor="AI">인공지능</Label>
+                  </CheckBoxWrap>
+                </SelectBox>
+                <SearchBar />
+              </NetworkHeadingSelectBox>
+              {isLoading ? (
+                <LoadingBox>
+                  <LoadingIcon />
+                  Loading...
+                </LoadingBox>
+              ) : (
+                <NetworkContainer>
+                  {netUsers?.map((user) => (
+                    <UserCard key={user.userId} profile={user} />
+                  ))}
+                </NetworkContainer>
+              )}
+            </NetworkWrap>
+          </Root>
+        </BgWrap>
+      )}
+    </>
+  );
 }
 
 export default Network;

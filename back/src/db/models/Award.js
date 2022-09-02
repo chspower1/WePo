@@ -5,12 +5,12 @@ class Award {
   // 새로운 수상내역 생성
   static async create({ userId, title, grade, org, date, description, awardId, order }) {
     return AwardModel.create({
-      userId, 
-      title, 
-      grade, 
-      org, 
-      date, 
-      description, 
+      userId,
+      title,
+      grade,
+      org,
+      date,
+      description,
       awardId,
       order
     });
@@ -38,7 +38,7 @@ class Award {
     );
     return updatedAward;
   }
-  
+
   // 수상내역 순서 변경
   static async updateOrder(newOrder) {
 

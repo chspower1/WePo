@@ -1,10 +1,9 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MagnifyingGlass } from "@styled-icons/foundation/MagnifyingGlass";
 import { useSetRecoilState } from "recoil";
 import { searchWordState } from "@/atoms";
+
 const SearchBox = styled.form`
     position: relative;
     width: 100%;
@@ -46,21 +45,21 @@ const Button = styled.button`
 `;
 
 export default function SearchBar() {
-    const setSearchWord = useSetRecoilState(searchWordState);
-    const { register, handleSubmit, reset } = useForm();
-    const onvalid = ({ search }: any) => {
-        setSearchWord(search);
-    };
-    return (
-        <SearchBox onSubmit={handleSubmit(onvalid)}>
-            <Input
-                type="text"
-                placeholder="찾고싶은 정보를 검색해주세요!"
-                {...register("search")}
-            />
-            <Button>
-                <MagnifyingGlass size={24} />
-            </Button>
-        </SearchBox>
-    );
+  const setSearchWord = useSetRecoilState(searchWordState);
+  const { register, handleSubmit, reset } = useForm();
+  const onvalid = ({ search }: any) => {
+    setSearchWord(search);
+  };
+  return (
+    <SearchBox onSubmit={handleSubmit(onvalid)}>
+      <Input
+        type="text"
+        placeholder="찾고싶은 정보를 검색해주세요!"
+        {...register("search")}
+      />
+      <Button>
+        <MagnifyingGlass size={24} />
+      </Button>
+    </SearchBox>
+  );
 }

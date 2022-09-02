@@ -29,7 +29,7 @@ certificateRouter.post("/", login_required, async function (req, res, next) {
       order
     });
 
-    if(newCertificate.errorMessage) {
+    if (newCertificate.errorMessage) {
       throw new Error(newCertificate.errorMessage);
     }
 
@@ -44,9 +44,9 @@ certificateRouter.get("/list", login_required, async function (req, res, next) {
   try {
 
     const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
-        
+
     // userId가 들어오지 않았을 시 로그인한 유저의 정보 가져오기
-    const userId = req.query.userId ?? currentUserId; 
+    const userId = req.query.userId ?? currentUserId;
 
     // userId 매칭되는 것들 찾아오기
     const certificateList = await certificateService.getCertificatesByUserId(userId);
@@ -73,21 +73,21 @@ certificateRouter.put("/:certId", login_required, async function (req, res, next
     const userId = certificate.userId; // certificate 내에 저장된 userId
 
     if (currentUserId !== userId) {
-        throw new Error(
-            "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
-        );
+      throw new Error(
+        "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
+      );
     }
-    
+
     // req (request) 에서 데이터 가져오기
     const { title, date, org, description } = req.body;
-    
+
     const toUpdate = { title, date, org, description };
-    const updateCertificate = await certificateService.updateCertificate({ 
-      certId, 
-      toUpdate 
+    const updateCertificate = await certificateService.updateCertificate({
+      certId,
+      toUpdate
     });
 
-    if(updateCertificate.errorMessage) {
+    if (updateCertificate.errorMessage) {
       throw new Error(updateCertificate.errorMessage);
     }
 
@@ -102,7 +102,7 @@ certificateRouter.put("/:certId", login_required, async function (req, res, next
 certificateRouter.delete("/:certId", login_required, async function (req, res, next) {
   try {
     const certId = req.params.certId;
-    
+
     // User authentication
     const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
     const certificate = await certificateService.getCertificate(certId);
@@ -116,7 +116,7 @@ certificateRouter.delete("/:certId", login_required, async function (req, res, n
 
     const deleteSuccessful = await certificateService.deleteCertificate(certId);
 
-    if(deleteSuccessful.errorMessage) {
+    if (deleteSuccessful.errorMessage) {
       throw new Error(deleteSuccessful.errorMessage);
     }
 
@@ -137,19 +137,6 @@ certificateRouter.put("/", async function (req, res, next) {
 
     // req (request) 에서 데이터 가져오기
     const { newCategories } = req.body.data;
-
-    // User authentication
-    // const currentUserId = req["currentUserId"]; // 현재 로그인 중인 userId
-
-    // const certId = newCategories[0].certId;
-    // const certificate = await certificateService.getCertificate(certId);
-    // const userId = certificate.userId; // education 내에 저장된 userId
-
-    // if (currentUserId !== userId) {
-    //     throw new Error(
-    //         "해당 정보을 수정할 권한이 없습니다. 본인의 정보만 수정할 수 있습니다."
-    //     );
-    // }
 
     await certificateService.updateCertificateOrder(newCategories);
 

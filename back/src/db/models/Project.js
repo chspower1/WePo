@@ -5,11 +5,11 @@ class Project {
   // 새로운 프로젝트 생성
   static async create({ userId, title, startDate, endDate, description, projectId, order }) {
     return ProjectModel.create({
-      userId, 
-      title, 
-      startDate, 
-      endDate, 
-      description, 
+      userId,
+      title,
+      startDate,
+      endDate,
+      description,
       projectId,
       order
     });
@@ -29,14 +29,14 @@ class Project {
   static async update({ projectId, newValues }) {
     const filter = { projectId: projectId };
     const option = { returnOriginal: false };
-    
+
     const updatedProject = await ProjectModel.findOneAndUpdate(
       filter,
       newValues,
       option
-      );
-      return updatedProject;
-    }
+    );
+    return updatedProject;
+  }
 
   // projectId에 해당하는 프로젝트 삭제
   static async delete(projectId) {
@@ -59,5 +59,5 @@ class Project {
     return updatedProject;
   }
 }
-  
+
 export { Project };

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
 import { useCookies } from "react-cookie";
@@ -178,38 +177,38 @@ const Img = styled.img`
     opacity: ${(props) => props.theme.imgOpacity};
 `;
 export default function Home() {
-    const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
-    useEffect(() => {
-        if (cookies.rememberEmail === undefined) {
-            setCookies("rememberEmail", "");
-        }
-    }, []);
+  const [cookies, setCookies, removeCookies] = useCookies(["rememberEmail", "rememberPassword"]);
+  useEffect(() => {
+    if (cookies.rememberEmail === undefined) {
+      setCookies("rememberEmail", "");
+    }
+  }, []);
 
-    return (
-        <Root>
-            <Wrap>
-                <TextBox>
-                    <TitleBox>
-                        <TitleTxt>Welcome to WePo</TitleTxt>
-                    </TitleBox>
-                    <DescBox>
-                        <DescTxt>
-                            우리들의 포트폴리오 공유 웹 서비스
-                            <br />
-                            WePo에 오신걸 환영합니다.
-                        </DescTxt>
-                    </DescBox>
-                    <ButtonBox>
-                        <ViewMoreButton to="/login">
-                            시작하기
-                            <ArrowIcon />
-                        </ViewMoreButton>
-                    </ButtonBox>
-                </TextBox>
-                <ImgBox>
-                    <Img src={process.env.PUBLIC_URL + "/assets/image/homeConceptImg2.png"} />
-                </ImgBox>
-            </Wrap>
-        </Root>
-    );
+  return (
+    <Root>
+      <Wrap>
+        <TextBox>
+          <TitleBox>
+            <TitleTxt>Welcome to WePo</TitleTxt>
+          </TitleBox>
+          <DescBox>
+            <DescTxt>
+              우리들의 포트폴리오 공유 웹 서비스
+              <br />
+              WePo에 오신걸 환영합니다.
+            </DescTxt>
+          </DescBox>
+          <ButtonBox>
+            <ViewMoreButton to="/login">
+              시작하기
+              <ArrowIcon />
+            </ViewMoreButton>
+          </ButtonBox>
+        </TextBox>
+        <ImgBox>
+          <Img src={process.env.PUBLIC_URL + "/assets/image/homeConceptImg2.png"} />
+        </ImgBox>
+      </Wrap>
+    </Root>
+  );
 }

@@ -32,26 +32,26 @@ class emailService {
   }
 
   // 이메일 인증코드 생성
-  static async createAuthCode(userId){
+  static async createAuthCode(userId) {
     // 인증번호 생성
     const authCode = Math.random().toString(36).slice(-8)
 
     const data = await Email.getUserIdCodePair(userId)
     // 기존 userId-인증번호 pair 존재 시 인증번호 update
-    if(data){
-      return Email.update({userId, authCode})
+    if (data) {
+      return Email.update({ userId, authCode })
     }
     // 이메일-인증번호 pair 추가
-    return Email.add({userId, authCode})
+    return Email.add({ userId, authCode })
   }
 
   // 이메일 인증코드 확인
-  static async getAuthCode(userId){
+  static async getAuthCode(userId) {
     return Email.getUserIdCodePair(userId)
   }
 
   // 이메일 인증코드 삭제
-  static async deleteAuthCode(userId){
+  static async deleteAuthCode(userId) {
     await Email.delete(userId)
   }
 
