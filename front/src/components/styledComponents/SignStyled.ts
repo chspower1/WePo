@@ -95,6 +95,7 @@ export const Title = styled.h2`
     font-size: 24px;
     font-weight: bold;
     color: ${(props) => props.theme.textColor};
+    padding-bottom:50px;
 
     @media screen and (max-width: 500px) {
         font-size: 22px;
@@ -218,7 +219,7 @@ export const RegisterFromContainer = styled(FromContainer)`
 `;
 
 export const RegisterWrapper = styled(Wrapper)`
-    padding: 30px 0 50px;
+    padding: 80px 0 50px;
 `;
 
 export const SuccessMsg = styled.p`
@@ -254,22 +255,12 @@ export const FiledBox = styled.div`
 `;
 export const FiledSelectBox = styled.div`
     display: flex;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
     justify-content: space-around;    
-=======
->>>>>>> rollbackTwo
-    justify-content: space-around;
 
     @media screen and (max-width: 500px) {
         flex-wrap: wrap;
         justify-content: flex-start;
     }
-<<<<<<< HEAD
-=======
->>>>>>> mobile
->>>>>>> rollbackTwo
 `;
 export const FiledTit = styled.h2`
     width: 100%;
