@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MagnifyingGlass } from "@styled-icons/foundation/MagnifyingGlass";
 import { useSetRecoilState } from "recoil";
 import { searchWordState } from "@/atoms";
+import { useEffect } from "react";
 
 const SearchBox = styled.form`
     position: relative;
@@ -46,13 +47,14 @@ const Button = styled.button`
 
 export default function SearchBar() {
     const setSearchWord = useSetRecoilState(searchWordState);
-    const { register, handleSubmit, watch } = useForm({
-        mode: "onChange",
-    });
+    const { register, handleSubmit, watch } = useForm();
     const onvalid = ({ search }: any) => {
         setSearchWord(search);
     };
-    watch("search");
+    useEffect(() => {
+        setSearchWord(watch("search"));
+    }, [watch("search")]);
+
     return (
         <SearchBox onSubmit={handleSubmit(onvalid)}>
             <Input
