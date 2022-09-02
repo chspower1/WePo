@@ -47,10 +47,13 @@ const Button = styled.button`
 
 export default function SearchBar() {
     const setSearchWord = useSetRecoilState(searchWordState);
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, watch } = useForm({
+        mode: "onChange",
+    });
     const onvalid = ({ search }: any) => {
         setSearchWord(search);
     };
+    watch("search");
     return (
         <SearchBox onSubmit={handleSubmit(onvalid)}>
             <Input
