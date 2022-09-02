@@ -29,7 +29,7 @@ const ContentAccent = styled(CurBoard.ContentAccent)`
     width: 100%;
     text-align: center;
     font-size: 20px;
-    margin-right:0;
+    margin-right: 0;
 `;
 
 interface ICurBoardProps {
@@ -52,11 +52,11 @@ export default function CurrentBoard({
             </ContentBox>
             <ContentBox>
                 <Title>수상경력</Title>
-                <ContentAccent>{certificates?.length}</ContentAccent>
+                <ContentAccent>{awards?.length}</ContentAccent>
             </ContentBox>
             <ContentBox>
                 <Title>자격증</Title>
-                <ContentAccent>{awards?.length}</ContentAccent>
+                <ContentAccent>{certificates?.length}</ContentAccent>
             </ContentBox>
             <ContentBox>
                 <Title>프로젝트</Title>
