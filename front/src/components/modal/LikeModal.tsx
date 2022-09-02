@@ -44,6 +44,10 @@ const Modal = styled.div`
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
     padding: 50px 30px 10px;
+
+    @media screen and (max-width: 500px) {
+        width: 90%;
+    }
 `;
 const LikedUserImgBox = styled.div`
     position: relative;
@@ -72,6 +76,13 @@ const LikeBox = styled.div`
     padding: 20px 0;
     & + & {
         border-top: 1px solid #eee;
+<<<<<<< HEAD
+=======
+    }
+
+    @media screen and (max-width: 500px) {
+        flex-wrap: wrap;
+>>>>>>> mobile
     }
 `;
 const LikeLists = styled.div`
@@ -106,6 +117,11 @@ const CloseBtnIcons = styled(CloseOutline)`
 `;
 const GotoLinkBox = styled.div`
     display: inline-block;
+    @media screen and (max-width: 500px) {
+        width: 100%;
+        margin-top: 10px;
+        text-align: right;
+    }
 `;
 const GotoLink = styled(Link)`
     display: inline-block;
@@ -123,6 +139,9 @@ const LikedUserInfoInner = styled.div`
     font-size: 16px;
     cursor: default;
     line-height: 1.5;
+    @media screen and (max-width: 500px) {
+        font-size: 14px;
+    }
 `;
 const LikedUserName = styled.h3``;
 const LikedUserEmail = styled.a`

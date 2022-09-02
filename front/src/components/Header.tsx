@@ -33,13 +33,17 @@ const HeaderWrap = styled.header`
 
 export const HeaderContainer = styled.div`
     max-width: 1800px;
-    min-width: 480px;
+    min-width: 300px;
     width: 100%;
     height: 80px;
     margin: 0 auto;
     padding: 0 30px;
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width: 800px) {
+        padding: 0 20px;
+    }
 `;
 const Nav = styled.nav`
     background-color: transprent;
@@ -48,6 +52,14 @@ const Nav = styled.nav`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+
+    @media screen and (max-width: 500px) {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        justify-content: center;
+    }
 `;
 /**
  *  정확한 페이지로 가면 active-style
@@ -91,6 +103,9 @@ export const LogoBox = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
+    @media screen and (max-width: 500px) {
+        width: 120px;
+    }
 `;
 export const LogoImg = styled.img`
     width: 100%;
@@ -106,6 +121,9 @@ const MiniProfileName = styled.span`
     margin: 0px 20px 0px 10px;
     font-size: 16px;
     color: ${(props) => props.theme.textColor};
+    @media screen and (max-width: 500px) {
+        display: none;
+    }
 `;
 const LoginOrRegiBtn = styled.button`
     padding: 5px 15px;
@@ -123,12 +141,17 @@ const LoginOrRegiBtn = styled.button`
     }
     &:logout {
     }
+
+    @media screen and (max-width: 500px) {
+        font-size: 14px;
+    }
 `;
 const MiniProfileBox = styled.div`
     display: flex;
     align-items: center;
     margin-left: 20px;
 `;
+
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
@@ -190,7 +213,9 @@ function Header() {
                                     <MiniProfileImg
                                         src={`http://${window.location.hostname}:5001/uploads/${notDefault}${curUser?.picture}`}
                                     />
-                                    <MiniProfileName>{curUser?.name} 님</MiniProfileName>
+                                    <MiniProfileName className="mobileNone">
+                                        {curUser?.name} 님
+                                    </MiniProfileName>
                                 </MiniProfileBox>
                                 <LoginOrRegiBtn onClick={UserLogout} className="logOut">
                                     {window.screen.width < 500 ? <>dd</> : <>로그아웃</>}

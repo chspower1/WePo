@@ -19,7 +19,6 @@ import { LockPassword } from "styled-icons/remix-line";
 
 const ItemWrap = styled.div`
     position: relative;
-    min-width: 380px;
     min-height: 335px;
     padding: 30px 30px 20px;
     border-radius: 10px;
@@ -38,6 +37,10 @@ const ItemWrap = styled.div`
         position: sticky;
         left: 0;
         top: 120px;
+    }
+    @media screen and (max-width: 500px) {
+        width: 88%;
+        margin: 0px auto;
     }
 `;
 const From = styled.form`
