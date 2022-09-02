@@ -1,15 +1,19 @@
+<img src="http://kdt-ai5-team08.elicecoding.com/assets/image/Logo.svg"/>
+
 # 포트폴리오 공유 서비스, [ WePo ]
 
-## 👋 소개 Introduction
+## 👋 소개
 
-본 프로젝트는 **`엘리스 AI트랙 5기`** 첫번째 프로젝트의 8팀, **`Limit`**팀이 개발한 웹 서비스입니다.
+본 프로젝트는 `엘리스 AI트랙 5기` 첫번째 프로젝트의 8팀, `Limit`팀이 개발한 웹 서비스입니다.
 
-우리(**We**)의 포트폴리오(**Po**rtfolio)를 작성하고, 서로 확인한다는 의미에서 **`WePo`**라는 이름을 붙여주었습니다.
+우리(**We**)의 포트폴리오(**Po**rtfolio)를 작성하고, 서로 확인한다는 의미에서 `WePo`라는 이름을 붙여주었습니다.
 
 ⭐ [**[ WePo ] 사이트 보러 가기](http://kdt-ai5-team08.elicecoding.com/)** ⭐
 
 > 위 링크는 프로젝트 진행 기간에만 유효합니다.
 > 
+
+📒 [**프로젝트 노션 페이지 보러 가기**](https://www.notion.so/Team-Limit-d1ce8a7ebec14b1dab9354bf4a3ede46) 📒
 
 ### 📅 **프로젝트 기간**
 
@@ -23,19 +27,33 @@ Back-end | 이준의, 정소희
 
 ## ⚙️ 설치 방법
 
-1. 프론트 엔드 서버 실행
-
-```bash
-cd front
-yarn
-yarn start
-```
-
-1. 백엔드 서버 실행
-
-```bash
-back 폴더 내부 README 참고
-```
+1. 프론트엔드 서버 실행
+    - Shell에서 다음 커맨드 입력:
+        
+        ```bash
+        cd front
+        yarn
+        yarn start
+        ```
+        
+2. 백엔드 서버 실행
+    - 하기 명칭들의 변수가 선언된 `.env` 파일 `back` 폴더 내에 작성
+        - SERVER_PORT
+        - MONGODB_URL
+        - JWT_SECRET_KEY
+        - MAILS_EMAIL
+        - MAILS_PWD
+    
+    > `MONGODB_URL`과 `MAILS_EMAIL`, `MAILS_PWD`에 대한 자세한 사항은 백엔드 README 참고
+    > 
+    - Shell에서 다음 커맨드 입력:
+        
+        ```bash
+        cd back
+        yarn
+        yarn start
+        ```
+        
 
 ## 🛠️ 사용 기술
 
@@ -54,13 +72,16 @@ back 폴더 내부 README 참고
 
 ### ☑️ 기본 기능
 
-`**엘리스**`에서 제시하고 저희가 구현한 **5개 MVP(Minimum Viable Product)**와 각 MVP에 대한 설명은 다음과 같습니다:
+`엘리스`에서 제시하고 저희가 구현한 **5개 MVP(Minimum Viable Product)**와 각 MVP에 대한 설명은 다음과 같습니다:
 
 - User (회원가입, 로그인 등 사용자 관련)
     - 회원가입
         - 회원가입 시 이메일, 이름, 비밀번호 형식 확인
         - 회원가입 시 비밀번호와 비밀번호 확인 일치 판단
     - 로그인
+        
+        ![로그인.gif](README_v1%208654c2bfc9e74302946941db57e806a7/%25EB%25A1%259C%25EA%25B7%25B8%25EC%259D%25B8.gif)
+        
         - 로그인 시 이메일, 비밀번호 형식 확인
         - 로그인 시도 시 DB에 이메일 존재 여부 확인
         - 로그인 시도 시 비밀번호 확인
@@ -90,15 +111,16 @@ back 폴더 내부 README 참고
 > 
 - 사용자 프로필 사진 업로드
 - 사용자 비밀번호 변경
-- 비밀번호 입력 시 숨기기/보이기 버튼
+- `MongoDB`의 `$inc operator`를 활용한 사용자 ID를 부여하여 사용자 정보 조회 URL 간결화
+- 비밀번호 입력 시 숨기기/보이기
 - CAPE 삭제
-- UI 고도화 (다크 모드) 및 애니메이션 추가
-- UX 고도화 (시작 페이지)
+- UI 고도화 (다크 모드, 미니 프로필) 및 애니메이션 추가
+- UX 고도화 (시작 페이지, 모바일뷰)
 
 ### 💡 추가 기능
 
 - 회원가입 시 **관심분야 선택**, 나의 페이지에서 수정
-- 회원가입 시 사용자 **프로필 사진 임의 지정**
+- 회원가입 시 사용자 **기본 프로필 사진 임의 적용** ( 총 10가지 종류 )
 - 회원가입 시 **인증 이메일** 전송
 - 비밀번호 5회 오입력 시 **임시 비밀번호** 이메일 전송
 - CAPE 항목 순서 **DND**(Drag and Drop)로 변경
@@ -110,4 +132,4 @@ back 폴더 내부 README 참고
 
 본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다. Copyright 2022 엘리스 Inc. All rights reserved.
 
-[README(BACKEND)](https://www.notion.so/README-BACKEND-451b8e8aeb17452d928f21b33ae09f61)
+[README (Back-end)](https://www.notion.so/README-Back-end-451b8e8aeb17452d928f21b33ae09f61)
