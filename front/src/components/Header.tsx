@@ -151,10 +151,6 @@ const MiniProfileBox = styled.div`
     align-items: center;
     margin-left: 20px;
 `;
-<<<<<<< HEAD
-
-=======
->>>>>>> rollbackTwo
 
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
