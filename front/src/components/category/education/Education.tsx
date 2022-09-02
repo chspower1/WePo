@@ -77,6 +77,7 @@ export default function Education({ educations, setEducations }: IEducationProps
                                         index={index}
                                     >
                                         {(magic) => (
+                                            <>
                                             <EducationStyled.ContentBox key={index}>
                                                 {targetIndex !== index && (
                                                     <div
@@ -132,6 +133,7 @@ export default function Education({ educations, setEducations }: IEducationProps
                                                     </div>
                                                 )}
 
+                                            </EducationStyled.ContentBox>
                                                 {isEditing && targetIndex === index && (
                                                     <EducationEditForm
                                                         index={index}
@@ -143,7 +145,7 @@ export default function Education({ educations, setEducations }: IEducationProps
                                                         setTargetIndex={setTargetIndex}
                                                     />
                                                 )}
-                                            </EducationStyled.ContentBox>
+                                            </>
                                         )}
                                     </Draggable>
                                 ))}

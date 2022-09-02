@@ -78,6 +78,7 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                         index={index}
                                     >
                                         {(magic) => (
+                                            <>
                                             <CertStyled.ContentBox key={index}>
                                                 {targetIndex !== index && (
                                                     <div
@@ -136,6 +137,7 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                                         </>
                                                     </div>
                                                 )}
+                                            </CertStyled.ContentBox>
                                                 {isEditing && targetIndex === index && (
                                                     <CertificateEditForm
                                                         index={index}
@@ -147,7 +149,7 @@ export default function Certificate({ certificates, setCertificates }: ICertific
                                                         certId={certificate?.certId!}
                                                     />
                                                 )}
-                                            </CertStyled.ContentBox>
+                                            </>
                                         )}
                                     </Draggable>
                                 ))}

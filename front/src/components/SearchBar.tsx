@@ -49,9 +49,7 @@ export default function SearchBar() {
     const setSearchWord = useSetRecoilState(searchWordState);
     const { register, handleSubmit, reset } = useForm();
     const onvalid = ({ search }: any) => {
-        console.log(search);
         setSearchWord(search);
-        reset();
     };
     return (
         <SearchBox onSubmit={handleSubmit(onvalid)}>

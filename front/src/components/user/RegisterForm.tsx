@@ -40,7 +40,7 @@ export default function RegisterForm() {
     const onvalid = (data: IRegister) => {
         (async () => {
             setLoading(true);
-            const newField = data.field === false ? [""] : data.field;
+            const newField = data.field === false ? [] : data.field;
             const newUser = await createtUser({ ...data, field: newField });
             if (newUser === undefined) {
                 setSendEmail(false);
@@ -122,7 +122,8 @@ export default function RegisterForm() {
                                         </RegisterStyled.ErrMsg>
                                     ) : (
                                         <RegisterStyled.SuccessMsg>
-                                            <RegisterStyled.CheckImoge/>적합한 Email이에요
+                                            <RegisterStyled.CheckImoge />
+                                            적합한 Email이에요
                                         </RegisterStyled.SuccessMsg>
                                     )}
                                 </RegisterStyled.InputBox>
@@ -145,7 +146,8 @@ export default function RegisterForm() {
                                         </RegisterStyled.ErrMsg>
                                     ) : (
                                         <RegisterStyled.SuccessMsg>
-                                            <RegisterStyled.CheckImoge/>멋진 이름이에요
+                                            <RegisterStyled.CheckImoge />
+                                            멋진 이름이에요
                                         </RegisterStyled.SuccessMsg>
                                     )}
                                 </RegisterStyled.InputBox>
@@ -181,7 +183,8 @@ export default function RegisterForm() {
                                         </RegisterStyled.ErrMsg>
                                     ) : (
                                         <RegisterStyled.SuccessMsg>
-                                            <RegisterStyled.CheckImoge/>적합한 비밀번호에요
+                                            <RegisterStyled.CheckImoge />
+                                            적합한 비밀번호에요
                                         </RegisterStyled.SuccessMsg>
                                     )}
                                 </RegisterStyled.InputBox>
@@ -222,7 +225,8 @@ export default function RegisterForm() {
                                         </RegisterStyled.ErrMsg>
                                     ) : (
                                         <RegisterStyled.SuccessMsg>
-                                            <RegisterStyled.CheckImoge/>비밀번호가 일치해요
+                                            <RegisterStyled.CheckImoge />
+                                            비밀번호가 일치해요
                                         </RegisterStyled.SuccessMsg>
                                     )}
                                 </RegisterStyled.InputBox>

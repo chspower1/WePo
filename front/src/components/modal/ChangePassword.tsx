@@ -8,7 +8,7 @@ import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
 import { Spam2 } from "@styled-icons/remix-line/Spam2";
 const Wrapper = styled.div`
-    z-index: 99;
+    z-index: 1007;
     position: fixed;
     top: 0;
     left: 0;
