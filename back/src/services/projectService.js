@@ -32,13 +32,11 @@ class projectService {
 
   // userId에 해당하는 유저의 프로젝트 전체 조회
   static async getProjectsByUserId(userId) {
-    // 에러 처리 추가하기 
     return Project.findByUserId(userId);
   }
   
   // projectId에 해당하는 자격증 조회
   static async getProject(projectId) {
-    // 에러 처리 추가하기 
     return Project.findByProjectId(projectId);
   }
   
@@ -65,6 +63,19 @@ class projectService {
     return Project.update({ projectId, newValues });
   }
   
+  // 프로젝트 순서 수정
+  static async updateProjectOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ projectId: newCategory.projectId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Project.updateOrder(newOrder);
+    });
+    
+    return;
+  }
+  
   // 프로젝트 삭제
   static async deleteProject(projectId){
     // 해당 projectId의 프로젝트가 db에 존재하는지 여부 확인
@@ -80,18 +91,6 @@ class projectService {
     return Project.delete(projectId);
   }
 
-  // 자격증 순서 수정
-  static async updateProjectOrder(newCategories) {
-    const newOrders = newCategories.map((newCategory, idx) => 
-      ({ projectId: newCategory.projectId, order: idx })
-    );
-
-    newOrders.forEach((newOrder) => {
-      Project.updateOrder(newOrder);
-    });
-    
-    return;
-  }
 }
 
 export { projectService };

@@ -33,13 +33,11 @@ class awardService {
 
   // userId에 해당하는 유저의 수상내역 전체 조회
   static async getAwardsByUseId(userId) {
-    // 에러 처리 추가하기 
     return Award.findByUserId(userId);
   }
 
   // awardId에 해당하는 수상내역 조회
   static async getAward(awardId) {
-    // 에러 처리 추가하기 
     return Award.findByAwardId(awardId);
   }
 
@@ -67,6 +65,19 @@ class awardService {
     return Award.update({ awardId, newValues });
   }
 
+  // 수상내역 순서 수정
+  static async updateAwardOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ awardId: newCategory.awardId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Award.updateOrder(newOrder);
+    });
+    
+    return;
+  }
+
   // 수상내역 삭제
   static async deleteAward(awardId){
     // 해당 certId의 자격증정보가 db에 존재하는지 여부 확인
@@ -80,19 +91,6 @@ class awardService {
     }
 
     return Award.delete(awardId);
-  }
-
-  // 수상내역 순서 수정
-  static async updateAwardOrder(newCategories) {
-    const newOrders = newCategories.map((newCategory, idx) => 
-      ({ awardId: newCategory.awardId, order: idx })
-    );
-
-    newOrders.forEach((newOrder) => {
-      Award.updateOrder(newOrder);
-    });
-    
-    return;
   }
 }
 

@@ -32,13 +32,11 @@ class certificateService {
 
   // userId에 해당하는 유저의 자격증 전체 조회
   static async getCertificatesByUserId(userId) {
-    // 에러 처리 추가하기 
     return Certificate.findByUserId(userId);
   }
 
   // certId에 해당하는 자격증 조회
   static async getCertificate(certId) {
-    // 에러 처리 추가하기 
     return Certificate.findByCertId(certId);
   }
 
@@ -66,6 +64,19 @@ class certificateService {
     return Certificate.update({ certId, newValues });
   }
 
+  // 자격증 순서 수정
+  static async updateCertificateOrder(newCategories) {
+    const newOrders = newCategories.map((newCategory, idx) => 
+      ({ certId: newCategory.certId, order: idx })
+    );
+
+    newOrders.forEach((newOrder) => {
+      Certificate.updateOrder(newOrder);
+    });
+    
+    return;
+  }
+
   // 자격증 삭제
   static async deleteCertificate(certId) {
     // 해당 certId의 자격증정보가 db에 존재하는지 여부 확인
@@ -81,18 +92,6 @@ class certificateService {
     return Certificate.delete(certId);
   }
 
-  // 자격증 순서 수정
-  static async updateCertificateOrder(newCategories) {
-    const newOrders = newCategories.map((newCategory, idx) => 
-      ({ certId: newCategory.certId, order: idx })
-    );
-
-    newOrders.forEach((newOrder) => {
-      Certificate.updateOrder(newOrder);
-    });
-    
-    return;
-  }
 }
 
 export { certificateService };

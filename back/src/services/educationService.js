@@ -27,13 +27,11 @@ class educationService {
 
     // userId에 해당하는 유저의 학력 전체 조회
     static async getEducationsByUserId(userId) {
-        // 에러 처리 추가하기
         return Education.findByUserId(userId);
     }
 
     // eduId에 해당하는 학력 조회
     static async getEducation(eduId) {
-        // 에러 처리 추가하기
         return Education.findByEduId(eduId);
     }
 
@@ -59,20 +57,6 @@ class educationService {
         return Education.update({ eduId, newValues });
     }
 
-    // 학력 삭제
-    static async deleteEducation(eduId) {
-        // 해당 eduId의 학력정보가 db에 존재하는지 여부 확인
-        const education = await Education.findByEduId(eduId);
-
-        // db에서 찾지 못한 경우, 에러 메시지 반환
-        if (!education) {
-            const errorMessage = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
-            return { errorMessage };
-        }
-
-        return Education.delete(eduId);
-    }
-
     // 학력 순서 수정
     static async updateEducationOrder(newCategories) {
         const newOrders = newCategories.map((newCategory, idx) => ({
@@ -85,6 +69,20 @@ class educationService {
         });
 
         return;
+    }
+
+    // 학력 삭제
+    static async deleteEducation(eduId) {
+        // 해당 eduId의 학력정보가 db에 존재하는지 여부 확인
+        const education = await Education.findByEduId(eduId);
+
+        // db에서 찾지 못한 경우, 에러 메시지 반환
+        if (!education) {
+            const errorMessage = "학력 정보가 없습니다. 다시 한 번 확인해 주세요.";
+            return { errorMessage };
+        }
+
+        return Education.delete(eduId);
     }
 }
 
