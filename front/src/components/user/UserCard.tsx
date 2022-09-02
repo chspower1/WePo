@@ -544,7 +544,7 @@ function UserCard({ profile, setProfile }: IUserCardProps) {
                         </UserInfoTxt>
                     </InfoBox>
                     {onEdit && (
-                        <PasswordChangeBtn onClick={() => setEditPassword(true)}>
+                        <PasswordChangeBtn onMouseDown={() => setEditPassword(true)}>
                             <LockPassword size={18} style={{ marginRight: "5px" }} />
                             비밀번호 변경
                         </PasswordChangeBtn>
