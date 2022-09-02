@@ -213,7 +213,7 @@ function Header() {
                                         src={`http://${window.location.hostname}:5001/uploads/${notDefault}${curUser?.picture}`}
                                     />
                                     <MiniProfileName className="mobileNone">
-                                        {curUser?.name} 님
+                                        {(String(curUser?.name).length > 7) ? String(curUser?.name).slice(0,7)+"..." : curUser?.name} 님
                                     </MiniProfileName>
                                 </MiniProfileBox>
                                 <LoginOrRegiBtn onClick={UserLogout} className="logOut">
