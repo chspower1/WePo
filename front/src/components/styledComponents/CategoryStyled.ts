@@ -76,7 +76,7 @@ export const ContentDetail = styled.p`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: #797979;
+    color:  ${props=> props.theme.subTextColor};
 `;
 export const ContentDesc = styled.p`
     font-size: 15px;
@@ -128,7 +128,7 @@ export const AddButton = styled.button`
 `;
 
 export const AddInput = styled.input.attrs((props) => ({
-    type: props.type || "text",
+  type: props.type || "text",
 }))`
     width: ${(props) => props.width}px;
     border-radius: 3px;
@@ -159,9 +159,9 @@ export const Button = styled.button`
     margin: 0 10px;
 `;
 export const MajorGraduate = styled.input.attrs((props) => ({
-    type: "radio",
-    name: props.name,
-    value: props.value,
+  type: "radio",
+  name: props.name,
+  value: props.value,
 }))``;
 
 export const MajorGraduateLabel = styled.label`

@@ -140,33 +140,33 @@ const CircleBox = styled.div`
 `;
 
 export default function NotFound() {
-    return (
-        <Root>
-            <Wrap>
-                <TextBox>
-                    <TitleBox>
-                        <NotFoundTitle>
-                            <Error size={44} color={"tomato"} style={{ marginRight: "10px" }} /> 404
-                            Not Found
-                        </NotFoundTitle>
-                        <TitleTxt>없는 페이지입니다 :-(</TitleTxt>
-                    </TitleBox>
-                    <DescBox>
-                        <DescTxt>
-                            <br />
-                        </DescTxt>
-                    </DescBox>
-                    <ButtonBox>
-                        <ViewMoreButton to="/">
-                            홈으로 돌아가기
-                            <ArrowIcon />
-                        </ViewMoreButton>
-                    </ButtonBox>
-                </TextBox>
-                <ImgBox>
-                    <Img src={process.env.PUBLIC_URL + "/assets/image/notFound.png"} />
-                </ImgBox>
-            </Wrap>
-        </Root>
-    );
+  return (
+    <Root>
+      <Wrap>
+        <TextBox>
+          <TitleBox>
+            <NotFoundTitle>
+              <Error size={44} color={"tomato"} style={{ marginRight: "10px" }} /> 404
+              Not Found
+            </NotFoundTitle>
+            <TitleTxt>없는 페이지입니다 :-(</TitleTxt>
+          </TitleBox>
+          <DescBox>
+            <DescTxt>
+              <br />
+            </DescTxt>
+          </DescBox>
+          <ButtonBox>
+            <ViewMoreButton to="/">
+              홈으로 돌아가기
+              <ArrowIcon />
+            </ViewMoreButton>
+          </ButtonBox>
+        </TextBox>
+        <ImgBox>
+          <Img src={process.env.PUBLIC_URL + "/assets/image/notFound.png"} />
+        </ImgBox>
+      </Wrap>
+    </Root>
+  );
 }

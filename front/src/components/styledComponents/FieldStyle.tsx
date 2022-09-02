@@ -12,8 +12,8 @@ const FieldTest = styled.label`
     user-select: none;
     transition: all 0.4s ease;
     ${(props: any) =>
-        props.chose &&
-        css`
+    props.chose &&
+    css`
             background-color: ${(props) => props.theme.filedBgColor};
             color: white;
         `}
@@ -23,5 +23,5 @@ const FieldTest = styled.label`
 `;
 
 export default function FiledStyle({ children, ...props }: any) {
-    return <FieldTest {...props}>{children}</FieldTest>;
+  return <FieldTest {...props}>{children}</FieldTest>;
 }

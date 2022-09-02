@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import styled,{keyframes} from "styled-components"
+import { useEffect, useState } from 'react'
+import styled, { keyframes } from "styled-components"
 import { useNavigate, useParams } from "react-router-dom";
 import { approveRegister } from '@api/api';
 
@@ -9,8 +9,8 @@ const Root = styled.div`
     position:relative;
     width: 100%;
     height: 100vh;
-    padding-top:100px;
-    background:${props=> props.theme.bgColor};
+    padding:100px 0;
+    background:${props => props.theme.bgColor};
     overflow:hidden;
     display:flex;
     justify-content:center;
@@ -18,12 +18,15 @@ const Root = styled.div`
 `
 const Header = styled.h1`
     width: 100%;
-    font-size: 20px;
+    font-size: 36px;
     font-weight: 400;
+    line-height: 1.6;
+    word-break: keep-all;
+    text-align: center;
 `;
 const AccentWord = styled.span`
     color: #3867ff;
-    font-size: 30px;
+    font-weight: 600;
 `;
 const shutdown = keyframes`
     0%{
@@ -43,8 +46,9 @@ const Test = styled.div`
     animation: ${shutdown} 0.5s ease-out;
 `
 const NavigateButton = styled.button`
-    width:100%;
-    height:60px;
+    display: inline-block;
+    font-size: 20px;
+    padding: 20px 30px;
     background-color:#3867FF;
     border-radius:10px;
     color:white;
@@ -53,29 +57,25 @@ const NavigateButton = styled.button`
     }
 `
 
-export default function SuccessRegister(){
-    const {userId} = useParams();
-    const {authCode} = useParams();
-    const [change,setChange] = useState(false);
-    const navigator = useNavigate();
-    useEffect(()=>{
-        approveRegister(userId,authCode);
-    },[])
-    return(
-            <Root>
-                {change && <Test></Test>}
-                <div style={{width:"50%",height:"300px",display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column"}}>
-                    <div>
-                        <Header><AccentWord>WEPO</AccentWord>회원가입을 축하드립니다  🎉🎉</Header>
-                        <Header><AccentWord>WEPO</AccentWord>회원가입을 축하드립니다  🎉🎉</Header>
-                    </div>
-                    <div style={{marginTop:"50px"}}>
-                        <h1 style={{fontSize:"20px"}}>저희 서비스를 모두 이용하실 수 있습니다</h1>
-                    </div>
-                    <div style={{marginTop:"50px",width:"35%",height:"auto"}}>
-                        <NavigateButton onClick={()=>navigator("/login")}>로그인 페이지로 이동</NavigateButton>
-                    </div>
-                </div>
-            </Root>  
-    )
+export default function SuccessRegister() {
+  const { userId } = useParams();
+  const { authCode } = useParams();
+  const [change, setChange] = useState(false);
+  const navigator = useNavigate();
+  useEffect(() => {
+    approveRegister(userId, authCode);
+  }, [])
+  return (
+    <Root>
+      {change && <Test></Test>}
+      <div style={{ width: "50%", height: "300px", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+        <div>
+          <Header>이메일 인증이 완료되었습니다.</Header>
+        </div>
+        <div style={{ marginTop: "60px"}}>
+          <NavigateButton onClick={() => navigator("/login")}>WePo 로그인하기</NavigateButton>
+        </div>
+      </div>
+    </Root>
+  )
 }

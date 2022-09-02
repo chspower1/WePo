@@ -6,26 +6,26 @@ class awardService {
   static async addAward({ userId, title, grade, org, date, description, awardId, order }) {
 
     // 사용자가 필수로 입력해야하는 값이 모두 있는지 확인
-    if(!title || !grade || !org || !date) {
-      const errorMessage = 
+    if (!title || !grade || !org || !date) {
+      const errorMessage =
         "필수값을 모두 입력해주세요."
-        return  { errorMessage };
+      return { errorMessage };
     }
 
     // front에서 생성하여 넘겨주는 id값 있는지 체크
-    if(!awardId) {  
-      const errorMessage = 
+    if (!awardId) {
+      const errorMessage =
         "awardId값이 정상적으로 생성되지 않았습니다."
-      return  { errorMessage };
+      return { errorMessage };
     }
 
-    return Award.create({ 
-      userId, 
-      title, 
-      grade, 
-      org, 
-      date, 
-      description, 
+    return Award.create({
+      userId,
+      title,
+      grade,
+      org,
+      date,
+      description,
       awardId,
       order
     });
@@ -48,8 +48,8 @@ class awardService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!award) {
-      const errorMessage 
-      = "수상이력 정보가 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage
+        = "수상이력 정보가 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -67,25 +67,25 @@ class awardService {
 
   // 수상내역 순서 수정
   static async updateAwardOrder(newCategories) {
-    const newOrders = newCategories.map((newCategory, idx) => 
+    const newOrders = newCategories.map((newCategory, idx) =>
       ({ awardId: newCategory.awardId, order: idx })
     );
 
     newOrders.forEach((newOrder) => {
       Award.updateOrder(newOrder);
     });
-    
+
     return;
   }
 
   // 수상내역 삭제
-  static async deleteAward(awardId){
+  static async deleteAward(awardId) {
     // 해당 certId의 자격증정보가 db에 존재하는지 여부 확인
     const award = await Award.findByAwardId(awardId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!award) {
-      const errorMessage 
+      const errorMessage
         = "수상이력 정보가 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }

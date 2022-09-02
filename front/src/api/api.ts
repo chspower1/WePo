@@ -107,7 +107,6 @@ export async function updateUser(data: IUpdateUserProps, userId: number) {
                     Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 },
             })
-            .then(console.log);
     } catch (err) {
         console.log(err);
     }
@@ -214,7 +213,6 @@ export async function mutationCategory(
 
 export async function searchData(searchData: string) {
     try {
-        console.log(searchData);
         const { data: result } = await axios.get(`${BASE_URL}/user/search/${searchData}`, {
             data: { searchData },
             headers: {
@@ -222,7 +220,6 @@ export async function searchData(searchData: string) {
                 Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
         });
-        console.log("반환값", result);
         return result as IUser[];
     } catch (err) {
         console.log(err);
@@ -231,31 +228,30 @@ export async function searchData(searchData: string) {
 
 
 //회원가입 이메일 인증
-export async function approveRegister(userId :any ,authCode : any){
-    try{
-        console.log("요청",userId,authCode);
+export async function approveRegister(userId: any, authCode: any) {
+    try {
         await axios.post(`${BASE_URL}/user/register/${userId}/${authCode}`,)
-    } catch(err){
+    } catch (err) {
         console.log(err);
     }
 }
 
 //비밀번호 변경
 
-export async function changePassword(oldPassword:any,newPassword:any){
-    try{
-        const {data:result} = await axios.put(`${BASE_URL}/user/changePassword`,
-            {oldPassword,newPassword},
+export async function changePassword(oldPassword: any, newPassword: any) {
+    try {
+        const { data: result } = await axios.put(`${BASE_URL}/user/changePassword`,
+            { oldPassword, newPassword },
             {
-                headers:{
+                headers: {
                     "Content-Type": "application/json",
-                    Authorization:`Bearer ${sessionStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
                 }
             }
         )
         return result
-    }   catch(err){
-        return(err);
+    } catch (err) {
+        return (err);
     }
 
 }

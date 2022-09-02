@@ -1,10 +1,9 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MagnifyingGlass } from "@styled-icons/foundation/MagnifyingGlass";
 import { useSetRecoilState } from "recoil";
 import { searchWordState } from "@/atoms";
+
 const SearchBox = styled.form`
     position: relative;
     width: 100%;

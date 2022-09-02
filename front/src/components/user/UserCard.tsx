@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { curUserState, usersState, IUser, Efield, IProfile } from "@/atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
+import { curUserState, IUser, IProfile } from "@/atoms";
+import { useRecoilState } from "recoil";
 import { Link, useLocation, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { ArrowRightShort } from "@styled-icons/bootstrap/ArrowRightShort";
@@ -10,7 +10,6 @@ import { Star } from "@styled-icons/fluentui-system-regular/Star";
 import { StarEmphasis } from "@styled-icons/fluentui-system-filled/StarEmphasis";
 import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline";
 import FieldStyle from "@styledComponents/FieldStyle";
-import { E } from "styled-icons/simple-icons";
 import FiledStyle from "@styledComponents/FieldStyle";
 import { LoadingBox, LoadingIcon } from "./Network";
 import LikeModal from "@components/modal/LikeModal";
@@ -147,6 +146,7 @@ export const NameTxt = styled.h2`
     overflow: hidden;
     white-space: nowrap;
     cursor: default;
+    line-height:1.4;
     & > input[type="text"] {
         font-size: 16px;
         width: 100%;
@@ -187,7 +187,7 @@ const DescTxt = styled.p`
     word-break: break-all;
     line-height: 1.2;
     font-size: 16px;
-    color: #797979;
+    color: ${props=> props.theme.subTextColor};
     &:focus {
         border: 1.5px solid ${(props) => props.theme.accentColor};
     }
@@ -299,8 +299,8 @@ const FieldBox = styled.div`
 `;
 const FieldTxt = styled.div`
     ${(props: any) =>
-        props.chose &&
-        css`
+    props.chose &&
+    css`
             background-color: ${(props) => props.theme.filedBgColor};
         `}
     display:inline-block;
@@ -355,306 +355,304 @@ const PasswordChangeBtn = styled.button`
 `;
 
 interface IUserCardProps {
-    profile?: IProfile | IUser;
-    setProfile?: React.Dispatch<React.SetStateAction<IProfile | undefined>>;
+  profile?: IProfile | IUser;
+  setProfile?: React.Dispatch<React.SetStateAction<IProfile | undefined>>;
 }
 interface IUserFormValue {
-    reName: string;
-    reDescription: string;
-    reField: string[];
-    rePicture: File[];
+  reName: string;
+  reDescription: string;
+  reField: string[];
+  rePicture: File[];
 }
 
 function UserCard({ profile, setProfile }: IUserCardProps) {
-    const location = useLocation();
-    const pathName = location.pathname;
-    const [curUser, setCurUser] = useRecoilState(curUserState);
-    const { name, email, description, field, userId, picture, likes } = profile
-        ? profile!
-        : curUser!;
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm<IUserFormValue>({
-        mode: "onChange",
-        defaultValues: {
-            reField: field,
-        },
+  const location = useLocation();
+  const pathName = location.pathname;
+  const [curUser, setCurUser] = useRecoilState(curUserState);
+  const { name, email, description, field, userId, picture, likes } = profile
+    ? profile!
+    : curUser!;
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IUserFormValue>({
+    mode: "onChange",
+    defaultValues: {
+      reField: field,
+    },
+  });
+  const [onLikeModalState, setOnLikeModalState] = useState(false);
+  const [onEdit, setOnEdit] = useState(false);
+  const [editPassword, setEditPassword] = useState(false);
+  const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
+  const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
+  //권한관리
+  const { userSeq } = useParams();
+  const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
+  const inMyPage = pathName === "/mypage";
+  const admin = inMyPage || compareUser;
+  //수정완료 후 실행함수
+  const onvalid = ({
+    reName: name,
+    reDescription: description,
+    reField: field,
+    rePicture: picture,
+  }: IUserFormValue) => {
+    setProfile!((prev) => {
+      const updateProfile = { ...prev };
+      if (picture!.length !== 0) {
+        updateProfile.picture = picture[0]?.name;
+      }
+      return { ...prev, name, field, description, picture: updateProfile.picture };
     });
-    const [onLikeModalState, setOnLikeModalState] = useState(false);
-    const [onEdit, setOnEdit] = useState(false);
-    const [editPassword, setEditPassword] = useState(false);
-    const foundLikeUser = curUser?.likes.find((user) => user.userId === userId);
-    const fieldList = ["프론트엔드", "백엔드", "데이터분석", "인공지능"];
-    //권한관리
-    const { userSeq } = useParams();
-    const compareUser = userSeq && parseInt(userSeq) === curUser?.userId!;
-    const inMyPage = pathName === "/mypage";
-    const admin = inMyPage || compareUser;
-    //수정완료 후 실행함수
-    const onvalid = ({
-        reName: name,
-        reDescription: description,
-        reField: field,
-        rePicture: picture,
-    }: IUserFormValue) => {
-        setProfile!((prev) => {
-            const updateProfile = { ...prev };
-            if (picture!.length !== 0) {
-                updateProfile.picture = picture[0]?.name;
-            }
-            return { ...prev, name, field, description, picture: updateProfile.picture };
-        });
-        setCurUser((prev) => {
-            const updateCurUser = { ...prev };
-            updateCurUser.name = name;
-            updateCurUser.description = description;
-            updateCurUser.field = field;
-            if (picture!.length !== 0) {
-                updateCurUser.picture = picture[0]?.name;
-            }
-            return updateCurUser as IUser;
-        });
-        updateUser({ name, description, field, picture }, curUser?.userId!);
-        setOnEdit(false);
-    };
-    const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setOnEdit((cur) => !cur);
-    };
-    console.log(picture);
+    setCurUser((prev) => {
+      const updateCurUser = { ...prev };
+      updateCurUser.name = name;
+      updateCurUser.description = description;
+      updateCurUser.field = field;
+      if (picture!.length !== 0) {
+        updateCurUser.picture = picture[0]?.name;
+      }
+      return updateCurUser as IUser;
+    });
+    updateUser({ name, description, field, picture }, curUser?.userId!);
+    setOnEdit(false);
+  };
+  const onClickEdit = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setOnEdit((cur) => !cur);
+  };
 
-    const onClickLikesModal = (e: React.FormEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setOnLikeModalState((cur) => !cur);
-    };
-    //즐겨찾기 추가/삭제
-    const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        curUserToggleLike(profile?.userId!);
-        setCurUser((prev) => {
-            let filterLike = [...prev?.likes!];
-            if (foundLikeUser) {
-                filterLike = filterLike.filter((elem) => elem.userId !== userId);
-            } else {
-                filterLike.push({
-                    userId: profile?.userId!,
-                    name: profile?.name!,
-                    email: profile?.email!,
-                    picture: profile?.picture!,
-                });
-            }
-            const addLikeUser = { ...prev, likes: filterLike };
-            return addLikeUser as IUser;
+  const onClickLikesModal = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setOnLikeModalState((cur) => !cur);
+  };
+  //즐겨찾기 추가/삭제
+  const onClickLike = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    curUserToggleLike(profile?.userId!);
+    setCurUser((prev) => {
+      let filterLike = [...prev?.likes!];
+      if (foundLikeUser) {
+        filterLike = filterLike.filter((elem) => elem.userId !== userId);
+      } else {
+        filterLike.push({
+          userId: profile?.userId!,
+          name: profile?.name!,
+          email: profile?.email!,
+          picture: profile?.picture!,
         });
-    };
-    // 이미지 미리보기
-    const [newPicturePreview, setNewPicturePreview] = useState("");
-    const newPicture = watch("rePicture");
-    useEffect(() => {
-        if (newPicture && newPicture.length > 0) {
-            const file = newPicture[0];
-            setNewPicturePreview(URL.createObjectURL(file));
-        }
-    }, [newPicture]);
+      }
+      const addLikeUser = { ...prev, likes: filterLike };
+      return addLikeUser as IUser;
+    });
+  };
+  // 이미지 미리보기
+  const [newPicturePreview, setNewPicturePreview] = useState("");
+  const newPicture = watch("rePicture");
+  useEffect(() => {
+    if (newPicture && newPicture.length > 0) {
+      const file = newPicture[0];
+      setNewPicturePreview(URL.createObjectURL(file));
+    }
+  }, [newPicture]);
 
-    const pictureDefault = String(picture).split("/")[0] === "default_images";
-    const findUserId = String(picture).split("_")[0] === String(userId) ? "" : userId + "_";
-    const notDefault = pictureDefault ? "" : findUserId;
+  const pictureDefault = String(picture).split("/")[0] === "default_images";
+  const findUserId = String(picture).split("_")[0] === String(userId) ? "" : userId + "_";
+  const notDefault = pictureDefault ? "" : findUserId;
 
-    useEffect(() => {}, [onEdit]);
-    if (!profile)
-        return (
-            <LoadingBox>
-                <LoadingIcon />
-                Loading...
-            </LoadingBox>
-        );
-    console.log("picture", picture);
+  useEffect(() => { }, [onEdit]);
+  if (!profile)
     return (
-        <>
-            {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
-            {onLikeModalState && (
-                <>
-                    <LikeModal
-                        likeUsers={likes}
-                        setOnLikeModalState={setOnLikeModalState}
-                        onLikeModalState={onLikeModalState}
-                    ></LikeModal>
-                </>
-            )}
-            <ItemWrap className={pathName === "/mypage" ? "sticky" : ""}>
-                {curUser?.userId === userId && pathName === "/network" && (
-                    <CheckMe>It's Me!</CheckMe>
-                )}
-
-                <From
-                    onSubmit={handleSubmit(onvalid)}
-                    encType="multipart/form-data"
-                    acceptCharset="UTF-8"
-                >
-                    <InfoBox>
-                        <ProfileImageBox>
-                            <ProfileImg
-                                src={
-                                    newPicturePreview
-                                        ? newPicturePreview
-                                        : `http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`
-                                }
-                                alt="profileImage"
-                            />
-                            {onEdit && (
-                                <ImageChangeBox>
-                                    <ImageChangeInput
-                                        type="file"
-                                        id="imgInput"
-                                        accept="image/*"
-                                        {...register("rePicture")}
-                                    />
-                                    <ImageChangeLabel htmlFor="imgInput">
-                                        <ImageChangeIcon />
-                                    </ImageChangeLabel>
-                                </ImageChangeBox>
-                            )}
-                        </ProfileImageBox>
-                        <UserInfoTxt>
-                            <NameTxt>
-                                {onEdit || name}
-                                {onEdit && (
-                                    <input
-                                        type="text"
-                                        defaultValue={name}
-                                        placeholder={errors.reName?.message}
-                                        {...register("reName", {
-                                            required: "이름을 입력해주세요",
-                                        })}
-                                    />
-                                )}
-                            </NameTxt>
-
-                            <EmailTxt>
-                                {onEdit || (
-                                    <a href={`mailto:${email}`} title={`${email}에 메일 보내기`}>
-                                        {email}
-                                    </a>
-                                )}
-                            </EmailTxt>
-                        </UserInfoTxt>
-                    </InfoBox>
-                    {onEdit && (
-                        <PasswordChangeBtn onMouseDown={() => setEditPassword(true)}>
-                            <LockPassword size={18} style={{ marginRight: "5px" }} />
-                            비밀번호 변경
-                        </PasswordChangeBtn>
-                    )}
-                    <FieldBox>
-                        {onEdit ||
-                            field?.map(
-                                (elem) =>
-                                    field.length >= 1 && (
-                                        <FieldStyle chose={field.includes(elem) ? true : false}>
-                                            {elem}
-                                        </FieldStyle>
-                                    )
-                            )}
-                        {onEdit &&
-                            fieldList.map((elem, index) => (
-                                <>
-                                    <div style={{ display: "inline-block" }}>
-                                        <InputBtn
-                                            id={elem}
-                                            key={elem}
-                                            type="checkbox"
-                                            value={elem}
-                                            {...register("reField")}
-                                        />
-                                        <FiledStyle
-                                            htmlFor={elem}
-                                            chose={field?.includes(elem) ? true : false}
-                                        >
-                                            {elem}
-                                        </FiledStyle>
-                                    </div>
-                                </>
-                            ))}
-                        {errors.reField?.message}
-                    </FieldBox>
-                    <DescBox>
-                        <DescTxt>
-                            {onEdit ||
-                                (description &&
-                                    (description!.length > 73
-                                        ? `${description?.slice(0, 73)}...`
-                                        : description!))}
-                            {onEdit && (
-                                <>
-                                    <DescTextarea
-                                        placeholder={errors.reDescription?.message}
-                                        defaultValue={description!}
-                                        {...register("reDescription", {
-                                            required: "나에 대한 설명을 입력해주세요",
-                                        })}
-                                    ></DescTextarea>
-                                </>
-                            )}
-                        </DescTxt>
-                    </DescBox>
-                    <EditOrDetailBtnBox>
-                        {pathName === `/network` && (
-                            <IsMyCardBox className={userId === curUser?.userId ? "mycard" : ""}>
-                                {userId !== curUser?.userId && (
-                                    <LikeBtnBox className={foundLikeUser ? "active" : ""}>
-                                        <LikeBtn onClick={onClickLike}>
-                                            {foundLikeUser ? (
-                                                <FullLikeButton />
-                                            ) : (
-                                                <EmptyLikeButton />
-                                            )}
-                                        </LikeBtn>
-                                    </LikeBtnBox>
-                                )}
-                                <Link to={`${userId}`}>
-                                    <DetailBtn title="더보기">
-                                        더보기
-                                        <ArrowIcon />
-                                    </DetailBtn>
-                                </Link>
-                            </IsMyCardBox>
-                        )}
-                        {onEdit ||
-                            (admin && (
-                                <DetailBtn title="편집" onClick={onClickEdit}>
-                                    편집
-                                </DetailBtn>
-                            ))}
-                        {pathName !== "/network" && !onEdit && admin && (
-                            <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
-                                즐겨찾기목록
-                            </DetailBtn>
-                        )}
-                        {onEdit && (
-                            <>
-                                <SubmitButton>수정완료</SubmitButton>
-                                <ExitButton
-                                    title="취소"
-                                    onClick={(e) => {
-                                        onClickEdit(e);
-                                        setNewPicturePreview(
-                                            `http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`
-                                        );
-                                    }}
-                                >
-                                    취소
-                                </ExitButton>
-                            </>
-                        )}
-                    </EditOrDetailBtnBox>
-                </From>
-            </ItemWrap>
-        </>
+      <LoadingBox>
+        <LoadingIcon />
+        Loading...
+      </LoadingBox>
     );
+  return (
+    <>
+      {editPassword && <ChangePassword setEditPassword={setEditPassword}></ChangePassword>}
+      {onLikeModalState && (
+        <>
+          <LikeModal
+            likeUsers={likes}
+            setOnLikeModalState={setOnLikeModalState}
+            onLikeModalState={onLikeModalState}
+          ></LikeModal>
+        </>
+      )}
+      <ItemWrap className={pathName === "/mypage" ? "sticky" : ""}>
+        {curUser?.userId === userId && pathName === "/network" && (
+          <CheckMe>It's Me!</CheckMe>
+        )}
+
+        <From
+          onSubmit={handleSubmit(onvalid)}
+          encType="multipart/form-data"
+          acceptCharset="UTF-8"
+        >
+          <InfoBox>
+            <ProfileImageBox>
+              <ProfileImg
+                src={
+                  newPicturePreview
+                    ? newPicturePreview
+                    : `http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`
+                }
+                alt="profileImage"
+              />
+              {onEdit && (
+                <ImageChangeBox>
+                  <ImageChangeInput
+                    type="file"
+                    id="imgInput"
+                    accept="image/*"
+                    {...register("rePicture")}
+                  />
+                  <ImageChangeLabel htmlFor="imgInput">
+                    <ImageChangeIcon />
+                  </ImageChangeLabel>
+                </ImageChangeBox>
+              )}
+            </ProfileImageBox>
+            <UserInfoTxt>
+              <NameTxt>
+                {onEdit || name}
+                {onEdit && (
+                  <input
+                    type="text"
+                    defaultValue={name}
+                    placeholder={errors.reName?.message}
+                    {...register("reName", {
+                      required: "이름을 입력해주세요",
+                    })}
+                  />
+                )}
+              </NameTxt>
+
+              <EmailTxt>
+                {onEdit || (
+                  <a href={`mailto:${email}`} title={`${email}에 메일 보내기`}>
+                    {email}
+                  </a>
+                )}
+              </EmailTxt>
+            </UserInfoTxt>
+          </InfoBox>
+          {onEdit && (
+            <PasswordChangeBtn onMouseDown={() => setEditPassword(true)}>
+              <LockPassword size={18} style={{ marginRight: "5px" }} />
+              비밀번호 변경
+            </PasswordChangeBtn>
+          )}
+          <FieldBox>
+            {onEdit ||
+              field?.map(
+                (elem) =>
+                  field.length >= 1 && (
+                    <FieldStyle chose={field.includes(elem) ? true : false}>
+                      {elem}
+                    </FieldStyle>
+                  )
+              )}
+            {onEdit &&
+              fieldList.map((elem, index) => (
+                <>
+                  <div style={{ display: "inline-block" }}>
+                    <InputBtn
+                      id={elem}
+                      key={elem}
+                      type="checkbox"
+                      value={elem}
+                      {...register("reField")}
+                    />
+                    <FiledStyle
+                      htmlFor={elem}
+                      chose={field?.includes(elem) ? true : false}
+                    >
+                      {elem}
+                    </FiledStyle>
+                  </div>
+                </>
+              ))}
+            {errors.reField?.message}
+          </FieldBox>
+          <DescBox>
+            <DescTxt>
+              {onEdit ||
+                (description &&
+                  (description!.length > 73
+                    ? `${description?.slice(0, 73)}...`
+                    : description!))}
+              {onEdit && (
+                <>
+                  <DescTextarea
+                    placeholder={errors.reDescription?.message}
+                    defaultValue={description!}
+                    {...register("reDescription", {
+                      required: "나에 대한 설명을 입력해주세요",
+                    })}
+                  ></DescTextarea>
+                </>
+              )}
+            </DescTxt>
+          </DescBox>
+          <EditOrDetailBtnBox>
+            {pathName === `/network` && (
+              <IsMyCardBox className={userId === curUser?.userId ? "mycard" : ""}>
+                {userId !== curUser?.userId && (
+                  <LikeBtnBox className={foundLikeUser ? "active" : ""}>
+                    <LikeBtn onClick={onClickLike}>
+                      {foundLikeUser ? (
+                        <FullLikeButton />
+                      ) : (
+                        <EmptyLikeButton />
+                      )}
+                    </LikeBtn>
+                  </LikeBtnBox>
+                )}
+                <Link to={`${userId}`}>
+                  <DetailBtn title="더보기">
+                    더보기
+                    <ArrowIcon />
+                  </DetailBtn>
+                </Link>
+              </IsMyCardBox>
+            )}
+            {onEdit ||
+              (admin && (
+                <DetailBtn title="편집" onClick={onClickEdit}>
+                  편집
+                </DetailBtn>
+              ))}
+            {pathName !== "/network" && !onEdit && admin && (
+              <DetailBtn title="즐겨찾기 목록" onClick={onClickLikesModal}>
+                즐겨찾기목록
+              </DetailBtn>
+            )}
+            {onEdit && (
+              <>
+                <SubmitButton>수정완료</SubmitButton>
+                <ExitButton
+                  title="취소"
+                  onClick={(e) => {
+                    onClickEdit(e);
+                    setNewPicturePreview(
+                      `http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`
+                    );
+                  }}
+                >
+                  취소
+                </ExitButton>
+              </>
+            )}
+          </EditOrDetailBtnBox>
+        </From>
+      </ItemWrap>
+    </>
+  );
 }
 
 export default UserCard;

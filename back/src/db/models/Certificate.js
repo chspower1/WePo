@@ -4,12 +4,12 @@ class Certificate {
 
   // 새로운 자격증 생성
   static async create({ userId, title, date, org, description, certId, order }) {
-    return CertificateModel.create({ 
-      userId, 
-      title, 
-      date, 
-      org, 
-      description, 
+    return CertificateModel.create({
+      userId,
+      title,
+      date,
+      org,
+      description,
       certId,
       order
     });
@@ -37,7 +37,7 @@ class Certificate {
     );
     return updatedCertificate;
   }
-  
+
   // 자격증 순서 변경
   static async updateOrder(newOrder) {
 

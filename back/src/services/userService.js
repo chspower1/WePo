@@ -23,10 +23,10 @@ class userAuthService {
     const picture = "default_images/random_profile" + randomSrc + ".png";
 
     // db에 저장
-    const createdNewUser = await User.create({ 
-      name, 
-      email, 
-      password: hashedPassword, 
+    const createdNewUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
       picture,
       field
     });
@@ -44,7 +44,7 @@ class userAuthService {
       subject: "[WePo] 이메일 인증",
       text: "",
       html: "",
-      setContent(authCode){
+      setContent(authCode) {
         const authURL = `http://kdt-ai5-team08.elicecoding.com/user/register/${userId}/${authCode}`
         this.text = `${name}님, 다음 링크로 이메일 인증 부탁드립니다: ${authURL}`;
         this.html = `<br>${name}<b/>님,<br/>
@@ -77,7 +77,7 @@ class userAuthService {
     if (!isPasswordCorrect) {
       const loginTrial = await Trial.increaseTrials(email)
       // 로그인 시도 횟수가 5번 이상이면 비밀번호 초기화 이메일 전송
-      if (loginTrial.trials>=5){
+      if (loginTrial.trials >= 5) {
         const newPassword = await userAuthService.resetPassword(email)
         // 비밀번호 초기화 이메일 내용
         const mailContent = {
@@ -91,7 +91,7 @@ class userAuthService {
         return { mailContent };
       }
       const errorMessage =
-      `비밀번호가 틀렸습니다(${loginTrial.trials}회).`;
+        `비밀번호가 틀렸습니다(${loginTrial.trials}회).`;
       return { errorMessage }
     }
     // 로그인 성공 -> 로그인 시도 횟수 초기화
@@ -131,10 +131,10 @@ class userAuthService {
       return { errorMessage };
     }
 
-    
+
     let { name, description, field, picture } = toUpdate;
 
-    if(!field) {
+    if (!field) {
       field = [];
     }
 
@@ -181,55 +181,55 @@ class userAuthService {
 
 
   // 사용자 즐겨찾기 추가/삭제
-  static async toggleLike({userId, otherId}) {
+  static async toggleLike({ userId, otherId }) {
     const user = await User.findByUserId(userId);
     const otherUser = await User.findByUserId(otherId);
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
-      "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-    
+
     // 아이디가 존재하면 즐겨찾기에서 삭제
-    if(user.likes.filter(likeUser => likeUser.userId === otherId).length) {
+    if (user.likes.filter(likeUser => likeUser.userId === otherId).length) {
       const newValues = {
         likes: user.likes.filter(likeUser => likeUser.userId !== otherId)
       };
       return User.update({ userId, newValues });
     }
-    
+
     // 아이디가 없으면 즐겨찾기에 새로 추가
     const newValues = {
       likes: [
         ...user.likes, {
-        userId: otherId,
-        name: otherUser.name,
-        email: otherUser.email,
-        picture: otherUser.picture
-      }]
+          userId: otherId,
+          name: otherUser.name,
+          email: otherUser.email,
+          picture: otherUser.picture
+        }]
     };
 
     return User.update({ userId, newValues })
   }
 
   // 사용자 비밀번호 초기화
-  static async resetPassword(email){
+  static async resetPassword(email) {
     const user = await User.findByEmail(email)
-    if(!user) {
+    if (!user) {
       throw new Error("해당되는 사용자가 존재하지 않습니다.")
     }
     const newPassword = Math.random().toString(36).slice(-8);
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const newValues = { password: hashedPassword}
+    const newValues = { password: hashedPassword }
     await User.update({ userId: user.userId, newValues })
     return newPassword
   }
 
   // 사용자 비밀번호 변경
-  static async changePassword({userId, oldPassword, newPassword}){
+  static async changePassword({ userId, oldPassword, newPassword }) {
     const user = await User.findByUserId(userId)
-    if(!user) {
+    if (!user) {
       throw new Error("해당되는 사용자가 존재하지 않습니다.")
     }
 

@@ -1,15 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { ILike } from "@/atoms";
-import {
-    EmailTxt,
-    InfoBox,
-    NameTxt,
-    ProfileImageBox,
-    ProfileImg,
-    UserInfoTxt,
-} from "@user/UserCard";
+import { ProfileImg } from "@user/UserCard";
 import { Link } from "react-router-dom";
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
 
@@ -158,59 +150,59 @@ const LikedUserEmail = styled.a`
 `;
 
 interface ILikeCardProps {
-    name: string;
-    email: string;
-    picture: string;
-    userId: number;
-    setOnLikeModalState: React.Dispatch<React.SetStateAction<boolean>>;
+  name: string;
+  email: string;
+  picture: string;
+  userId: number;
+  setOnLikeModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const LikeCard = ({ name, email, picture, userId, setOnLikeModalState }: ILikeCardProps) => {
-    const pictureDefault = String(picture).split("/")[0] === "default_images";
-    const findUserId = String(picture).split("_")[0] === String(userId) ? "" : userId + "_";
-    const notDefault = pictureDefault ? "" : findUserId;
-    return (
-        <LikeBox>
-            <LikedUserInfoBox>
-                <LikedUserImgBox>
-                    <ProfileImg
-                        src={`http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`}
-                        alt="profileImage"
-                    />
-                </LikedUserImgBox>
-                <LikedUserInfoInner>
-                    <LikedUserName>{name}</LikedUserName>
-                    <LikedUserEmail href={`mailto:${email}`} title={`${email}에 메일 보내기`}>
-                        {email}
-                    </LikedUserEmail>
-                </LikedUserInfoInner>
-            </LikedUserInfoBox>
-            <GotoLinkBox>
-                <GotoLink to={`/network/${userId}`} onClick={() => setOnLikeModalState(false)}>
-                    프로필 보기
-                </GotoLink>
-            </GotoLinkBox>
-        </LikeBox>
-    );
+  const pictureDefault = String(picture).split("/")[0] === "default_images";
+  const findUserId = String(picture).split("_")[0] === String(userId) ? "" : userId + "_";
+  const notDefault = pictureDefault ? "" : findUserId;
+  return (
+    <LikeBox>
+      <LikedUserInfoBox>
+        <LikedUserImgBox>
+          <ProfileImg
+            src={`http://${window.location.hostname}:5001/uploads/${notDefault}${picture}`}
+            alt="profileImage"
+          />
+        </LikedUserImgBox>
+        <LikedUserInfoInner>
+          <LikedUserName>{name}</LikedUserName>
+          <LikedUserEmail href={`mailto:${email}`} title={`${email}에 메일 보내기`}>
+            {email}
+          </LikedUserEmail>
+        </LikedUserInfoInner>
+      </LikedUserInfoBox>
+      <GotoLinkBox>
+        <GotoLink to={`/network/${userId}`} onClick={() => setOnLikeModalState(false)}>
+          프로필 보기
+        </GotoLink>
+      </GotoLinkBox>
+    </LikeBox>
+  );
 };
 
 function LikeModal({ likeUsers, setOnLikeModalState, onLikeModalState }: any) {
-    // useEffect(() => {}, [onLikeModalState]);
-    const navigator = useNavigate();
-    return (
-        <Wrapper>
-            <Modal>
-                <AccentWord>나의 즐겨찾기 목록</AccentWord>
-                <ClsBtn onClick={() => setOnLikeModalState(false)}>
-                    <CloseBtnIcons />
-                </ClsBtn>
-                <LikeLists>
-                    {likeUsers?.map((user: any, index: number) => (
-                        <LikeCard {...user} setOnLikeModalState={setOnLikeModalState}></LikeCard>
-                    ))}
-                </LikeLists>
-            </Modal>
-        </Wrapper>
-    );
+  // useEffect(() => {}, [onLikeModalState]);
+  const navigator = useNavigate();
+  return (
+    <Wrapper>
+      <Modal>
+        <AccentWord>나의 즐겨찾기 목록</AccentWord>
+        <ClsBtn onClick={() => setOnLikeModalState(false)}>
+          <CloseBtnIcons />
+        </ClsBtn>
+        <LikeLists>
+          {likeUsers?.map((user: any, index: number) => (
+            <LikeCard {...user} setOnLikeModalState={setOnLikeModalState}></LikeCard>
+          ))}
+        </LikeLists>
+      </Modal>
+    </Wrapper>
+  );
 }
 
 export default LikeModal;

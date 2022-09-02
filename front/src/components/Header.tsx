@@ -1,11 +1,10 @@
-import { Link, useLocation, NavLink, useNavigate } from "react-router-dom";
+import { Link, useLocation, NavLink } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { curUserState, isLoginState } from "@/atoms";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import SearchBar from "./SearchBar";
+import { useEffect, useState } from "react";
+
 
 const LinkHover = keyframes`
     0%{color:#343434}
@@ -61,11 +60,7 @@ const Nav = styled.nav`
         justify-content: center;
     }
 `;
-/**
- *  정확한 페이지로 가면 active-style
- *  아니면 normal-style
- * @end v6는 exact가 기본 설정되어 있지만 확실하게 end 써주세요!
- * */
+
 export const LinkButton = styled(NavLink)`
     text-align: center;
     position: relative;
@@ -153,99 +148,99 @@ const MiniProfileBox = styled.div`
 `;
 
 function Header() {
-    const isLogin = useRecoilValue(isLoginState);
-    const setCurUser = useSetRecoilState(curUserState);
-    const location = useLocation();
-    const pathName = location.pathname;
-    const curUser = useRecoilValue(curUserState);
-    const [scrollY, setScrollY] = useState(0);
-    const [scrollActive, setScrollActive] = useState(false);
+  const isLogin = useRecoilValue(isLoginState);
+  const setCurUser = useSetRecoilState(curUserState);
+  const location = useLocation();
+  const pathName = location.pathname;
+  const curUser = useRecoilValue(curUserState);
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollActive, setScrollActive] = useState(false);
 
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            setScrollY(window.scrollY);
-        });
-        if (scrollY < 10) {
-            setScrollActive(false);
-        } else {
-            setScrollActive(true);
-        }
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setScrollY(window.scrollY);
     });
+    if (scrollY < 10) {
+      setScrollActive(false);
+    } else {
+      setScrollActive(true);
+    }
+  });
 
-    const UserLogout = () => {
-        localStorage.removeItem("recoil-persist");
-        sessionStorage.removeItem("userToken");
-        setCurUser(null);
-    };
-    // 이미지 초기값 확인
-    const pictureDefault = curUser?.picture?.split("/")[0] === "default_images";
-    const findUserId =
-        curUser?.picture?.split("_")[0] === curUser?.userId ? "" : curUser?.userId + "_";
-    const notDefault = pictureDefault ? "" : findUserId;
+  const UserLogout = () => {
+    localStorage.removeItem("recoil-persist");
+    sessionStorage.removeItem("userToken");
+    setCurUser(null);
+  };
+  // 이미지 초기값 확인
+  const pictureDefault = curUser?.picture?.split("/")[0] === "default_images";
+  const findUserId =
+    curUser?.picture?.split("_")[0] === curUser?.userId ? "" : curUser?.userId + "_";
+  const notDefault = pictureDefault ? "" : findUserId;
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        setScrollY(0);
-        setScrollActive(false);
-    }, [pathName]);
-    useEffect(() => {}, [curUser?.picture]);
-    return (
-        <>
-            <HeaderWrap className={`${scrollActive ? "active" : ""}`}>
-                <HeaderContainer>
-                    <Link to="/">
-                        <LogoBox>
-                            <LogoImg
-                                src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"}
-                                alt="WepoLogo"
-                            />
-                        </LogoBox>
-                    </Link>
-                    <Nav>
-                        {isLogin ? (
-                            <>
-                                <LinkButton to="/network" end>
-                                    네트워크
-                                </LinkButton>
-                                <LinkButton to="/mypage">나의페이지</LinkButton>
-                                <MiniProfileBox>
-                                    <MiniProfileImg
-                                        src={`http://${window.location.hostname}:5001/uploads/${notDefault}${curUser?.picture}`}
-                                    />
-                                    <MiniProfileName className="mobileNone">
-                                        {(String(curUser?.name).length > 7) ? String(curUser?.name).slice(0,7)+"..." : curUser?.name} 님
-                                    </MiniProfileName>
-                                </MiniProfileBox>
-                                <LoginOrRegiBtn onClick={UserLogout} className="logOut">
-                                    <>로그아웃</>
-                                </LoginOrRegiBtn>
-                            </>
-                        ) : pathName === "/login" ? (
-                            <>
-                                <LinkButton to="/">홈</LinkButton>
-                                <LinkButton to="/login" end>
-                                    로그인
-                                </LinkButton>
-                                <Link to={`/register`}>
-                                    <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
-                                </Link>
-                            </>
-                        ) : (
-                            <>
-                                <LinkButton to="/">홈</LinkButton>
-                                <LinkButton to="/register" end>
-                                    회원가입
-                                </LinkButton>
-                                <Link to={`/login`}>
-                                    <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
-                                </Link>
-                            </>
-                        )}
-                    </Nav>
-                </HeaderContainer>
-            </HeaderWrap>
-        </>
-    );
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setScrollY(0);
+    setScrollActive(false);
+  }, [pathName]);
+  useEffect(() => { }, [curUser?.picture]);
+  return (
+    <>
+      <HeaderWrap className={`${scrollActive ? "active" : ""}`}>
+        <HeaderContainer>
+          <Link to="/">
+            <LogoBox>
+              <LogoImg
+                src={process.env.PUBLIC_URL + "/assets/image/Logo.svg"}
+                alt="WepoLogo"
+              />
+            </LogoBox>
+          </Link>
+          <Nav>
+            {isLogin ? (
+              <>
+                <LinkButton to="/network" end>
+                  네트워크
+                </LinkButton>
+                <LinkButton to="/mypage">나의페이지</LinkButton>
+                <MiniProfileBox>
+                  <MiniProfileImg
+                    src={`http://${window.location.hostname}:5001/uploads/${notDefault}${curUser?.picture}`}
+                  />
+                  <MiniProfileName className="mobileNone">
+                    {(String(curUser?.name).length > 7) ? String(curUser?.name).slice(0, 7) + "..." : curUser?.name} 님
+                  </MiniProfileName>
+                </MiniProfileBox>
+                <LoginOrRegiBtn onClick={UserLogout} className="logOut">
+                  <>로그아웃</>
+                </LoginOrRegiBtn>
+              </>
+            ) : pathName === "/login" ? (
+              <>
+                <LinkButton to="/">홈</LinkButton>
+                <LinkButton to="/login" end>
+                  로그인
+                </LinkButton>
+                <Link to={`/register`}>
+                  <LoginOrRegiBtn>회원가입</LoginOrRegiBtn>
+                </Link>
+              </>
+            ) : (
+              <>
+                <LinkButton to="/">홈</LinkButton>
+                <LinkButton to="/register" end>
+                  회원가입
+                </LinkButton>
+                <Link to={`/login`}>
+                  <LoginOrRegiBtn>로그인</LoginOrRegiBtn>
+                </Link>
+              </>
+            )}
+          </Nav>
+        </HeaderContainer>
+      </HeaderWrap>
+    </>
+  );
 }
 
 export default Header;

@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
 import { lightTheme, darkTheme } from "./theme/theme";
 import Router from "./Router";
@@ -33,16 +33,16 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-    const [isDark, setIsDark] = useRecoilState(isDarkState);
-    return (
-        <>
-            <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-                <GlobalStyle />
-                <Router />
-                <ReactQueryDevtools />
-            </ThemeProvider>
-        </>
-    );
+  const [isDark, setIsDark] = useRecoilState(isDarkState);
+  return (
+    <>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Router />
+        <ReactQueryDevtools />
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;

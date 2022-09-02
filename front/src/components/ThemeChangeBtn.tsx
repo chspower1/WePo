@@ -1,8 +1,9 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Sun } from "@styled-icons/octicons/Sun";
 import { MoonStarsFill } from "@styled-icons/bootstrap/MoonStarsFill";
 import { useRecoilState } from "recoil";
 import { isDarkState } from "@/atoms";
+
 const ThemeBtnBox = styled.div`
     position: fixed;
     z-index: 1005;
@@ -22,11 +23,7 @@ const ThemeBtnBox = styled.div`
         height: 45px;
     }
 `;
-/* ${(props:any)=>{
-        props.light && css`
-            
-        `
-    }} */
+
 const ThemeBtn = styled.button`
     width: 100%;
     height: 100%;
@@ -59,16 +56,16 @@ const DarkIcon = styled(MoonStarsFill)`
 `;
 
 export default function ThemeChangeBtn() {
-    const [isDark, setIsDark] = useRecoilState(isDarkState);
-    return (
-        <ThemeBtnBox>
-            <ThemeBtn
-                onClick={() => {
-                    setIsDark((prev) => !prev);
-                }}
-            >
-                {isDark ? <LightIcon /> : <DarkIcon />}
-            </ThemeBtn>
-        </ThemeBtnBox>
-    );
+  const [isDark, setIsDark] = useRecoilState(isDarkState);
+  return (
+    <ThemeBtnBox>
+      <ThemeBtn
+        onClick={() => {
+          setIsDark((prev) => !prev);
+        }}
+      >
+        {isDark ? <LightIcon /> : <DarkIcon />}
+      </ThemeBtn>
+    </ThemeBtnBox>
+  );
 }

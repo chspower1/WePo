@@ -7,7 +7,7 @@ const userExtraInfoLookup = [{
     localField: 'userId', // User.userId
     foreignField: 'userId', // Award.userId
     pipeline: [
-      { $sort: {'order': 1} }
+      { $sort: { 'order': 1 } }
     ],
     as: 'awards', // 추가 할 프로퍼티
   },
@@ -18,7 +18,7 @@ const userExtraInfoLookup = [{
     localField: 'userId',
     foreignField: 'userId',
     pipeline: [
-      { $sort: {'order': 1} }
+      { $sort: { 'order': 1 } }
     ],
     as: 'projects',
   },
@@ -29,7 +29,7 @@ const userExtraInfoLookup = [{
     localField: 'userId',
     foreignField: 'userId',
     pipeline: [
-      { $sort: {'order': 1} }
+      { $sort: { 'order': 1 } }
     ],
     as: 'educations',
   },
@@ -40,7 +40,7 @@ const userExtraInfoLookup = [{
     localField: 'userId',
     foreignField: 'userId',
     pipeline: [
-      { $sort: {'order': 1} }
+      { $sort: { 'order': 1 } }
     ],
     as: 'certificates',
   },
@@ -51,9 +51,9 @@ class User {
   // 새로운 유저 생성
   static async create({ name, email, password: hashedPassword, picture, field }) {
     return UserModel.create({
-      name, 
-      email, 
-      password: hashedPassword, 
+      name,
+      email,
+      password: hashedPassword,
       picture,
       field
     });
@@ -89,7 +89,7 @@ class User {
 
   // 모든 유저 조회
   static async findAll() {
-    const users = await UserModel.find({}).sort({createdAt: -1});
+    const users = await UserModel.find({}).sort({ createdAt: -1 });
     return users;
   }
 
@@ -111,8 +111,8 @@ class User {
     const updatedView = await UserModel.findOneAndUpdate(
       {
         userId
-      }, 
-      { $inc: { views: 1} }, 
+      },
+      { $inc: { views: 1 } },
       {
         returnDocument: 'after',
       }

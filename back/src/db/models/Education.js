@@ -4,11 +4,11 @@ class Education {
 
   // 새로운 학력 생성
   static async create({ userId, school, major, status, eduId, order }) {
-    return EducationModel.create({ 
-      userId, 
-      school, 
-      major, 
-      status, 
+    return EducationModel.create({
+      userId,
+      school,
+      major,
+      status,
       eduId,
       order
     });

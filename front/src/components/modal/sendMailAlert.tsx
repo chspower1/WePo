@@ -1,4 +1,3 @@
-import React from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -66,34 +65,34 @@ const AccentWord = styled.span`
     font-weight: 600;
 `;
 function SendMailAlert({ setSendEmail }: any) {
-    const navigator = useNavigate();
-    return (
-        <Wrapper>
-            <Modal>
-                <ModalHeader>
-                    ✉️ 이메일을 인증해주세요
-                    
-                </ModalHeader>
-                <ModalMsgBox>
-                    <ModalMsg>
-                        반가워요 ! <AccentWord>WEPO</AccentWord> 에 오신 것을 환영합니다 😆
-                    </ModalMsg>
-                    <ModalMsg>아직 한 단계가 남아있어요 !</ModalMsg>
-                    <ModalMsg>
-                        가입하신 이메일을 인증한 후 <AccentWord>WEPO</AccentWord> 를 마음껏 이용해 주세요
-                    </ModalMsg>
-                </ModalMsgBox>
-                <ModalCloseButton
-                    onClick={() => {
-                        setSendEmail(false);
-                        navigator("/login", { replace: true });
-                    }}
-                >
-                    로그인 페이지로 이동하기
-                </ModalCloseButton>
-            </Modal>
-        </Wrapper>
-    );
+  const navigator = useNavigate();
+  return (
+    <Wrapper>
+      <Modal>
+        <ModalHeader>
+          ✉️ 이메일을 인증해주세요
+
+        </ModalHeader>
+        <ModalMsgBox>
+          <ModalMsg>
+            반가워요 ! <AccentWord>WEPO</AccentWord> 에 오신 것을 환영합니다 😆
+          </ModalMsg>
+          <ModalMsg>아직 한 단계가 남아있어요 !</ModalMsg>
+          <ModalMsg>
+            가입하신 이메일을 인증한 후 <AccentWord>WEPO</AccentWord> 를 마음껏 이용해 주세요
+          </ModalMsg>
+        </ModalMsgBox>
+        <ModalCloseButton
+          onClick={() => {
+            setSendEmail(false);
+            navigator("/login", { replace: true });
+          }}
+        >
+          로그인 페이지로 이동하기
+        </ModalCloseButton>
+      </Modal>
+    </Wrapper>
+  );
 }
 
 export default SendMailAlert;

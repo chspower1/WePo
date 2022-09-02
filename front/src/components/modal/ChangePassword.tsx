@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { changePassword } from "@api/api";
 import { useForm } from "react-hook-form";
-import { $pac } from "styled-icons/crypto";
-import { BackgroundColor } from "styled-icons/foundation";
 import { EyeOffOutline, EyeOutline } from "styled-icons/evaicons-outline";
 import { DangerIcon, ErrMsg } from "@styledComponents/SignStyled";
-import { Spam2 } from "@styled-icons/remix-line/Spam2";
+
 const Wrapper = styled.div`
     z-index: 1007;
     position: fixed;
@@ -129,189 +127,189 @@ const SuccessMsg = styled.p`
     margin: 0 0 0 5px;
 `;
 interface IChangePassword {
-    oldPassword: string;
-    newPassword: string;
-    newCheckPassword: string;
+  oldPassword: string;
+  newPassword: string;
+  newCheckPassword: string;
 }
 
 export default function ChangePassword({ setEditPassword }: any) {
-    const [viewOldPassword, setViewOldPassword] = useState(false);
-    const [viewCheckPassword, setViewCheckPassword] = useState(false);
-    const [viewPassword, setViewPassword] = useState(false);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        setError,
-        getValues,
-    } = useForm<IChangePassword>({ mode: "onChange" });
+  const [viewOldPassword, setViewOldPassword] = useState(false);
+  const [viewCheckPassword, setViewCheckPassword] = useState(false);
+  const [viewPassword, setViewPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    getValues,
+  } = useForm<IChangePassword>({ mode: "onChange" });
 
-    const valid = !errors.oldPassword && !errors.newPassword && !errors.newCheckPassword;
+  const valid = !errors.oldPassword && !errors.newPassword && !errors.newCheckPassword;
 
-    const onvalid = async (data: IChangePassword) => {
-        const { oldPassword, newPassword } = data;
-        await changePassword(oldPassword, newPassword).then((data) => {
-            if (data?.response?.status!) {
-                if (data.response.status == 400) {
-                    alert("현재 비밀번호가 틀립니다.");
-                }
-            } else {
-                alert("변경이 완료되었습니다");
-                setEditPassword(false);
-            }
-        });
-    };
-    useEffect(() => {
-        setError("oldPassword", {
-            type: "custom",
-            message: "기존의 비밀번호를 입력해주세요!",
-        });
-        setError("newPassword", {
-            type: "custom",
-            message: "새로운 비밀번호를 입력해주세요!",
-        });
-        setError("newCheckPassword", {
-            type: "custom",
-            message: " 새로운 비밀번호를 한 번 더 입력해주세요!",
-        });
-    }, []);
-    function handleViewOldButton(e: React.FormEvent<HTMLButtonElement>) {
-        e.preventDefault();
-        setViewOldPassword((prev) => !prev);
-    }
-    function handleViewButton(e: React.FormEvent<HTMLButtonElement>) {
-        e.preventDefault();
-        setViewPassword((prev) => !prev);
-    }
-    function handleViewCheckButton(e: React.FormEvent<HTMLButtonElement>) {
-        e.preventDefault();
-        setViewCheckPassword((prev) => !prev);
-    }
-    return (
-        <Wrapper>
-            <form onSubmit={handleSubmit(onvalid)}>
-                <Modal>
-                    <div style={{ width: "100%", textAlign: "center" }}>
-                        <ModalHeader style={{ fontSize: "24px", fontWeight: "bold" }}>
-                            비밀번호 변경
-                        </ModalHeader>
-                    </div>
-                    <ModalInnerBox>
-                        <ModalHeaderBox>
-                            <RequiredElement>*</RequiredElement>{" "}
-                            <ModalHeader>현재 비밀번호를 입력하세요</ModalHeader>
-                        </ModalHeaderBox>
-                        <InputBox>
-                            <ChangePasswordInput
-                                className="password"
-                                type={viewOldPassword ? "text" : "password"}
-                                placeholder="현재 비밀번호"
-                                {...register("oldPassword", {
-                                    required: "현재 비밀번호를 입력해주세요!",
-                                    minLength: {
-                                        value: 4,
-                                        message: "비밀번호는 4글자 이상입니다!",
-                                    },
-                                })}
-                            ></ChangePasswordInput>
-                            <ViewButton tabIndex={-1} onMouseDown={handleViewOldButton}>
-                                {viewOldPassword ? (
-                                    <EyeOutline color="#3687FF" />
-                                ) : (
-                                    <EyeOffOutline color="#3687FF" />
-                                )}
-                            </ViewButton>
-                        </InputBox>
-                        {errors.oldPassword ? (
-                            <ErrMsg>
-                                <DangerIcon></DangerIcon>
-                                {errors.oldPassword.message}
-                            </ErrMsg>
-                        ) : (
-                            <SuccessMsg>비밀번호가 맞는지 확인해 주세요 :-)</SuccessMsg>
-                        )}
-                    </ModalInnerBox>
-                    <ModalInnerBox>
-                        <ModalHeaderBox>
-                            <RequiredElement>*</RequiredElement>{" "}
-                            <ModalHeader>변경할 비밀번호</ModalHeader>
-                        </ModalHeaderBox>
-                        <InputBox>
-                            <ChangePasswordInput
-                                className="password"
-                                placeholder="변경할 비밀번호"
-                                type={viewPassword ? "text" : "password"}
-                                {...register("newPassword", {
-                                    required: "변경할 비밀번호를 입력해주세요!",
-                                    minLength: {
-                                        value: 4,
-                                        message: "비밀번호는 4글자 이상입니다!",
-                                    },
-                                })}
-                            ></ChangePasswordInput>
-                            <ViewButton tabIndex={-1} onMouseDown={handleViewButton}>
-                                {viewPassword ? (
-                                    <EyeOutline color="#3687FF" />
-                                ) : (
-                                    <EyeOffOutline color="#3687FF" />
-                                )}
-                            </ViewButton>
-                        </InputBox>
-                        {errors.newPassword ? (
-                            <ErrMsg>
-                                <DangerIcon></DangerIcon>
-                                {errors.newPassword.message}
-                            </ErrMsg>
-                        ) : (
-                            <SuccessMsg>✔️적합한 비밀번호에요!</SuccessMsg>
-                        )}
-                    </ModalInnerBox>
-                    <ModalInnerBox>
-                        <ModalHeaderBox>
-                            <RequiredElement>*</RequiredElement>
-                            <ModalHeader>변경할 비밀번호 확인</ModalHeader>
-                        </ModalHeaderBox>
-                        <InputBox>
-                            <ChangePasswordInput
-                                className="password"
-                                placeholder="변경할 비밀번호 확인"
-                                type={viewCheckPassword ? "text" : "password"}
-                                {...register("newCheckPassword", {
-                                    required: "비밀번호가 일치하지 않습니다!",
-                                    validate: {
-                                        mathchesPreviousPassword: (value) => {
-                                            const { newPassword } = getValues();
-                                            return (
-                                                newPassword === value ||
-                                                "비밀번호가 일치하지 않습니다!"
-                                            );
-                                        },
-                                    },
-                                })}
-                            ></ChangePasswordInput>
-                            <ViewButton tabIndex={-1} onMouseDown={handleViewCheckButton}>
-                                {viewCheckPassword ? (
-                                    <EyeOutline color="#3687FF" />
-                                ) : (
-                                    <EyeOffOutline color="#3687FF" />
-                                )}
-                            </ViewButton>
-                        </InputBox>
-                        {errors.newCheckPassword ? (
-                            <ErrMsg>
-                                <DangerIcon></DangerIcon>
-                                {errors.newCheckPassword.message}
-                            </ErrMsg>
-                        ) : (
-                            <SuccessMsg>✔️비밀번호가 일치합니다</SuccessMsg>
-                        )}
-                    </ModalInnerBox>
-                    <div>
-                        <SubmitButton disabled={!valid}>변경</SubmitButton>
-                        <ExitButton onClick={() => setEditPassword(false)}>취소</ExitButton>
-                    </div>
-                </Modal>
-            </form>
-        </Wrapper>
-    );
+  const onvalid = async (data: IChangePassword) => {
+    const { oldPassword, newPassword } = data;
+    await changePassword(oldPassword, newPassword).then((data) => {
+      if (data?.response?.status!) {
+        if (data.response.status == 400) {
+          alert("현재 비밀번호가 틀립니다.");
+        }
+      } else {
+        alert("변경이 완료되었습니다");
+        setEditPassword(false);
+      }
+    });
+  };
+  useEffect(() => {
+    setError("oldPassword", {
+      type: "custom",
+      message: "기존의 비밀번호를 입력해주세요!",
+    });
+    setError("newPassword", {
+      type: "custom",
+      message: "새로운 비밀번호를 입력해주세요!",
+    });
+    setError("newCheckPassword", {
+      type: "custom",
+      message: " 새로운 비밀번호를 한 번 더 입력해주세요!",
+    });
+  }, []);
+  function handleViewOldButton(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setViewOldPassword((prev) => !prev);
+  }
+  function handleViewButton(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setViewPassword((prev) => !prev);
+  }
+  function handleViewCheckButton(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setViewCheckPassword((prev) => !prev);
+  }
+  return (
+    <Wrapper>
+      <form onSubmit={handleSubmit(onvalid)}>
+        <Modal>
+          <div style={{ width: "100%", textAlign: "center" }}>
+            <ModalHeader style={{ fontSize: "24px", fontWeight: "bold" }}>
+              비밀번호 변경
+            </ModalHeader>
+          </div>
+          <ModalInnerBox>
+            <ModalHeaderBox>
+              <RequiredElement>*</RequiredElement>{" "}
+              <ModalHeader>현재 비밀번호를 입력하세요</ModalHeader>
+            </ModalHeaderBox>
+            <InputBox>
+              <ChangePasswordInput
+                className="password"
+                type={viewOldPassword ? "text" : "password"}
+                placeholder="현재 비밀번호"
+                {...register("oldPassword", {
+                  required: "현재 비밀번호를 입력해주세요!",
+                  minLength: {
+                    value: 4,
+                    message: "비밀번호는 4글자 이상입니다!",
+                  },
+                })}
+              ></ChangePasswordInput>
+              <ViewButton tabIndex={-1} onMouseDown={handleViewOldButton}>
+                {viewOldPassword ? (
+                  <EyeOutline color="#3687FF" />
+                ) : (
+                  <EyeOffOutline color="#3687FF" />
+                )}
+              </ViewButton>
+            </InputBox>
+            {errors.oldPassword ? (
+              <ErrMsg>
+                <DangerIcon></DangerIcon>
+                {errors.oldPassword.message}
+              </ErrMsg>
+            ) : (
+              <SuccessMsg>비밀번호가 맞는지 확인해 주세요 :-)</SuccessMsg>
+            )}
+          </ModalInnerBox>
+          <ModalInnerBox>
+            <ModalHeaderBox>
+              <RequiredElement>*</RequiredElement>{" "}
+              <ModalHeader>변경할 비밀번호</ModalHeader>
+            </ModalHeaderBox>
+            <InputBox>
+              <ChangePasswordInput
+                className="password"
+                placeholder="변경할 비밀번호"
+                type={viewPassword ? "text" : "password"}
+                {...register("newPassword", {
+                  required: "변경할 비밀번호를 입력해주세요!",
+                  minLength: {
+                    value: 4,
+                    message: "비밀번호는 4글자 이상입니다!",
+                  },
+                })}
+              ></ChangePasswordInput>
+              <ViewButton tabIndex={-1} onMouseDown={handleViewButton}>
+                {viewPassword ? (
+                  <EyeOutline color="#3687FF" />
+                ) : (
+                  <EyeOffOutline color="#3687FF" />
+                )}
+              </ViewButton>
+            </InputBox>
+            {errors.newPassword ? (
+              <ErrMsg>
+                <DangerIcon></DangerIcon>
+                {errors.newPassword.message}
+              </ErrMsg>
+            ) : (
+              <SuccessMsg>✔️적합한 비밀번호에요!</SuccessMsg>
+            )}
+          </ModalInnerBox>
+          <ModalInnerBox>
+            <ModalHeaderBox>
+              <RequiredElement>*</RequiredElement>
+              <ModalHeader>변경할 비밀번호 확인</ModalHeader>
+            </ModalHeaderBox>
+            <InputBox>
+              <ChangePasswordInput
+                className="password"
+                placeholder="변경할 비밀번호 확인"
+                type={viewCheckPassword ? "text" : "password"}
+                {...register("newCheckPassword", {
+                  required: "비밀번호가 일치하지 않습니다!",
+                  validate: {
+                    mathchesPreviousPassword: (value) => {
+                      const { newPassword } = getValues();
+                      return (
+                        newPassword === value ||
+                        "비밀번호가 일치하지 않습니다!"
+                      );
+                    },
+                  },
+                })}
+              ></ChangePasswordInput>
+              <ViewButton tabIndex={-1} onMouseDown={handleViewCheckButton}>
+                {viewCheckPassword ? (
+                  <EyeOutline color="#3687FF" />
+                ) : (
+                  <EyeOffOutline color="#3687FF" />
+                )}
+              </ViewButton>
+            </InputBox>
+            {errors.newCheckPassword ? (
+              <ErrMsg>
+                <DangerIcon></DangerIcon>
+                {errors.newCheckPassword.message}
+              </ErrMsg>
+            ) : (
+              <SuccessMsg>✔️비밀번호가 일치합니다</SuccessMsg>
+            )}
+          </ModalInnerBox>
+          <div>
+            <SubmitButton disabled={!valid}>변경</SubmitButton>
+            <ExitButton onClick={() => setEditPassword(false)}>취소</ExitButton>
+          </div>
+        </Modal>
+      </form>
+    </Wrapper>
+  );
 }
