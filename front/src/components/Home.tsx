@@ -105,7 +105,7 @@ const DescBox = styled.div`
 const DescTxt = styled.p`
     line-height: 2;
     font-size: 18px;
-    color: #676767;
+    color: ${props =>props.theme.textColor};
 
     @media screen and (max-width: 500px) {
         font-size: 15px;

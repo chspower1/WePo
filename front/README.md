@@ -75,3 +75,20 @@ Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
 │  └─ 📁theme -> 웹에 기본적인 컬러 폴더
 └─ 
 ```
+
+---
+
+## Detail
+
+- ### 나의 페이지 기능
+  - #### 글 추가 기능
+    <img src="./gif/create.gif" width="500px"/>
+
+  - #### 글 수정 기능
+    <img src="./gif/update.gif" width="500px"/>
+
+  - #### 글 삭제 기능
+    <img src="./gif/delete.gif" width="500px"/>
+
+  - #### 해당 목록 드래그 앤 드롭 기능
+    <img src="./gif/dnd.gif" width="500px"/>
