@@ -146,6 +146,7 @@ export const NameTxt = styled.h2`
     overflow: hidden;
     white-space: nowrap;
     cursor: default;
+    line-height:1.4;
     & > input[type="text"] {
         font-size: 16px;
         width: 100%;
