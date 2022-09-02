@@ -83,10 +83,10 @@ Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
 - ### Login & Register
   - Login Form
 
-    <img src="./readmeImg/로그인.png" width="300">
+    <img src="./readmeImg/login.png" width="300">
   - Register Form
 
-    <img src="./readmeImg/회원가입.png" width="300">
+    <img src="./readmeImg/register.png" width="300">
 
 - ### 나의 페이지
   - CAPE
@@ -96,16 +96,20 @@ Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
     - Project
       - CAPE Form
       
-        <img src="./readmeImg/학력.png" width="400">
+        <img src="./readmeImg/award.png" width="400">
+
+      - 목록
+
+        <img src="./readmeImg/list.png" width="400">
     ---
     - 기본 기능
       - 글 추가
 
-        <img src="./readmeImg/추가.png" width="400">
+        <img src="./readmeImg/add.png" width="400">
 
       - 글 수정
 
-        <img src="./readmeImg/수정.png" width="400">
+        <img src="./readmeImg/edit.png" width="400">
 
       ---
     - 추가기능
@@ -116,17 +120,17 @@ Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
 
       - 각 부문의 갯수 확인 가능
 
-        <img src="./readmeImg/부문갯수.png" width="400">
+        <img src="./readmeImg/MVPvalue.png" width="400">
 
     ---
   - MyCard
     -  MyCard From 기본
 
-        <img src="./readmeImg/마이카드.png" width="400">
+        <img src="./readmeImg/myCard.png" width="400">
 
     -  MyCard From 편집 버튼 클릭 후
 
-        <img src="./readmeImg/마이카드수정.png" width="400">
+        <img src="./readmeImg/myCardEdit.png" width="400">
     ---
     - 기본 기능
       - 이름 변경
@@ -137,12 +141,12 @@ Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
       - 비밀번호 변경 가능
       - 비밀번호 변경 버튼 클릭 시 모달
 
-        <img src="./readmeImg/비밀번호변경모달.png" width="400">
+        <img src="./readmeImg/passwordChangeEdit.png" width="400">
 
       - 자신의 분야 설정 가능
       - 즐겨찾기에 추가한 목록 보기 가능
 
-        <img src="./readmeImg/즐겨찾기모달.png" width="400">
+        <img src="./readmeImg/likeModal.png" width="400">
 
   ---
   ---
@@ -151,7 +155,7 @@ Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
   - 기본 기능
     - UsersCard 확인
 
-        <img src="./readmeImg/네트워크.png" width="400">
+        <img src="./readmeImg/userCard.png" width="400">
 
     - 다른 사람 포트폴리오 자세히 보기 가능
     ---
@@ -165,7 +169,7 @@ Axios는 promise 기반이기 때문에 데이터를 다루기에 편하고
         - UserCard에서 보이는 텍스트는 검색을 통해 확인 가능
         - 영어일 경우 소문자, 대문자 상관없이 검색 가능
 
-          <img src="./readmeImg/검색기능.gif" width="400">
+          <img src="./readmeImg/search.gif" width="400">
       
       - 분야 필터 기능 추가
         - 원하는 분야를 체크하여 확인 가능
