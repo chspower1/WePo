@@ -76,13 +76,9 @@ const LikeBox = styled.div`
     padding: 20px 0;
     & + & {
         border-top: 1px solid #eee;
-<<<<<<< HEAD
-=======
     }
-
     @media screen and (max-width: 500px) {
         flex-wrap: wrap;
->>>>>>> mobile
     }
 `;
 const LikeLists = styled.div`
