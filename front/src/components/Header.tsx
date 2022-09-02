@@ -152,7 +152,6 @@ const MiniProfileBox = styled.div`
     margin-left: 20px;
 `;
 
-
 function Header() {
     const isLogin = useRecoilValue(isLoginState);
     const setCurUser = useSetRecoilState(curUserState);
@@ -218,7 +217,7 @@ function Header() {
                                     </MiniProfileName>
                                 </MiniProfileBox>
                                 <LoginOrRegiBtn onClick={UserLogout} className="logOut">
-                                    {window.screen.width < 500 ? <>dd</> : <>로그아웃</>}
+                                    <>로그아웃</>
                                 </LoginOrRegiBtn>
                             </>
                         ) : pathName === "/login" ? (

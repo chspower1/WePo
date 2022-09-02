@@ -48,7 +48,6 @@ export const ContentBox = styled.div`
     height: auto;
     display: flex;
     flex-direction: column;
-    padding: 30px 3px 10px;
     @media screen and (max-width: 500px) {
         display: flex;
     }
