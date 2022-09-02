@@ -1,4 +1,4 @@
-<img src="http://kdt-ai5-team08.elicecoding.com/assets/image/Logo.svg"/>
+<img src="https://imgcloud.s3.us-east-1.wasabisys.com/yez78HiM58.png"/>
 
 # 포트폴리오 공유 서비스, [ WePo ]
 
