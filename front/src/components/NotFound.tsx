@@ -22,7 +22,6 @@ const Wrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    top: -30px;
     background: url(${process.env.PUBLIC_URL + "/assets/image/waveBg3.png"}) no-repeat left 50%
         bottom -110px / contain;
 `;
