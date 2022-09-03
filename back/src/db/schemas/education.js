@@ -26,6 +26,10 @@ const EducationSchema = new Schema(
     // eduId : 학력 추가 시 프론트에서 넘겨주는 해당 educaiton의 고유id
     eduId: {
       type: String,
+    },
+    // 개인 페이지 내의 배열 순서
+    order: {
+      type: Number,
       required: true
     }
   },

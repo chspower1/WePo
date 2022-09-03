@@ -2,6 +2,11 @@ import { Schema, model, connection } from "mongoose";
 
 const UserSchema = new Schema(
   {
+    // User 식별 id
+    userId: {
+      type: Number,
+      required: false
+    },
     // User 이메일
     email: {
       type: String,
@@ -28,7 +33,7 @@ const UserSchema = new Schema(
       required: false,
       default: []
     },
-    // 즐겨찾기/좋아요한 user의 ID들
+    // 즐겨찾기/좋아요한 user 정보들
     likes: {
       type: Array,
       required: false,
@@ -45,10 +50,6 @@ const UserSchema = new Schema(
       type: String,
       required: false,
       default: "설명이 아직 없습니다. 추가해 주세요.",
-    },
-    userId: {
-      type: Number,
-      required: false
     }
   },
   {
@@ -56,7 +57,7 @@ const UserSchema = new Schema(
   }
 );
 
-
+// 단순한 숫자로 된 userId 부여 
 UserSchema.pre('save', async function () {
   const sequenceCollection = connection.collection('sequences');
 
@@ -75,7 +76,6 @@ UserSchema.pre('save', async function () {
 
   this.set({ userId: sequence.value });
 });
-
 
 const UserModel = model("User", UserSchema);
 

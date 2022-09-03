@@ -1,33 +1,39 @@
-import { BrowserRouter, Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import MyPortfolio from "./components/user/MyPortfolio";
-import RegisterForm from "./components/user/RegisterForm";
-import Network from "./components/user/Network";
-import Header from "./components/Header";
-import LoginForm from "./components/user/LoginForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import RegisterForm from "@user/RegisterForm";
+import Network from "@user/Network";
+import Header from "@components/Header";
 import { useRecoilValue } from "recoil";
-import { isLoginState } from "./atoms";
+import { isLoginState } from "@/atoms";
 import { useEffect } from "react";
-import UserDetail from "./components/user/UserDetail";
-import NotFound from "./components/NotFound";
-import Home from "./components/Home";
-import SEO from "./components/SEO";
+
+import NotFound from "@components/NotFound";
+import Home from "@components/Home";
+import SEO from "@components/SEO";
+import UserDetails from "@user/UserDetails";
+import ThemeChangeBtn from "@components/ThemeChangeBtn";
+import SuccessRegister from "@components/SuccessRegister";
+import ScrollToTop from "./ScrollToTop";
+import LoginForm from "@user/LoginForm";
 function Router() {
-    const isLogin = useRecoilValue(isLoginState);
-    useEffect(() => {}, [isLogin]);
-    return (
-        <BrowserRouter>
-            <SEO />
-            <Header />
-            <Routes>
-                <Route path="*" element={<NotFound />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/mypage" element={<MyPortfolio />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/register" element={<RegisterForm />} />
-                <Route path="/network" element={<Network />} />
-                <Route path="/network/:userSeq" element={<UserDetail />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  const isLogin = useRecoilValue(isLoginState);
+  useEffect(() => { }, [isLogin]);
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <SEO />
+      <Header />
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/mypage" element={<UserDetails />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/network" element={<Network />} />
+        <Route path="/network/:userSeq" element={<UserDetails />} />
+        <Route path="/user/register/:userId/:authCode" element={<SuccessRegister />} />
+      </Routes>
+      <ThemeChangeBtn />
+    </BrowserRouter>
+  );
 }
 export default Router;

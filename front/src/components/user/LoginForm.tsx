@@ -1,227 +1,167 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { useForm } from "react-hook-form";
-import styled from "styled-components";
-import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { UserLogin } from "../../api/api";
-import { isLoginState, IUser } from "../../atoms";
-import { curUserState } from "./../../atoms";
-
-import { Spam2 } from "@styled-icons/remix-line/Spam2";
-
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { UserLogin } from '@api/api';
+import { isLoginState, IUser } from '../../atoms';
+import { curUserState } from '@/atoms';
+import * as LoginStyled from '@styledComponents/SignStyled';
+import { EyeOffOutline, EyeOutline } from 'styled-icons/evaicons-outline';
+import { useCookies } from 'react-cookie';
 export interface ILogin {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
-const Root = styled.div`
-    width: 100%;
-    height : 100vh;
-    padding: 70px 0 0;
-    background: #eff3ff;
-`
-
-
-export const Wrapper = styled.div`
-    width: 100%;
-    height:100%;
-    display:flex;
-    padding: 80px 0 50px;
-`;
-
-export const FromContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 570px;
-    width: 100%;
-    height: 560px;
-    padding: 70px 80px;
-    margin: auto;
-    border-radius: 15px;
-    background: rgba(162, 190, 231, 0.1);
-    box-shadow: 10px 10px 15px  rgba(162,190,231,.25);
-`;
-
-export const TitleBox = styled.div`
-    width: 100%;
-`;
-
-export const Title = styled.h2`
-    font-size: 24px;
-    font-weight: bold;
-`;
-
-export const InputBox = styled.div`
-    width: 100%;
-    margin-bottom: 30px;
-`;
-
-export const Input = styled.input`
-    width: 100%;
-    height: 50px;
-    border-radius: 7px;
-    outline: 0;
-    border: 1px solid rgba(161, 161, 161, 0.1);
-    font-size: 15px;
-    padding: 0 20px;
-    margin-bottom: 10px;
-    box-shadow: 5px 4px 5px rgba(166, 184, 210, 0.3);
-    &::placeholder {
-        font-size: 12px;
-    }
-    &[type="password"]{
-        font-family: sans-serif;
-        letter-spacing: 1px;
-        color: #3687FF;
-        &::placeholder{
-            font-family: "Elice";
-        }
-    }
-`;
-
-export const ErrMsg = styled.p`
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    color: #eb7474;
-`;
-
-export const DangerIcon = styled(Spam2)`
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 3px 0 6px;
-`;
-
-export const SubmitButtonBox = styled.div`
-    width: 100%;
-    text-align: center;
-    padding-top: 40px;
-`;
-export const SubmitButton = styled.button`
-    width: 50%;
-    height: 50px;
-    background: ${(props) => props.theme.btnColor};
-    color: ${(props) => props.theme.bgColor};
-    border-radius: 10px;
-    box-shadow: 10px 10px 15px rgba(90, 156, 255, 0.4);
-    &:disabled {
-        background: #8a929e;
-        box-shadow: 10px 10px 15px rgba(138, 146, 158, 0.4);
-        cursor: not-allowed;
-    }
-`;
-
-export const RegisterButton = styled.button`
-    text-decoration: underline;
-    color: ${(props) => props.theme.btnColor};
-`;
-
-export const RegisterCommentBox = styled.div`
-    margin: 20px 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-`;
-
 export default function LoginForm() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        setError,
-    } = useForm<ILogin>({ mode: "onChange", defaultValues: { email: "", password: "" } });
+  const [cookies, setCookies, removeCookies] = useCookies(['rememberEmail', 'rememberPassword']);
+  const [viewPassword, setViewPassword] = useState(false);
+  const [isEmailRemember, setIsEmailRemember] = useState(false);
+  // const [isPasswordRemember, setIsPasswordRemember] = useState(false);
+  const [curUser, setCurUser] = useRecoilState(curUserState);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError
+  } = useForm<ILogin>({
+    mode: 'onChange',
+    defaultValues: {
+      email: `${cookies.rememberEmail}`
+    }
+  });
+  const location = useLocation();
+  const pathName = location.pathname;
+  const isLogin = useRecoilValue(isLoginState);
+  const navigator = useNavigate();
 
-    const isLogin = useRecoilValue(isLoginState);
-    const navigator = useNavigate();
-    const setCurUser = useSetRecoilState(curUserState);
+  const onvalid = async (formData: ILogin) => {
+    try {
+      const newUser = await UserLogin({ ...formData });
+      await setCurUser(newUser!);
+    } catch (err) {
+      alert('일치하지 않습니다!');
+    }
+  };
 
-    const onvalid = async (formData: ILogin) => {
-        try {
-            const newUser = await UserLogin({ ...formData });
-            console.log(newUser);
-            await setCurUser(newUser!);
-        } catch (err) {
-            alert("일치하지 않습니다!");
-            console.log(err);
-        }
-    };
-    console.log(isLogin);
-    useEffect(() => {
-        if (isLogin) {
-            navigator("/mypage", { replace: true });
-        }
-        setError("email", {
-            type: "costom",
-            message: "이메일을 입력해 주세요",
-        });
-        setError("password", {
-            type: "custom",
-            message: "비밀번호를 입력해 주세요",
-        });
-    }, [isLogin]);
+  //첫 랜더시
+  useEffect(() => {
+    if (cookies.rememberEmail !== undefined) {
+      setIsEmailRemember(true);
+    }
+    if (cookies.rememberEmail === '') {
+      setError('email', {
+        type: 'costom',
+        message: '이메일을 입력해 주세요'
+      });
+      setIsEmailRemember(false);
+    }
+    if (cookies.rememberEmail === undefined) {
+      setCookies('rememberEmail', '');
+    }
+    if (!cookies.rememberEmail) {
+      setCookies('rememberEmail', '');
+    }
+    setError('password', {
+      type: 'custom',
+      message: '비밀번호를 입력해 주세요'
+    });
+  }, []);
 
-    return (
-        <Root>
-            <Wrapper>
-                <FromContainer>
-                    <TitleBox>
-                        <Title>로그인</Title>
-                    </TitleBox>
-                    <form onSubmit={handleSubmit(onvalid)}>
-                        <InputBox>
-                            <Input
-                                type="text"
-                                placeholder="이메일을 입력하세요"
-                                {...register("email", {
-                                    required: "이메일을 입력해 주세요",
-                                    pattern: {
-                                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        message: "이메일 형식에 맞지 않습니다!",
-                                    },
-                                })}
-                            />
-                            {errors.email && (
-                                <ErrMsg>
-                                    <DangerIcon />
-                                    {errors.email.message}
-                                </ErrMsg>
-                            )}
-                        </InputBox>
-                        <InputBox>
-                            <Input
-                                type="password"
-                                placeholder="비밀번호를 입력하세요"
-                                {...register("password", {
-                                    required: "비밀번호를 입력해 주세요",
-                                    minLength: {
-                                        value: 4,
-                                        message: "비밀번호는 4글자 이상입니다!",
-                                    },
-                                })}
-                            />
-                            {errors.password && (
-                                <ErrMsg>
-                                    <DangerIcon />
-                                    {errors.password.message}
-                                </ErrMsg>
-                            )}
-                        </InputBox>
-                        <SubmitButtonBox>
-                            <SubmitButton>로그인</SubmitButton>
-                        </SubmitButtonBox>
-                        <RegisterCommentBox>
-                            아직 회원이 아니신가요?
-                            <Link to="/register">
-                                <RegisterButton>회원가입</RegisterButton>
-                            </Link>
-                        </RegisterCommentBox>
-                    </form>
-                </FromContainer>
-            </Wrapper>
-        </Root>
-    );
+  //로그인상황이 바뀔시
+  useEffect(() => {
+    if (isLogin) {
+      if (isEmailRemember) {
+        setCookies('rememberEmail', curUser?.email!, { maxAge: 360000 });
+      } else {
+        setCookies('rememberEmail', '');
+      }
+      navigator('/mypage', { replace: true });
+    }
+  }, [isLogin]);
+
+  function handleViewButton(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setViewPassword((prev) => !prev);
+  }
+
+  //자동로그인 & 아이디 저장 OnClick시
+  function onChangeAtuoLogin(e: React.FormEvent<HTMLInputElement>) {
+    console.log(e.currentTarget.name);
+    console.log(e.currentTarget.checked);
+    setIsEmailRemember(e.currentTarget.checked);
+    if (e.currentTarget.checked === false) setCookies('rememberEmail', '');
+  }
+  return (
+    <LoginStyled.Root>
+      <LoginStyled.Wrapper className={pathName === '/login' ? 'login' : ''}>
+        <LoginStyled.FromContainer>
+          <LoginStyled.TitleBox>
+            <LoginStyled.Title>로그인</LoginStyled.Title>
+          </LoginStyled.TitleBox>
+          <form onSubmit={handleSubmit(onvalid)}>
+            <LoginStyled.InputBox>
+              <LoginStyled.Input
+                type="text"
+                placeholder="이메일을 입력하세요"
+                {...register('email', {
+                  required: '이메일을 입력해 주세요',
+                  pattern: {
+                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: '이메일 형식에 맞지 않습니다!'
+                  }
+                })}
+              />
+              {errors.email && (
+                <LoginStyled.ErrMsg>
+                  <LoginStyled.DangerIcon />
+                  {errors.email.message}
+                </LoginStyled.ErrMsg>
+              )}
+            </LoginStyled.InputBox>
+            <LoginStyled.InputBox>
+              <LoginStyled.InputInnerBox>
+                <LoginStyled.Input
+                  type={viewPassword ? 'text' : 'password'}
+                  className="password"
+                  placeholder="비밀번호를 입력하세요"
+                  {...register('password', {
+                    required: '비밀번호를 입력해 주세요',
+                    minLength: {
+                      value: 4,
+                      message: '비밀번호는 4글자 이상입니다!'
+                    }
+                  })}
+                />
+                <LoginStyled.ViewButton tabIndex={-1} onMouseDown={handleViewButton}>
+                  {viewPassword ? <EyeOutline color="#3687FF" /> : <EyeOffOutline color="#3687FF" />}
+                </LoginStyled.ViewButton>
+              </LoginStyled.InputInnerBox>
+              {errors.password && (
+                <LoginStyled.ErrMsg>
+                  <LoginStyled.DangerIcon />
+                  {errors.password.message}
+                </LoginStyled.ErrMsg>
+              )}
+            </LoginStyled.InputBox>
+            <div>
+              <input type="checkbox" name="rememberId" checked={isEmailRemember} onClick={onChangeAtuoLogin} id="rememberId" />
+              <LoginStyled.RememberIdLabel htmlFor="rememberId" style={{ userSelect: 'none' }}>
+                이메일 기억하기
+              </LoginStyled.RememberIdLabel>
+            </div>
+            <LoginStyled.SubmitButtonBox>
+              <LoginStyled.SubmitButton>로그인</LoginStyled.SubmitButton>
+            </LoginStyled.SubmitButtonBox>
+          </form>
+          <LoginStyled.RegisterCommentBox>
+            아직 회원이 아니신가요?
+            <Link to="/register">
+              <LoginStyled.RegisterButton>회원가입</LoginStyled.RegisterButton>
+            </Link>
+          </LoginStyled.RegisterCommentBox>
+        </LoginStyled.FromContainer>
+      </LoginStyled.Wrapper>
+    </LoginStyled.Root>
+  );
 }

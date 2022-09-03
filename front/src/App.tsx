@@ -1,12 +1,12 @@
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
-import { lightTheme } from "./theme/theme";
+import { lightTheme, darkTheme } from "./theme/theme";
 import Router from "./Router";
 import "./font/font.css";
-import { useRecoilValue } from "recoil";
-import { isLoginState } from "./atoms";
-import { useNavigate, Navigator } from "react-router-dom";
-import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { isDarkState } from "./atoms";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 const GlobalStyle = createGlobalStyle`
     ${reset}
     html,body,#root{
@@ -31,15 +31,18 @@ const GlobalStyle = createGlobalStyle`
         width:100%;
     }
 `;
+
 function App() {
-    return (
-        <>
-            <ThemeProvider theme={lightTheme}>
-                <GlobalStyle />
-                <Router />
-            </ThemeProvider>
-        </>
-    );
+  const [isDark, setIsDark] = useRecoilState(isDarkState);
+  return (
+    <>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Router />
+        <ReactQueryDevtools />
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;

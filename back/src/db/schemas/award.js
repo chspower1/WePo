@@ -36,6 +36,11 @@ const AwardSchema = new Schema(
     awardId: {
       type: String,
       required: true
+    },
+    // 개인 페이지 내의 배열 순서
+    order: {
+      type: Number,
+      required: true
     }
   },
   {
