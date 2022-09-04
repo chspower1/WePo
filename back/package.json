@@ -21,6 +21,7 @@
   "dependencies": {
     "@sindresorhus/is": "^4.2.0",
     "bcrypt": "^5.0.1",
+    "browserslist": "^4.21.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jest": "^27.3.1",
